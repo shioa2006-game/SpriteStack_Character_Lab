@@ -1,0 +1,441 @@
+{
+  "reference_source_sha256": "dcbabdd492f32d693c528c7fc67d7783a748a4c8eebfeb1cf9e7360ceb758aed",
+  "family_area_share": {
+    "reference": {
+      "indigo hair": 0.1559,
+      "skin": 0.0168,
+      "beige cloth and paper": 0.3513,
+      "slate blue": 0.2273,
+      "brown leather and wood": 0.2441,
+      "crystal blue": 0.0046
+    },
+    "mage_48_front_mean": {
+      "indigo hair": 0.1545,
+      "skin": 0.0604,
+      "beige cloth and paper": 0.2586,
+      "slate blue": 0.2448,
+      "brown leather and wood": 0.265,
+      "crystal blue": 0.0167
+    },
+    "mage_48_all_mean": {
+      "indigo hair": 0.1931,
+      "skin": 0.0335,
+      "beige cloth and paper": 0.167,
+      "slate blue": 0.3895,
+      "brown leather and wood": 0.2009,
+      "crystal blue": 0.016
+    }
+  },
+  "proportions": {
+    "MAGE": {
+      "height_units": 30.5,
+      "shoulder": 0.623,
+      "hip": 0.413,
+      "knee": 0.216,
+      "top_of_staff_units": 31.5,
+      "staff_over_figure_height": 1.033
+    },
+    "MAREN": {
+      "height_units": 33.0,
+      "shoulder": 0.627,
+      "hip": 0.421,
+      "knee": 0.248
+    },
+    "LARK": {
+      "height_units": 32.0,
+      "shoulder": 0.497,
+      "hip": 0.301,
+      "knee": 0.194
+    },
+    "BRAM": {
+      "height_units": 24.5,
+      "shoulder": 0.476,
+      "hip": 0.278,
+      "knee": 0.18
+    },
+    "reference": {
+      "shoulder": 0.8396,
+      "waist_belt": 0.6555,
+      "knee": 0.2148,
+      "heads_tall": 10.26,
+      "staff_over_figure_height": 0.9721
+    }
+  },
+  "palette_methods": {
+    "extracted": 5,
+    "adjusted": 12,
+    "derived": 8
+  },
+  "idle_48": {
+    "S": {
+      "bbox": [
+        12,
+        5,
+        36,
+        42
+      ],
+      "figure_px": 399,
+      "family_share": {
+        "indigo hair": 0.1404,
+        "skin": 0.0652,
+        "beige cloth and paper": 0.2607,
+        "slate blue": 0.2932,
+        "brown leather and wood": 0.2256,
+        "crystal blue": 0.015
+      },
+      "visible_px": {
+        "staff": 45,
+        "crystal": 6,
+        "book": 16,
+        "head": 81
+      }
+    },
+    "SW": {
+      "bbox": [
+        15,
+        2,
+        34,
+        43
+      ],
+      "figure_px": 381,
+      "family_share": {
+        "indigo hair": 0.168,
+        "skin": 0.0551,
+        "beige cloth and paper": 0.2546,
+        "slate blue": 0.2362,
+        "brown leather and wood": 0.2703,
+        "crystal blue": 0.0157
+      },
+      "visible_px": {
+        "staff": 58,
+        "crystal": 6,
+        "book": 15,
+        "head": 84
+      }
+    },
+    "W": {
+      "bbox": [
+        18,
+        1,
+        32,
+        42
+      ],
+      "figure_px": 281,
+      "family_share": {
+        "indigo hair": 0.242,
+        "skin": 0.0427,
+        "beige cloth and paper": 0.2064,
+        "slate blue": 0.3665,
+        "brown leather and wood": 0.1246,
+        "crystal blue": 0.0178
+      },
+      "visible_px": {
+        "staff": 8,
+        "crystal": 5,
+        "book": 9,
+        "head": 80
+      }
+    },
+    "NW": {
+      "bbox": [
+        15,
+        2,
+        34,
+        42
+      ],
+      "figure_px": 378,
+      "family_share": {
+        "indigo hair": 0.2143,
+        "skin": 0.0026,
+        "beige cloth and paper": 0.0741,
+        "slate blue": 0.5556,
+        "brown leather and wood": 0.1349,
+        "crystal blue": 0.0185
+      },
+      "visible_px": {
+        "staff": 19,
+        "crystal": 7,
+        "book": 4,
+        "head": 82
+      }
+    },
+    "N": {
+      "bbox": [
+        12,
+        5,
+        36,
+        41
+      ],
+      "figure_px": 433,
+      "family_share": {
+        "indigo hair": 0.2079,
+        "skin": 0.0,
+        "beige cloth and paper": 0.0508,
+        "slate blue": 0.6005,
+        "brown leather and wood": 0.127,
+        "crystal blue": 0.0139
+      },
+      "visible_px": {
+        "staff": 37,
+        "crystal": 6,
+        "book": 0,
+        "head": 90
+      }
+    },
+    "NE": {
+      "bbox": [
+        14,
+        6,
+        33,
+        43
+      ],
+      "figure_px": 392,
+      "family_share": {
+        "indigo hair": 0.2041,
+        "skin": 0.0051,
+        "beige cloth and paper": 0.0638,
+        "slate blue": 0.5281,
+        "brown leather and wood": 0.1862,
+        "crystal blue": 0.0128
+      },
+      "visible_px": {
+        "staff": 47,
+        "crystal": 5,
+        "book": 0,
+        "head": 81
+      }
+    },
+    "E": {
+      "bbox": [
+        16,
+        5,
+        30,
+        44
+      ],
+      "figure_px": 272,
+      "family_share": {
+        "indigo hair": 0.2132,
+        "skin": 0.0368,
+        "beige cloth and paper": 0.1654,
+        "slate blue": 0.3309,
+        "brown leather and wood": 0.239,
+        "crystal blue": 0.0147
+      },
+      "visible_px": {
+        "staff": 43,
+        "crystal": 4,
+        "book": 7,
+        "head": 66
+      }
+    },
+    "SE": {
+      "bbox": [
+        14,
+        6,
+        33,
+        44
+      ],
+      "figure_px": 361,
+      "family_share": {
+        "indigo hair": 0.1551,
+        "skin": 0.0609,
+        "beige cloth and paper": 0.2604,
+        "slate blue": 0.205,
+        "brown leather and wood": 0.2992,
+        "crystal blue": 0.0194
+      },
+      "visible_px": {
+        "staff": 57,
+        "crystal": 7,
+        "book": 18,
+        "head": 75
+      }
+    }
+  },
+  "idle_64": {
+    "S": {
+      "bbox": [
+        16,
+        6,
+        48,
+        56
+      ],
+      "figure_px": 711,
+      "family_share": {
+        "indigo hair": 0.1547,
+        "skin": 0.0703,
+        "beige cloth and paper": 0.2602,
+        "slate blue": 0.2827,
+        "brown leather and wood": 0.2138,
+        "crystal blue": 0.0183
+      },
+      "visible_px": {
+        "staff": 72,
+        "crystal": 13,
+        "book": 25,
+        "head": 155
+      }
+    },
+    "SW": {
+      "bbox": [
+        20,
+        3,
+        45,
+        56
+      ],
+      "figure_px": 683,
+      "family_share": {
+        "indigo hair": 0.1772,
+        "skin": 0.0542,
+        "beige cloth and paper": 0.243,
+        "slate blue": 0.2621,
+        "brown leather and wood": 0.2504,
+        "crystal blue": 0.0132
+      },
+      "visible_px": {
+        "staff": 97,
+        "crystal": 9,
+        "book": 24,
+        "head": 154
+      }
+    },
+    "W": {
+      "bbox": [
+        24,
+        1,
+        43,
+        56
+      ],
+      "figure_px": 500,
+      "family_share": {
+        "indigo hair": 0.246,
+        "skin": 0.038,
+        "beige cloth and paper": 0.214,
+        "slate blue": 0.348,
+        "brown leather and wood": 0.134,
+        "crystal blue": 0.02
+      },
+      "visible_px": {
+        "staff": 8,
+        "crystal": 10,
+        "book": 12,
+        "head": 142
+      }
+    },
+    "NW": {
+      "bbox": [
+        21,
+        3,
+        45,
+        55
+      ],
+      "figure_px": 675,
+      "family_share": {
+        "indigo hair": 0.2267,
+        "skin": 0.0044,
+        "beige cloth and paper": 0.0681,
+        "slate blue": 0.5541,
+        "brown leather and wood": 0.1274,
+        "crystal blue": 0.0193
+      },
+      "visible_px": {
+        "staff": 34,
+        "crystal": 13,
+        "book": 6,
+        "head": 156
+      }
+    },
+    "N": {
+      "bbox": [
+        16,
+        6,
+        48,
+        55
+      ],
+      "figure_px": 761,
+      "family_share": {
+        "indigo hair": 0.2089,
+        "skin": 0.0,
+        "beige cloth and paper": 0.0539,
+        "slate blue": 0.6124,
+        "brown leather and wood": 0.1078,
+        "crystal blue": 0.0171
+      },
+      "visible_px": {
+        "staff": 54,
+        "crystal": 13,
+        "book": 0,
+        "head": 159
+      }
+    },
+    "NE": {
+      "bbox": [
+        19,
+        8,
+        44,
+        57
+      ],
+      "figure_px": 703,
+      "family_share": {
+        "indigo hair": 0.2119,
+        "skin": 0.0071,
+        "beige cloth and paper": 0.0654,
+        "slate blue": 0.5249,
+        "brown leather and wood": 0.1764,
+        "crystal blue": 0.0142
+      },
+      "visible_px": {
+        "staff": 81,
+        "crystal": 10,
+        "book": 0,
+        "head": 152
+      }
+    },
+    "E": {
+      "bbox": [
+        21,
+        7,
+        40,
+        58
+      ],
+      "figure_px": 488,
+      "family_share": {
+        "indigo hair": 0.2111,
+        "skin": 0.0328,
+        "beige cloth and paper": 0.166,
+        "slate blue": 0.3422,
+        "brown leather and wood": 0.2316,
+        "crystal blue": 0.0164
+      },
+      "visible_px": {
+        "staff": 80,
+        "crystal": 8,
+        "book": 15,
+        "head": 119
+      }
+    },
+    "SE": {
+      "bbox": [
+        19,
+        7,
+        44,
+        57
+      ],
+      "figure_px": 655,
+      "family_share": {
+        "indigo hair": 0.1634,
+        "skin": 0.0595,
+        "beige cloth and paper": 0.2443,
+        "slate blue": 0.2336,
+        "brown leather and wood": 0.2824,
+        "crystal blue": 0.0168
+      },
+      "visible_px": {
+        "staff": 95,
+        "crystal": 11,
+        "book": 28,
+        "head": 143
+      }
+    }
+  }
+}

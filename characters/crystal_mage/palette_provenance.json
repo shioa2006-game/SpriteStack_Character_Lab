@@ -1,0 +1,30 @@
+{
+  "description": "How each crystal mage material color relates to the colors sampled from the reference image (reference_palette.json). extracted: all three tones copied. adjusted: sampled, then changed for the 48 px renderer. derived: no direct sample; built from a related sample.",
+  "materials": {
+    "sole": {"source": "boot", "method": "derived", "note": "靴底は画像でほぼ見えない。ブーツの影色より暗い推測色"},
+    "boot": {"source": "boot", "method": "adjusted", "note": "基色は抽出のまま。影色を下げ明色を上げて、輪郭色 #241c2a の隣でも筒と足の形が残るようにした"},
+    "trousers": {"source": "trousers", "method": "extracted", "note": ""},
+    "robe": {"source": "robe", "method": "adjusted", "note": "抽出色 dec0b0 は肌 f0bfa7 と近く、初回の48 pxで顔と胴が同じ色に見えた。黄みの麻色に寄せ、影色を暗くして裾の量感を出した"},
+    "robe shade": {"source": "robe", "method": "derived", "note": "前身頃の合わせ目と袖口の内側。ローブより一段暗い"},
+    "robe lining": {"source": "robe_inner_strip", "method": "adjusted", "note": "細い帯の採色は割れ目の暗部と混ざり灰紫になった。画像で見える青い帯として、マントと同じ青にした"},
+    "hood": {"source": "hood", "method": "adjusted", "note": "抽出の影色はフード内部の深い陰。ローブより少し暗く灰色寄りの生成りにして、髪とマントの間の帯として読めるようにした"},
+    "cape": {"source": "cape", "method": "adjusted", "note": "抽出の基色 6b6b84 は髪の基色 696378 とほぼ同じ明度。髪と分けるため青みと明度を上げた"},
+    "cape lining": {"source": "cape", "method": "derived", "note": "マントの内側。抽出の影色 504e62 に近い暗い青"},
+    "clasp": {"source": "clasp", "method": "adjusted", "note": "採色範囲が留め具の黒い線を多く含み暗い。青いマントの上で1〜2 pxの金具に見える青銅色にした"},
+    "belt": {"source": "belt", "method": "extracted", "note": ""},
+    "buckle": {"source": "buckle", "method": "adjusted", "note": "抽出色は暖色でローブと区別できない。画像の銀色の留め金として寒色の鋼色にした"},
+    "skin": {"source": "skin_arm", "method": "extracted", "note": "顔の採色は3階調の差がほぼない。腕の採色を使った"},
+    "eyes": {"source": "eyes", "method": "adjusted", "note": "採色はまつげの茶色と白目が混ざる。1 pxの目として髪と調和する暗い藍色にした"},
+    "hair": {"source": "hair", "method": "adjusted", "note": "抽出の基色はマントとほぼ同じ明度。影色 4c4657 付近まで暗くし、明色を青紫に寄せて光沢を残した"},
+    "hair shade": {"source": "hair", "method": "derived", "note": "毛束の溝。髪の基色より暗い"},
+    "glove": {"source": "glove", "method": "adjusted", "note": "明色を上げ、暗い杖と本の上でも拳の形が残るようにした"},
+    "bracer": {"source": "belt", "method": "derived", "note": "手首の革の籠手。画像ではベルトと同じ革で、手袋より明るい"},
+    "staff wood": {"source": "staff_wood", "method": "extracted", "note": ""},
+    "staff carving": {"source": "staff_wood", "method": "derived", "note": "杖頭のねじれた装飾と軸の輪。画像の装飾は灰色がかった明るい木"},
+    "ferrule": {"source": "buckle", "method": "derived", "note": "石突きの金具。画像では灰色の金属"},
+    "crystal": {"source": "crystal", "method": "adjusted", "note": "抽出色を基に、明色を白に近い水色へ上げ、2〜3 pxでも光る石に見えるようにした"},
+    "crystal glow": {"source": "crystal", "method": "derived", "note": "結晶の中心の光。どの面でもほぼ白い水色"},
+    "book cover": {"source": "book_cover", "method": "adjusted", "note": "抽出色 5a5769 はマントの灰青と近い。指示の「暗い青」とマントとの区別のため暗い紺にした"},
+    "book pages": {"source": "book_pages", "method": "extracted", "note": ""}
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "status": {
+    "idle": "published: 48x48 standard sheet and a 64x64 comparison sheet of the same model (bake_idle.py)",
+    "walk": "loader placeholder only: LARK's walk clip and tuning so the shared loader accepts the manifest; not baked or published",
+    "attack": "loader placeholder only: LARK's sword attack clip and tuning; a staff attack is not designed; not baked or published"
+  },
+  "model": {
+    "materials": "materials.npz",
+    "part_ids": "part_ids.npz",
+    "origin_xyz": [-14, -12, 0],
+    "voxel_size_xyz": [0.5, 0.5, 0.5],
+    "palette": [
+      {"name": "sole", "group": "boots", "shadow": "1f1716", "base": "2c2220", "light": "3d302c"},
+      {"name": "boot", "group": "boots", "shadow": "3a2d2b", "base": "5d4945", "light": "7a625b"},
+      {"name": "trousers", "group": "legs", "shadow": "322828", "base": "4a3b38", "light": "66514c"},
+      {"name": "robe", "group": "robe", "shadow": "b3a08e", "base": "d4c3ae", "light": "e8dccb"},
+      {"name": "robe shade", "group": "robe", "shadow": "9f8b79", "base": "b5a08c", "light": "c6b29e"},
+      {"name": "robe lining", "group": "robe lining", "shadow": "434a70", "base": "5a6490", "light": "727da8"},
+      {"name": "hood", "group": "hood", "shadow": "8f7a68", "base": "b29c86", "light": "d3c0aa"},
+      {"name": "cape", "group": "cape", "shadow": "434a70", "base": "5a6490", "light": "727da8"},
+      {"name": "cape lining", "group": "cape lining", "shadow": "33395a", "base": "474f78", "light": "5a6390"},
+      {"name": "clasp", "group": "metal", "shadow": "6e5536", "base": "9c7d52", "light": "c9a86f"},
+      {"name": "belt", "group": "leather", "shadow": "3a2923", "base": "61463c", "light": "705145"},
+      {"name": "buckle", "group": "metal", "shadow": "8a8480", "base": "b8b2ac", "light": "dcd6d0"},
+      {"name": "skin", "group": "skin", "shadow": "d19b87", "base": "f0bfa7", "light": "f6c9b0"},
+      {"name": "eyes", "group": "skin", "shadow": "231f33", "base": "2f2a45", "light": "4a4466"},
+      {"name": "hair", "group": "hair", "shadow": "2d2a45", "base": "44426a", "light": "6a6c9e"},
+      {"name": "hair shade", "group": "hair", "shadow": "24213a", "base": "35314f", "light": "4a4570"},
+      {"name": "glove", "group": "glove", "shadow": "4b3a38", "base": "5e4b49", "light": "7d6560"},
+      {"name": "bracer", "group": "leather", "shadow": "4a3128", "base": "6b4a3c", "light": "8a6250"},
+      {"name": "staff wood", "group": "staff", "shadow": "4e3d39", "base": "6c584d", "light": "8e6d60"},
+      {"name": "staff carving", "group": "staff", "shadow": "6b5a52", "base": "8f7a6c", "light": "b09888"},
+      {"name": "ferrule", "group": "metal", "shadow": "6c6866", "base": "9a9490", "light": "c8c2bc"},
+      {"name": "crystal", "group": "crystal", "shadow": "2d4fc4", "base": "4f84f2", "light": "9cc8ff"},
+      {"name": "crystal glow", "group": "crystal", "shadow": "8ab8ff", "base": "b8d8ff", "light": "e6f3ff"},
+      {"name": "book cover", "group": "book", "shadow": "262a44", "base": "343a5c", "light": "4c5480"},
+      {"name": "book pages", "group": "book", "shadow": "e8cebc", "base": "ecd2c1", "light": "eed4c4"}
+    ]
+  },
+  "rig": {
+    "parts": ["head", "chest", "pelvis", "thigh_R", "shin_R", "boot_R", "upper_R", "fore_R", "hand_R", "thigh_L", "shin_L", "boot_L", "upper_L", "fore_L", "hand_L", "staff", "book"],
+    "rest": {
+      "pelvis": [0, 0, 13.0],
+      "chest": [0, -0.1, 16.6],
+      "neck": [0, 0.1, 20.2],
+      "head": [0, 0.4, 24.4],
+      "shoulder_R": [-3.5, -0.2, 19.0],
+      "elbow_R": [-4.7, 0.3, 16.0],
+      "hand_R": [-6.6, 0.6, 17.0],
+      "shoulder_L": [3.5, -0.2, 19.0],
+      "elbow_L": [4.5, 0.5, 15.8],
+      "hand_L": [3.7, 3.0, 15.2],
+      "hip_R": [-1.45, 0, 12.6],
+      "knee_R": [-1.6, 0.4, 6.6],
+      "ankle_R": [-1.75, -0.1, 2.0],
+      "toe_R": [-1.9, 2.1, 0],
+      "hip_L": [1.45, 0, 12.6],
+      "knee_L": [1.6, 0.6, 6.6],
+      "ankle_L": [1.8, 0.3, 2.0],
+      "toe_L": [2.5, 2.4, 0],
+      "staff_tip": [-7.0, 0.6, 31.2],
+      "book_center": [2.3, 2.75, 15.9]
+    },
+    "attachments": {
+      "staff": {
+        "hand": "hand_R",
+        "marker": "staff_tip"
+      },
+      "book": {
+        "hand": "hand_L",
+        "marker": "book_center"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.19,
+      "base_pivot": [24, 40]
+    },
+    "neutral_cell": 48,
+    "render_cell": 64,
+    "neutral_rays": [42, -36, -0.18],
+    "posed_rays": [51, -45, -0.18],
+    "outline_rgb": [36, 28, 42]
+  },
+  "comparison_view": {
+    "description": "Same model and camera angle at 4/3 the pixel density, in a 64x64 cell with the 48 px anchor scaled by 4/3 and rounded. Used only by bake_idle.py for the 48 vs 64 comparison.",
+    "pixels_per_unit": 1.5867,
+    "neutral_cell": 64,
+    "base_pivot": [32, 53]
+  },
+  "posed_volume": {
+    "origin_xyz": [-24.0, -23.0, -2.0],
+    "limit_xyz": [24.0, 25.0, 44.0],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../experiments/lark_stage3/walk_motion.json",
+    "cell": 48,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 3,
+      "knee_pole": [1.12, 8, -0.15],
+      "arm_swing_scale": {"R": 1, "L": -0.57},
+      "hand_outward": 0.12,
+      "hand_lift_scale": 0.18,
+      "hand_lift": 0.29,
+      "wrist_pitch_scale": 4.3,
+      "wrist_yaw_scale": 0.27,
+      "elbow_pole": [4, -2.7, -4.5]
+    }
+  },
+  "attack": {
+    "clip": "../../experiments/lark_stage3/attack_motion.json",
+    "cell": 64,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_yaw_scale": 0.48,
+      "head_lean_scale": 0.37,
+      "step_side": "R",
+      "knee_pole": [0.85, 8, -0.3],
+      "main_hand_side": "R",
+      "weapon_axis": [-6.35, 2.45, -8.85],
+      "support_yaw_offset": 0.031,
+      "support_hand_lift": 0.25,
+      "support_wrist_yaw_scale": 0.35,
+      "support_wrist_pitch": -8,
+      "support_elbow_pole": [5, -2.4, -4.2]
+    }
+  },
+  "measurements": {
+    "lowest_z": {
+      "sole_floor": [1],
+      "staff_foot": [21]
+    },
+    "visibility": {
+      "staff": {"part": "staff", "materials": [19, 20, 21]},
+      "crystal": {"part": "staff", "materials": [22, 23]},
+      "book": {"part": "book", "materials": [24, 25]}
+    }
+  }
+}

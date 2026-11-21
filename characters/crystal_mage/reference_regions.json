@@ -1,0 +1,353 @@
+{
+  "image": {
+    "description": "Single reference illustration for image-to-character experiment 02 (a young male mage with a crystal staff and a book). Only coordinates and derived colors are tracked; the image pixels are not.",
+    "size": [
+      537,
+      730
+    ]
+  },
+  "regions": {
+    "hair": {
+      "boxes": [
+        [
+          256,
+          14,
+          296,
+          40
+        ],
+        [
+          292,
+          42,
+          306,
+          60
+        ],
+        [
+          244,
+          40,
+          256,
+          70
+        ]
+      ]
+    },
+    "eyes": {
+      "boxes": [
+        [
+          250,
+          54,
+          260,
+          60
+        ],
+        [
+          281,
+          54,
+          291,
+          60
+        ]
+      ],
+      "filter": "dark"
+    },
+    "skin_face": {
+      "boxes": [
+        [
+          262,
+          68,
+          280,
+          82
+        ]
+      ]
+    },
+    "skin_arm": {
+      "boxes": [
+        [
+          142,
+          232,
+          156,
+          244
+        ],
+        [
+          350,
+          238,
+          362,
+          248
+        ]
+      ]
+    },
+    "hood": {
+      "boxes": [
+        [
+          228,
+          100,
+          252,
+          110
+        ],
+        [
+          318,
+          100,
+          334,
+          114
+        ]
+      ]
+    },
+    "cape": {
+      "boxes": [
+        [
+          186,
+          136,
+          214,
+          166
+        ],
+        [
+          356,
+          150,
+          372,
+          180
+        ],
+        [
+          30,
+          430,
+          56,
+          470
+        ],
+        [
+          460,
+          400,
+          490,
+          430
+        ]
+      ]
+    },
+    "clasp": {
+      "boxes": [
+        [
+          292,
+          130,
+          308,
+          146
+        ]
+      ],
+      "filter": "dark"
+    },
+    "robe": {
+      "boxes": [
+        [
+          236,
+          180,
+          266,
+          228
+        ],
+        [
+          216,
+          340,
+          246,
+          420
+        ],
+        [
+          300,
+          360,
+          340,
+          440
+        ]
+      ]
+    },
+    "robe_inner_strip": {
+      "boxes": [
+        [
+          253,
+          300,
+          259,
+          360
+        ]
+      ]
+    },
+    "belt": {
+      "boxes": [
+        [
+          236,
+          246,
+          262,
+          262
+        ]
+      ]
+    },
+    "buckle": {
+      "boxes": [
+        [
+          268,
+          244,
+          290,
+          262
+        ]
+      ],
+      "filter": "bright"
+    },
+    "glove": {
+      "boxes": [
+        [
+          118,
+          216,
+          140,
+          236
+        ],
+        [
+          314,
+          218,
+          334,
+          238
+        ]
+      ]
+    },
+    "book_cover": {
+      "boxes": [
+        [
+          296,
+          178,
+          326,
+          210
+        ]
+      ]
+    },
+    "book_pages": {
+      "boxes": [
+        [
+          296,
+          166,
+          328,
+          172
+        ]
+      ],
+      "filter": "bright"
+    },
+    "staff_wood": {
+      "boxes": [
+        [
+          102,
+          260,
+          110,
+          300
+        ],
+        [
+          140,
+          420,
+          148,
+          470
+        ]
+      ]
+    },
+    "crystal": {
+      "boxes": [
+        [
+          90,
+          44,
+          108,
+          90
+        ]
+      ],
+      "filter": "saturated_blue"
+    },
+    "trousers": {
+      "boxes": [
+        [
+          196,
+          525,
+          222,
+          560
+        ],
+        [
+          292,
+          530,
+          316,
+          560
+        ]
+      ]
+    },
+    "boot": {
+      "boxes": [
+        [
+          196,
+          610,
+          222,
+          680
+        ],
+        [
+          300,
+          610,
+          330,
+          680
+        ]
+      ]
+    }
+  },
+  "landmarks_y": {
+    "hair_top": 5,
+    "skull_top": 24,
+    "eyes": 57,
+    "chin": 92,
+    "shoulder": 120,
+    "clasp": 138,
+    "book_top": 165,
+    "waist_belt": 252,
+    "book_bottom": 262,
+    "robe_hem": 512,
+    "knee": 568,
+    "boot_top": 582,
+    "sole": 722
+  },
+  "staff_y": {
+    "ornament_top": 18,
+    "crystal_top": 40,
+    "crystal_bottom": 95,
+    "grip": 205,
+    "foot": 715
+  },
+  "widths_x": {
+    "figure_center": 272,
+    "staff_at_grip": 112,
+    "staff_at_foot": 184,
+    "cape_tip_right_of_figure": 18,
+    "cape_tip_left_of_figure": 515,
+    "robe_hem_right": 140,
+    "robe_hem_left": 408,
+    "shoulder_right": 196,
+    "shoulder_left": 350,
+    "book_center": 308
+  },
+  "notes": {
+    "orientation": "The figure faces the viewer. The staff is in the hand on the viewer's left, which is his anatomical right hand; the book is in his anatomical left hand. This already matches the project contract (main item right, secondary item left).",
+    "landmarks": "Vertical positions in image pixels. 'figure_center' is the midpoint between the outer edges of the boots. Widths on the 'right_of_figure' side are on the viewer's left.",
+    "sole": "The boots are fully visible; the sole landmark is the bottom of the right boot heel.",
+    "hidden": "The back of the cape, hood, hair and belt, the book's back cover and spine, the far side of the staff ornament and the soles are not visible."
+  },
+  "families": {
+    "indigo hair": [
+      "hair",
+      "eyes"
+    ],
+    "skin": [
+      "skin_face",
+      "skin_arm"
+    ],
+    "beige cloth and paper": [
+      "hood",
+      "robe",
+      "book_pages",
+      "buckle"
+    ],
+    "slate blue": [
+      "cape",
+      "robe_inner_strip",
+      "book_cover"
+    ],
+    "brown leather and wood": [
+      "belt",
+      "glove",
+      "trousers",
+      "boot",
+      "staff_wood",
+      "clasp"
+    ],
+    "crystal blue": [
+      "crystal"
+    ]
+  },
+  "exclude_boxes": []
+}

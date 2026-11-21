@@ -1,0 +1,33 @@
+{
+  "description": "Comparison sheet: the same voxel model as idle.png at 4/3 the pixel density.",
+  "camera": {
+    "pitch_deg": 24,
+    "pixels_per_unit": 1.5867,
+    "base_pivot": [
+      32,
+      53
+    ]
+  },
+  "neutral": {
+    "layout": "1 row, 8 columns",
+    "directions": [
+      "S",
+      "SW",
+      "W",
+      "NW",
+      "N",
+      "NE",
+      "E",
+      "SE"
+    ],
+    "cell": [
+      64,
+      64
+    ],
+    "anchor": [
+      32,
+      53
+    ]
+  },
+  "rgba_sha256": "280a7348c2b4b24e48219b510713a5a9c163660c62762c0b572f320cd47f0e33"
+}

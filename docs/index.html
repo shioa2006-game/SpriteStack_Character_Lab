@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LARK・BRAMの静止・歩行・攻撃と、MARENの静止を8方向のPNGスプライトで確認。">
+  <meta name="description" content="LARK・BRAMの静止・歩行・攻撃と、MAREN・CRYSTAL MAGEの静止を8方向のPNGスプライトで確認。">
   <title>SpriteStack Character Lab</title>
   <link rel="stylesheet" href="gallery.css">
   <script src="gallery.js" defer></script>
@@ -33,6 +33,7 @@
             <option value="lark">LARK · 青の従士</option>
             <option value="bram">BRAM · ドワーフ戦士</option>
             <option value="maren">MAREN · 青髪の剣士</option>
+            <option value="crystal_mage">CRYSTAL MAGE · 水晶の杖の魔法使い</option>
           </select>
         </div>
         <fieldset>
@@ -43,6 +44,15 @@
             <button type="button" data-motion="attack" aria-pressed="false">攻撃</button>
           </div>
           <p id="motion-note" class="note" hidden>このキャラクターは静止8方向のみ公開しています。</p>
+        </fieldset>
+
+        <fieldset id="resolution-row" hidden>
+          <legend id="resolution-label">セル解像度（同じ立体モデル）</legend>
+          <select id="resolution" aria-labelledby="resolution-label">
+            <option value="48">48×48 · 標準（1.19 px/単位）</option>
+            <option value="64">64×64 · 比較（1.59 px/単位）</option>
+          </select>
+          <p class="note">64×64は同じモデルを4/3倍の画素密度で描いた比較用です。原寸 (1×) で読みやすさを比べてください。</p>
         </fieldset>
 
         <fieldset id="attack-variant-row" hidden>

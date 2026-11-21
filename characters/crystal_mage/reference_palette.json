@@ -1,0 +1,169 @@
+{
+  "source_sha256": "dcbabdd492f32d693c528c7fc67d7783a748a4c8eebfeb1cf9e7360ceb758aed",
+  "percentile_bands": {
+    "shadow": [
+      10,
+      30
+    ],
+    "base": [
+      45,
+      70
+    ],
+    "light": [
+      80,
+      95
+    ]
+  },
+  "materials": {
+    "hair": {
+      "shadow": "4c4657",
+      "base": "696378",
+      "light": "8e8090",
+      "pixels": 1627
+    },
+    "eyes": {
+      "shadow": "3a2a2a",
+      "base": "514546",
+      "light": "715d60",
+      "pixels": 60
+    },
+    "skin_face": {
+      "shadow": "f5cab2",
+      "base": "f8cfb6",
+      "light": "fad0b7",
+      "pixels": 252
+    },
+    "skin_arm": {
+      "shadow": "d19b87",
+      "base": "f0bfa7",
+      "light": "f6c9b0",
+      "pixels": 288
+    },
+    "hood": {
+      "shadow": "625859",
+      "base": "b69a90",
+      "light": "e1c6bc",
+      "pixels": 449
+    },
+    "cape": {
+      "shadow": "504e62",
+      "base": "6b6b84",
+      "light": "7f798c",
+      "pixels": 1890
+    },
+    "clasp": {
+      "shadow": "3c2e32",
+      "base": "564c4e",
+      "light": "67585a",
+      "pixels": 128
+    },
+    "robe": {
+      "shadow": "c2a394",
+      "base": "dec0b0",
+      "light": "e6caba",
+      "pixels": 7040
+    },
+    "robe_inner_strip": {
+      "shadow": "4e444c",
+      "base": "6c6473",
+      "light": "807177",
+      "pixels": 360
+    },
+    "belt": {
+      "shadow": "3a2923",
+      "base": "61463c",
+      "light": "705145",
+      "pixels": 416
+    },
+    "buckle": {
+      "shadow": "a48e82",
+      "base": "c6b0a4",
+      "light": "e0c8bb",
+      "pixels": 80
+    },
+    "glove": {
+      "shadow": "4b3a38",
+      "base": "5e4b49",
+      "light": "695654",
+      "pixels": 835
+    },
+    "book_cover": {
+      "shadow": "545162",
+      "base": "5a5769",
+      "light": "83716e",
+      "pixels": 960
+    },
+    "book_pages": {
+      "shadow": "e8cebc",
+      "base": "ecd2c1",
+      "light": "eed4c4",
+      "pixels": 39
+    },
+    "staff_wood": {
+      "shadow": "4e3d39",
+      "base": "6c584d",
+      "light": "8e6d60",
+      "pixels": 399
+    },
+    "crystal": {
+      "shadow": "4266ce",
+      "base": "6688df",
+      "light": "7aa2f0",
+      "pixels": 442
+    },
+    "trousers": {
+      "shadow": "322828",
+      "base": "4a3b38",
+      "light": "66514c",
+      "pixels": 1630
+    },
+    "boot": {
+      "shadow": "453837",
+      "base": "5d4945",
+      "light": "6a5450",
+      "pixels": 3739
+    }
+  },
+  "family_area_share": {
+    "indigo hair": 0.1559,
+    "skin": 0.0168,
+    "beige cloth and paper": 0.3513,
+    "slate blue": 0.2273,
+    "brown leather and wood": 0.2441,
+    "crystal blue": 0.0046
+  },
+  "figure_pixels": 157497,
+  "height_fraction_above_sole": {
+    "hair_top": 1.0,
+    "skull_top": 0.9735,
+    "eyes": 0.9275,
+    "chin": 0.8787,
+    "shoulder": 0.8396,
+    "clasp": 0.8145,
+    "book_top": 0.7768,
+    "waist_belt": 0.6555,
+    "book_bottom": 0.6416,
+    "robe_hem": 0.2929,
+    "knee": 0.2148,
+    "boot_top": 0.1953,
+    "sole": 0.0
+  },
+  "heads_tall": 10.26,
+  "staff_height_fraction_above_sole": {
+    "ornament_top": 0.9819,
+    "crystal_top": 0.9512,
+    "crystal_bottom": 0.8745,
+    "grip": 0.7211,
+    "foot": 0.0098
+  },
+  "staff_length_over_figure_height": 0.9721,
+  "staff_tilt_deg_from_vertical": 8.04,
+  "half_width_over_height": {
+    "cape_tip_right": 0.3543,
+    "cape_tip_left": 0.3389,
+    "robe_hem_right": 0.1841,
+    "robe_hem_left": 0.1897,
+    "staff_at_grip": 0.2232
+  },
+  "shoulder_width_over_height": 0.2148
+}

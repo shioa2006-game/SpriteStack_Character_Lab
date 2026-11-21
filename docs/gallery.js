@@ -8,6 +8,8 @@ const scale = document.querySelector("#scale");
 const speed = document.querySelector("#speed");
 const attackVariant = document.querySelector("#attack-variant");
 const attackVariantRow = document.querySelector("#attack-variant-row");
+const resolution = document.querySelector("#resolution");
+const resolutionRow = document.querySelector("#resolution-row");
 const character = document.querySelector("#character");
 const characterName = document.querySelector("#character-name");
 const characterSubtitle = document.querySelector("#character-subtitle");
@@ -20,6 +22,11 @@ const characters = {
   lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets" },
   bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram" },
   maren: { name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren" },
+  crystal_mage: {
+    name: "CRYSTAL MAGE", subtitle: "Staff and Tome", assets: "assets/crystal_mage",
+    // Idle sheets of the same model at two pixel densities; null keeps the standard idle.png.
+    idleSheets: { 48: null, 64: "idle-64" },
+  },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };
@@ -63,9 +70,9 @@ function loadMetadata(url) {
   return metadata.get(url);
 }
 
-function configure(data, attackLayout) {
+function configure(data, attackLayout, idleLayout) {
   const layouts = {
-    idle: { ...data.neutral, columns: 1 },
+    idle: { ...(idleLayout ?? data.neutral), columns: 1 },
     ...data.animations,
   };
   if (attackLayout ?? data.animations.attack) layouts.attack = attackLayout ?? data.animations.attack;
@@ -156,22 +163,26 @@ async function showSelection() {
     selectAvailableMotion(data);
     const name = motion;
     const facing = direction;
-    const sheetName = name === "attack" ? attackSheets[attackVariant.value] : name;
+    const idleVariant = name === "idle" && chosen.idleSheets ? chosen.idleSheets[resolution.value] : null;
+    const sheetName = name === "attack" ? attackSheets[attackVariant.value] : idleVariant ?? name;
     speed.disabled = name === "idle";
     replay.hidden = name !== "attack";
     attackVariantRow.hidden = name !== "attack";
+    resolutionRow.hidden = !(name === "idle" && chosen.idleSheets);
     const label = motionButtons.find(button => button.dataset.motion === name).textContent;
-    const [image, attackLayout] = await Promise.all([
+    const [image, variantLayout] = await Promise.all([
       loadSheet(chosen.assets + "/" + sheetName + ".png"),
       sheetName !== name ? loadMetadata(chosen.assets + "/" + sheetName + ".json") : null,
     ]);
     if (ticket !== selection) return;
-    const layout = configure(data, attackLayout)[name];
+    const layout = name === "idle"
+      ? configure(data, null, variantLayout?.neutral)[name]
+      : configure(data, variantLayout)[name];
     active = {
       name, facing, layout, image, frame: 0, elapsed: 0, lastTick: performance.now(),
       duration: layout.durations_ms?.reduce((total, ms) => total + ms, 0),
     };
-    status.textContent = label + " · " + facing;
+    status.textContent = label + " · " + facing + (chosen.idleSheets && name === "idle" ? " · " + layout.cell.join("×") : "");
     canvas.setAttribute("aria-label", chosen.name + " " + status.textContent);
     resize();
     if (name !== "idle") animation = requestAnimationFrame(animate);
@@ -204,4 +215,5 @@ replay.addEventListener("click", showSelection);
 scale.addEventListener("change", resize);
 character.addEventListener("change", showSelection);
 attackVariant.addEventListener("change", showSelection);
+resolution.addEventListener("change", showSelection);
 showSelection();
