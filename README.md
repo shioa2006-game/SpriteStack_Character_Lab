@@ -8,8 +8,8 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | --- | --- |
 | 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
-| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証 |
-| 未実装 | 量産用のウェイト変形、別の骨格構成、キャラクターの自動生成 |
+| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMARENの静止8方向 |
+| 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、MARENの歩行・攻撃 |
 | 検証課題 | 他の体形への転用範囲、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
 方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
@@ -21,6 +21,7 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | [spritestack/](spritestack/) | 共通CLI、設定読込、二足歩行リグ、ボクセル再スライス、描画、ベイク |
 | [characters/lark/](characters/lark/) | LARKのモデル・モーション参照、材質、リグ、表示と計測の設定 |
 | [characters/bram/](characters/bram/) | BRAMの独立モデル、部位マスク、設定、攻撃目標の転用手順 |
+| [characters/maren/](characters/maren/) | 参考画像から作ったMARENのモデル生成コード、NPZ、設定、採色範囲と抽出色、配色の出典、静止のベイク |
 | [experiments/lark_stage3/](experiments/lark_stage3/) | ZIPから移植した基準コード・モデル・検証スクリプト・元のプレビュー |
 | [experiments/lark_stage3/baseline/](experiments/lark_stage3/baseline/) | 旧版と、再生成に必要な元モデル・水平断面 |
 | [experiments/lark_stage3/output/](experiments/lark_stage3/output/) | 8方向 PNG、関節・計測 JSON、水平断面・部位 ID の NPZ |
@@ -120,6 +121,19 @@ $weighted = Join-Path $trial 'weighted'
 
 [Phase 4の検証結果と比較GIF](research/PHASE4_VERIFICATION.md)
 
+### MARENの生成と検証（画像からの生成実験01）
+
+MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。標準CLIは転用した攻撃が64 pxセルを越えて止まるため、静止8方向は共通の描画関数を使う専用コマンドで焼きます。
+
+~~~powershell
+$maren = Join-Path $run 'maren'
+& $python -B -m characters.maren.bake_idle --out $maren
+& $python -B -m research.verify_maren $maren
+& $python -B -m research.image_to_character.compare --idle $maren --out (Join-Path $run 'maren-comparison')
+~~~
+
+モデルNPZは `python characters/maren/build_model.py --out <出力先>` で作り直せます。参考画像からの色の再抽出、参考画像を並べたローカル比較、評価は[実験01レポート](research/IMAGE_TO_CHARACTER_01.md)を参照してください。
+
 ## 旧コードと同梱成果物の検証
 
 `validate_package.py` と `verify_attack.py` は `output/` に診断を書き込みます。以下の手順では検証用コピーと再生成先を `.phase1/` 内の新規フォルダに作ります。`--out` を指定し、全8方向と装備の可視計測を有効にした既定設定で実行します。
@@ -150,7 +164,7 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-キャラクター欄でLARKとBRAMを切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/` にあります。
+キャラクター欄でLARK、BRAM、MARENを切り替えられます。MARENは静止8方向だけを公開し、歩行・攻撃のボタンは無効になります。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/`、MARENの素材は `docs/assets/maren/` にあります。
 
 GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 

@@ -27,3 +27,4 @@ AIを活用し、ゲーム用ピクセルアートキャラクターの自動生
 7. ウェイト試作は別フォルダへ焼き出し、`research.phase4.compare` で剛体版との関節座標、足・手・装備のボクセル、8方向のPNGを比較する。既存の公開PNGを回帰基準に使う。[実行手順](README.md#bramのウェイト変形を比較する)
 8. 振りかぶり攻撃は `research/overhead/clip.json` を両体形へ転用する。編集後は `research.overhead.compare` で8方向の剣の見え方、キー間の接地と剣身の交差、静止・歩行のRGBAを照合する。旧攻撃のPNGとクリップを比較基準に保持する。[攻撃品質レポート](research/OVERHEAD_ATTACK_VERIFICATION.md)
 9. 公開中の輪郭改善版は `research/blade/clip.json` を両体形へ適用する。`wrist_roll` は刃の軸回りの手首角度（度）で、省略時は0。剣身の見え方は `research.blade.compare` で投影軸と可視画素を照合し、W・E・NW・SEの拡大図と8方向の再生を確認する。[輪郭改善レポート](research/BLADE_REFINEMENT_VERIFICATION.md)
+10. 参考画像から作ったMARENは `characters/maren/` にある。参考画像はコミットせず、採色範囲の座標、抽出色、配色の出典だけを追跡する。静止8方向は `python -m characters.maren.bake_idle --out <新しい出力先>` で焼き、`python -m research.verify_maren <出力先>` でモデル再生成、配置、余白、左右、公開PNGとの一致を確認する。標準CLIは攻撃の振りかぶりが64 pxセルを越えて止まる。[実験01レポート](research/IMAGE_TO_CHARACTER_01.md)

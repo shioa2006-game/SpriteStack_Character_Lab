@@ -12,13 +12,17 @@ const character = document.querySelector("#character");
 const characterName = document.querySelector("#character-name");
 const characterSubtitle = document.querySelector("#character-subtitle");
 const replay = document.querySelector("#replay");
+const motionNote = document.querySelector("#motion-note");
 const motionButtons = [...document.querySelectorAll("[data-motion]")];
 const directionButtons = [...document.querySelectorAll("[data-direction]")];
 
 const characters = {
   lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets" },
   bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram" },
+  maren: { name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren" },
 };
+// The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
+const stage = { cell: [64, 64], anchor: [32, 48] };
 const attackSheets = { refined: "attack-refined", overhead: "attack-overhead", legacy: "attack" };
 const sheets = new Map();
 const metadata = new Map();
@@ -63,13 +67,14 @@ function configure(data, attackLayout) {
   const layouts = {
     idle: { ...data.neutral, columns: 1 },
     ...data.animations,
-    attack: attackLayout ?? data.animations.attack,
   };
+  if (attackLayout ?? data.animations.attack) layouts.attack = attackLayout ?? data.animations.attack;
+  const all = [stage, ...Object.values(layouts)];
   viewport = {
-    width: Math.max(...Object.values(layouts).map(layout => layout.cell[0])),
-    height: Math.max(...Object.values(layouts).map(layout => layout.cell[1])),
-    anchorX: Math.max(...Object.values(layouts).map(layout => layout.anchor[0])),
-    anchorY: Math.max(...Object.values(layouts).map(layout => layout.anchor[1])),
+    width: Math.max(...all.map(layout => layout.cell[0])),
+    height: Math.max(...all.map(layout => layout.cell[1])),
+    anchorX: Math.max(...all.map(layout => layout.anchor[0])),
+    anchorY: Math.max(...all.map(layout => layout.anchor[1])),
   };
   return layouts;
 }
@@ -123,17 +128,20 @@ function animate(now) {
   }
 }
 
+function selectAvailableMotion(data) {
+  const available = new Set(["idle", ...Object.keys(data.animations)]);
+  for (const button of motionButtons) button.disabled = !available.has(button.dataset.motion);
+  motionNote.hidden = motionButtons.every(button => !button.disabled);
+  if (!available.has(motion)) {
+    motion = "idle";
+    for (const option of motionButtons) option.setAttribute("aria-pressed", option.dataset.motion === motion);
+  }
+}
+
 async function showSelection() {
   const ticket = ++selection;
   const chosen = characters[character.value];
-  const name = motion;
-  const facing = direction;
-  const sheetName = name === "attack" ? attackSheets[attackVariant.value] : name;
   cancelAnimationFrame(animation);
-  speed.disabled = name === "idle";
-  replay.hidden = name !== "attack";
-  attackVariantRow.hidden = name !== "attack";
-  const label = motionButtons.find(button => button.dataset.motion === name).textContent;
   if (characterName.textContent !== chosen.name) {
     characterName.textContent = chosen.name;
     characterSubtitle.textContent = chosen.subtitle;
@@ -143,8 +151,17 @@ async function showSelection() {
     status.textContent = "画像を読み込み中…";
   }
   try {
-    const [data, image, attackLayout] = await Promise.all([
-      loadMetadata(chosen.assets + "/metadata.json"),
+    const data = await loadMetadata(chosen.assets + "/metadata.json");
+    if (ticket !== selection) return;
+    selectAvailableMotion(data);
+    const name = motion;
+    const facing = direction;
+    const sheetName = name === "attack" ? attackSheets[attackVariant.value] : name;
+    speed.disabled = name === "idle";
+    replay.hidden = name !== "attack";
+    attackVariantRow.hidden = name !== "attack";
+    const label = motionButtons.find(button => button.dataset.motion === name).textContent;
+    const [image, attackLayout] = await Promise.all([
       loadSheet(chosen.assets + "/" + sheetName + ".png"),
       sheetName !== name ? loadMetadata(chosen.assets + "/" + sheetName + ".json") : null,
     ]);

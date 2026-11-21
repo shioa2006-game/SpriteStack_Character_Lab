@@ -1,0 +1,135 @@
+{
+  "source_sha256": "35dda44a572970d0c5c6f0e29ae538ce3382e4f8078b7b226a417d200acfe52a",
+  "percentile_bands": {
+    "shadow": [
+      10,
+      30
+    ],
+    "base": [
+      45,
+      70
+    ],
+    "light": [
+      80,
+      95
+    ]
+  },
+  "materials": {
+    "hair": {
+      "shadow": "374462",
+      "base": "53668c",
+      "light": "7185af",
+      "pixels": 2579
+    },
+    "eyes": {
+      "shadow": "363d52",
+      "base": "636b83",
+      "light": "969fb4",
+      "pixels": 29
+    },
+    "skin_face": {
+      "shadow": "f8d0b9",
+      "base": "fbd3bc",
+      "light": "fbd5be",
+      "pixels": 384
+    },
+    "skin_arm": {
+      "shadow": "d7a290",
+      "base": "f1bea8",
+      "light": "f9ccb5",
+      "pixels": 730
+    },
+    "scarf": {
+      "shadow": "2f2420",
+      "base": "4e3d36",
+      "light": "5b463f",
+      "pixels": 1325
+    },
+    "tunic": {
+      "shadow": "604e43",
+      "base": "9d8475",
+      "light": "d6c0ad",
+      "pixels": 2955
+    },
+    "belt": {
+      "shadow": "2f211b",
+      "base": "483832",
+      "light": "674b40",
+      "pixels": 480
+    },
+    "buckle": {
+      "shadow": "3f2b20",
+      "base": "6e564a",
+      "light": "9b8274",
+      "pixels": 391
+    },
+    "glove": {
+      "shadow": "281e1c",
+      "base": "483834",
+      "light": "886c62",
+      "pixels": 570
+    },
+    "coat_outer": {
+      "shadow": "171413",
+      "base": "232022",
+      "light": "352f2f",
+      "pixels": 381
+    },
+    "coat_lining": {
+      "shadow": "34425a",
+      "base": "465877",
+      "light": "4d6180",
+      "pixels": 6500
+    },
+    "tights": {
+      "shadow": "302621",
+      "base": "4d3e36",
+      "light": "5c493f",
+      "pixels": 920
+    },
+    "boot": {
+      "shadow": "241c19",
+      "base": "362c28",
+      "light": "746457",
+      "pixels": 1298
+    },
+    "knee_guard": {
+      "shadow": "84736c",
+      "base": "907e75",
+      "light": "bdab9d",
+      "pixels": 562
+    },
+    "blade": {
+      "shadow": "2f3640",
+      "base": "434d5f",
+      "light": "b29895",
+      "pixels": 174
+    },
+    "shield": {
+      "shadow": "655854",
+      "base": "827472",
+      "light": "94817a",
+      "pixels": 1708
+    }
+  },
+  "family_area_share": {
+    "blue": 0.1788,
+    "skin": 0.072,
+    "beige": 0.0694,
+    "dark": 0.4897,
+    "metal": 0.1902
+  },
+  "figure_pixels": 140588,
+  "height_fraction_above_sole": {
+    "hair_top": 1.0,
+    "skull_top": 0.9714,
+    "eyes": 0.9141,
+    "chin": 0.8568,
+    "shoulder": 0.7885,
+    "waist_belt": 0.6276,
+    "tunic_hem": 0.487,
+    "knee": 0.1883,
+    "sole": 0.0
+  },
+  "heads_tall": 8.48
+}

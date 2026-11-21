@@ -1,0 +1,27 @@
+{
+  "description": "How each MAREN material color relates to the colors sampled from the reference image (reference_palette.json). extracted: all three tones copied. adjusted: sampled, then changed for the 48 px renderer. derived: no direct sample; built from a related sample.",
+  "materials": {
+    "sole": {"source": "boot", "method": "derived", "note": "靴底は画像外。ブーツの影色より暗くした推測色"},
+    "boot": {"source": "boot", "method": "adjusted", "note": "抽出色は輪郭色 #241c2a とほぼ同じ明度で形が消えるため、基色と明色を持ち上げた"},
+    "knee guard": {"source": "knee_guard", "method": "adjusted", "note": "抽出色では1〜2 px の膝当てが革と区別できず、金属として読めるよう明度差を広げた"},
+    "tights": {"source": "tights", "method": "extracted", "note": ""},
+    "coat": {"source": "coat_outer", "method": "adjusted", "note": "抽出色（ほぼ黒）は輪郭と融合するため、外套の外形が残る明度まで持ち上げた"},
+    "coat lining": {"source": "coat_lining", "method": "extracted", "note": ""},
+    "tunic": {"source": "tunic", "method": "adjusted", "note": "描画の正面光では基色が大半の面積を占める。抽出基色では茶色に見えたため、基色を抽出の基色と明色の中間にした"},
+    "belt": {"source": "belt", "method": "extracted", "note": "たすき掛けの革帯にも使用"},
+    "buckle": {"source": "buckle", "method": "extracted", "note": ""},
+    "scarf": {"source": "scarf", "method": "extracted", "note": ""},
+    "skin": {"source": "skin_arm", "method": "adjusted", "note": "顔の抽出色は3階調がほぼ同じで陰影にならない。腕の影色と基色に、顔の明色を組み合わせた"},
+    "glove": {"source": "glove", "method": "extracted", "note": "剣の握りにも近い色を使用"},
+    "hair": {"source": "hair", "method": "extracted", "note": ""},
+    "hair shade": {"source": "hair", "method": "derived", "note": "後ろ髪の毛束の溝。髪の抽出色を1段暗くした"},
+    "eyes": {"source": "eyes", "method": "adjusted", "note": "抽出した青灰色は1 px では髪の青と区別できない。瞳の青を残したまま暗い紺にした"},
+    "blade": {"source": "blade", "method": "adjusted", "note": "抽出の明色は暖色の反射。剣身として読めるよう基色を持ち上げ、明色を中性の鋼色にした"},
+    "blade edge": {"source": "blade", "method": "derived", "note": "参考画像の明るい刃縁を、剣身の両縁の明るい材質として表現"},
+    "guard": {"source": "knee_guard", "method": "derived", "note": "鍔と柄頭は銀色の金具。膝当てと同じ金属色"},
+    "grip": {"source": "glove", "method": "derived", "note": "柄の革巻き。手袋の色に近い暗い革色"},
+    "shield face": {"source": "shield", "method": "extracted", "note": ""},
+    "shield rim": {"source": "shield", "method": "derived", "note": "盾の縁の暗い金属。盾の抽出色を暗くした"},
+    "shield boss": {"source": "shield", "method": "derived", "note": "盾の中心の突起。推測で追加し、盾の抽出色を明るくした"}
+  }
+}

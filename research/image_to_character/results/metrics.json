@@ -1,0 +1,235 @@
+{
+  "reference_source_sha256": "35dda44a572970d0c5c6f0e29ae538ce3382e4f8078b7b226a417d200acfe52a",
+  "family_area_share": {
+    "reference": {
+      "blue": 0.1788,
+      "skin": 0.072,
+      "beige": 0.0694,
+      "dark": 0.4897,
+      "metal": 0.1902
+    },
+    "maren_front_mean": {
+      "blue": 0.3044,
+      "skin": 0.1292,
+      "beige": 0.0679,
+      "dark": 0.299,
+      "metal": 0.1995
+    },
+    "maren_all_mean": {
+      "blue": 0.3847,
+      "skin": 0.0797,
+      "beige": 0.0352,
+      "dark": 0.3513,
+      "metal": 0.1491
+    }
+  },
+  "proportions": {
+    "MAREN": {
+      "height_units": 33.0,
+      "shoulder": 0.627,
+      "hip": 0.421,
+      "knee": 0.248
+    },
+    "LARK": {
+      "height_units": 32.0,
+      "shoulder": 0.497,
+      "hip": 0.301,
+      "knee": 0.194
+    },
+    "BRAM": {
+      "height_units": 24.5,
+      "shoulder": 0.476,
+      "hip": 0.278,
+      "knee": 0.18
+    },
+    "reference": {
+      "shoulder": 0.7885,
+      "waist_belt": 0.6276,
+      "knee": 0.1883,
+      "heads_tall": 8.48
+    }
+  },
+  "palette_methods": {
+    "extracted": 8,
+    "adjusted": 7,
+    "derived": 7
+  },
+  "idle": {
+    "S": {
+      "bbox": [
+        5,
+        3,
+        40,
+        43
+      ],
+      "figure_px": 476,
+      "family_share": {
+        "blue": 0.3067,
+        "skin": 0.1239,
+        "beige": 0.0777,
+        "dark": 0.2647,
+        "metal": 0.2269
+      },
+      "visible_px": {
+        "head": 122,
+        "sword": 38,
+        "shield": 59,
+        "pelvis": 80
+      }
+    },
+    "SW": {
+      "bbox": [
+        3,
+        3,
+        34,
+        43
+      ],
+      "figure_px": 427,
+      "family_share": {
+        "blue": 0.2646,
+        "skin": 0.1335,
+        "beige": 0.0679,
+        "dark": 0.2951,
+        "metal": 0.2389
+      },
+      "visible_px": {
+        "head": 121,
+        "sword": 32,
+        "shield": 66,
+        "pelvis": 38
+      }
+    },
+    "W": {
+      "bbox": [
+        13,
+        3,
+        31,
+        43
+      ],
+      "figure_px": 360,
+      "family_share": {
+        "blue": 0.3833,
+        "skin": 0.0778,
+        "beige": 0.0222,
+        "dark": 0.3639,
+        "metal": 0.1528
+      },
+      "visible_px": {
+        "head": 140,
+        "sword": 13,
+        "shield": 43,
+        "pelvis": 76
+      }
+    },
+    "NW": {
+      "bbox": [
+        10,
+        3,
+        34,
+        43
+      ],
+      "figure_px": 421,
+      "family_share": {
+        "blue": 0.4774,
+        "skin": 0.0428,
+        "beige": 0.0119,
+        "dark": 0.4014,
+        "metal": 0.0665
+      },
+      "visible_px": {
+        "head": 195,
+        "sword": 7,
+        "shield": 26,
+        "pelvis": 130
+      }
+    },
+    "N": {
+      "bbox": [
+        8,
+        2,
+        43,
+        42
+      ],
+      "figure_px": 477,
+      "family_share": {
+        "blue": 0.434,
+        "skin": 0.0231,
+        "beige": 0.0168,
+        "dark": 0.3774,
+        "metal": 0.1488
+      },
+      "visible_px": {
+        "head": 207,
+        "sword": 26,
+        "shield": 47,
+        "pelvis": 139
+      }
+    },
+    "NE": {
+      "bbox": [
+        14,
+        2,
+        45,
+        42
+      ],
+      "figure_px": 435,
+      "family_share": {
+        "blue": 0.4552,
+        "skin": 0.0391,
+        "beige": 0.0046,
+        "dark": 0.3954,
+        "metal": 0.1057
+      },
+      "visible_px": {
+        "head": 191,
+        "sword": 31,
+        "shield": 17,
+        "pelvis": 127
+      }
+    },
+    "E": {
+      "bbox": [
+        17,
+        3,
+        35,
+        44
+      ],
+      "figure_px": 357,
+      "family_share": {
+        "blue": 0.4146,
+        "skin": 0.0672,
+        "beige": 0.0224,
+        "dark": 0.3754,
+        "metal": 0.1204
+      },
+      "visible_px": {
+        "head": 143,
+        "sword": 15,
+        "shield": 30,
+        "pelvis": 80
+      }
+    },
+    "SE": {
+      "bbox": [
+        14,
+        3,
+        38,
+        46
+      ],
+      "figure_px": 430,
+      "family_share": {
+        "blue": 0.3419,
+        "skin": 0.1302,
+        "beige": 0.0581,
+        "dark": 0.3372,
+        "metal": 0.1326
+      },
+      "visible_px": {
+        "head": 130,
+        "sword": 27,
+        "shield": 25,
+        "pelvis": 66
+      }
+    }
+  }
+}

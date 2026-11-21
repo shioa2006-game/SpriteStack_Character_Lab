@@ -1,0 +1,125 @@
+{
+  "image": {
+    "description": "Single reference illustration for image-to-character experiment 01. Only coordinates and derived colors are tracked; the image pixels are not.",
+    "size": [432, 748]
+  },
+  "regions": {
+    "hair": {
+      "boxes": [
+        [228, 30, 262, 52],
+        [120, 130, 165, 165],
+        [262, 50, 285, 80]
+      ]
+    },
+    "eyes": {
+      "boxes": [
+        [223, 72, 235, 84],
+        [249, 72, 261, 84]
+      ],
+      "filter": "saturated_blue"
+    },
+    "skin_face": {
+      "boxes": [
+        [238, 94, 262, 110]
+      ]
+    },
+    "skin_arm": {
+      "boxes": [
+        [290, 170, 312, 200],
+        [308, 240, 322, 280]
+      ]
+    },
+    "scarf": {
+      "boxes": [
+        [215, 140, 268, 165]
+      ]
+    },
+    "tunic": {
+      "boxes": [
+        [212, 250, 255, 280],
+        [200, 335, 245, 372]
+      ]
+    },
+    "belt": {
+      "boxes": [
+        [260, 300, 300, 312]
+      ]
+    },
+    "buckle": {
+      "boxes": [
+        [215, 295, 232, 318]
+      ]
+    },
+    "glove": {
+      "boxes": [
+        [330, 320, 355, 345]
+      ]
+    },
+    "coat_outer": {
+      "boxes": [
+        [400, 440, 414, 470],
+        [62, 384, 100, 402]
+      ],
+      "filter": "dark"
+    },
+    "coat_lining": {
+      "boxes": [
+        [330, 440, 380, 500],
+        [80, 420, 150, 470]
+      ]
+    },
+    "tights": {
+      "boxes": [
+        [232, 480, 255, 520]
+      ]
+    },
+    "boot": {
+      "boxes": [
+        [245, 690, 285, 740]
+      ]
+    },
+    "knee_guard": {
+      "boxes": [
+        [222, 595, 290, 650]
+      ],
+      "filter": "bright"
+    },
+    "blade": {
+      "boxes": [
+        [145, 497, 160, 507],
+        [195, 460, 210, 470]
+      ]
+    },
+    "shield": {
+      "boxes": [
+        [75, 250, 110, 300]
+      ]
+    }
+  },
+  "landmarks_y": {
+    "hair_top": 15,
+    "skull_top": 36,
+    "eyes": 78,
+    "chin": 120,
+    "shoulder": 170,
+    "waist_belt": 288,
+    "tunic_hem": 391,
+    "knee": 610,
+    "sole": 748
+  },
+  "notes": {
+    "sole": "The boots touch the lower image edge, so the sole landmark is a lower bound of the true figure height.",
+    "handedness": "Viewed as a front-facing figure, the sword is in the hand on the viewer's right (her left) and the shield on the viewer's left (her right). The project contract keeps the sword in the right hand and the shield in the left.",
+    "exclude_boxes": "Image-viewer search icon in the lower-right corner, not part of the illustration."
+  },
+  "families": {
+    "blue": ["hair", "eyes", "coat_lining"],
+    "skin": ["skin_face", "skin_arm"],
+    "beige": ["tunic"],
+    "dark": ["scarf", "belt", "buckle", "glove", "coat_outer", "tights", "boot"],
+    "metal": ["knee_guard", "blade", "shield"]
+  },
+  "exclude_boxes": [
+    [380, 700, 432, 748]
+  ]
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LARKとBRAMの静止・歩行・攻撃を8方向のPNGスプライトで確認。">
+  <meta name="description" content="LARK・BRAMの静止・歩行・攻撃と、MARENの静止を8方向のPNGスプライトで確認。">
   <title>SpriteStack Character Lab</title>
   <link rel="stylesheet" href="gallery.css">
   <script src="gallery.js" defer></script>
@@ -32,6 +32,7 @@
           <select id="character">
             <option value="lark">LARK · 青の従士</option>
             <option value="bram">BRAM · ドワーフ戦士</option>
+            <option value="maren">MAREN · 青髪の剣士</option>
           </select>
         </div>
         <fieldset>
@@ -41,6 +42,7 @@
             <button type="button" data-motion="walk" aria-pressed="false">歩行</button>
             <button type="button" data-motion="attack" aria-pressed="false">攻撃</button>
           </div>
+          <p id="motion-note" class="note" hidden>このキャラクターは静止8方向のみ公開しています。</p>
         </fieldset>
 
         <fieldset id="attack-variant-row" hidden>
