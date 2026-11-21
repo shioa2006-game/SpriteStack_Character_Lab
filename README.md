@@ -6,9 +6,10 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 
 | 状態 | 対象 |
 | --- | --- |
-| 実装済み | LARK の32層モデル、17部位の剛体リグ、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、Canvasギャラリー |
-| 未実装 | ウェイト変形、別の体形や装備を扱う共通生成エンジン、キャラクターの自動生成 |
-| 検証課題 | 側面・背面の斬撃の視認性、停止や旋回時の見え方、実ゲーム組み込み時の操作感 |
+| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、Canvasギャラリー |
+| 検証済み | LARK の32層モデル、装備込み17部位、基準PNGとのRGBA・レイアウト・再生時間の一致 |
+| 未実装 | ウェイト変形、別の骨格構成、キャラクターの自動生成 |
+| 検証課題 | 別キャラクターでの再利用、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
 方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
 
@@ -16,7 +17,9 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 
 | 場所 | 内容 |
 | --- | --- |
-| [experiments/lark_stage3/](experiments/lark_stage3/) | ZIP から移植したコード・モデル・検証スクリプト・元のプレビュー |
+| [spritestack/](spritestack/) | 共通CLI、設定読込、二足歩行リグ、ボクセル再スライス、描画、ベイク |
+| [characters/lark/](characters/lark/) | LARKのモデル・モーション参照、材質、リグ、表示と計測の設定 |
+| [experiments/lark_stage3/](experiments/lark_stage3/) | ZIPから移植した基準コード・モデル・検証スクリプト・元のプレビュー |
 | [experiments/lark_stage3/baseline/](experiments/lark_stage3/baseline/) | 旧版と、再生成に必要な元モデル・水平断面 |
 | [experiments/lark_stage3/output/](experiments/lark_stage3/output/) | 8方向 PNG、関節・計測 JSON、水平断面・部位 ID の NPZ |
 | [experiments/lark_stage3/comparisons/](experiments/lark_stage3/comparisons/) | 旧版との比較 GIF・PNG と計測結果 |
@@ -37,7 +40,43 @@ $python = (Resolve-Path .\.venv\Scripts\python.exe).Path
 & $python -m pip install -r requirements.txt "numpy==2.3.5" "Pillow==13.0.0"
 ~~~
 
-## 同梱成果物の検証と再生成
+## 共通エンジンでの生成
+
+ルートから `--character` に設定ファイル、`--out` に新しい出力先を指定します。静止も材質ボクセルから描画し、攻撃の空キーでは同じ静止フレームを使います。保存したPNGとJSONは[基準データ](experiments/lark_stage3/output/)と照合できます。
+
+~~~powershell
+$run = Join-Path $PWD ('.phase1/phase2-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
+$rebuild = Join-Path $run 'common'
+& $python -B -m spritestack --character characters/lark/character.json --out $rebuild
+& $python research/verify_rebuild.py $rebuild
+~~~
+
+出力は `idle.png`、`walk.png`、`attack.png`、歩行・攻撃の部位ID画像、`metadata.json`、関節と計測のJSON、材質・部位IDのNPZです。比較スクリプトはPNGの寸法とデコード後の全RGBAピクセル、方向順、アンカー、コマ数、歩行FPS、攻撃のコマ別表示時間を含むメタデータを比較します。PNGバイト差も表示します。
+
+## キャラクター設定 v1
+
+[LARKの設定例](characters/lark/character.json)を参照してください。ファイル参照は設定ファイルの位置を基準に解決します。座標は X+ が身体の左、Y+ が前方、Z+ が上方です。
+
+| 項目 | 内容 |
+| --- | --- |
+| `version` | 現在は `1` |
+| `model` | 材質NPZの `slices` と、同じ形状の部位NPZの `parts`。どちらも Z/Y/X 順の `uint8`。0は空で、占有位置を揃える。原点とボクセル間隔は X/Y/Z 順。パレットは材質ID 1から順に、RGBの影色・基色・明色と陰影グループを指定する |
+| `rig` | `parts` の並びを部位IDの1始まりと重なり時の優先順に使用する。胴体の `head`、`chest`、`pelvis`、左右の `thigh`、`shin`、`boot`、`upper`、`fore`、`hand`（`_R`、`_L`）と、装備の部位を指定する。`rest` は構えの関節座標、`attachments` は装備部位ごとの手と基準点の名前 |
+| `posed_volume` | ポーズ後のボクセル原点・上限（X/Y/Z）と共通のボクセル間隔。各姿勢の全部位が余白付きで収まる大きさ |
+| `view` | 挿入順で並ぶ8方向のヨー角、カメラ仰角、1単位当たりの画素数、足元アンカー、静止セルと描画用セル、静止・動作のレイの開始・終了・刻み、輪郭色 |
+| `walk` | 既存形式の歩行クリップ、セル、歩幅に合わせる支持足・頭・腕の調整値。コマ別配列を `poses` に揃え、左右の接地は循環する連続区間、遊脚配列は接地外のコマ数に揃える |
+| `attack` | 既存形式の攻撃クリップ、セル、踏み出す側・主手・装備の軸・反対側の腕の調整値。非空キーに足と手の目標値、主手に合わせた `hand_R`/`hand_L` と `elbow_pole_R`/`elbow_pole_L` を指定する。`shield_delta` は反対側の手の相対オフセット。`keys`、`poses`、`durations_ms` の長さを揃える |
+| `measurements` | `lowest_z` は計測名と材質IDリスト、`visibility` は計測名と部位名・材質IDリストの組。計測項目がなければ空オブジェクトを指定できる |
+
+### 同じ骨格のキャラクターを追加する手順
+
+1. `characters/<名前>/` に設定ファイル、材質NPZ、部位NPZ、歩行・攻撃クリップを置きます。LARKの設定を雛形にし、参照先を新しい資産へ更新します。
+2. 体形に合わせて `rig.rest`、部位マスク、装備の取り付けを定義します。既存モーションを試し、接地や手の目標値と描画範囲を必要に応じて調整します。各セルを同じアンカーで切り出せるよう、描画用セルとの差を偶数にします。
+3. CLIの `--character` を新しい設定に変えて生成し、8方向の左右、接地、装備、アンカー、テンポを確認します。採用したモデル、設定、モーション、基準PNGを追跡します。
+
+共通側は二足歩行の関節名と歩行・攻撃の計算方式を共有します。LARKのモデルを作る手続き、材質から部位を割り当てる処理、過去の比較・検証スクリプトは実験ディレクトリにあります。新しい体形での再利用はPhase 3で検証します。
+
+## 旧コードと同梱成果物の検証
 
 `validate_package.py` と `verify_attack.py` は `output/` に診断を書き込みます。以下の手順では検証用コピーと再生成先を `.phase1/` 内の新規フォルダに作ります。`--out` を指定し、全8方向と装備の可視計測を有効にした既定設定で実行します。
 
@@ -57,7 +96,7 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python research/verify_rebuild.py $rebuild
 ~~~
 
-各コマンドの終了コードを確認してください。同梱の `validate_package.py --rebuild` は11ファイルをバイト比較します。Windows 実測では圧縮や改行などの差でこの検証が失敗しました。`research/verify_rebuild.py` は5点すべての PNG について寸法、デコード後の RGBA、ファイルバイトを個別に報告し、方向順・アンカー・フレーム数を含む JSON を照合します。
+各コマンドの終了コードを確認してください。同梱の `validate_package.py --rebuild` は11ファイルをバイト比較します。Windows実測では圧縮や改行などの差でこの検証が失敗しました。共通エンジンの描画回帰は `research/verify_rebuild.py` で判定します。
 
 ## ギャラリー
 
@@ -73,7 +112,7 @@ GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a bran
 
 ## 今後の研究
 
-LARK の再生成結果を回帰基準に、描画と装備の可視計測の所要時間を切り分け、キャラクター設定と共通エンジンの境界を整えます。異なる体形へのモーション転用、ウェイト変形、装備バリエーション、ゲームへの組み込みも研究対象です。[研究ロードマップ](research/ROADMAP.md)
+Phase 3では別の体形で同じエンジンを使い、共通モーションの接地・持ち手・8方向での見え方を確認します。ウェイト変形、装備バリエーション、レンダリングの高速化、ゲームへの組み込みも研究対象です。[研究ロードマップ](research/ROADMAP.md)
 
 ## ライセンス
 

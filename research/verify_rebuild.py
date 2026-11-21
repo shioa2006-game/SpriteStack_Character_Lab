@@ -14,7 +14,7 @@ def check_sprites(rebuild):
     reference_metadata = json.loads((REFERENCE / "metadata.json").read_bytes())
     rebuilt_metadata = json.loads((rebuild / "metadata.json").read_bytes())
     metadata_matches = reference_metadata == rebuilt_metadata
-    print("Parsed metadata (including directions, anchors and frames):", metadata_matches)
+    print("Parsed metadata (including directions, anchors, frames and timing):", metadata_matches)
 
     neutral = reference_metadata["neutral"]
     width, height = neutral["cell"]

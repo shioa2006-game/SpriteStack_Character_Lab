@@ -6,9 +6,9 @@ AIを活用し、ゲーム用ピクセルアートキャラクターの自動生
 
 ## 現在の実装
 
-- `generate.py` は NumPy と Pillow を使う。元モデルは材質IDを `slices` 配列（Z, Y, X の順に32×60×80、`uint8`）に保持する NPZ。LARK 固有の関節位置と17部位を使い、腕・脚を2関節IKで解き、部位ごとの剛体変換から0.5単位のボクセルへ再スライスする。[生成コード](experiments/lark_stage3/generate.py) · [元モデル](experiments/lark_stage3/baseline/base/knight_materials.npz)
-- 歩行は `walk_motion.py` と `walk_motion.json`、攻撃は `attack_motion.json` のポーズとコマ時間で定義する。関節座標は `output/joints.json` に出力される。ウェイト変形と複数キャラクターの共通生成は未実装。側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感は検証課題。
-- カメラは正投影、仰角24°、1.19 px/モデル単位。方向順は **S、SW、W、NW、N、NE、E、SE**。静止は元シートを継承し、歩行・攻撃は方向別に描画して Pillow でRGBA PNGにまとめる。配置の契約は[出力メタデータ](experiments/lark_stage3/output/metadata.json)にある。
+- `spritestack/` は NumPy と Pillow を使い、設定読込、2関節IK、剛体変形、再スライス、正投影、RGBAベイクを担当する。`characters/lark/character.json` に材質と部位のNPZ参照、関節座標、装備の取り付け、カメラ、モーション調整値を置く。材質 `slices` と部位 `parts` は同形状の Z/Y/X 配列。[共通コード](spritestack/) · [LARK設定](characters/lark/character.json)
+- 対象は二足歩行の共通リグ。LARK は装備込み17部位を0.5単位のボクセルへ再スライスする。静止・歩行・攻撃をモデルから描画する。ウェイト変形は未実装で、別キャラクターでの利用はPhase 3で検証する。旧生成コードと正式な基準PNGは実験ディレクトリに保持する。[実験資産](experiments/lark_stage3/)
+- LARKのカメラは仰角24°、1.19 px/モデル単位。方向順は **S、SW、W、NW、N、NE、E、SE**。配置・タイミングの契約はメタデータにある。[基準メタデータ](experiments/lark_stage3/output/metadata.json)
 
 | モーション | セル | アンカー (x, y) | 配置 |
 | --- | --- | --- | --- |
@@ -20,6 +20,6 @@ AIを活用し、ゲーム用ピクセルアートキャラクターの自動生
 
 1. 同じ立体モデルから各方向を生成し、水平反転で方向を代用しない。武器・盾の解剖学的な左右と、静止・歩行・攻撃の方向順・アンカーを維持する。LARK の剣は右手、盾は左手。
 2. 元モデル、モーション、生成コード、正式なPNG、基準画像を一緒に追跡する。既存成果と再生成性を優先し、変更前の基準画像を保持する。
-3. エンジン変更時は既存キャラクターを `generate.py --out` で別フォルダに再生成し、基準と寸法、RGBA、方向順、アンカー、コマ数を比較する。ファイルのバイト差も記録する。
-4. `validate_package.py`、`verify_walk.py`、`verify_attack.py` は出力保全のため作業用コピーで実行する。`research/verify_rebuild.py` で再生成画像を比較する。技術的な合否と動作の自然さを別に評価し、仕様・不具合・未確認事項を分けて記録する。[実行手順](README.md#同梱成果物の検証と再生成)
-5. 共通エンジンと個別キャラクターデータを分離する方向で開発し、新規キャラクターでは共通モーションの再利用を先に検証する。未依頼の大規模なリファクタリングを行わず、重要な設計変更の理由と影響範囲を記録する。[研究ロードマップ](research/ROADMAP.md)
+3. エンジン変更時は `python -m spritestack --character characters/lark/character.json --out <新しい出力先>` でLARKを再生成する。`research/verify_rebuild.py` で寸法、RGBA、方向順、アンカー、コマ数、タイミングを比較する。描画の合否はデコード後のRGBAを使う。[再生成手順](README.md#共通エンジンでの生成)
+4. `validate_package.py`、`verify_walk.py`、`verify_attack.py` は作業用コピーで実行する。技術的な合否と動作の自然さを別に評価し、仕様・不具合・未確認事項を分けて記録する。[旧コードの検証手順](README.md#旧コードと同梱成果物の検証)
+5. 同じ骨格のキャラクターは `characters/<名前>/` に設定、材質・部位NPZ、モーションクリップを追加する。元の関節名と部位ID契約を守り、先に共通モーションの接地と装備の向きを確認する。未依頼の大規模なリファクタリングを行わず、設計変更の理由と影響範囲を記録する。[設定仕様と追加手順](README.md#キャラクター設定-v1)

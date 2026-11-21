@@ -1,0 +1,329 @@
+{
+  "version": 1,
+  "model": {
+    "materials": "../../experiments/lark_stage3/baseline/base/knight_materials.npz",
+    "part_ids": "../../experiments/lark_stage3/output/rest_part_ids.npz",
+    "origin_xyz": [-20.0, -15.0, 0.0],
+    "voxel_size_xyz": [0.5, 0.5, 1.0],
+    "palette": [
+      {
+        "name": "leather",
+        "group": "boots",
+        "shadow": "50303c",
+        "base": "8b503b",
+        "light": "c5824c"
+      },
+      {
+        "name": "sole",
+        "group": "boots",
+        "shadow": "292539",
+        "base": "4b3139",
+        "light": "745044"
+      },
+      {
+        "name": "trousers",
+        "group": "legs",
+        "shadow": "202846",
+        "base": "354669",
+        "light": "546789"
+      },
+      {
+        "name": "tunic",
+        "group": "torso",
+        "shadow": "1d3760",
+        "base": "346aa4",
+        "light": "5eabd0"
+      },
+      {
+        "name": "tunic trim",
+        "group": "torso",
+        "shadow": "263b68",
+        "base": "427fb5",
+        "light": "81bed3"
+      },
+      {
+        "name": "belt",
+        "group": "torso",
+        "shadow": "382537",
+        "base": "624037",
+        "light": "996249"
+      },
+      {
+        "name": "buckle",
+        "group": "torso",
+        "shadow": "98543d",
+        "base": "e0a459",
+        "light": "f8d790"
+      },
+      {
+        "name": "sleeve",
+        "group": "arms",
+        "shadow": "213959",
+        "base": "3f75aa",
+        "light": "6caaca"
+      },
+      {
+        "name": "gauntlet",
+        "group": "arms",
+        "shadow": "583541",
+        "base": "95563e",
+        "light": "cd8e61"
+      },
+      {
+        "name": "skin",
+        "group": "head",
+        "shadow": "ad5c49",
+        "base": "e7a47d",
+        "light": "ffcf9c"
+      },
+      {
+        "name": "hair",
+        "group": "head",
+        "shadow": "4b252f",
+        "base": "794334",
+        "light": "b3673d"
+      },
+      {
+        "name": "hair lock",
+        "group": "head",
+        "shadow": "61302f",
+        "base": "955036",
+        "light": "c88148"
+      },
+      {
+        "name": "eyes",
+        "group": "head",
+        "shadow": "292336",
+        "base": "302638",
+        "light": "493347"
+      },
+      {
+        "name": "eye glint",
+        "group": "head",
+        "shadow": "d1bcb4",
+        "base": "fff0ce",
+        "light": "fff7e6"
+      },
+      {
+        "name": "cheeks",
+        "group": "head",
+        "shadow": "ab544d",
+        "base": "d78367",
+        "light": "efa186"
+      },
+      {
+        "name": "smile",
+        "group": "head",
+        "shadow": "773c40",
+        "base": "994d48",
+        "light": "af5e53"
+      },
+      {
+        "name": "sword edge",
+        "group": "sword_R",
+        "shadow": "495c7e",
+        "base": "92aace",
+        "light": "c8eef1"
+      },
+      {
+        "name": "sword ridge",
+        "group": "sword_R",
+        "shadow": "6b84a3",
+        "base": "b4d3e2",
+        "light": "e6fbf9"
+      },
+      {
+        "name": "crossguard",
+        "group": "sword_R",
+        "shadow": "87513e",
+        "base": "c68c4a",
+        "light": "f4cc80"
+      },
+      {
+        "name": "hilt grip",
+        "group": "sword_R",
+        "shadow": "503138",
+        "base": "765843",
+        "light": "a07a55"
+      },
+      {
+        "name": "shield rim",
+        "group": "shield_L",
+        "shadow": "683f45",
+        "base": "a66f51",
+        "light": "deb178"
+      },
+      {
+        "name": "shield face",
+        "group": "shield_L",
+        "shadow": "294b66",
+        "base": "448c9d",
+        "light": "75c2c2"
+      },
+      {
+        "name": "shield emblem",
+        "group": "shield_L",
+        "shadow": "a56b45",
+        "base": "dfaa64",
+        "light": "f6d58c"
+      },
+      {
+        "name": "shield reverse",
+        "group": "shield_L",
+        "shadow": "493142",
+        "base": "704f49",
+        "light": "a57b59"
+      },
+      {
+        "name": "neck",
+        "group": "head",
+        "shadow": "91504b",
+        "base": "cf8869",
+        "light": "eab18a"
+      },
+      {
+        "name": "undershirt",
+        "group": "torso",
+        "shadow": "222d4b",
+        "base": "355276",
+        "light": "547b9c"
+      }
+    ]
+  },
+  "rig": {
+    "parts": [
+      "head",
+      "chest",
+      "pelvis",
+      "thigh_R",
+      "shin_R",
+      "boot_R",
+      "upper_R",
+      "fore_R",
+      "hand_R",
+      "thigh_L",
+      "shin_L",
+      "boot_L",
+      "upper_L",
+      "fore_L",
+      "hand_L",
+      "sword",
+      "shield"
+    ],
+    "rest": {
+      "pelvis": [0.0, 0.0, 9.75],
+      "chest": [0.0, 0.0, 13.6],
+      "neck": [0.0, 0.3, 18.25],
+      "head": [0.0, 0.7, 24.0],
+      "shoulder_R": [-5.9, -0.02, 15.9],
+      "elbow_R": [-7.85, 0.29, 12.45],
+      "hand_R": [-9.39, 3.03, 11.25],
+      "shoulder_L": [5.9, -0.02, 15.9],
+      "elbow_L": [7.85, 0.29, 12.45],
+      "hand_L": [9.39, 3.03, 11.25],
+      "hip_R": [-2.65, 0.0, 9.62],
+      "knee_R": [-3.15, 1.53, 6.2],
+      "ankle_R": [-3.35, 1.15, 2.65],
+      "toe_R": [-3.35, 3.35, 0.0],
+      "hip_L": [2.65, 0.0, 9.62],
+      "knee_L": [3.15, 0.24, 6.18],
+      "ankle_L": [3.35, -0.75, 2.65],
+      "toe_L": [3.35, 1.45, 0.0],
+      "sword_tip": [-16.35, 6.3, 2.45],
+      "shield_center": [10.6, 4.65, 10.9]
+    },
+    "attachments": {
+      "sword": {
+        "hand": "hand_R",
+        "marker": "sword_tip"
+      },
+      "shield": {
+        "hand": "hand_L",
+        "marker": "shield_center"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.19,
+      "base_pivot": [24, 40]
+    },
+    "neutral_cell": 48,
+    "render_cell": 64,
+    "neutral_rays": [42, -36, -0.18],
+    "posed_rays": [51, -45, -0.18],
+    "outline_rgb": [36, 28, 42]
+  },
+  "posed_volume": {
+    "origin_xyz": [-24.0, -23.0, -2.0],
+    "limit_xyz": [24.0, 25.0, 44.0],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../experiments/lark_stage3/walk_motion.json",
+    "cell": 48,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 3,
+      "knee_pole": [1.12, 8, -0.15],
+      "arm_swing_scale": {
+        "R": 1,
+        "L": -0.57
+      },
+      "hand_outward": 0.12,
+      "hand_lift_scale": 0.18,
+      "hand_lift": 0.29,
+      "wrist_pitch_scale": 4.3,
+      "wrist_yaw_scale": 0.27,
+      "elbow_pole": [4, -2.7, -4.5]
+    }
+  },
+  "attack": {
+    "clip": "../../experiments/lark_stage3/attack_motion.json",
+    "cell": 64,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_yaw_scale": 0.48,
+      "head_lean_scale": 0.37,
+      "step_side": "R",
+      "knee_pole": [0.85, 8, -0.3],
+      "main_hand_side": "R",
+      "weapon_axis": [-6.35, 2.45, -8.85],
+      "support_yaw_offset": 0.031,
+      "support_hand_lift": 0.25,
+      "support_wrist_yaw_scale": 0.35,
+      "support_wrist_pitch": -8,
+      "support_elbow_pole": [5, -2.4, -4.2]
+    }
+  },
+  "measurements": {
+    "lowest_z": {
+      "sole_floor": [1, 2],
+      "blade_min_z": [17, 18]
+    },
+    "visibility": {
+      "blade": {
+        "part": "sword",
+        "materials": [17, 18]
+      },
+      "shield": {
+        "part": "shield",
+        "materials": [21, 22, 23, 24]
+      }
+    }
+  }
+}
