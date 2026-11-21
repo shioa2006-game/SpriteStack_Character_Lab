@@ -150,6 +150,8 @@ $mage = Join-Path $run 'crystal_mage'
 
 検証は、モデルの再生成、部位のつながりと手・装備の接触、8方向の配置と余白、各コマと再描画の一致、杖と本の左右、公開素材との一致を確認します。モデルNPZは `python characters/crystal_mage/build_model.py --out <出力先>` で作り直せます。参考画像との比較、48×48と64×64の評価、推測で補った背面、マントを動かすための課題は[実験02レポート](research/IMAGE_TO_CHARACTER_02.md)を参照してください。
 
+新しい参考画像からキャラクターを作る手順は[制作ガイド](research/CHARACTER_CREATION_GUIDE.md)、実験01・02の比較と共通化の提案は[比較分析](research/IMAGE_TO_CHARACTER_COMPARISON.md)にまとめています。
+
 ## 旧コードと同梱成果物の検証
 
 `validate_package.py` と `verify_attack.py` は `output/` に診断を書き込みます。以下の手順では検証用コピーと再生成先を `.phase1/` 内の新規フォルダに作ります。`--out` を指定し、全8方向と装備の可視計測を有効にした既定設定で実行します。
