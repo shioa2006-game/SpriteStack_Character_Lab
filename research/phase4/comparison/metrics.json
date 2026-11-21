@@ -1,0 +1,162 @@
+{
+  "walk_boot_min_z": {
+    "R": [
+      0.0,
+      2.0,
+      2.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "L": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      2.0,
+      2.0
+    ]
+  },
+  "seam_faces": {
+    "shoulder_R": {
+      "rigid": {
+        "min": 102,
+        "mean": 125.15
+      },
+      "weighted": {
+        "min": 102,
+        "mean": 125.0
+      }
+    },
+    "elbow_R": {
+      "rigid": {
+        "min": 63,
+        "mean": 74.08
+      },
+      "weighted": {
+        "min": 57,
+        "mean": 72.0
+      }
+    },
+    "knee_R": {
+      "rigid": {
+        "min": 6,
+        "mean": 32.31
+      },
+      "weighted": {
+        "min": 10,
+        "mean": 33.38
+      }
+    },
+    "shoulder_L": {
+      "rigid": {
+        "min": 98,
+        "mean": 120.38
+      },
+      "weighted": {
+        "min": 98,
+        "mean": 121.15
+      }
+    },
+    "elbow_L": {
+      "rigid": {
+        "min": 63,
+        "mean": 78.15
+      },
+      "weighted": {
+        "min": 63,
+        "mean": 77.46
+      }
+    },
+    "knee_L": {
+      "rigid": {
+        "min": 6,
+        "mean": 22.38
+      },
+      "weighted": {
+        "min": 12,
+        "mean": 22.92
+      }
+    }
+  },
+  "fragments": {
+    "rigid": {
+      "total_voxels": 48,
+      "largest_component": 2
+    },
+    "weighted": {
+      "total_voxels": 51,
+      "largest_component": 2
+    }
+  },
+  "changed_pixels": {
+    "walk": {
+      "S": {
+        "rgba": 16,
+        "alpha": 0
+      },
+      "SW": {
+        "rgba": 12,
+        "alpha": 0
+      },
+      "W": {
+        "rgba": 3,
+        "alpha": 0
+      },
+      "NW": {
+        "rgba": 6,
+        "alpha": 0
+      },
+      "N": {
+        "rgba": 3,
+        "alpha": 0
+      },
+      "NE": {
+        "rgba": 9,
+        "alpha": 0
+      },
+      "E": {
+        "rgba": 7,
+        "alpha": 0
+      },
+      "SE": {
+        "rgba": 16,
+        "alpha": 0
+      }
+    },
+    "attack": {
+      "S": {
+        "rgba": 22,
+        "alpha": 0
+      },
+      "SW": {
+        "rgba": 13,
+        "alpha": 0
+      },
+      "W": {
+        "rgba": 1,
+        "alpha": 0
+      },
+      "NW": {
+        "rgba": 4,
+        "alpha": 0
+      },
+      "N": {
+        "rgba": 6,
+        "alpha": 0
+      },
+      "NE": {
+        "rgba": 5,
+        "alpha": 0
+      },
+      "E": {
+        "rgba": 2,
+        "alpha": 0
+      },
+      "SE": {
+        "rgba": 12,
+        "alpha": 0
+      }
+    }
+  }
+}

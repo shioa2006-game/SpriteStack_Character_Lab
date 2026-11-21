@@ -94,7 +94,7 @@ def render_motion(character, renderer, mode, poses, neutral):
     return sheet, part_atlas, measurements
 
 
-def bake(character, out):
+def bake(character, out, *, pose_volume=reslice):
     view = character.config["view"]
     directions = list(view["directions"])
     neutral_cell = view["neutral_cell"]
@@ -115,7 +115,7 @@ def bake(character, out):
         for index in range(count):
             points, transforms = rig.pose(mode, index)
             check_attachment(rig, points, transforms)
-            volume, part_ids = reslice(character, transforms)
+            volume, part_ids = pose_volume(character, transforms)
             pose_groups[mode].append((volume, part_ids))
             key = f"{mode}_{index:02}"
             volumes[key], parts[key] = volume, part_ids

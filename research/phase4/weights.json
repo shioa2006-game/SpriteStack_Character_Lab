@@ -1,0 +1,6 @@
+{
+  "weight_steps": 8,
+  "shoulder": {"radius": 1.55, "half_width": 1.15},
+  "elbow": {"radius": 1.2, "half_width": 0.9},
+  "knee": {"radius": 1.75, "half_width": 1.2}
+}

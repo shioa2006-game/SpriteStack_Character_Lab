@@ -8,7 +8,8 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | --- | --- |
 | 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
-| 未実装 | ウェイト変形、別の骨格構成、キャラクターの自動生成 |
+| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証 |
+| 未実装 | 量産用のウェイト変形、別の骨格構成、キャラクターの自動生成 |
 | 検証課題 | 他の体形への転用範囲、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
 方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
@@ -88,6 +89,21 @@ $bram = Join-Path $run 'bram'
 ~~~
 
 モデルと部位NPZを別フォルダへ作るには `python characters/bram/build_model.py --out <出力先>`、転用した攻撃クリップを再計算するには `python -m characters.bram.retarget_attack --out <JSONの出力先>` を使います。設計と検証の記録は[Phase 3レポート](research/PHASE3_VERIFICATION.md)を参照してください。
+
+### BRAMのウェイト変形を比較する
+
+Phase 4の試作はBRAMの肩・肘・膝のボクセルを局所的に補間します。標準の `spritestack` コマンドと公開ギャラリーでは剛体版を使います。以下のコマンドで同じモーションを別々に生成し、8方向の比較GIFと計測JSONを出力します。
+
+~~~powershell
+$trial = Join-Path $PWD ('.phase1/phase4-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
+$rigid = Join-Path $trial 'rigid'
+$weighted = Join-Path $trial 'weighted'
+& $python -B -m spritestack --character characters/bram/character.json --out $rigid
+& $python -B -m research.phase4.run --out $weighted
+& $python -B -m research.phase4.compare --rigid $rigid --weighted $weighted --out (Join-Path $trial 'comparison')
+~~~
+
+[Phase 4の検証結果と比較GIF](research/PHASE4_VERIFICATION.md)
 
 ## 旧コードと同梱成果物の検証
 
