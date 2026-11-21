@@ -2,7 +2,19 @@
 
 参考画像を1枚渡されたClaude Codeが、画像分析から立体モデル、8方向PNG、品質検証、公開まで進めるための手順。実験01（MAREN）と実験02（CRYSTAL MAGE）の工程と問題を元にしている。2実験の比較と、共通化の提案は [IMAGE_TO_CHARACTER_COMPARISON.md](IMAGE_TO_CHARACTER_COMPARISON.md) にある。
 
-現在の共通エンジン（`spritestack/`）を変えずに作る手順を示す。共通エンジン、LARK・BRAM・既存キャラクターの成果物は変更しない。先例のコードは複写して使う。複写元は、マント・杖など装備と衣装が多い場合はCRYSTAL MAGE、剣と盾ならMAREN。
+現在の共通エンジン（`spritestack/`）を変えずに作る手順を示す。共通エンジン、LARK・BRAM・既存キャラクターの成果物は変更しない。静止8方向のベイクは共通CLIの `--modes idle`、品質検証は `research.verify_character` を使う（[共通化の検証レポート](SHARED_IDLE_BAKE_AND_VALIDATION.md)）。キャラクターごとに書くのは、モデル生成コード、設定、品質設定だけ。モデル生成コードの複写元は、マント・杖など装備と衣装が多い場合はCRYSTAL MAGE、剣と盾ならMAREN。
+
+### 従来の手順との違い
+
+| 段階 | 実験01・02の手順 | 現在の手順 |
+| --- | --- | --- |
+| 静止のベイク | `bake_idle.py` を複写して書き換える | `python -m spritestack --character ... --modes idle --out ...`。比較用セルは `character.json` の `comparison_view` |
+| 品質検証 | `research/verify_<name>.py` を複写し、定数と検査を書き換える | `characters/<name>/quality.json` を書き、`python -m research.verify_character` |
+| 反復のプレビュー | キャラクターの `bake_idle` を読み込む | `spritestack.bake.bake_idle` を読み込む |
+| 回帰テスト | キャラクターごとの検証コマンド | MAREN・CRYSTAL MAGEも同じ汎用検証 |
+| 変わらない部分 | 画像分析、採色、配色、`build_model.py`、目視の評価、比較図、レポート、ギャラリー | 同じ |
+
+旧来の `characters/maren/bake_idle.py`、`characters/crystal_mage/bake_idle.py`、`research/verify_maren.py`、`research/verify_crystal_mage.py` は互換のために残っている。新しいキャラクターでは複写しない。
 
 ## 0. 全体の流れと成果物
 
@@ -13,8 +25,8 @@
 | 3 | 採色範囲と目印を座標で記録し、色と比率を抽出 | 抽出JSONができ、範囲の確認図を目視した |
 | 4 | 設計：頭身、高さの予算、部位、描画順、配色 | 48 pxに収まる寸法を計算した |
 | 5 | `character.json` と `build_model.py` を書く | 全材質・全部位が使われ、警告なしで生成できる |
-| 6 | 静止8方向を焼き、見て直す | 7. の確認表を満たす |
-| 7 | 検証スクリプトと回帰テスト | すべて合格 |
+| 6 | 静止8方向を焼き、見て直す | 6. の確認表を満たす |
+| 7 | 品質設定を書き、汎用検証と回帰テスト | FAILが0。WARNINGを確認して記録した |
 | 8 | 比較図、レポート、ギャラリー、文書 | 公開素材と検証が一致 |
 | 9 | コミット、push、GitHub Pagesの確認 | 公開ページで8方向を確認した |
 
@@ -30,9 +42,8 @@ characters/<name>/
   build_model.py           立体モデルの生成
   materials.npz            材質ID（Z/Y/X、uint8）
   part_ids.npz             部位ID（同じ形状）
-  bake_idle.py             静止8方向のベイク
+  quality.json             汎用検証の条件（装備、可視画素、公開先など）
 docs/assets/<name>/        公開する idle.png と metadata.json（比較用があれば idle-64.*）
-research/verify_<name>.py  検証
 research/image_to_character_NN/compare.py と results/   比較図と計測
 research/IMAGE_TO_CHARACTER_NN.md                        実験レポート
 ~~~
@@ -77,7 +88,7 @@ Copy-Item $source (Join-Path $work 'reference.png')
 
 **装備の割り当て。** リグは2つの手の装備枠だけを持つ（`Biped.__init__`）。部位名は自由に付けられる（例：`staff`、`book`）。両手持ちの装備や背中の装備は今のリグでは表現できない。その場合は依頼者に相談するか、片手に持たせてレポートに記録する。
 
-**優先順位。** 依頼文に優先順位があればそのまま使う。なければ、シルエット、最大の衣装、主装備、副装備、髪、細部の順にする。7. の目視確認と検証のしきい値に写す。
+**優先順位。** 依頼文に優先順位があればそのまま使う。なければ、シルエット、最大の衣装、主装備、副装備、髪、細部の順にする。6. の目視確認と、7. の品質設定のしきい値に写す。
 
 ## 3. 採色範囲と目印
 
@@ -188,10 +199,10 @@ Copy-Item characters/crystal_mage/extract_reference.py characters/$name/
 | `model.origin_xyz`、格子 | 外套や装備が収まる範囲。`build_model.py` の `SHAPE` と合わせる |
 | `model.palette` | 4. の配色 |
 | `rig.parts` | 体の15部位の後に装備2つ（主装備、副装備の順）。合計17部位 |
-| `rig.rest` | 関節座標と装備の目印。目印は装備のボクセルの範囲内に置く |
+| `rig.rest` | 関節座標と装備の目印。目印は装備のボクセルから1.5単位以内に置く（検証の `rig.markers`） |
 | `rig.attachments` | 主装備は `hand_R`、副装備は `hand_L` |
 | `view` | LARKと同じ値のまま |
-| `comparison_view` | 64×64の比較を焼く場合だけ |
+| `comparison_view` | 64×64の比較を焼く場合だけ。`pixels_per_unit`、`neutral_cell`、`base_pivot`（[crystal_mage](../characters/crystal_mage/character.json) は 1.5867、64、[32, 53]） |
 | `posed_volume`、`walk`、`attack` | 読込に必要。歩行・攻撃を作らないなら、LARKのクリップと調整値を参照したままにする |
 | `measurements` | 装備の材質IDを書き換える |
 
@@ -208,9 +219,15 @@ Copy-Item characters/crystal_mage/extract_reference.py characters/$name/
 
 `RuntimeWarning` を止めるのは、負の数の小数乗などによるNaNを見逃さないため（実験02で発生）。
 
-### bake_idle.py
+### 静止のベイク
 
-48×48だけなら [maren/bake_idle.py](../characters/maren/bake_idle.py)、64×64の比較も焼くなら [crystal_mage/bake_idle.py](../characters/crystal_mage/bake_idle.py) を複写する。標準CLIは静止・歩行・攻撃を一括で焼き、1つでも収まらないと何も出力しない。画像由来のキャラクターは、静止専用のベイクから始める。
+ベイクのスクリプトは作らない。共通CLIの `--modes idle` を使う。全モードの標準CLI（`--modes all`）は静止・歩行・攻撃を一括で焼き、1つでも収まらないと何も出力しない。画像由来のキャラクターは静止だけから始める。
+
+~~~powershell
+& $python -B -m spritestack --character characters/$name/character.json --modes idle --out (Join-Path $run 'idle')
+~~~
+
+出力は `idle.png`、`metadata.json`、`rest_part_ids.npz`。`comparison_view` があれば `idle-64.png` と `idle-64.json` も出る。`--cells 48` で標準セルだけにできる。
 
 ## 6. 焼き出しと反復
 
@@ -227,7 +244,7 @@ sys.path.insert(0, str(ROOT))
 NAME = "new_character"
 from importlib import import_module
 build = import_module(f"characters.{NAME}.build_model").build
-bake_idle = import_module(f"characters.{NAME}.bake_idle").bake_idle
+from spritestack.bake import bake_idle
 from spritestack.character import load_character
 
 config_path = ROOT / f"characters/{NAME}/character.json"
@@ -237,7 +254,7 @@ np.savez_compressed(config_path.parent / "part_ids.npz", parts=parts)
 out = ROOT / f".phase1/{NAME}/{sys.argv[1]}"
 shutil.rmtree(out, ignore_errors=True)
 out.mkdir(parents=True)
-bake_idle(load_character(config_path), out)
+bake_idle(load_character(config_path), out, [48])
 sheet = Image.open(out / "idle.png").convert("RGBA")
 zoom = Image.new("RGBA", (4 * 298, 2 * 310 + 120), (58, 66, 84, 255))
 draw = ImageDraw.Draw(zoom)
@@ -274,45 +291,53 @@ zoom.save(out / "zoom_48.png")
 
 - 依頼文の優先順位の上位3つが、原寸で読める。
 - 8方向で配色・装備・体形が一貫し、装備が隠れる方向は自然な遮蔽だけ。
-- 7. の検証に合格する。
+- 7. の汎用検証でFAILが0。
 - 直す価値のある問題が、48 pxの解像度の限界によるものだけになった。
 
 ## 7. 検証
 
-### 検証スクリプト
+### 品質設定
 
-[verify_crystal_mage.py](verify_crystal_mage.py) を `research/verify_<name>.py` に複写し、次を書き換える。
+検証スクリプトは書かない。`characters/<name>/quality.json` に、このキャラクターの条件を書く。先例は [maren/quality.json](../characters/maren/quality.json) と [crystal_mage/quality.json](../characters/crystal_mage/quality.json)。全項目は[共通化の検証レポート](SHARED_IDLE_BAKE_AND_VALIDATION.md#品質設定の項目)にある。パスは `quality.json` のフォルダから、材質は配色の名前で書く。
 
-| 箇所 | 書き換え |
+| キー | 書く内容 |
 | --- | --- |
-| `MAGE_DIR`、`MAGE`、`PUBLISHED` | 新キャラクターのパス |
-| 材質IDの定数（`CRYSTAL`、`STAFF_WOOD`、`BOOK`） | 主装備の主役・本体、副装備の材質ID |
-| `BOOK_VIEWS` と下限の画素数 | 副装備が見えるべき方向。主役の小物の下限 |
-| `check_rig` の装備の辞書 | 装備名、手、目印 |
-| `check_handedness` | 主装備 x < 0、副装備 x > 0 |
-| `check_connectivity` の接触の組と連続の検査 | 装備と手、手と前腕。細長い装備は床から先端までの連続 |
-| `check_sources` の歩行・攻撃の確認 | 仮の参照ならLARKのクリップと一致。転用したなら転用規則と一致 |
-| 64×64の検査 | 比較シートを焼かないなら外す |
+| `model_builder` | `"characters.<name>.build_model:build"`。NPZが生成コードと一致するかを調べる |
+| `provenance` | `palette_provenance.json` と `reference_palette.json` |
+| `motions` | 歩行・攻撃を作らないなら、両方 `{"same_as": "../lark/character.json"}` |
+| `items` | `main`（右手）と `off`（左手）の `part`、`hand`、`marker` |
+| `continuous` | 杖や槍のように途切れてはいけない装備。床に立てるなら `from_floor` |
+| `visibility` | 依頼文の優先順位の上位要素。主役の小物は全方向、副装備は見えるべき方向。依頼文で「見える」とされた要素は既定の FAIL、目安にとどめるものは `"severity": "warning"` |
+| `presence` | 長い髪や裾など形の条件（例：髪の最下点 `lowest_z_at_most`） |
+| `cells` | 比較用セルも検査するなら `[48, 64]` |
+| `published` | `"../../docs/assets/<name>"`。公開前は省くか、実行時に `--no-published` |
 
-検査の内容は次の通り。
+可視画素の下限は、見た目を確定したシートで `--verbose` を付けて実行し、表示される `px` の半分程度にする（実験01・02の設定と同じ考え方）。
 
-- NPZが生成コードと一致。全材質・全部位が使われる。「抽出」の色が抽出結果と一致。
-- `Biped` が装備を受け付け、静止で装備が手に追従。目印が装備の範囲内。
-- 主装備は本人の右、副装備は左。
-- モデル全体が1つにつながる。部位の切れ端は他部位に覆われ、3ボクセル未満の切れ端は16枚のどの描画にも出ない。装備と手、手と前腕、前腕と上腕、上腕と胸が接する。
-- シートの寸法、方向順、アンカー、0か255の不透明度、1 px以上の余白。各コマが再描画と一致。反対方向の反転と一致しない。
-- 装備の描かれる画面側が、3次元の位置の投影と一致。
-- 主役の小物の可視画素が全方向で下限以上。副装備が見えるべき方向で下限以上。
-- 公開PNG・JSONが焼いた出力と一致。
+### 実行
 
 ~~~powershell
 $run = Join-Path $PWD ('.phase1/' + $name + '-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
 & $python -B characters/$name/build_model.py --out (Join-Path $run 'model')
-& $python -B -m characters.$name.bake_idle --out (Join-Path $run 'idle')
-& $python -B -m research.verify_$name (Join-Path $run 'idle') --skip-published
+& $python -B -m spritestack --character characters/$name/character.json --modes idle --out (Join-Path $run 'idle')
+& $python -B -m research.verify_character --character characters/$name/character.json --out (Join-Path $run 'idle') --no-published --verbose
 ~~~
 
-`--skip-published` は公開前の確認用（CRYSTAL MAGEの検証にある引数）。`model/` のNPZがコミット対象と一致することも確かめる。
+`model/` のNPZがコミット対象と一致することも確かめる（`model.regenerate` が同じことを調べる）。
+
+### 結果の扱い
+
+- **FAIL** は0にする。装備が手から離れた、左右が違う、余白がない、コマがモデルの描画と違う、可視画素が下限未満など、仕様違反か生成の不具合。
+- **WARNING** は詳細を読み、レポートに記録する。例えば `model.fragments` は、他の部位に覆われて切り離された部位の小片。`drawn_in` が `never drawn` なら静止画には影響しない。動かすときの部位の所有の見直し候補として扱う。検証を通すためだけに造形を変えない。
+- **SKIP** は、品質設定で求めていない検査。意図どおりか確かめる。
+
+検査の内容：
+
+- モデル：数値が有限、読込、全材質・全部位の使用、生成コードとの一致と数値の警告、全体のつながり、部位の切れ端と迷い画素、配色の出典、モーションの出典。
+- リグと装備：リグが受け付け静止で手に追従、規約どおりの持ち手と3次元の左右、目印と装備の距離、装備と手・腕の連鎖の接触、装備と手が一続き、途切れない装備、形の存在条件。
+- シート（セルごと）：方向順・セル・アンカー・カメラ、RGBAと寸法、不透明度、余白、再描画との一致、8コマの重複、反転との一致、画面上の左右、可視画素、公開PNG・JSONとの一致。
+
+検出できないこと（同系色の同化、顔が隠れる、小物が何に見えるか、参考画像との似かた）は、6. の目視で確かめる。
 
 ### 回帰テスト
 
@@ -323,10 +348,10 @@ $run = Join-Path $PWD ('.phase1/' + $name + '-' + (Get-Date -Format 'yyyyMMdd-HH
 & $python research/verify_rebuild.py (Join-Path $run 'lark')
 & $python -B -m spritestack --character characters/bram/character.json --out (Join-Path $run 'bram')
 & $python -B -m research.verify_bram (Join-Path $run 'bram')
-& $python -B -m characters.maren.bake_idle --out (Join-Path $run 'maren')
-& $python -B -m research.verify_maren (Join-Path $run 'maren')
-& $python -B -m characters.crystal_mage.bake_idle --out (Join-Path $run 'crystal_mage')
-& $python -B -m research.verify_crystal_mage (Join-Path $run 'crystal_mage')
+& $python -B -m spritestack --character characters/maren/character.json --modes idle --out (Join-Path $run 'maren')
+& $python -B -m research.verify_character --character characters/maren/character.json --out (Join-Path $run 'maren')
+& $python -B -m spritestack --character characters/crystal_mage/character.json --modes idle --out (Join-Path $run 'crystal_mage')
+& $python -B -m research.verify_character --character characters/crystal_mage/character.json --out (Join-Path $run 'crystal_mage')
 git diff --stat -- spritestack characters/lark characters/bram characters/maren characters/crystal_mage experiments docs/assets
 ~~~
 
@@ -368,7 +393,7 @@ LARKの `verify_rebuild.py` は、PNGのバイトが一致しなくても（Wind
 
 ### ギャラリー
 
-1. 焼いた `idle.png`、`metadata.json`（比較シートがあれば `idle-64.png`、`idle-64.json`）を `docs/assets/<name>/` に複写する。
+1. 焼いた `idle.png`、`metadata.json`（比較シートがあれば `idle-64.png`、`idle-64.json`）を `docs/assets/<name>/` に複写する。`quality.json` の `published` を設定し、汎用検証を `--no-published` なしで再実行して `sheetNN.published` がPASSになることを確かめる。
 2. `docs/index.html` のキャラクター欄に `<option value="<name>">` を足す。
 3. `docs/gallery.js` の `characters` に `{ name, subtitle, assets: "assets/<name>" }` を足す。比較シートがあれば `idleSheets: { 48: null, 64: "idle-64" }` を加える。歩行・攻撃がないキャラクターでは、ボタンが自動で無効になり注記が出る。
 4. ローカルサーバーで確かめる。新キャラクターの8方向（比較シートがあれば両方）、既存キャラクターの攻撃再生、375 px幅で横スクロールがないこと、コンソールエラーがないこと。
@@ -400,7 +425,8 @@ URL：https://shioa2006-game.github.io/SpriteStack_Character_Lab/
 - [ ] 配色の出典を全材質に書いた
 - [ ] `-W error::RuntimeWarning` で生成できる
 - [ ] 8方向を拡大と原寸で確認し、調整の経緯をメモした
-- [ ] 新キャラクターの検証と、LARK・BRAM・MAREN・CRYSTAL MAGEの回帰に合格した
+- [ ] `quality.json` を書き、汎用検証でFAILが0。WARNINGの内容をレポートに記録した
+- [ ] LARK・BRAM・MAREN・CRYSTAL MAGEの回帰に合格した
 - [ ] 既存の成果物にGit差分がない
 - [ ] 比較図とレポートを書き、数値を照合した
 - [ ] ギャラリーをローカルで確認した

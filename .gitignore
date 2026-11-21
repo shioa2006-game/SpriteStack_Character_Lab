@@ -47,3 +47,6 @@ secrets.json
 *.pfx
 id_rsa
 id_ed25519
+
+# Default output folder in the README examples
+/output/

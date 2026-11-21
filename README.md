@@ -6,7 +6,7 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 
 | 状態 | 対象 |
 | --- | --- |
-| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、Canvasギャラリー |
+| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、設定ファイルで条件を変えられる汎用品質検証、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
 | 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMARENと、魔法使いCRYSTAL MAGEの静止8方向（48×48と64×64の比較） |
 | 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、MARENの歩行・攻撃、CRYSTAL MAGEの歩行と杖の攻撃、マント・裾の従属部位 |
@@ -21,8 +21,8 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | [spritestack/](spritestack/) | 共通CLI、設定読込、二足歩行リグ、ボクセル再スライス、描画、ベイク |
 | [characters/lark/](characters/lark/) | LARKのモデル・モーション参照、材質、リグ、表示と計測の設定 |
 | [characters/bram/](characters/bram/) | BRAMの独立モデル、部位マスク、設定、攻撃目標の転用手順 |
-| [characters/maren/](characters/maren/) | 参考画像から作ったMARENのモデル生成コード、NPZ、設定、採色範囲と抽出色、配色の出典、静止のベイク |
-| [characters/crystal_mage/](characters/crystal_mage/) | 参考画像から作った魔法使いCRYSTAL MAGEのモデル生成コード、NPZ、設定、採色範囲と抽出色、配色の出典、48×48と64×64の静止のベイク |
+| [characters/maren/](characters/maren/) | 参考画像から作ったMARENのモデル生成コード、NPZ、設定、品質設定、採色範囲と抽出色、配色の出典、旧来の静止のベイク |
+| [characters/crystal_mage/](characters/crystal_mage/) | 参考画像から作った魔法使いCRYSTAL MAGEのモデル生成コード、NPZ、設定（64×64の比較用の `comparison_view` を含む）、品質設定、採色範囲と抽出色、配色の出典、旧来の静止のベイク |
 | [experiments/lark_stage3/](experiments/lark_stage3/) | ZIPから移植した基準コード・モデル・検証スクリプト・元のプレビュー |
 | [experiments/lark_stage3/baseline/](experiments/lark_stage3/baseline/) | 旧版と、再生成に必要な元モデル・水平断面 |
 | [experiments/lark_stage3/output/](experiments/lark_stage3/output/) | 8方向 PNG、関節・計測 JSON、水平断面・部位 ID の NPZ |
@@ -56,6 +56,30 @@ $rebuild = Join-Path $run 'common'
 ~~~
 
 出力は `idle.png`、`walk.png`、`attack.png`、歩行・攻撃の部位ID画像、`metadata.json`、関節と計測のJSON、材質・部位IDのNPZです。比較スクリプトはPNGの寸法とデコード後の全RGBAピクセル、方向順、アンカー、コマ数、歩行FPS、攻撃のコマ別表示時間を含むメタデータを比較します。PNGバイト差も表示します。
+
+### 静止8方向だけを焼く
+
+`--modes idle` は静止姿勢のモデルから8方向だけを焼きます。歩行・攻撃の姿勢計算と姿勢ボリュームの検査はしません。攻撃が合わないキャラクター（MAREN、CRYSTAL MAGE）でも静止は出力されます。既定の `--modes all` は従来どおり3モードを焼きます。
+
+~~~powershell
+& $python -B -m spritestack --character characters/maren/character.json --modes idle --out output/maren
+& $python -B -m spritestack --character characters/crystal_mage/character.json --modes idle --out output/crystal_mage
+& $python -B -m spritestack --character characters/crystal_mage/character.json --modes idle --cells 64 --out output/mage-64
+~~~
+
+出力は `idle.png`、`metadata.json`（`animations` は空）、`rest_part_ids.npz`。`--cells` で焼くセルを選べます。既定は `view.neutral_cell` と、`character.json` に `comparison_view` があればそのセルです。比較用セルは、同じモデルを `comparison_view` の画素密度・セル・アンカーで描き直し、`idle-<PX>.png` と `idle-<PX>.json` に書きます（48×48の拡大ではありません）。`comparison_view` のないセルを指定すると失敗します。`output/` はGitで無視されます。
+
+### キャラクターの汎用検証
+
+`research.verify_character` は、キャラクター名で分岐せず、設定ファイルと静止シートからモデル、リグと装備、シートを検査します。結果は PASS、WARNING（問題の可能性）、FAIL（仕様違反・生成不具合）、SKIP（未実施）で、FAILがあると終了コード1になります。
+
+~~~powershell
+& $python -B -m research.verify_character --character characters/maren/character.json --out output/maren
+& $python -B -m research.verify_character --character characters/crystal_mage/character.json --out output/crystal_mage
+& $python -B -m research.verify_character_selftest
+~~~
+
+キャラクターごとの条件は `character.json` と同じフォルダの `quality.json` に書きます。装備の役割（主装備は右手、副装備は左手）、可視画素の下限と方向、部位の存在条件、途切れてはいけない装備、公開先、モデル生成コード、配色とモーションの出典を設定できます。材質は配色の名前で書きます。項目の一覧、旧スクリプトとの対応、異常データでの検出テストは[共通化の検証レポート](research/SHARED_IDLE_BAKE_AND_VALIDATION.md)を参照してください。`verify_character_selftest` は一時フォルダに複写したキャラクターへ異常を入れ、検証が報告するかを確かめます（約2分）。
 
 ### 振りかぶり攻撃の生成
 
@@ -93,6 +117,13 @@ $refined = Join-Path $run 'refined-lark'
 2. 体形に合わせて `rig.rest`、部位マスク、装備の取り付けを定義します。既存モーションを試し、接地や手の目標値と描画範囲を必要に応じて調整します。各セルを同じアンカーで切り出せるよう、描画用セルとの差を偶数にします。
 3. CLIの `--character` を新しい設定に変えて生成し、8方向の左右、接地、装備、アンカー、テンポを確認します。採用したモデル、設定、モーション、基準PNGを追跡します。
 
+参考画像から静止だけのキャラクターを作る場合の推奨手順です。詳しくは[制作ガイド](research/CHARACTER_CREATION_GUIDE.md)を参照してください。
+
+1. `characters/<名前>/` に `character.json`、`build_model.py`、生成したNPZ、`quality.json` を置きます。個別のベイクスクリプトと検証スクリプトは不要です。
+2. `python -m spritestack --character characters/<名前>/character.json --modes idle --out <新しい出力先>` で焼き、拡大図と原寸で見て造形を直します。
+3. `python -m research.verify_character --character characters/<名前>/character.json --out <出力先>` でFAILを0にします。WARNINGは内容を確認し、レポートに記録します。
+4. 出力を `docs/assets/<名前>/` に置き、`quality.json` の `published` を設定して、公開素材との一致まで検証します。
+
 共通側は二足歩行の関節名と歩行・攻撃の計算方式を共有します。LARKのモデルを作る手続き、材質から部位を割り当てる処理、過去の比較・検証スクリプトは実験ディレクトリにあります。
 
 ### BRAMの生成と検証
@@ -124,12 +155,12 @@ $weighted = Join-Path $trial 'weighted'
 
 ### MARENの生成と検証（画像からの生成実験01）
 
-MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。標準CLIは転用した攻撃が64 pxセルを越えて止まるため、静止8方向は共通の描画関数を使う専用コマンドで焼きます。
+MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。全モードの標準CLIは転用した攻撃が64 pxセルを越えて止まるため、静止8方向は `--modes idle` で焼きます。旧来の `characters.maren.bake_idle` と `research.verify_maren` も残しており、同じ出力と合否になります。
 
 ~~~powershell
 $maren = Join-Path $run 'maren'
-& $python -B -m characters.maren.bake_idle --out $maren
-& $python -B -m research.verify_maren $maren
+& $python -B -m spritestack --character characters/maren/character.json --modes idle --out $maren
+& $python -B -m research.verify_character --character characters/maren/character.json --out $maren
 & $python -B -m research.image_to_character.compare --idle $maren --out (Join-Path $run 'maren-comparison')
 ~~~
 
@@ -139,12 +170,12 @@ $maren = Join-Path $run 'maren'
 
 CRYSTAL MAGE（仮名 `crystal_mage`）は参考イラスト1枚から作った魔法使いです。長いローブ、左右と背面へ広がるマント、首のフード、右手の水晶の杖、左手の魔法書を立体化しました。杖と本は、LARKで剣と盾が入る2つの取り付け枠に入れています。参考画像は追跡せず、採色範囲の座標と抽出色だけを置いています。
 
-公開するのは静止8方向だけです。`bake_idle` は標準の48×48シートと、同じモデルを4/3倍の画素密度で描いた64×64の比較シートを焼きます。歩行・攻撃の設定は読込のためにLARKのクリップを参照するだけで、焼いていません。標準CLIは、剣の攻撃の姿勢で杖が姿勢ボリュームを出て止まります。
+公開するのは静止8方向だけです。`--modes idle` は標準の48×48シートと、`comparison_view` に従って同じモデルを4/3倍の画素密度で描いた64×64の比較シートを焼きます。歩行・攻撃の設定は読込のためにLARKのクリップを参照するだけで、焼いていません。全モードの標準CLIは、剣の攻撃の姿勢で杖が姿勢ボリュームを出て止まります。旧来の `characters.crystal_mage.bake_idle` と `research.verify_crystal_mage` も残しており、同じ出力と合否になります。
 
 ~~~powershell
 $mage = Join-Path $run 'crystal_mage'
-& $python -B -m characters.crystal_mage.bake_idle --out $mage
-& $python -B -m research.verify_crystal_mage $mage
+& $python -B -m spritestack --character characters/crystal_mage/character.json --modes idle --out $mage
+& $python -B -m research.verify_character --character characters/crystal_mage/character.json --out $mage
 & $python -B -m research.image_to_character_02.compare --idle $mage --out (Join-Path $run 'mage-comparison')
 ~~~
 

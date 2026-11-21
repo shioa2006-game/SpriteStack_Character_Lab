@@ -1,5 +1,8 @@
 """Bake the configured character into PNG sheets, volumes and metadata."""
 
+import copy
+import dataclasses
+from fractions import Fraction
 import hashlib
 import json
 
@@ -29,6 +32,90 @@ def check_attachment(rig, joints, transforms):
         if (np.linalg.norm(position - joints[hand]) >= 1e-6
                 or np.linalg.norm(offset - (rig.rest[marker] - rig.rest[hand])) >= 1e-6):
             raise ValueError(f"{part} does not follow {hand}")
+
+
+def neutral_layout(character, renderer):
+    view = character.config["view"]
+    return {
+        "layout": f"1 row, {len(view['directions'])} columns",
+        "directions": list(view["directions"]),
+        "cell": [view["neutral_cell"], view["neutral_cell"]],
+        "anchor": renderer.anchor(view["neutral_cell"]),
+    }
+
+
+def view_for_cell(character, cell):
+    """Return the character as drawn in an idle cell of the given size.
+
+    The configured view.neutral_cell uses the view unchanged. Another size uses the
+    optional comparison_view: the same model and camera angle, with its own pixel
+    density, cell and anchor. Nothing is scaled implicitly.
+    """
+    view = character.config["view"]
+    if cell == view["neutral_cell"]:
+        return character
+    variant = character.config.get("comparison_view")
+    if not variant or variant.get("neutral_cell") != cell:
+        raise ValueError(f"no {cell}px idle view: character.json needs a comparison_view "
+                         f"with neutral_cell {cell}")
+    pivot = variant["base_pivot"]
+    if (type(cell) is not int or cell <= 0 or variant["pixels_per_unit"] <= 0 or len(pivot) != 2
+            or not all(0 <= coordinate < cell for coordinate in pivot)):
+        raise ValueError("comparison_view needs a positive pixel density and an anchor inside its cell")
+    config = copy.deepcopy(character.config)
+    camera = config["view"]["camera"]
+    camera["pixels_per_unit"] = variant["pixels_per_unit"]
+    camera["base_pivot"] = pivot
+    config["view"]["neutral_cell"] = config["view"]["render_cell"] = cell
+    return dataclasses.replace(character, config=config)
+
+
+def idle_cells(character):
+    """The idle cell sizes a character declares: view.neutral_cell, then comparison_view if any."""
+    cells = [character.config["view"]["neutral_cell"]]
+    variant = character.config.get("comparison_view")
+    if variant and variant.get("neutral_cell") not in cells:
+        cells.append(variant["neutral_cell"])
+    return cells
+
+
+def bake_idle(character, out, cells=None):
+    """Bake only the idle eight directions from the rest model; no poses are computed.
+
+    cells defaults to every idle size the character declares (idle_cells). The
+    standard cell writes idle.png, metadata.json (the CLI layout with no
+    animations; the volume fields describe the rest grid of rest_part_ids.npz) and
+    rest_part_ids.npz. Each other cell writes idle-<cell>.png and idle-<cell>.json.
+    """
+    standard = character.config["view"]["neutral_cell"]
+    variants = [(cell, view_for_cell(character, cell)) for cell in (cells or idle_cells(character))]
+    for cell, seen in variants:
+        renderer = Renderer(seen)
+        sheet, _ = render_neutral(seen, renderer)
+        if cell == standard:
+            grid = character.source_grid
+            sheet.save(out / "idle.png")
+            np.savez_compressed(out / "rest_part_ids.npz", parts=character.part_ids)
+            write_json(out / "metadata.json", {
+                "version": 3,
+                "camera": character.config["view"]["camera"],
+                "world_axes": {"X_positive": "anatomical left", "Y_positive": "front", "Z_positive": "up"},
+                "volume_origin_xyz": grid.origin.tolist(),
+                "volume_order": "Z,Y,X",
+                "voxel_size_xyz": grid.spacing.tolist(),
+                "neutral": neutral_layout(seen, renderer),
+                "parts": character.parts,
+                "animations": {},
+            })
+        else:
+            sheet.save(out / f"idle-{cell}.png")
+            write_json(out / f"idle-{cell}.json", {
+                "description": "Comparison sheet: the same voxel model as idle.png "
+                               f"at {Fraction(cell, standard)} the pixel density.",
+                "camera": seen.config["view"]["camera"],
+                "neutral": neutral_layout(seen, renderer),
+                "rgba_sha256": hashlib.sha256(sheet.tobytes()).hexdigest(),
+            })
 
 
 def render_neutral(character, renderer):
@@ -97,7 +184,6 @@ def render_motion(character, renderer, mode, poses, neutral):
 def bake(character, out, *, pose_volume=reslice):
     view = character.config["view"]
     directions = list(view["directions"])
-    neutral_cell = view["neutral_cell"]
     renderer = Renderer(character)
     rig = Biped(character)
     clips = character.motions
@@ -134,12 +220,7 @@ def bake(character, out, *, pose_volume=reslice):
         "volume_origin_xyz": character.posed_grid.origin.tolist(),
         "volume_order": "Z,Y,X",
         "voxel_size_xyz": character.posed_grid.spacing.tolist(),
-        "neutral": {
-            "layout": f"1 row, {len(directions)} columns",
-            "directions": directions,
-            "cell": [neutral_cell, neutral_cell],
-            "anchor": renderer.anchor(neutral_cell),
-        },
+        "neutral": neutral_layout(character, renderer),
         "parts": character.parts,
         "animations": {},
     }

@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "description": "Quality settings for research.verify_character. Rules ported from research/verify_crystal_mage.py: the crystal in all eight directions, the book where the left side faces the camera, an unbroken staff from the floor.",
+  "model_builder": "characters.crystal_mage.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {"same_as": "../lark/character.json"},
+    "attack": {"same_as": "../lark/character.json"}
+  },
+  "items": {
+    "main": {"part": "staff", "hand": "hand_R", "marker": "staff_tip"},
+    "off": {"part": "book", "hand": "hand_L", "marker": "book_center"}
+  },
+  "continuous": [
+    {"part": "staff", "through": ["hand_R"], "from_floor": true}
+  ],
+  "cells": [48, 64],
+  "visibility": [
+    {"label": "head", "part": "head", "min_px": 1, "directions": "all"},
+    {"label": "staff wood", "part": "staff", "materials": ["staff wood", "staff carving", "ferrule"], "min_px": 1, "directions": "all"},
+    {"label": "crystal", "part": "staff", "materials": ["crystal", "crystal glow"], "min_px": 3, "directions": "all"},
+    {"label": "book", "part": "book", "materials": ["book cover", "book pages"], "min_px": 4, "directions": ["S", "SW", "W", "SE"]}
+  ],
+  "published": "../../docs/assets/crystal_mage"
+}

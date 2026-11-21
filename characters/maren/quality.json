@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "description": "Quality settings for research.verify_character. Rules ported from research/verify_maren.py, plus blade, shield and long-hair checks. Thresholds are about half of the values measured on the published idle sheet.",
+  "model_builder": "characters.maren.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {"same_as": "../lark/character.json"},
+    "attack": {"call": "characters.maren.retarget_attack:retarget"}
+  },
+  "items": {
+    "main": {"part": "sword", "hand": "hand_R", "marker": "sword_tip"},
+    "off": {"part": "shield", "hand": "hand_L", "marker": "shield_center"}
+  },
+  "cells": [48],
+  "visibility": [
+    {"label": "head", "part": "head", "min_px": 1, "directions": ["S", "SW", "SE", "N"]},
+    {"label": "sword", "part": "sword", "min_px": 1, "directions": ["S", "SW", "SE", "N"]},
+    {"label": "shield", "part": "shield", "min_px": 1, "directions": ["S", "SW", "SE", "N"]},
+    {"label": "sword blade", "part": "sword", "materials": ["blade", "blade edge"], "min_px": 4, "directions": "all"},
+    {"label": "shield face", "part": "shield", "materials": ["shield face", "shield rim", "shield boss"], "min_px": 8, "directions": "all"},
+    {"label": "long hair from behind", "part": "head", "materials": ["hair", "hair shade"], "min_px": 120, "directions": ["NW", "N", "NE"]}
+  ],
+  "presence": [
+    {"label": "long hair below the shoulders", "part": "head", "materials": ["hair", "hair shade"], "lowest_z_at_most": 20.0}
+  ],
+  "published": "../../docs/assets/maren"
+}
