@@ -55,6 +55,18 @@ $rebuild = Join-Path $run 'common'
 
 出力は `idle.png`、`walk.png`、`attack.png`、歩行・攻撃の部位ID画像、`metadata.json`、関節と計測のJSON、材質・部位IDのNPZです。比較スクリプトはPNGの寸法とデコード後の全RGBAピクセル、方向順、アンカー、コマ数、歩行FPS、攻撃のコマ別表示時間を含むメタデータを比較します。PNGバイト差も表示します。
 
+### 振りかぶり攻撃の生成
+
+標準CLIで旧攻撃を再現できます。公開ギャラリーの新しい攻撃は、同じ剛体リグに振りかぶりクリップを適用して焼き出します。`--character` は `lark` または `bram`。両方とも9コマ、800 ms、64×64の攻撃セルです。
+
+~~~powershell
+$overhead = Join-Path $run 'overhead-lark'
+& $python -B -m research.overhead.run --character lark --out $overhead
+& $python -B -m research.overhead.compare --character lark --before $rebuild --after $overhead --out (Join-Path $run 'overhead-comparison')
+~~~
+
+[攻撃品質の検証と比較資料](research/OVERHEAD_ATTACK_VERIFICATION.md)
+
 ## キャラクター設定 v1
 
 [LARKの設定例](characters/lark/character.json)を参照してください。ファイル参照は設定ファイルの位置を基準に解決します。座標は X+ が身体の左、Y+ が前方、Z+ が上方です。
@@ -135,7 +147,7 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-キャラクター欄でLARKとBRAMを切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。攻撃はコマごとの時間配分で1回再生し、ボタンで再生し直せます。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/` にあります。
+キャラクター欄でLARKとBRAMを切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと改善後を再生し、攻撃モーション欄で同じ方向・倍率・速度のまま改善前へ切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/` にあります。
 
 GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 

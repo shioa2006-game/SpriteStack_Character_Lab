@@ -6,6 +6,8 @@ const status = document.querySelector("#status");
 const frameLabel = document.querySelector("#frame");
 const scale = document.querySelector("#scale");
 const speed = document.querySelector("#speed");
+const attackVariant = document.querySelector("#attack-variant");
+const attackVariantRow = document.querySelector("#attack-variant-row");
 const character = document.querySelector("#character");
 const characterName = document.querySelector("#character-name");
 const characterSubtitle = document.querySelector("#character-subtitle");
@@ -42,24 +44,25 @@ function loadSheet(url) {
   return sheets.get(url);
 }
 
-function loadMetadata(folder) {
-  if (!metadata.has(folder)) {
-    const loaded = fetch(folder + "/metadata.json").then(response => {
+function loadMetadata(url) {
+  if (!metadata.has(url)) {
+    const loaded = fetch(url).then(response => {
       if (!response.ok) throw new Error("metadata");
       return response.json();
     }).catch(error => {
-      metadata.delete(folder);
+      metadata.delete(url);
       throw error;
     });
-    metadata.set(folder, loaded);
+    metadata.set(url, loaded);
   }
-  return metadata.get(folder);
+  return metadata.get(url);
 }
 
-function configure(data) {
+function configure(data, attackLayout) {
   const layouts = {
     idle: { ...data.neutral, columns: 1 },
     ...data.animations,
+    attack: attackLayout ?? data.animations.attack,
   };
   viewport = {
     width: Math.max(...Object.values(layouts).map(layout => layout.cell[0])),
@@ -124,9 +127,12 @@ async function showSelection() {
   const chosen = characters[character.value];
   const name = motion;
   const facing = direction;
+  const overhead = name === "attack" && attackVariant.value === "overhead";
+  const sheetName = overhead ? "attack-overhead" : name;
   cancelAnimationFrame(animation);
   speed.disabled = name === "idle";
   replay.hidden = name !== "attack";
+  attackVariantRow.hidden = name !== "attack";
   const label = motionButtons.find(button => button.dataset.motion === name).textContent;
   if (characterName.textContent !== chosen.name) {
     characterName.textContent = chosen.name;
@@ -137,11 +143,13 @@ async function showSelection() {
     status.textContent = "画像を読み込み中…";
   }
   try {
-    const [data, image] = await Promise.all([
-      loadMetadata(chosen.assets), loadSheet(chosen.assets + "/" + name + ".png"),
+    const [data, image, attackLayout] = await Promise.all([
+      loadMetadata(chosen.assets + "/metadata.json"),
+      loadSheet(chosen.assets + "/" + sheetName + ".png"),
+      overhead ? loadMetadata(chosen.assets + "/attack-overhead.json") : null,
     ]);
     if (ticket !== selection) return;
-    const layout = configure(data)[name];
+    const layout = configure(data, attackLayout)[name];
     active = {
       name, facing, layout, image, frame: 0, elapsed: 0, lastTick: performance.now(),
       duration: layout.durations_ms?.reduce((total, ms) => total + ms, 0),
@@ -178,4 +186,5 @@ for (const button of directionButtons) {
 replay.addEventListener("click", showSelection);
 scale.addEventListener("change", resize);
 character.addEventListener("change", showSelection);
+attackVariant.addEventListener("change", showSelection);
 showSelection();

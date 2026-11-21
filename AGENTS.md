@@ -25,3 +25,4 @@ AIを活用し、ゲーム用ピクセルアートキャラクターの自動生
 5. 同じ骨格のキャラクターは `characters/<名前>/` に設定、材質・部位NPZ、モーションクリップを追加する。元の関節名と部位ID契約を守り、先に共通モーションの接地と装備の向きを確認する。未依頼の大規模なリファクタリングを行わず、設計変更の理由と影響範囲を記録する。[設定仕様と追加手順](README.md#キャラクター設定-v1)
 6. BRAMの歩行はLARKと同じクリップを参照する。攻撃は `characters.bram.retarget_attack` で右手の目標だけを転用する。調整時は `python -m research.verify_bram <出力先>` で接地、装備の接続、部位の残存、PNGを検査し、見た目も8方向で確認する。[Phase 3レポート](research/PHASE3_VERIFICATION.md)
 7. ウェイト試作は別フォルダへ焼き出し、`research.phase4.compare` で剛体版との関節座標、足・手・装備のボクセル、8方向のPNGを比較する。既存の公開PNGを回帰基準に使う。[実行手順](README.md#bramのウェイト変形を比較する)
+8. 振りかぶり攻撃は `research/overhead/clip.json` を両体形へ転用する。編集後は `research.overhead.compare` で8方向の剣の見え方、キー間の接地と剣身の交差、静止・歩行のRGBAを照合する。旧攻撃のPNGとクリップを比較基準に保持する。[攻撃品質レポート](research/OVERHEAD_ATTACK_VERIFICATION.md)
