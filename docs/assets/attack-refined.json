@@ -1,0 +1,46 @@
+{
+  "rows": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "columns": 9,
+  "cell": [
+    64,
+    64
+  ],
+  "anchor": [
+    32,
+    48
+  ],
+  "fps": 10,
+  "loop": false,
+  "rgba_sha256": "6bcc625834fe82ab748be1511487bdb81c6cac73a3c74dd24b8d2d9924485304",
+  "durations_ms": [
+    60,
+    75,
+    95,
+    115,
+    45,
+    100,
+    90,
+    110,
+    110
+  ],
+  "phase_names": [
+    "guard",
+    "gather",
+    "raise",
+    "apex",
+    "cut",
+    "low follow-through",
+    "settle",
+    "recover",
+    "guard"
+  ]
+}

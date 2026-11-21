@@ -57,15 +57,18 @@ $rebuild = Join-Path $run 'common'
 
 ### 振りかぶり攻撃の生成
 
-標準CLIで旧攻撃を再現できます。公開ギャラリーの新しい攻撃は、同じ剛体リグに振りかぶりクリップを適用して焼き出します。`--character` は `lark` または `bram`。両方とも9コマ、800 ms、64×64の攻撃セルです。
+標準CLIで初期版の攻撃を再現できます。公開ギャラリーの振りかぶり版と輪郭改善版は、同じ剛体リグに攻撃クリップを適用して焼き出します。`--character` は `lark` または `bram`。どちらも9コマ、800 ms、64×64の攻撃セルです。
 
 ~~~powershell
 $overhead = Join-Path $run 'overhead-lark'
 & $python -B -m research.overhead.run --character lark --out $overhead
 & $python -B -m research.overhead.compare --character lark --before $rebuild --after $overhead --out (Join-Path $run 'overhead-comparison')
+$refined = Join-Path $run 'refined-lark'
+& $python -B -m research.overhead.run --character lark --clip research/blade/clip.json --out $refined
+& $python -B -m research.blade.compare --character lark --before $overhead --after $refined --out (Join-Path $run 'blade-comparison')
 ~~~
 
-[攻撃品質の検証と比較資料](research/OVERHEAD_ATTACK_VERIFICATION.md)
+[振りかぶり版の検証](research/OVERHEAD_ATTACK_VERIFICATION.md) · [剣の輪郭改善と比較資料](research/BLADE_REFINEMENT_VERIFICATION.md)
 
 ## キャラクター設定 v1
 
@@ -79,7 +82,7 @@ $overhead = Join-Path $run 'overhead-lark'
 | `posed_volume` | ポーズ後のボクセル原点・上限（X/Y/Z）と共通のボクセル間隔。各姿勢の全部位が余白付きで収まる大きさ |
 | `view` | 挿入順で並ぶ8方向のヨー角、カメラ仰角、1単位当たりの画素数、足元アンカー、静止セルと描画用セル、静止・動作のレイの開始・終了・刻み、輪郭色 |
 | `walk` | 既存形式の歩行クリップ、セル、歩幅に合わせる支持足・頭・腕の調整値。コマ別配列を `poses` に揃え、左右の接地は循環する連続区間、遊脚配列は接地外のコマ数に揃える |
-| `attack` | 既存形式の攻撃クリップ、セル、踏み出す側・主手・装備の軸・反対側の腕の調整値。非空キーに足と手の目標値、主手に合わせた `hand_R`/`hand_L` と `elbow_pole_R`/`elbow_pole_L` を指定する。`shield_delta` は反対側の手の相対オフセット。`keys`、`poses`、`durations_ms` の長さを揃える |
+| `attack` | 既存形式の攻撃クリップ、セル、踏み出す側・主手・装備の軸・反対側の腕の調整値。非空キーに足と手の目標値、主手に合わせた `hand_R`/`hand_L` と `elbow_pole_R`/`elbow_pole_L` を指定する。`shield_delta` は反対側の手の相対オフセット。`wrist_roll` は刃の軸回りの手首角度（度、省略時は0）。`keys`、`poses`、`durations_ms` の長さを揃える |
 | `measurements` | `lowest_z` は計測名と材質IDリスト、`visibility` は計測名と部位名・材質IDリストの組。計測項目がなければ空オブジェクトを指定できる |
 
 ### 同じ骨格のキャラクターを追加する手順
@@ -147,7 +150,7 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-キャラクター欄でLARKとBRAMを切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと改善後を再生し、攻撃モーション欄で同じ方向・倍率・速度のまま改善前へ切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/` にあります。
+キャラクター欄でLARKとBRAMを切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/` にあります。
 
 GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 

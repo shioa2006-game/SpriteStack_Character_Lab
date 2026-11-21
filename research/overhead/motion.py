@@ -57,6 +57,8 @@ def overhead(character, source):
             "elbow_pole_R": (vec(pose["pole"]) * scale).tolist(),
             "shield_delta": (vec(pose["shield_delta"]) * scale).tolist(),
         }
+        if "wrist_roll" in pose:
+            key["wrist_roll"] = pose["wrist_roll"]
         # Same shoulder-relative reach normalization as the Phase 3 retarget.
         key["hand_R"] = (shoulder(rest, key, "R") + vec(pose["hand"]) * reach).tolist()
         support_base = (vec(rest["hand_L"]) + key["root"]

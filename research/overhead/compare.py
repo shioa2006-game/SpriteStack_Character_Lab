@@ -26,9 +26,12 @@ def frame_at(sheet, layout, row, column):
     return sheet.crop((w * column, h * row, w * (column + 1), h * (row + 1)))
 
 
-def check_layout(before, improved, official_assets):
+def check_layout(before, improved, official_assets, *, attack_stem="attack"):
     current, new = (read(folder / "metadata.json") for folder in (before, improved))
-    assert current == read(official_assets / "metadata.json")
+    reference = read(official_assets / "metadata.json")
+    if attack_stem != "attack":
+        reference["animations"]["attack"] = read(official_assets / f"{attack_stem}.json")
+    assert current == reference
     for mode in ("idle", "walk"):
         panes = [open_rgba(folder / f"{mode}.png") for folder in (official_assets, before, improved)]
         assert panes[0].size == panes[1].size == panes[2].size
@@ -37,7 +40,7 @@ def check_layout(before, improved, official_assets):
     assert current["animations"]["walk"] == new["animations"]["walk"]
     poses = tuple(meta["animations"]["attack"] for meta in (current, new))
     sheets = tuple(open_rgba(folder / "attack.png") for folder in (before, improved))
-    assert sheets[0].tobytes() == open_rgba(official_assets / "attack.png").tobytes()
+    assert sheets[0].tobytes() == open_rgba(official_assets / f"{attack_stem}.png").tobytes()
     idle = open_rgba(improved / "idle.png")
     for clip, sheet in zip(poses, sheets, strict=True):
         assert clip["rows"] == DIRECTIONS and clip["columns"] == 9

@@ -20,7 +20,7 @@ def guard_key(rig):
     rest = rig.rest
     tuning = rig.config["attack"]["tuning"]
     return {
-        "root": [0, 0, 0], "yaw": 0, "lean": 0, "front_step": 0, "front_lift": 0,
+        "root": [0, 0, 0], "yaw": 0, "lean": 0, "front_step": 0, "front_lift": 0, "wrist_roll": 0,
         "hand_R": rest["hand_R"],
         "elbow_pole_R": rest["elbow_R"] - rest["shoulder_R"],
         "blade": unit(vec(tuning["weapon_axis"])),

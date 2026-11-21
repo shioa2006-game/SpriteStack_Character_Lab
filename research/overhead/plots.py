@@ -20,14 +20,14 @@ def camera_projection(yaw, pitch):
     return np.stack((right, up), axis=1)
 
 
-def plot_paths(path, name, camera, directions, measurements, visibility):
+def plot_paths(path, name, camera, directions, measurements, visibility, *, variant_label="Overhead"):
     image = Image.new("RGB", (1440, 924), "#111b2b")
     draw = ImageDraw.Draw(image)
     small, regular, heading = (ImageFont.load_default(size=size) for size in (12, 16, 25))
     draw.text((22, 14), f"{name.upper()}   /   SWORD AND RIGHT HAND PATHS",
               font=heading, fill="#edf1f5")
     legends = (("Before: hand", COLORS[0][0]), ("Before: tip", COLORS[0][1]),
-               ("Overhead: hand", COLORS[1][0]), ("Overhead: tip", COLORS[1][1]))
+               (f"{variant_label}: hand", COLORS[1][0]), (f"{variant_label}: tip", COLORS[1][1]))
     for i, (label, color) in enumerate(legends):
         x = 23 + 150 * i
         draw.line((x, 59, x + 18, 59), fill=color, width=2)

@@ -198,6 +198,8 @@ class Biped:
             if side == tuning["main_hand_side"]:
                 hand = vec(key["hand_" + side])
                 wrist = align(vec(tuning["weapon_axis"]), vec(key["blade"]))
+                if roll := float(key.get("wrist_roll", 0)):
+                    wrist = rotate(key["blade"], roll) @ wrist
                 elbow_pole = vec(key["elbow_pole_" + side])
             else:
                 hand = self.rest["hand_" + side] + root + vec(key["shield_delta"]) + vec([

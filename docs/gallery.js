@@ -19,6 +19,7 @@ const characters = {
   lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets" },
   bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram" },
 };
+const attackSheets = { refined: "attack-refined", overhead: "attack-overhead", legacy: "attack" };
 const sheets = new Map();
 const metadata = new Map();
 let viewport;
@@ -127,8 +128,7 @@ async function showSelection() {
   const chosen = characters[character.value];
   const name = motion;
   const facing = direction;
-  const overhead = name === "attack" && attackVariant.value === "overhead";
-  const sheetName = overhead ? "attack-overhead" : name;
+  const sheetName = name === "attack" ? attackSheets[attackVariant.value] : name;
   cancelAnimationFrame(animation);
   speed.disabled = name === "idle";
   replay.hidden = name !== "attack";
@@ -146,7 +146,7 @@ async function showSelection() {
     const [data, image, attackLayout] = await Promise.all([
       loadMetadata(chosen.assets + "/metadata.json"),
       loadSheet(chosen.assets + "/" + sheetName + ".png"),
-      overhead ? loadMetadata(chosen.assets + "/attack-overhead.json") : null,
+      sheetName !== name ? loadMetadata(chosen.assets + "/" + sheetName + ".json") : null,
     ]);
     if (ticket !== selection) return;
     const layout = configure(data, attackLayout)[name];
