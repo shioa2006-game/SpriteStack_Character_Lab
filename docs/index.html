@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="LARKの静止・歩行・攻撃を8方向のPNGスプライトで確認。">
+  <title>LARK — SpriteStack Character Lab</title>
+  <link rel="stylesheet" href="gallery.css">
+  <script src="gallery.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="heading">
+      <p class="lab-name">SpriteStack Character Lab</p>
+      <h1>LARK <span lang="en">The Blue Squire</span></h1>
+    </header>
+
+    <section class="gallery" aria-label="LARK スプライトギャラリー">
+      <figure class="viewer">
+        <div class="stage">
+          <canvas id="sprite" width="256" height="256" role="img" aria-label="LARK のスプライト">LARK のスプライト</canvas>
+        </div>
+        <figcaption>
+          <span id="status" role="status">画像を読み込み中…</span>
+          <span id="frame"></span>
+        </figcaption>
+      </figure>
+
+      <div class="controls">
+        <fieldset>
+          <legend>モーション</legend>
+          <div class="motions">
+            <button type="button" data-motion="idle" aria-pressed="true">静止</button>
+            <button type="button" data-motion="walk" aria-pressed="false">歩行</button>
+            <button type="button" data-motion="attack" aria-pressed="false">攻撃</button>
+          </div>
+        </fieldset>
+
+        <div class="settings">
+          <fieldset>
+            <legend>方向</legend>
+            <div class="directions">
+              <button type="button" data-direction="NW" aria-label="NW 北西" aria-pressed="false">NW</button>
+              <button type="button" data-direction="N" aria-label="N 北" aria-pressed="false">N</button>
+              <button type="button" data-direction="NE" aria-label="NE 北東" aria-pressed="false">NE</button>
+              <button type="button" data-direction="W" aria-label="W 西" aria-pressed="false">W</button>
+              <span class="compass-center" aria-hidden="true"></span>
+              <button type="button" data-direction="E" aria-label="E 東" aria-pressed="false">E</button>
+              <button type="button" data-direction="SW" aria-label="SW 南西" aria-pressed="true">SW</button>
+              <button type="button" data-direction="S" aria-label="S 南" aria-pressed="false">S</button>
+              <button type="button" data-direction="SE" aria-label="SE 南東" aria-pressed="false">SE</button>
+            </div>
+          </fieldset>
+
+          <div class="playback">
+            <label for="scale">表示倍率</label>
+            <select id="scale">
+              <option value="1">原寸 (1×)</option>
+              <option value="2">2×</option>
+              <option value="3">3×</option>
+              <option value="4" selected>4×</option>
+            </select>
+            <label for="speed">再生速度</label>
+            <select id="speed" disabled>
+              <option value="0.25">0.25×</option>
+              <option value="0.5">0.5×</option>
+              <option value="1" selected>1×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2×</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="replay" type="button" hidden>攻撃をもう一度再生</button>
+      </div>
+    </section>
+    <noscript><p>スプライトを切り替えるには JavaScript を有効にしてください。</p></noscript>
+  </main>
+</body>
+</html>

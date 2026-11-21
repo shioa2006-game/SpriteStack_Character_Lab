@@ -1,0 +1,171 @@
+{
+  "version": 3,
+  "camera": {
+    "pitch_deg": 24,
+    "pixels_per_unit": 1.19,
+    "base_pivot": [
+      24,
+      40
+    ]
+  },
+  "world_axes": {
+    "X_positive": "anatomical left",
+    "Y_positive": "front",
+    "Z_positive": "up"
+  },
+  "volume_origin_xyz": [
+    -24.0,
+    -23.0,
+    -2.0
+  ],
+  "volume_order": "Z,Y,X",
+  "voxel_size_xyz": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "neutral": {
+    "layout": "1 row, 8 columns",
+    "directions": [
+      "S",
+      "SW",
+      "W",
+      "NW",
+      "N",
+      "NE",
+      "E",
+      "SE"
+    ],
+    "cell": [
+      48,
+      48
+    ],
+    "anchor": [
+      24,
+      40
+    ]
+  },
+  "parts": {
+    "head": 1,
+    "chest": 2,
+    "pelvis": 3,
+    "thigh_R": 4,
+    "shin_R": 5,
+    "boot_R": 6,
+    "upper_R": 7,
+    "fore_R": 8,
+    "hand_R": 9,
+    "thigh_L": 10,
+    "shin_L": 11,
+    "boot_L": 12,
+    "upper_L": 13,
+    "fore_L": 14,
+    "hand_L": 15,
+    "sword": 16,
+    "shield": 17
+  },
+  "animations": {
+    "walk": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 6,
+      "cell": [
+        48,
+        48
+      ],
+      "anchor": [
+        24,
+        40
+      ],
+      "fps": 9,
+      "loop": true,
+      "rgba_sha256": "a3b410e090724cdfa803592340257ebd11ca1452eedbb8bdfb2adbd32758c4b3",
+      "suggested_forward_per_frame_model_units": 1.9,
+      "poses": [
+        "left heel contact",
+        "left loading",
+        "right passing",
+        "right heel contact",
+        "right loading",
+        "left passing"
+      ],
+      "contact": {
+        "index_base": 0,
+        "cycle_frames": 6,
+        "inclusive_stance_cyclic": {
+          "L": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "R": [
+            3,
+            4,
+            5,
+            0
+          ]
+        },
+        "sole_markers": {
+          "L": "toe_L",
+          "R": "toe_R"
+        },
+        "stance_note": "Flat rigid boot, model z=0. Keep a marker fixed on the ground while root advances by 1.9 model units per frame. Both feet touch at frames 0 and 3."
+      }
+    },
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        48
+      ],
+      "fps": 10,
+      "loop": false,
+      "rgba_sha256": "5243c9c404ed2fc3c6c0dfd32d9eab58f1bd2f4790c9b9aa2a9771003f9cca62",
+      "durations_ms": [
+        75,
+        85,
+        105,
+        105,
+        45,
+        50,
+        95,
+        100,
+        140
+      ],
+      "phase_names": [
+        "guard",
+        "anticipation",
+        "raise",
+        "coil",
+        "cut",
+        "downstroke",
+        "follow-through",
+        "recover",
+        "guard"
+      ]
+    }
+  }
+}
