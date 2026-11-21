@@ -8,8 +8,8 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | --- | --- |
 | 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、設定ファイルで条件を変えられる汎用品質検証、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
-| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMARENと、魔法使いCRYSTAL MAGEの静止8方向（48×48と64×64の比較） |
-| 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、MARENの歩行・攻撃、CRYSTAL MAGEの歩行と杖の攻撃、マント・裾の従属部位 |
+| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMAREN、魔法使いCRYSTAL MAGE、スカーフの剣士AZURE RONINの静止8方向（CRYSTAL MAGEとAZURE RONINは48×48と64×64の比較） |
+| 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、MARENの歩行・攻撃、CRYSTAL MAGEの歩行と杖の攻撃、AZURE RONINの歩行・攻撃、マント・裾・髪束の従属部位 |
 | 検証課題 | 他の体形への転用範囲、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
 方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
@@ -23,6 +23,7 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | [characters/bram/](characters/bram/) | BRAMの独立モデル、部位マスク、設定、攻撃目標の転用手順 |
 | [characters/maren/](characters/maren/) | 参考画像から作ったMARENのモデル生成コード、NPZ、設定、品質設定、採色範囲と抽出色、配色の出典、旧来の静止のベイク |
 | [characters/crystal_mage/](characters/crystal_mage/) | 参考画像から作った魔法使いCRYSTAL MAGEのモデル生成コード、NPZ、設定（64×64の比較用の `comparison_view` を含む）、品質設定、採色範囲と抽出色、配色の出典、旧来の静止のベイク |
+| [characters/azure_ronin/](characters/azure_ronin/) | 参考画像から作ったスカーフの剣士AZURE RONINのモデル生成コード、NPZ、設定（装備は右手の剣1つ、64×64の比較用の `comparison_view` を含む）、品質設定、採色範囲と抽出色、配色の出典。ベイクと検証は共通CLIと汎用検証だけを使う |
 | [experiments/lark_stage3/](experiments/lark_stage3/) | ZIPから移植した基準コード・モデル・検証スクリプト・元のプレビュー |
 | [experiments/lark_stage3/baseline/](experiments/lark_stage3/baseline/) | 旧版と、再生成に必要な元モデル・水平断面 |
 | [experiments/lark_stage3/output/](experiments/lark_stage3/output/) | 8方向 PNG、関節・計測 JSON、水平断面・部位 ID の NPZ |
@@ -181,6 +182,21 @@ $mage = Join-Path $run 'crystal_mage'
 
 検証は、モデルの再生成、部位のつながりと手・装備の接触、8方向の配置と余白、各コマと再描画の一致、杖と本の左右、公開素材との一致を確認します。モデルNPZは `python characters/crystal_mage/build_model.py --out <出力先>` で作り直せます。参考画像との比較、48×48と64×64の評価、推測で補った背面、マントを動かすための課題は[実験02レポート](research/IMAGE_TO_CHARACTER_02.md)を参照してください。
 
+### AZURE RONINの生成と検証（画像からの生成実験03）
+
+AZURE RONIN（`azure_ronin`）は参考イラスト1枚から作った軽装の剣士です。高い位置で束ねた紺の髪と青い結び紐、鼻から下を覆う濃灰のスカーフと後ろに垂れる端、ベージュの上衣と青い布の2層の裾、濃色のズボン、右手の反りのある片手剣を立体化しました。左手は空で、取り付け枠は剣の1つだけです（16部位）。参考画像は追跡せず、採色範囲の座標と抽出色だけを置いています。
+
+共通化後に作った最初のキャラクターで、キャラクター用のベイク・検証スクリプトはありません。静止は共通CLIの `--modes idle` で48×48の標準と64×64の比較を焼き、`quality.json` の条件で汎用検証します。歩行・攻撃の設定は読込のためにLARKのクリップを参照するだけで、公開していません（全モードの標準CLIは止まらずに焼けますが、未調整です）。
+
+~~~powershell
+$ronin = Join-Path $run 'azure_ronin'
+& $python -B -m spritestack --character characters/azure_ronin/character.json --modes idle --out $ronin
+& $python -B -m research.verify_character --character characters/azure_ronin/character.json --out $ronin
+& $python -B -m research.image_to_character_03.compare --idle $ronin --out (Join-Path $run 'ronin-comparison')
+~~~
+
+検証は、モデルの再生成、剣と右手の接触と途切れ、8方向の配置と余白、各コマと再描画の一致、スカーフ・ポニーテール・剣・衣装の層の可視画素、形の存在条件、公開素材との一致を確認します。比較スクリプトは、描画上で刀身が1つながりかも数えます。参考画像との比較、推測で補った背面、共通化で省略できた作業と残った個別判断は[実験03レポート](research/IMAGE_TO_CHARACTER_03.md)を参照してください。
+
 新しい参考画像からキャラクターを作る手順は[制作ガイド](research/CHARACTER_CREATION_GUIDE.md)、実験01・02の比較と共通化の提案は[比較分析](research/IMAGE_TO_CHARACTER_COMPARISON.md)にまとめています。
 
 ## 旧コードと同梱成果物の検証
@@ -213,7 +229,7 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-キャラクター欄でLARK、BRAM、MAREN、CRYSTAL MAGEを切り替えられます。MARENとCRYSTAL MAGEは静止8方向だけを公開し、歩行・攻撃のボタンは無効になります。CRYSTAL MAGEでは「セル解像度」欄で48×48の標準と64×64の比較を切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/`、MARENの素材は `docs/assets/maren/`、CRYSTAL MAGEの素材は `docs/assets/crystal_mage/` にあります。
+キャラクター欄でLARK、BRAM、MAREN、CRYSTAL MAGE、AZURE RONINを切り替えられます。MAREN、CRYSTAL MAGE、AZURE RONINは静止8方向だけを公開し、歩行・攻撃のボタンは無効になります。CRYSTAL MAGEとAZURE RONINでは「セル解像度」欄で48×48の標準と64×64の比較を切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/`、MARENの素材は `docs/assets/maren/`、CRYSTAL MAGEの素材は `docs/assets/crystal_mage/`、AZURE RONINの素材は `docs/assets/azure_ronin/` にあります。
 
 GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 

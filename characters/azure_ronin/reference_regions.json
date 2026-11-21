@@ -1,0 +1,76 @@
+{
+  "image": {
+    "description": "Single reference illustration for image-to-character experiment 03 (a young male swordsman with a high ponytail, a dark scarf over the lower face, a beige sleeveless tunic with long panels, blue cloth layers, dark trousers and a curved one-handed sword). Only coordinates and derived colors are tracked; the image pixels are not.",
+    "size": [556, 738]
+  },
+  "regions": {
+    "hair": {"boxes": [[264, 22, 292, 40], [298, 42, 310, 58], [270, 50, 280, 70]]},
+    "hair_ribbon": {"boxes": [[150, 82, 178, 92], [100, 82, 118, 96]], "filter": "saturated_blue"},
+    "eyes": {"boxes": [[285, 61, 297, 67], [311, 61, 320, 67]], "filter": "dark"},
+    "skin_face": {"boxes": [[296, 70, 306, 78]]},
+    "skin_arm": {"boxes": [[340, 198, 358, 228], [188, 222, 200, 236]]},
+    "scarf": {"boxes": [[282, 98, 312, 116], [236, 128, 262, 146], [318, 100, 334, 118]]},
+    "scarf_tail": {"boxes": [[60, 196, 100, 214], [120, 160, 150, 176]]},
+    "tunic": {"boxes": [[295, 184, 320, 214], [312, 445, 328, 470], [440, 410, 480, 428]]},
+    "blue_cloth": {"boxes": [[255, 500, 280, 530], [400, 470, 430, 490], [290, 268, 300, 292]]},
+    "trousers": {"boxes": [[170, 445, 200, 470], [330, 550, 350, 575]]},
+    "belt": {"boxes": [[264, 252, 290, 262], [262, 182, 272, 198]]},
+    "buckle": {"boxes": [[240, 248, 256, 262]], "filter": "bright"},
+    "bracer": {"boxes": [[150, 262, 170, 290], [378, 252, 398, 280]]},
+    "armband": {"boxes": [[346, 166, 366, 180]]},
+    "knee_guard": {"boxes": [[185, 490, 210, 500]]},
+    "shin_wrap": {"boxes": [[158, 572, 180, 582]], "filter": "saturated_blue"},
+    "boot": {"boxes": [[150, 650, 170, 690], [352, 660, 372, 680]]},
+    "blade": {"boxes": [[74, 440, 82, 452], [100, 400, 108, 410], [36, 510, 42, 520]]},
+    "tsuba": {"boxes": [[108, 352, 118, 364]]},
+    "sword_grip": {"boxes": [[165, 322, 180, 332]]}
+  },
+  "landmarks_y": {
+    "hair_top": 5,
+    "skull_top": 20,
+    "ponytail_tie": 28,
+    "eyes": 63,
+    "scarf_top": 80,
+    "chin": 95,
+    "shoulder": 122,
+    "scarf_bottom": 142,
+    "waist_belt": 256,
+    "tunic_front_tip": 375,
+    "knee": 505,
+    "long_panel_tip": 560,
+    "shin_wrap": 580,
+    "boot_top": 600,
+    "sole": 727
+  },
+  "sword": {
+    "pommel": [195, 307],
+    "tsuba": [120, 368],
+    "blade_mid": [53, 482],
+    "tip": [3, 592]
+  },
+  "widths_x": {
+    "figure_center": 272,
+    "shoulder_right": 212,
+    "shoulder_left": 366,
+    "scarf_tail_tip_right_of_figure": 10,
+    "long_panel_tip_left_of_figure": 545,
+    "ponytail_tip_right_of_figure": 175
+  },
+  "notes": {
+    "orientation": "The body is turned slightly toward the viewer's left and the head toward the viewer's right. The sword is in the hand on the viewer's left, which is his anatomical right hand, so it already matches the project contract (main item right). The anatomical left hand is empty.",
+    "landmarks": "Vertical positions in image pixels. The chin is hidden by the scarf and estimated from the jaw line above it. 'figure_center' is the midpoint between the outer edges of the boots. Widths on the 'right_of_figure' side are on the viewer's left.",
+    "sole": "The sole landmark is the bottom of the front boot (viewer's left); the other boot stands higher in the picture because it is farther back.",
+    "wind": "The ponytail, the two hair ribbons and the scarf tail blow toward the viewer's left. In a standing idle model they hang behind the figure instead.",
+    "hidden": "The back of the head, the ponytail root, the back of the scarf and tunic, the back panels of the skirt, the far side of the sword hilt and scabbard, and the soles are not visible."
+  },
+  "families": {
+    "navy hair": ["hair", "eyes"],
+    "skin": ["skin_face", "skin_arm"],
+    "beige tunic": ["tunic", "buckle"],
+    "blue cloth": ["blue_cloth", "hair_ribbon", "shin_wrap"],
+    "charcoal scarf and trousers": ["scarf", "scarf_tail", "trousers", "bracer", "armband"],
+    "brown leather": ["belt", "boot"],
+    "steel and bronze": ["blade", "tsuba", "knee_guard", "sword_grip"]
+  },
+  "exclude_boxes": [[0, 700, 125, 738], [190, 695, 556, 738]]
+}

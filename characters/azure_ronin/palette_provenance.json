@@ -1,0 +1,29 @@
+{
+  "description": "How each AZURE RONIN material color relates to the colors sampled from the reference image (reference_palette.json). extracted: all three tones copied. adjusted: sampled, then changed for the 48 px renderer. derived: no direct sample; built from a related sample.",
+  "materials": {
+    "sole": {"source": "boot", "method": "derived", "note": "靴底は画像でほとんど見えない。ブーツより暗い推測色。輪郭色 #241c2a より明るくした"},
+    "boot": {"source": "boot", "method": "adjusted", "note": "抽出色 534646 はスカーフ 52494c とほぼ同じ灰色。足元の塊をスカーフ・ズボンと分けるため、ベルトと同じ茶色の色相に寄せ、明色を上げた"},
+    "trousers": {"source": "trousers", "method": "adjusted", "note": "抽出の明色 4a4344 は基色との差が小さく、太いズボンの丸みが出ない。明色だけ上げ、影色をわずかに下げた"},
+    "metal": {"source": "knee_guard", "method": "extracted", "note": "膝当てと腕当ての金属板"},
+    "tunic": {"source": "tunic", "method": "adjusted", "note": "採色範囲に汚れの灰色が多く、抽出の基色 af9990 は暗い灰褐色。画像で見える白〜薄ベージュの上衣にするため明度を上げた。肌 e8baa2 とは彩度と色相で分かれる"},
+    "tunic shade": {"source": "tunic", "method": "derived", "note": "裾の布の継ぎ目。上衣より一段暗い"},
+    "blue cloth": {"source": "blue_cloth", "method": "adjusted", "note": "抽出色 454f6f は汚れで灰色に寄った。48 pxで「紺〜青の差し色」と分かるよう、彩度を上げた"},
+    "blue lining": {"source": "blue_cloth", "method": "derived", "note": "青い布と上衣の裾の裏。画像の長い裾の裏は青い。青い布より暗い"},
+    "belt": {"source": "belt", "method": "extracted", "note": "腰のベルト、胸の斜めの帯、腕輪、ブーツの留め帯"},
+    "buckle": {"source": "buckle", "method": "adjusted", "note": "抽出色は上衣と同じベージュで、ベルト上の金具に見えない。鋼色にした"},
+    "scarf": {"source": "scarf", "method": "extracted", "note": "顔を覆う布、首と肩の巻き、後ろに垂れる端。髪（紺）とは色相、ズボンとは明度で分かれる"},
+    "scarf shade": {"source": "scarf", "method": "derived", "note": "スカーフのしわ。スカーフより一段暗い"},
+    "skin": {"source": "skin_arm", "method": "extracted", "note": "顔の採色は範囲が小さく3階調の差がない。腕の採色を使った"},
+    "eyes": {"source": "eyes", "method": "adjusted", "note": "採色はまつげの茶色が中心。1 pxの目として、画像の灰青の瞳に近い暗い青灰色にした"},
+    "hair": {"source": "hair", "method": "adjusted", "note": "採色範囲に白い光沢と背景が混ざり、抽出色 4f4853 は灰紫。画像の紺に近い暗い青にした。初回の明色 4b5d96 は48 pxで明るすぎたため下げた"},
+    "hair shade": {"source": "hair", "method": "derived", "note": "毛束の溝。髪より暗い"},
+    "ponytail": {"source": "hair", "method": "derived", "note": "髪と同じ3階調。別の材質IDと陰影グループにして、頭と重なる境界に段差線を入れ、可視画素を数えられるようにした"},
+    "hair ribbon": {"source": "hair_ribbon", "method": "adjusted", "note": "抽出色 535576 は灰色寄り。紺の髪の上で結び紐と分かるよう、明るく鮮やかな青にした"},
+    "bracer": {"source": "bracer", "method": "extracted", "note": "手甲と指なし手袋"},
+    "sheath": {"source": "bracer", "method": "derived", "note": "腰の短い刀の鞘。画像では暗い漆塗り。手甲より暗い"},
+    "blade": {"source": "blade", "method": "adjusted", "note": "抽出色は背景の反射で赤み。ベージュの上衣と分かれる寒色の鋼色にした"},
+    "blade edge": {"source": "blade", "method": "derived", "note": "刃側（反りの外側）の明るい線。1 px幅の刀身で光る線になる"},
+    "tsuba": {"source": "tsuba", "method": "adjusted", "note": "抽出の明色 cdb9a8 は光の反射。暗い青銅の鍔として明色を下げた"},
+    "sword grip": {"source": "sword_grip", "method": "adjusted", "note": "抽出色は灰色。画像の柄巻きの紺にした。腰の短い刀の柄にも使う"}
+  }
+}

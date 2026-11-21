@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "description": "Quality settings for research.verify_character. AZURE RONIN holds one item, a curved sword in the right hand; the left hand is empty. Visibility thresholds are about half of the values measured on the published 48 and 64 sheets. The sword is never hidden; in NW the body covers most of it (natural occlusion), so the main blade rule leaves NW out. The hair ribbons are a small accent, so their rule is a warning.",
+  "model_builder": "characters.azure_ronin.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {"same_as": "../lark/character.json"},
+    "attack": {"same_as": "../lark/character.json"}
+  },
+  "items": {
+    "main": {"part": "sword", "hand": "hand_R", "marker": "sword_tip"}
+  },
+  "continuous": [
+    {"part": "sword", "through": ["hand_R"]}
+  ],
+  "cells": [48, 64],
+  "visibility": [
+    {"label": "sword blade", "part": "sword", "materials": ["blade", "blade edge"], "min_px": {"48": 1, "64": 3}, "directions": "all"},
+    {"label": "sword blade outside NW", "part": "sword", "materials": ["blade", "blade edge"], "min_px": {"48": 3, "64": 6}, "directions": ["S", "SW", "W", "N", "NE", "E", "SE"]},
+    {"label": "scarf over the face", "part": "head", "materials": ["scarf", "scarf shade"], "min_px": {"48": 4, "64": 8}, "directions": ["S", "SW", "W", "E", "SE"]},
+    {"label": "eyes above the scarf", "part": "head", "materials": ["eyes"], "min_px": 1, "directions": ["S", "SW", "SE"]},
+    {"label": "ponytail from behind and the sides", "part": "head", "materials": ["ponytail"], "min_px": {"48": 11, "64": 20}, "directions": ["W", "NW", "N", "NE", "E"]},
+    {"label": "hair ribbons", "part": "head", "materials": ["hair ribbon"], "min_px": {"48": 1, "64": 3}, "directions": ["SW", "W", "NW", "N", "NE", "E", "SE"], "severity": "warning"},
+    {"label": "scarf collar and tail from behind", "part": "chest", "materials": ["scarf", "scarf shade"], "min_px": {"48": 23, "64": 40}, "directions": ["NW", "N", "NE", "E"]},
+    {"label": "beige tunic", "part": "chest", "materials": ["tunic"], "min_px": {"48": 5, "64": 9}, "directions": ["S", "SW", "SE"]},
+    {"label": "beige skirt panels", "part": "pelvis", "materials": ["tunic", "tunic shade"], "min_px": {"48": 12, "64": 19}, "directions": "all"},
+    {"label": "blue skirt layer", "part": "pelvis", "materials": ["blue cloth", "blue lining"], "min_px": {"48": 5, "64": 9}, "directions": "all"},
+    {"label": "dark trousers right", "part": "thigh_R", "materials": ["trousers"], "min_px": {"48": 2, "64": 6}, "directions": ["S", "SW", "SE"]},
+    {"label": "dark trousers left", "part": "thigh_L", "materials": ["trousers"], "min_px": {"48": 2, "64": 6}, "directions": ["S", "SW", "SE"]}
+  ],
+  "presence": [
+    {"label": "ponytail rises to the top of the hair", "part": "head", "materials": ["ponytail"], "highest_z_at_least": 28.5},
+    {"label": "ponytail falls to the shoulders", "part": "head", "materials": ["ponytail"], "lowest_z_at_most": 21.0},
+    {"label": "scarf covers the nose and mouth", "part": "head", "materials": ["scarf", "scarf shade"], "highest_z_at_least": 22.5},
+    {"label": "scarf tail hangs below the waist", "part": "chest", "materials": ["scarf", "scarf shade"], "lowest_z_at_most": 11.0},
+    {"label": "long back panels", "part": "pelvis", "materials": ["tunic", "tunic shade"], "lowest_z_at_most": 7.5}
+  ],
+  "published": "../../docs/assets/azure_ronin"
+}

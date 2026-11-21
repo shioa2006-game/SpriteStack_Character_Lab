@@ -1,0 +1,183 @@
+{
+  "source_sha256": "ee0fdf88f0381a373b2509df732cec3e42e85749d4a864370c3b8ac955b01d85",
+  "percentile_bands": {
+    "shadow": [
+      10,
+      30
+    ],
+    "base": [
+      45,
+      70
+    ],
+    "light": [
+      80,
+      95
+    ]
+  },
+  "materials": {
+    "hair": {
+      "shadow": "3c3a46",
+      "base": "4f4853",
+      "light": "6b5d66",
+      "pixels": 896
+    },
+    "hair_ribbon": {
+      "shadow": "494c6f",
+      "base": "535576",
+      "light": "5d5f81",
+      "pixels": 197
+    },
+    "eyes": {
+      "shadow": "442e26",
+      "base": "6a5349",
+      "light": "8b6f62",
+      "pixels": 62
+    },
+    "skin_face": {
+      "shadow": "edceb6",
+      "base": "f8d3bc",
+      "light": "fbd7c2",
+      "pixels": 80
+    },
+    "skin_arm": {
+      "shadow": "bd9584",
+      "base": "e8baa2",
+      "light": "f4c8b0",
+      "pixels": 355
+    },
+    "scarf": {
+      "shadow": "383234",
+      "base": "52494c",
+      "light": "665c5d",
+      "pixels": 1292
+    },
+    "scarf_tail": {
+      "shadow": "37353e",
+      "base": "4e4c5a",
+      "light": "938891",
+      "pixels": 975
+    },
+    "tunic": {
+      "shadow": "837370",
+      "base": "af9990",
+      "light": "cdb4a9",
+      "pixels": 1851
+    },
+    "blue_cloth": {
+      "shadow": "353a4e",
+      "base": "454f6f",
+      "light": "4c5a7e",
+      "pixels": 1590
+    },
+    "trousers": {
+      "shadow": "332e2e",
+      "base": "403a3b",
+      "light": "4a4344",
+      "pixels": 1249
+    },
+    "belt": {
+      "shadow": "3c3230",
+      "base": "5e463c",
+      "light": "6a514b",
+      "pixels": 420
+    },
+    "buckle": {
+      "shadow": "947d71",
+      "base": "a9938a",
+      "light": "cab4a9",
+      "pixels": 45
+    },
+    "bracer": {
+      "shadow": "403737",
+      "base": "534949",
+      "light": "827472",
+      "pixels": 1001
+    },
+    "armband": {
+      "shadow": "4c3d3c",
+      "base": "64534e",
+      "light": "765f5a",
+      "pixels": 280
+    },
+    "knee_guard": {
+      "shadow": "7e6a62",
+      "base": "917d75",
+      "light": "a58f87",
+      "pixels": 250
+    },
+    "shin_wrap": {
+      "shadow": "434964",
+      "base": "4e5574",
+      "light": "576080",
+      "pixels": 173
+    },
+    "boot": {
+      "shadow": "3c3232",
+      "base": "534646",
+      "light": "685655",
+      "pixels": 1200
+    },
+    "blade": {
+      "shadow": "948d90",
+      "base": "beb2b4",
+      "light": "e0d5d6",
+      "pixels": 107
+    },
+    "tsuba": {
+      "shadow": "40332b",
+      "base": "67534b",
+      "light": "cdb9a8",
+      "pixels": 113
+    },
+    "sword_grip": {
+      "shadow": "403e47",
+      "base": "504c56",
+      "light": "8a7b7b",
+      "pixels": 144
+    }
+  },
+  "family_area_share": {
+    "navy hair": 0.053,
+    "skin": 0.0524,
+    "beige tunic": 0.1041,
+    "blue cloth": 0.1831,
+    "charcoal scarf and trousers": 0.3956,
+    "brown leather": 0.0489,
+    "steel and bronze": 0.1629
+  },
+  "figure_pixels": 147535,
+  "height_fraction_above_sole": {
+    "hair_top": 1.0,
+    "skull_top": 0.9792,
+    "ponytail_tie": 0.9681,
+    "eyes": 0.9197,
+    "scarf_top": 0.8961,
+    "chin": 0.8753,
+    "shoulder": 0.838,
+    "scarf_bottom": 0.8102,
+    "waist_belt": 0.6524,
+    "tunic_front_tip": 0.4875,
+    "knee": 0.3075,
+    "long_panel_tip": 0.2313,
+    "shin_wrap": 0.2036,
+    "boot_top": 0.1759,
+    "sole": 0.0
+  },
+  "heads_tall": 9.43,
+  "sword": {
+    "blade_length_over_figure_height": 0.35,
+    "hilt_length_over_figure_height": 0.1339,
+    "blade_sagitta_over_blade_length": 0.0261,
+    "blade_angle_deg_from_vertical": 27.58,
+    "tip_height_fraction_above_sole": 0.187,
+    "tsuba_height_fraction_above_sole": 0.4972
+  },
+  "half_width_over_height": {
+    "shoulder_right": 0.0831,
+    "shoulder_left": 0.1302,
+    "scarf_tail_tip_right": 0.3629,
+    "long_panel_tip_left": 0.3781,
+    "ponytail_tip_right": 0.1343
+  },
+  "shoulder_width_over_height": 0.2133
+}

@@ -1,0 +1,621 @@
+{
+  "reference_source_sha256": "ee0fdf88f0381a373b2509df732cec3e42e85749d4a864370c3b8ac955b01d85",
+  "family_area_share": {
+    "reference": {
+      "navy hair": 0.053,
+      "skin": 0.0524,
+      "beige tunic": 0.1041,
+      "blue cloth": 0.1831,
+      "charcoal scarf and trousers": 0.3956,
+      "brown leather": 0.0489,
+      "steel and bronze": 0.1629
+    },
+    "ronin_48_front_mean": {
+      "navy hair": 0.2016,
+      "skin": 0.0894,
+      "beige tunic": 0.1386,
+      "blue cloth": 0.0799,
+      "charcoal scarf and trousers": 0.2241,
+      "brown leather": 0.1595,
+      "steel and bronze": 0.1069
+    },
+    "ronin_48_all_mean": {
+      "navy hair": 0.2421,
+      "skin": 0.0674,
+      "beige tunic": 0.1614,
+      "blue cloth": 0.0771,
+      "charcoal scarf and trousers": 0.228,
+      "brown leather": 0.1468,
+      "steel and bronze": 0.0772
+    }
+  },
+  "proportions": {
+    "RONIN": {
+      "height_units": 29.0,
+      "shoulder": 0.655,
+      "hip": 0.434,
+      "knee": 0.228
+    },
+    "MAGE": {
+      "height_units": 30.5,
+      "shoulder": 0.623,
+      "hip": 0.413,
+      "knee": 0.216
+    },
+    "MAREN": {
+      "height_units": 33.0,
+      "shoulder": 0.627,
+      "hip": 0.421,
+      "knee": 0.248
+    },
+    "LARK": {
+      "height_units": 32.0,
+      "shoulder": 0.497,
+      "hip": 0.301,
+      "knee": 0.194
+    },
+    "BRAM": {
+      "height_units": 24.5,
+      "shoulder": 0.476,
+      "hip": 0.278,
+      "knee": 0.18
+    },
+    "reference": {
+      "shoulder": 0.838,
+      "waist_belt": 0.6524,
+      "knee": 0.3075,
+      "heads_tall": 9.43,
+      "blade_over_figure_height": 0.35
+    }
+  },
+  "shapes": {
+    "hair_top_units": 29.0,
+    "blade_length_units": 11.11,
+    "blade_over_figure_height": 0.383,
+    "blade_sagitta_design_units": 0.85,
+    "ponytail_z_range": [
+      19.5,
+      29.0
+    ],
+    "ponytail_behind_hair_units": 3.5,
+    "scarf_tail_lowest_z": 9.5,
+    "back_panel_lowest_z": 6.5
+  },
+  "palette_methods": {
+    "extracted": 5,
+    "adjusted": 11,
+    "derived": 8
+  },
+  "idle_48": {
+    "S": {
+      "bbox": [
+        9,
+        5,
+        32,
+        42
+      ],
+      "figure_px": 311,
+      "family_share": {
+        "navy hair": 0.1768,
+        "skin": 0.1029,
+        "beige tunic": 0.164,
+        "blue cloth": 0.0804,
+        "charcoal scarf and trousers": 0.2219,
+        "brown leather": 0.1511,
+        "steel and bronze": 0.1029
+      },
+      "visible_px": {
+        "blade": 18,
+        "hilt": 1,
+        "ponytail": 7,
+        "hair ribbon": 0,
+        "eyes": 2,
+        "scarf mask": 14,
+        "scarf collar and tail": 21,
+        "beige tunic": 18,
+        "skirt beige": 33,
+        "skirt blue": 21,
+        "hip sword": 7
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "SW": {
+      "bbox": [
+        7,
+        6,
+        32,
+        43
+      ],
+      "figure_px": 305,
+      "family_share": {
+        "navy hair": 0.1902,
+        "skin": 0.0852,
+        "beige tunic": 0.1344,
+        "blue cloth": 0.0852,
+        "charcoal scarf and trousers": 0.2066,
+        "brown leather": 0.1639,
+        "steel and bronze": 0.1344
+      },
+      "visible_px": {
+        "blade": 20,
+        "hilt": 5,
+        "ponytail": 6,
+        "hair ribbon": 4,
+        "eyes": 2,
+        "scarf mask": 14,
+        "scarf collar and tail": 17,
+        "beige tunic": 11,
+        "skirt beige": 29,
+        "skirt blue": 18,
+        "hip sword": 10
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "W": {
+      "bbox": [
+        15,
+        7,
+        33,
+        43
+      ],
+      "figure_px": 256,
+      "family_share": {
+        "navy hair": 0.2891,
+        "skin": 0.0664,
+        "beige tunic": 0.125,
+        "blue cloth": 0.0938,
+        "charcoal scarf and trousers": 0.2344,
+        "brown leather": 0.125,
+        "steel and bronze": 0.0664
+      },
+      "visible_px": {
+        "blade": 8,
+        "hilt": 1,
+        "ponytail": 23,
+        "hair ribbon": 6,
+        "eyes": 0,
+        "scarf mask": 9,
+        "scarf collar and tail": 38,
+        "beige tunic": 4,
+        "skirt beige": 28,
+        "skirt blue": 16,
+        "hip sword": 9
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "NW": {
+      "bbox": [
+        17,
+        7,
+        36,
+        42
+      ],
+      "figure_px": 307,
+      "family_share": {
+        "navy hair": 0.2606,
+        "skin": 0.0358,
+        "beige tunic": 0.2248,
+        "blue cloth": 0.0554,
+        "charcoal scarf and trousers": 0.2378,
+        "brown leather": 0.1694,
+        "steel and bronze": 0.0163
+      },
+      "visible_px": {
+        "blade": 3,
+        "hilt": 1,
+        "ponytail": 25,
+        "hair ribbon": 4,
+        "eyes": 0,
+        "scarf mask": 8,
+        "scarf collar and tail": 46,
+        "beige tunic": 13,
+        "skirt beige": 56,
+        "skirt blue": 11,
+        "hip sword": 7
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "N": {
+      "bbox": [
+        16,
+        7,
+        39,
+        42
+      ],
+      "figure_px": 312,
+      "family_share": {
+        "navy hair": 0.2276,
+        "skin": 0.0449,
+        "beige tunic": 0.2179,
+        "blue cloth": 0.0769,
+        "charcoal scarf and trousers": 0.2147,
+        "brown leather": 0.1571,
+        "steel and bronze": 0.0609
+      },
+      "visible_px": {
+        "blade": 13,
+        "hilt": 3,
+        "ponytail": 22,
+        "hair ribbon": 1,
+        "eyes": 0,
+        "scarf mask": 5,
+        "scarf collar and tail": 50,
+        "beige tunic": 14,
+        "skirt beige": 54,
+        "skirt blue": 23,
+        "hip sword": 7
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "NE": {
+      "bbox": [
+        16,
+        7,
+        41,
+        42
+      ],
+      "figure_px": 303,
+      "family_share": {
+        "navy hair": 0.264,
+        "skin": 0.0561,
+        "beige tunic": 0.1485,
+        "blue cloth": 0.0693,
+        "charcoal scarf and trousers": 0.2376,
+        "brown leather": 0.1452,
+        "steel and bronze": 0.0792
+      },
+      "visible_px": {
+        "blade": 19,
+        "hilt": 3,
+        "ponytail": 28,
+        "hair ribbon": 3,
+        "eyes": 0,
+        "scarf mask": 7,
+        "scarf collar and tail": 47,
+        "beige tunic": 5,
+        "skirt beige": 40,
+        "skirt blue": 15,
+        "hip sword": 5
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "E": {
+      "bbox": [
+        15,
+        7,
+        33,
+        42
+      ],
+      "figure_px": 282,
+      "family_share": {
+        "navy hair": 0.2908,
+        "skin": 0.0674,
+        "beige tunic": 0.1596,
+        "blue cloth": 0.0816,
+        "charcoal scarf and trousers": 0.227,
+        "brown leather": 0.0993,
+        "steel and bronze": 0.0745
+      },
+      "visible_px": {
+        "blade": 15,
+        "hilt": 3,
+        "ponytail": 30,
+        "hair ribbon": 4,
+        "eyes": 0,
+        "scarf mask": 9,
+        "scarf collar and tail": 48,
+        "beige tunic": 6,
+        "skirt beige": 37,
+        "skirt blue": 17,
+        "hip sword": 0
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "SE": {
+      "bbox": [
+        13,
+        6,
+        31,
+        43
+      ],
+      "figure_px": 324,
+      "family_share": {
+        "navy hair": 0.2377,
+        "skin": 0.0802,
+        "beige tunic": 0.1173,
+        "blue cloth": 0.0741,
+        "charcoal scarf and trousers": 0.2438,
+        "brown leather": 0.1636,
+        "steel and bronze": 0.0833
+      },
+      "visible_px": {
+        "blade": 16,
+        "hilt": 2,
+        "ponytail": 23,
+        "hair ribbon": 6,
+        "eyes": 2,
+        "scarf mask": 14,
+        "scarf collar and tail": 39,
+        "beige tunic": 13,
+        "skirt beige": 24,
+        "skirt blue": 14,
+        "hip sword": 2
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    }
+  },
+  "idle_64": {
+    "S": {
+      "bbox": [
+        12,
+        7,
+        43,
+        56
+      ],
+      "figure_px": 541,
+      "family_share": {
+        "navy hair": 0.1922,
+        "skin": 0.098,
+        "beige tunic": 0.1701,
+        "blue cloth": 0.0684,
+        "charcoal scarf and trousers": 0.2237,
+        "brown leather": 0.1423,
+        "steel and bronze": 0.1054
+      },
+      "visible_px": {
+        "blade": 31,
+        "hilt": 4,
+        "ponytail": 13,
+        "hair ribbon": 0,
+        "eyes": 1,
+        "scarf mask": 22,
+        "scarf collar and tail": 40,
+        "beige tunic": 32,
+        "skirt beige": 58,
+        "skirt blue": 27,
+        "hip sword": 11
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "SW": {
+      "bbox": [
+        10,
+        8,
+        42,
+        56
+      ],
+      "figure_px": 529,
+      "family_share": {
+        "navy hair": 0.2042,
+        "skin": 0.0945,
+        "beige tunic": 0.1361,
+        "blue cloth": 0.0945,
+        "charcoal scarf and trousers": 0.2004,
+        "brown leather": 0.1531,
+        "steel and bronze": 0.1172
+      },
+      "visible_px": {
+        "blade": 35,
+        "hilt": 3,
+        "ponytail": 13,
+        "hair ribbon": 7,
+        "eyes": 4,
+        "scarf mask": 23,
+        "scarf collar and tail": 28,
+        "beige tunic": 18,
+        "skirt beige": 52,
+        "skirt blue": 35,
+        "hip sword": 15
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "W": {
+      "bbox": [
+        20,
+        9,
+        44,
+        56
+      ],
+      "figure_px": 462,
+      "family_share": {
+        "navy hair": 0.2987,
+        "skin": 0.0519,
+        "beige tunic": 0.1234,
+        "blue cloth": 0.0931,
+        "charcoal scarf and trousers": 0.2381,
+        "brown leather": 0.1299,
+        "steel and bronze": 0.0649
+      },
+      "visible_px": {
+        "blade": 18,
+        "hilt": 1,
+        "ponytail": 41,
+        "hair ribbon": 9,
+        "eyes": 1,
+        "scarf mask": 16,
+        "scarf collar and tail": 63,
+        "beige tunic": 6,
+        "skirt beige": 50,
+        "skirt blue": 26,
+        "hip sword": 16
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "NW": {
+      "bbox": [
+        23,
+        9,
+        47,
+        56
+      ],
+      "figure_px": 543,
+      "family_share": {
+        "navy hair": 0.2615,
+        "skin": 0.035,
+        "beige tunic": 0.2155,
+        "blue cloth": 0.0571,
+        "charcoal scarf and trousers": 0.232,
+        "brown leather": 0.1713,
+        "steel and bronze": 0.0276
+      },
+      "visible_px": {
+        "blade": 8,
+        "hilt": 4,
+        "ponytail": 46,
+        "hair ribbon": 9,
+        "eyes": 0,
+        "scarf mask": 14,
+        "scarf collar and tail": 79,
+        "beige tunic": 20,
+        "skirt beige": 97,
+        "skirt blue": 18,
+        "hip sword": 13
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "N": {
+      "bbox": [
+        21,
+        9,
+        52,
+        55
+      ],
+      "figure_px": 561,
+      "family_share": {
+        "navy hair": 0.221,
+        "skin": 0.0499,
+        "beige tunic": 0.2282,
+        "blue cloth": 0.0731,
+        "charcoal scarf and trousers": 0.2157,
+        "brown leather": 0.1497,
+        "steel and bronze": 0.0624
+      },
+      "visible_px": {
+        "blade": 25,
+        "hilt": 3,
+        "ponytail": 42,
+        "hair ribbon": 8,
+        "eyes": 0,
+        "scarf mask": 10,
+        "scarf collar and tail": 90,
+        "beige tunic": 22,
+        "skirt beige": 106,
+        "skirt blue": 29,
+        "hip sword": 10
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 2
+    },
+    "NE": {
+      "bbox": [
+        21,
+        9,
+        54,
+        55
+      ],
+      "figure_px": 537,
+      "family_share": {
+        "navy hair": 0.2626,
+        "skin": 0.0521,
+        "beige tunic": 0.1508,
+        "blue cloth": 0.0708,
+        "charcoal scarf and trousers": 0.2514,
+        "brown leather": 0.1341,
+        "steel and bronze": 0.0782
+      },
+      "visible_px": {
+        "blade": 33,
+        "hilt": 5,
+        "ponytail": 56,
+        "hair ribbon": 8,
+        "eyes": 0,
+        "scarf mask": 13,
+        "scarf collar and tail": 90,
+        "beige tunic": 9,
+        "skirt beige": 72,
+        "skirt blue": 25,
+        "hip sword": 10
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "E": {
+      "bbox": [
+        20,
+        9,
+        44,
+        56
+      ],
+      "figure_px": 505,
+      "family_share": {
+        "navy hair": 0.295,
+        "skin": 0.0653,
+        "beige tunic": 0.1545,
+        "blue cloth": 0.0752,
+        "charcoal scarf and trousers": 0.2158,
+        "brown leather": 0.1109,
+        "steel and bronze": 0.0832
+      },
+      "visible_px": {
+        "blade": 29,
+        "hilt": 4,
+        "ponytail": 51,
+        "hair ribbon": 8,
+        "eyes": 1,
+        "scarf mask": 16,
+        "scarf collar and tail": 80,
+        "beige tunic": 6,
+        "skirt beige": 70,
+        "skirt blue": 23,
+        "hip sword": 3
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    },
+    "SE": {
+      "bbox": [
+        17,
+        8,
+        41,
+        56
+      ],
+      "figure_px": 584,
+      "family_share": {
+        "navy hair": 0.2363,
+        "skin": 0.0925,
+        "beige tunic": 0.1045,
+        "blue cloth": 0.0805,
+        "charcoal scarf and trousers": 0.2346,
+        "brown leather": 0.1404,
+        "steel and bronze": 0.1113
+      },
+      "visible_px": {
+        "blade": 35,
+        "hilt": 8,
+        "ponytail": 44,
+        "hair ribbon": 9,
+        "eyes": 3,
+        "scarf mask": 23,
+        "scarf collar and tail": 69,
+        "beige tunic": 23,
+        "skirt beige": 37,
+        "skirt blue": 30,
+        "hip sword": 6
+      },
+      "blade_pieces": 1,
+      "sword_pieces": 1
+    }
+  }
+}

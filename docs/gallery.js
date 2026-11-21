@@ -27,6 +27,10 @@ const characters = {
     // Idle sheets of the same model at two pixel densities; null keeps the standard idle.png.
     idleSheets: { 48: null, 64: "idle-64" },
   },
+  azure_ronin: {
+    name: "AZURE RONIN", subtitle: "Scarf Swordsman", assets: "assets/azure_ronin",
+    idleSheets: { 48: null, 64: "idle-64" },
+  },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };
