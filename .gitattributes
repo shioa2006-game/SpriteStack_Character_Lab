@@ -1,0 +1,3 @@
+# Keep the original ZIP's bytes when Git checks out an imported file.
+/experiments/lark_stage3/** -text
+/docs/assets/** -text

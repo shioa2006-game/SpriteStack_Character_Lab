@@ -1,0 +1,161 @@
+{
+  "blade_centers_per_pose": 64,
+  "stored_discrete_poses": [
+    {
+      "index": 1,
+      "phase": "guard",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301427,
+      "head": [
+        0.0,
+        0.7,
+        24.0
+      ],
+      "hand_R": [
+        -9.39,
+        3.03,
+        11.25
+      ],
+      "arm_length": 7.339461626470565
+    },
+    {
+      "index": 2,
+      "phase": "anticipation",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301427,
+      "head": [
+        -0.2333477040475522,
+        0.09716268566125746,
+        23.88997834186474
+      ],
+      "hand_R": [
+        -10.3,
+        1.55,
+        14.7
+      ],
+      "arm_length": 7.339461626470565
+    },
+    {
+      "index": 3,
+      "phase": "raise",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301423,
+      "head": [
+        -0.24439708182159045,
+        -1.0091034674709949,
+        23.665404759131526
+      ],
+      "hand_R": [
+        -11.009603238984415,
+        -2.944913937551042,
+        20.795089424207813
+      ],
+      "arm_length": 7.3394616264705625
+    },
+    {
+      "index": 4,
+      "phase": "coil",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301425,
+      "head": [
+        -0.27774496727515513,
+        -0.48463132939437026,
+        23.543717769194835
+      ],
+      "hand_R": [
+        -8.477980920516226,
+        -0.12039116699654473,
+        20.604489626062463
+      ],
+      "arm_length": 7.339461626470565
+    },
+    {
+      "index": 5,
+      "phase": "cut",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301427,
+      "head": [
+        0.42542359210869257,
+        2.3632651751771636,
+        23.87613224574165
+      ],
+      "hand_R": [
+        -11.196412792753918,
+        7.010985471511066,
+        18.656429853688707
+      ],
+      "arm_length": 7.339461626470565
+    },
+    {
+      "index": 6,
+      "phase": "downstroke",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301425,
+      "head": [
+        1.287540773409009,
+        2.912973044708923,
+        23.497848238074827
+      ],
+      "hand_R": [
+        -10.447154721249426,
+        8.321988371300634,
+        17.252134405700378
+      ],
+      "arm_length": 7.339461626470564
+    },
+    {
+      "index": 7,
+      "phase": "follow-through",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301423,
+      "head": [
+        1.818404279745747,
+        3.7739257720841723,
+        23.03533998090385
+      ],
+      "hand_R": [
+        -10.589983990924448,
+        7.606903809637025,
+        13.413966093017617
+      ],
+      "arm_length": 7.339461626470564
+    },
+    {
+      "index": 8,
+      "phase": "recover",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301427,
+      "head": [
+        0.32255007550215986,
+        2.1729033512303335,
+        23.64226729556924
+      ],
+      "hand_R": [
+        -9.98,
+        4.6,
+        10.6
+      ],
+      "arm_length": 7.339461626470566
+    },
+    {
+      "index": 9,
+      "phase": "guard",
+      "blade_collision_centers_by_part": {},
+      "grip_tip_length": 11.686509316301427,
+      "head": [
+        0.0,
+        0.7,
+        24.0
+      ],
+      "hand_R": [
+        -9.39,
+        3.03,
+        11.25
+      ],
+      "arm_length": 7.339461626470565
+    }
+  ],
+  "definition": "sampled source blade voxel centers vs transformed occupied body voxels, discrete keys only; not a mesh collision proof",
+  "both_attachments_share_corresponding_hand_transform": true,
+  "first_and_last_same_guard": true
+}

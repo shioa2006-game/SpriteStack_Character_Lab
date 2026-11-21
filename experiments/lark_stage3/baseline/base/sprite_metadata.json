@@ -1,0 +1,374 @@
+{
+  "cell": [
+    48,
+    48
+  ],
+  "direction_order": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "pivot": [
+    24,
+    40
+  ],
+  "pitch_deg": 24,
+  "atlas": {
+    "shape": [
+      32,
+      60,
+      80
+    ],
+    "rows": 4,
+    "cols": 8,
+    "cell": [
+      80,
+      60
+    ],
+    "axes": "Z,Y,X",
+    "image_top": "+Y front",
+    "horizontal_unit": 0.5,
+    "x_min": -20,
+    "y_min": -15,
+    "z_step": 1
+  },
+  "palette": {
+    "1": {
+      "name": "leather",
+      "part": "boots",
+      "shades": [
+        "50303c",
+        "8b503b",
+        "c5824c"
+      ]
+    },
+    "2": {
+      "name": "sole",
+      "part": "boots",
+      "shades": [
+        "292539",
+        "4b3139",
+        "745044"
+      ]
+    },
+    "3": {
+      "name": "trousers",
+      "part": "legs",
+      "shades": [
+        "202846",
+        "354669",
+        "546789"
+      ]
+    },
+    "4": {
+      "name": "tunic",
+      "part": "torso",
+      "shades": [
+        "1d3760",
+        "346aa4",
+        "5eabd0"
+      ]
+    },
+    "5": {
+      "name": "tunic trim",
+      "part": "torso",
+      "shades": [
+        "263b68",
+        "427fb5",
+        "81bed3"
+      ]
+    },
+    "6": {
+      "name": "belt",
+      "part": "torso",
+      "shades": [
+        "382537",
+        "624037",
+        "996249"
+      ]
+    },
+    "7": {
+      "name": "buckle",
+      "part": "torso",
+      "shades": [
+        "98543d",
+        "e0a459",
+        "f8d790"
+      ]
+    },
+    "8": {
+      "name": "sleeve",
+      "part": "arms",
+      "shades": [
+        "213959",
+        "3f75aa",
+        "6caaca"
+      ]
+    },
+    "9": {
+      "name": "gauntlet",
+      "part": "arms",
+      "shades": [
+        "583541",
+        "95563e",
+        "cd8e61"
+      ]
+    },
+    "10": {
+      "name": "skin",
+      "part": "head",
+      "shades": [
+        "ad5c49",
+        "e7a47d",
+        "ffcf9c"
+      ]
+    },
+    "11": {
+      "name": "hair",
+      "part": "head",
+      "shades": [
+        "4b252f",
+        "794334",
+        "b3673d"
+      ]
+    },
+    "12": {
+      "name": "hair lock",
+      "part": "head",
+      "shades": [
+        "61302f",
+        "955036",
+        "c88148"
+      ]
+    },
+    "13": {
+      "name": "eyes",
+      "part": "head",
+      "shades": [
+        "292336",
+        "302638",
+        "493347"
+      ]
+    },
+    "14": {
+      "name": "eye glint",
+      "part": "head",
+      "shades": [
+        "d1bcb4",
+        "fff0ce",
+        "fff7e6"
+      ]
+    },
+    "15": {
+      "name": "cheeks",
+      "part": "head",
+      "shades": [
+        "ab544d",
+        "d78367",
+        "efa186"
+      ]
+    },
+    "16": {
+      "name": "smile",
+      "part": "head",
+      "shades": [
+        "773c40",
+        "994d48",
+        "af5e53"
+      ]
+    },
+    "17": {
+      "name": "sword edge",
+      "part": "sword_R",
+      "shades": [
+        "495c7e",
+        "92aace",
+        "c8eef1"
+      ]
+    },
+    "18": {
+      "name": "sword ridge",
+      "part": "sword_R",
+      "shades": [
+        "6b84a3",
+        "b4d3e2",
+        "e6fbf9"
+      ]
+    },
+    "19": {
+      "name": "crossguard",
+      "part": "sword_R",
+      "shades": [
+        "87513e",
+        "c68c4a",
+        "f4cc80"
+      ]
+    },
+    "20": {
+      "name": "hilt grip",
+      "part": "sword_R",
+      "shades": [
+        "503138",
+        "765843",
+        "a07a55"
+      ]
+    },
+    "21": {
+      "name": "shield rim",
+      "part": "shield_L",
+      "shades": [
+        "683f45",
+        "a66f51",
+        "deb178"
+      ]
+    },
+    "22": {
+      "name": "shield face",
+      "part": "shield_L",
+      "shades": [
+        "294b66",
+        "448c9d",
+        "75c2c2"
+      ]
+    },
+    "23": {
+      "name": "shield emblem",
+      "part": "shield_L",
+      "shades": [
+        "a56b45",
+        "dfaa64",
+        "f6d58c"
+      ]
+    },
+    "24": {
+      "name": "shield reverse",
+      "part": "shield_L",
+      "shades": [
+        "493142",
+        "704f49",
+        "a57b59"
+      ]
+    },
+    "25": {
+      "name": "neck",
+      "part": "head",
+      "shades": [
+        "91504b",
+        "cf8869",
+        "eab18a"
+      ]
+    },
+    "26": {
+      "name": "undershirt",
+      "part": "torso",
+      "shades": [
+        "222d4b",
+        "355276",
+        "547b9c"
+      ]
+    }
+  },
+  "per_view": {
+    "S": {
+      "yaw_deg": 0,
+      "bbox_ltrb_exclusive": [
+        4,
+        3,
+        42,
+        44
+      ],
+      "blade_visible_pixels": 28,
+      "sword_visible_pixels": 33,
+      "shield_visible_pixels": 71
+    },
+    "SW": {
+      "yaw_deg": -45,
+      "bbox_ltrb_exclusive": [
+        4,
+        3,
+        35,
+        44
+      ],
+      "blade_visible_pixels": 23,
+      "sword_visible_pixels": 34,
+      "shield_visible_pixels": 82
+    },
+    "W": {
+      "yaw_deg": -90,
+      "bbox_ltrb_exclusive": [
+        15,
+        3,
+        33,
+        44
+      ],
+      "blade_visible_pixels": 8,
+      "sword_visible_pixels": 8,
+      "shield_visible_pixels": 58
+    },
+    "NW": {
+      "yaw_deg": -135,
+      "bbox_ltrb_exclusive": [
+        8,
+        2,
+        34,
+        44
+      ],
+      "blade_visible_pixels": 6,
+      "sword_visible_pixels": 6,
+      "shield_visible_pixels": 39
+    },
+    "N": {
+      "yaw_deg": -180,
+      "bbox_ltrb_exclusive": [
+        6,
+        2,
+        44,
+        42
+      ],
+      "blade_visible_pixels": 21,
+      "sword_visible_pixels": 25,
+      "shield_visible_pixels": 46
+    },
+    "NE": {
+      "yaw_deg": -225,
+      "bbox_ltrb_exclusive": [
+        13,
+        2,
+        44,
+        43
+      ],
+      "blade_visible_pixels": 21,
+      "sword_visible_pixels": 26,
+      "shield_visible_pixels": 12
+    },
+    "E": {
+      "yaw_deg": -270,
+      "bbox_ltrb_exclusive": [
+        15,
+        2,
+        33,
+        45
+      ],
+      "blade_visible_pixels": 16,
+      "sword_visible_pixels": 21,
+      "shield_visible_pixels": 23
+    },
+    "SE": {
+      "yaw_deg": -315,
+      "bbox_ltrb_exclusive": [
+        14,
+        3,
+        40,
+        45
+      ],
+      "blade_visible_pixels": 22,
+      "sword_visible_pixels": 31,
+      "shield_visible_pixels": 43
+    }
+  }
+}

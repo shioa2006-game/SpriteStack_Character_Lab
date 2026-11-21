@@ -1,0 +1,126 @@
+{
+  "version": 2,
+  "camera": {
+    "pitch_deg": 24,
+    "pixels_per_unit": 1.19,
+    "base_pivot": [
+      24,
+      40
+    ]
+  },
+  "world_axes": {
+    "X_positive": "anatomical left",
+    "Y_positive": "front",
+    "Z_positive": "up"
+  },
+  "volume_origin_xyz": [
+    -24.0,
+    -23.0,
+    -2.0
+  ],
+  "volume_order": "Z,Y,X",
+  "voxel_size_xyz": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "neutral": {
+    "layout": "1 row, 8 columns",
+    "directions": [
+      "S",
+      "SW",
+      "W",
+      "NW",
+      "N",
+      "NE",
+      "E",
+      "SE"
+    ],
+    "cell": [
+      48,
+      48
+    ],
+    "anchor": [
+      24,
+      40
+    ]
+  },
+  "parts": {
+    "head": 1,
+    "chest": 2,
+    "pelvis": 3,
+    "thigh_R": 4,
+    "shin_R": 5,
+    "boot_R": 6,
+    "upper_R": 7,
+    "fore_R": 8,
+    "hand_R": 9,
+    "thigh_L": 10,
+    "shin_L": 11,
+    "boot_L": 12,
+    "upper_L": 13,
+    "fore_L": 14,
+    "hand_L": 15,
+    "sword": 16,
+    "shield": 17
+  },
+  "animations": {
+    "walk": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 6,
+      "cell": [
+        48,
+        48
+      ],
+      "anchor": [
+        24,
+        40
+      ],
+      "fps": 9,
+      "loop": true,
+      "rgba_sha256": "78da2dc12b0ecf78e3d028515f41ccf2b1173fb00795d280791d602a44a5c8c9",
+      "suggested_forward_per_frame_model_units": 1.9
+    },
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 6,
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        48
+      ],
+      "fps": 10,
+      "loop": false,
+      "rgba_sha256": "9efad6386161dd50f9037784eff211580c235800807c58e58297b4cf4f3422ab",
+      "durations_ms": [
+        150,
+        130,
+        160,
+        75,
+        125,
+        170
+      ]
+    }
+  }
+}

@@ -1,0 +1,49 @@
+# Python and Node development environments
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+node_modules/
+
+# Local imports and disposable runs
+/LARK_Stage_3A_GitHub_Import.zip
+/.phase1/
+rebuild/
+tmp/
+.tmp/
+.test-tmp/
+test-results/
+*.tmp
+*.log
+
+# OS and local editor state
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+
+# Local credentials and private keys
+.env
+.env.*
+!.env.example
+.git-credentials
+.netrc
+_netrc
+.npmrc
+.pypirc
+credentials.json
+secrets.json
+*.key
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519

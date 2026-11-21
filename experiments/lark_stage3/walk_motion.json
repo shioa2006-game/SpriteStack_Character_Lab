@@ -1,0 +1,82 @@
+{
+  "fps": 9,
+  "forward_each_frame": 1.9,
+  "swing_forward": [
+    -1.6,
+    2.65
+  ],
+  "swing_lift": [
+    2.55,
+    2.05
+  ],
+  "swing_pitch": [
+    -12,
+    7
+  ],
+  "track_offset": 0.36,
+  "root_level": -0.73,
+  "root_bob": [
+    0,
+    -0.22,
+    -0.06,
+    0,
+    -0.22,
+    -0.06
+  ],
+  "root_sway": [
+    0.17,
+    0.24,
+    0.18,
+    -0.17,
+    -0.24,
+    -0.18
+  ],
+  "twist": [
+    -5,
+    -1.5,
+    3.2,
+    5,
+    1.5,
+    -3.2
+  ],
+  "right_arm_swing": [
+    -1.65,
+    -1.22,
+    0.42,
+    1.65,
+    1.22,
+    -0.42
+  ],
+  "torso_lean": 2.35,
+  "poses": [
+    "left heel contact",
+    "left loading",
+    "right passing",
+    "right heel contact",
+    "right loading",
+    "left passing"
+  ],
+  "contact": {
+    "index_base": 0,
+    "cycle_frames": 6,
+    "inclusive_stance_cyclic": {
+      "L": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "R": [
+        3,
+        4,
+        5,
+        0
+      ]
+    },
+    "sole_markers": {
+      "L": "toe_L",
+      "R": "toe_R"
+    },
+    "stance_note": "Flat rigid boot, model z=0. Keep a marker fixed on the ground while root advances by 1.9 model units per frame. Both feet touch at frames 0 and 3."
+  }
+}

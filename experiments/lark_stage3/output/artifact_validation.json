@@ -1,0 +1,69 @@
+{
+  "idle_unchanged": true,
+  "checked_sprite_cells": 120,
+  "alpha": [
+    "0",
+    "255"
+  ],
+  "no_cell_edge_contact": true,
+  "attack_starts_and_ends_with_exact_idle": true,
+  "gif_decodes": {
+    "attack_AB.gif": {
+      "frames_decoded": 14,
+      "total_gif_loop_ms": 1300
+    },
+    "attack_AB_other_directions.gif": {
+      "frames_decoded": 14,
+      "total_gif_loop_ms": 1300
+    },
+    "attack_optional_trail.gif": {
+      "frames_decoded": 9,
+      "total_gif_loop_ms": 1300
+    },
+    "attack_sample_count.gif": {
+      "frames_decoded": 9,
+      "total_gif_loop_ms": 1300
+    },
+    "attack_timing.gif": {
+      "frames_decoded": 16,
+      "total_gif_loop_ms": 1300
+    },
+    "attack_v3.gif": {
+      "frames_decoded": 9,
+      "total_gif_loop_ms": 1300
+    },
+    "walk_AB_cardinals.gif": {
+      "frames_decoded": 42,
+      "total_gif_loop_ms": 2080
+    },
+    "walk_AB_fast.gif": {
+      "frames_decoded": 27,
+      "total_gif_loop_ms": 1480
+    },
+    "walk_AB_slow.gif": {
+      "frames_decoded": 70,
+      "total_gif_loop_ms": 3200
+    },
+    "walk_AB_standard.gif": {
+      "frames_decoded": 42,
+      "total_gif_loop_ms": 2080
+    },
+    "walk_v3.gif": {
+      "frames_decoded": 42,
+      "total_gif_loop_ms": 2080
+    }
+  },
+  "rebuild_byte_match": {
+    "idle.png": true,
+    "walk.png": true,
+    "attack.png": true,
+    "walk_part_ids.png": true,
+    "attack_part_ids.png": true,
+    "joints.json": true,
+    "metadata.json": true,
+    "measurements.json": true,
+    "rest_part_ids.npz": true,
+    "posed_slices.npz": true,
+    "posed_part_ids.npz": true
+  }
+}

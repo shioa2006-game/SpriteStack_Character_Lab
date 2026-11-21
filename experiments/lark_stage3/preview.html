@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LARK｜スプライト検証場</title>
+<style>
+:root{color-scheme:dark;--paper:#10171a;--border:#3b514e;--ink:#e7ede0;--mint:#b0e1be;--dim:#b1c2b8;--font:system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#11191c;color:var(--ink);font:14px var(--font)}main{max-width:1120px;margin:auto;padding:clamp(14px,4vw,48px)}header{margin-bottom:20px}.eyebrow{font:700 11px monospace;letter-spacing:.22em;color:var(--mint);margin:0}.eyebrow span{color:#eac787}h1{font:700 clamp(32px,7vw,64px) Georgia,serif;color:#f3ebd7;line-height:1;margin:.12em 0}.sub{color:var(--dim);margin:0}.lab{display:grid;grid-template-columns:minmax(0,1fr) 238px;border:1px solid var(--border);background:var(--paper)}.scene{display:grid;min-width:0;place-items:center;position:relative;overflow:auto;background:#182526}.side{display:grid;gap:14px;padding:16px;border-left:1px solid var(--border);align-content:start}.side section{display:grid;gap:5px}.side h2{font-size:12px;color:var(--dim);margin:0;letter-spacing:.1em}canvas{display:block;image-rendering:pixelated}#native{background:#26393a;border:1px solid #475f5b;box-sizing:content-box}button,select,input{font:inherit}button,select{background:#233335;color:var(--ink);border:1px solid #526762;padding:6px 8px;border-radius:4px;min-height:33px}button:hover,select:hover{border-color:var(--mint)}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #fff1b2;outline-offset:2px}button#attack{background:#344a3f;color:#e5f6e7;font-weight:700}button[aria-pressed=true]{border-color:#eac787;color:#eac787}label.toggle{display:flex;align-items:center;gap:6px;color:var(--dim)}.pair{display:flex;gap:6px}.pair>*{flex:1;min-width:0}.dir{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.dir button{padding:4px}.legend{color:var(--dim);line-height:1.5;margin:12px 0}.legend kbd{color:#f0e6ce}.stamp{position:absolute;top:11px;left:12px;color:#c7e4d2;background:#172225d9;padding:4px 7px;font:12px monospace;pointer-events:none}.bottom{display:flex;align-items:center;gap:12px}.bottom small{color:var(--dim)}#error{background:#7d4533;color:white;padding:10px;font-weight:700}@media(max-width:760px){.lab{grid-template-columns:minmax(0,1fr)}.side{border-left:0;border-top:1px solid var(--border);grid-template-columns:repeat(auto-fit,minmax(134px,1fr))}.scene{min-height:240px}}
+</style>
+</head>
+<body>
+<main>
+<header><p class="eyebrow">SPRITE STACKING <span>／</span> STAGE 03A</p><h1>LARK</h1><p class="sub">THE BLUE SQUIRE　／　歩行と斬撃の検証場</p></header>
+<div id="error" role="alert" hidden></div>
+<div class="lab">
+  <div class="scene" id="scene"><canvas id="field" width="320" height="208" aria-label="床上で操作できるキャラクター"></canvas><output id="stamp" class="stamp" aria-live="off">読込中…</output></div>
+  <aside class="side">
+    <section><h2>スプライト</h2><div class="pair"><button id="old" type="button" aria-pressed="false">旧版</button><button id="new" type="button" aria-pressed="true">改良版</button></div></section>
+    <section><h2><label for="speed">歩行速度</label></h2><select id="speed"><option value=".6">低速 ×0.6</option><option value="1" selected>標準 ×1.0</option><option value="1.6">高速 ×1.6</option></select>
+    <label class="toggle"><input type="checkbox" id="sync" checked>歩行コマを移動と同期</label></section>
+    <section><h2><label for="timing">斬撃の時間配分</label></h2><select id="timing"><option value="authored">設定どおり（可変）</option><option value="equal">均等（同じ総時間）</option></select>
+    <div class="pair"><select id="tempo" aria-label="アニメーション再生倍率"><option value=".5">再生 ×0.5</option><option value="1" selected>再生 ×1.0</option><option value="1.5">再生 ×1.5</option></select><button id="attack" type="button">斬撃</button></div></section>
+    <section><h2>向き / 押し続けて歩く</h2><div class="dir"><button data-dir="3" aria-label="北西">↖</button><button data-dir="4" aria-label="北">↑</button><button data-dir="5" aria-label="北東">↗</button><button data-dir="2" aria-label="西">←</button><button id="center" title="開始位置に戻す" aria-label="開始位置に戻す">・</button><button data-dir="6" aria-label="東">→</button><button data-dir="1" aria-label="南西">↙</button><button data-dir="0" aria-label="南">↓</button><button data-dir="7" aria-label="南東">↘</button></div></section>
+    <section><h2><label for="zoom">表示倍率</label></h2><select id="zoom"><option value="1">1× 原寸</option><option value="2" selected>2×</option><option value="3">3×</option><option value="4">4×</option></select><label class="toggle"><input type="checkbox" id="anchor">アンカーを表示</label></section>
+    <div class="bottom"><canvas id="native" width="64" height="64" aria-label="原寸表示"></canvas><small>原寸<br>攻撃セルは<br>余白込み</small></div>
+  </aside>
+</div>
+<p class="legend"><kbd>WASD</kbd> / <kbd>矢印</kbd> で移動　・　<kbd>Space</kbd> / <kbd>J</kbd> で斬撃。斬撃中は移動と向きを固定します。再生倍率は斬撃に常時適用し、歩行では同期を外したときに適用します。</p>
+</main>
+<script src="preview_assets.js"></script>
+<script>
+(() => {
+'use strict';
+const el=id=>document.getElementById(id);
+const err=el('error'), scene=el('scene'), field=el('field'), native=el('native'), stamp=el('stamp');
+const ctx=field.getContext('2d'), small=native.getContext('2d');
+const W=field.width,H=field.height, maxDt=50;
+const dirs=['S','SW','W','NW','N','NE','E','SE'];
+const kfy=Math.sin(24*Math.PI/180)*1.19,kfx=1.19;
+const fwd=dirs.map((_,i)=>[-Math.sin(i*Math.PI/4),Math.cos(i*Math.PI/4)]);
+const keys=new Set(), pointers=new Map();
+const controls={a:'w',arrowleft:'w',d:'e',arrowright:'e',w:'n',arrowup:'n',s:'s',arrowdown:'s'};
+const state={version:'new',direction:0,x:0,y:0,walkPhase:0,attackTime:null,active:false,camX:0,camY:0,steps:0};
+const assets=window.LARK_ASSETS;
+const posmod=(x,n)=>((x % n)+n)%n;
+let lastMs=null, actualZoom=1, ready=false, attackStart=null, firstDraw=null, debugCanvas=null;
+function inputDirection(){
+ if(pointers.size) return [...pointers.values()].at(-1);
+ const pressed=new Set([...keys].map(k=>controls[k]));
+ const x=+pressed.has('e')-pressed.has('w'),y=+pressed.has('s')-pressed.has('n');
+ return x||y?posmod(Math.round(Math.atan2(-x,y)/(Math.PI/4)),8):null;
+}
+function clip(name){return assets[state.version][name]}
+function resetWalk(){state.walkPhase=0;state.active=false}
+function setVersion(version){
+ if(!ready||state.version===version)return;
+ const wasActive=state.active, relPhase=state.walkPhase/clip('walk').columns;
+ state.version=version; state.attackTime=null;
+ state.walkPhase=relPhase*clip('walk').columns; state.active=wasActive;
+ el('old').setAttribute('aria-pressed',version==='old');el('new').setAttribute('aria-pressed',version==='new');
+}
+function doAttack(){
+ if(!ready||state.attackTime!==null)return;
+ const dir=inputDirection(); if(dir!==null)state.direction=dir;
+ state.attackTime=0;attackStart=performance.now();firstDraw=null;resetWalk();
+}
+function frames(){
+ const sheet=clip('attack'), durations=sheet.durations_ms??Array(sheet.columns).fill(1000/(sheet.fps??10));
+ const total=durations.reduce((s,t)=>s+t,0);
+ return {total,durations:el('timing').value==='equal'?durations.map(()=>total/sheet.columns):durations};
+}
+function advance(dt){
+ if(state.attackTime!==null){
+   const next=state.attackTime + dt*Number(el('tempo').value);
+   if(next < frames().total){state.attackTime=next;return}
+   state.attackTime=null; resetWalk(); return;
+ }
+ const dir=inputDirection();
+ if(dir===null){resetWalk();return}
+ const fps=clip('walk').fps??9, stride=clip('walk').suggested_forward_per_frame_model_units??1.9;
+ const speed=Number(el('speed').value);
+ const distance=stride*fps*speed*dt/1000, same=state.active&&state.direction===dir;
+ const [vx,vy]=fwd[dir];
+ state.x+=vx*distance; state.y+=vy*distance;
+ if(!same){state.walkPhase=0}
+ state.walkPhase=posmod(state.walkPhase+dt/1000*(el('sync').checked?fps*speed:fps*Number(el('tempo').value)),clip('walk').columns);
+ state.active=true;state.direction=dir;state.steps+=distance;
+}
+function getFrame(){
+ const direction=dirs[state.direction];
+ if(state.attackTime!==null){
+  const {durations,total}=frames(); let t=state.attackTime, i=0;
+  while(i<durations.length-1 && t>=durations[i])t-=durations[i++];
+  return {name:'attack',i,row:clip('attack').rows.indexOf(direction),total};
+ }
+ if(state.active)return {name:'walk',i:Math.floor(state.walkPhase),row:clip('walk').rows.indexOf(direction)};
+ return {name:'idle',i:clip('idle').rows.indexOf(direction),row:0};
+}
+function drawSheet(g,fr,x,y){
+ const {img,cell:[w,h],anchor:[ax,ay]}=clip(fr.name);g.imageSmoothingEnabled=false;
+ g.drawImage(img,fr.i*w,fr.row*h,w,h,x-ax,y-ay,w,h);
+}
+function cross(g,x,y){
+ g.fillStyle='#f9d787';g.fillRect(x-3,y,7,1);g.fillRect(x,y-3,1,7);
+}
+function floor(x,y){
+ ctx.fillStyle='#29393a';ctx.fillRect(0,0,W,H);
+ const by=16,bx=32;
+ const ix=Math.floor((x-W/2)/bx), iy=Math.floor((y-H/2)/by);
+ for(let j=iy;j<=iy+Math.ceil(H/by)+1;j++)for(let i=ix;i<=ix+Math.ceil(W/bx)+1;i++){
+   const px=Math.round(i*bx-x+W/2),py=Math.round(j*by-y+H/2);
+   ctx.fillStyle=(i+j)%2===0?'#304242':'#2b3c3d';ctx.fillRect(px,py,bx,by);
+   ctx.fillStyle='#253435';ctx.fillRect(px,py,bx,1);ctx.fillRect(px,py,1,by);
+   if((i+j)%4===0){ctx.fillStyle='#496060';ctx.fillRect(px+7,py+5,2,1);ctx.fillRect(px+20,py+10,3,1)}
+ }
+ // A fixed world origin marker supplies a reference when the camera starts to follow.
+ const gx=Math.round(W/2-x),gy=Math.round(H/2-y);
+ ctx.fillStyle='#829e89';ctx.fillRect(gx-4,gy,9,1);ctx.fillRect(gx,gy-2,1,5);
+}
+function draw(){
+ const px=state.x*kfx,py=state.y*kfy;
+ if(px-state.camX>88)state.camX=px-88;
+ if(px-state.camX< -88)state.camX=px+88;
+ if(py-state.camY>68)state.camY=py-68;
+ if(py-state.camY< -38)state.camY=py+38;
+ const x=Math.round(W/2+px-state.camX),y=Math.round(H/2+py-state.camY);
+ floor(state.camX,state.camY);
+ ctx.fillStyle='#203132';ctx.fillRect(x-8,y-1,17,3);ctx.fillRect(x-5,y-2,11,5);
+ const fr=getFrame();drawSheet(ctx,fr,x,y);
+ small.clearRect(0,0,64,64);drawSheet(small,fr,32,48);
+ if(el('anchor').checked){cross(ctx,x,y);cross(small,32,48)}
+ stamp.textContent=(state.version==='old'?'旧版':'改良版')+'  /  '+dirs[state.direction]+'  /  '+({walk:'歩行',attack:'斬撃',idle:'待機'}[fr.name])+(fr.name==='idle'?'':' '+(fr.i+1)+'/'+clip(fr.name).columns)+(fr.total?'  '+Math.round(fr.total/Number(el('tempo').value))+'ms':'');
+ if(fr.name==='attack'&&firstDraw===null)firstDraw=performance.now()-attackStart;
+ debugCanvas={...fr,screenX:x,screenY:y,anchor:clip(fr.name).anchor.slice(),zoom:actualZoom,firstAttackDrawMs:firstDraw};
+}
+function resize(){
+ actualZoom=Math.max(1,Math.min(Number(el('zoom').value),Math.floor(scene.clientWidth/W)));
+ field.style.width=W*actualZoom+'px';field.style.height=H*actualZoom+'px'
+}
+function cycle(ms){
+ if(ready){if(lastMs!==null)advance(Math.min(maxDt,Math.max(0,ms-lastMs)));draw()}
+ lastMs=ms;requestAnimationFrame(cycle);
+}
+function isUi(target){return target.closest?.('button, input, select')}
+window.addEventListener('keydown',e=>{
+ const key=e.key.toLowerCase();
+ if((isUi(e.target)&&key===' ')||(e.target.closest?.('select,input')&&key.startsWith('arrow')))return;
+ if(controls[key]){e.preventDefault();keys.add(key);return}
+ if(key===' '||key==='j'){e.preventDefault();if(!e.repeat)doAttack()}
+});
+window.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
+function cancel(){keys.clear();pointers.clear();resetWalk()}
+window.addEventListener('blur',cancel);document.addEventListener('visibilitychange',()=>{if(document.hidden)cancel()});
+document.querySelectorAll('button[data-dir]').forEach(b=>{
+ b.style.touchAction='none';
+ b.addEventListener('pointerdown',e=>{e.preventDefault();b.setPointerCapture(e.pointerId);pointers.set(e.pointerId,Number(b.dataset.dir));if(state.attackTime===null)state.direction=Number(b.dataset.dir)});
+ const release=e=>pointers.delete(e.pointerId);
+ b.addEventListener('pointerup',release);b.addEventListener('pointercancel',release);b.addEventListener('lostpointercapture',release);
+ b.addEventListener('click',e=>{if(e.detail===0&&state.attackTime===null)state.direction=Number(b.dataset.dir)});
+});
+el('old').onclick=()=>setVersion('old');el('new').onclick=()=>setVersion('new');el('attack').onclick=doAttack;
+el('center').onclick=()=>{cancel();state.x=state.y=state.camX=state.camY=state.steps=0;state.attackTime=null};
+el('zoom').onchange=resize;new ResizeObserver(resize).observe(scene);
+function loadOne(c){
+ if(!c||!c.cell||!c.anchor||!c.rows||!c.columns)throw Error('アニメーションの設定が見つかりません。');
+ return new Promise((resolve,reject)=>{
+  const img=new Image();
+  img.onload=()=>{c.img=img;resolve()};
+  img.onerror=()=>reject(Error(c.src+' を読み込めません。'));
+  img.src=c.data||c.src;
+ });
+}
+window.LARK_PREVIEW_DEBUG={snapshot:()=>({...state,...debugCanvas,ready,sync:el('sync').checked,speed:+el('speed').value,tempo:+el('tempo').value,screenScale:[kfx,kfy],attackDuration:ready?frames().total:null})};
+if(!assets){err.hidden=false;err.textContent='スプライトデータを読み込めません。ZIPを展開し、付属ファイルと一緒に開いてください。';stamp.textContent='読込エラー';return}
+Promise.all(['old','new'].flatMap(v=>['idle','walk','attack'].map(name=>loadOne(assets[v][name])))).then(()=>{
+ ready=true; resize();draw();requestAnimationFrame(cycle);
+}).catch(e=>{err.hidden=false;err.textContent=e.message;stamp.textContent='読込エラー'});
+})();
+</script>
+</body>
+</html>

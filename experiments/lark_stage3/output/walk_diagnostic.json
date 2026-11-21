@@ -1,0 +1,664 @@
+{
+  "old": {
+    "directions": {
+      "S": {
+        "silhouette_minimum_iou": 0.9146,
+        "silhouette_mean_changed_px": 70.33,
+        "head_minimum_iou": 0.8949,
+        "head_mean_changed_px": 21.67,
+        "minimum_visible_boot_px": {
+          "L": 33,
+          "R": 29
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            43,
+            41,
+            40,
+            37,
+            33,
+            37
+          ],
+          "R": [
+            34,
+            29,
+            35,
+            47,
+            41,
+            41
+          ]
+        }
+      },
+      "SW": {
+        "silhouette_minimum_iou": 0.89,
+        "silhouette_mean_changed_px": 77.0,
+        "head_minimum_iou": 0.9135,
+        "head_mean_changed_px": 20.0,
+        "minimum_visible_boot_px": {
+          "L": 27,
+          "R": 13
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            55,
+            45,
+            43,
+            35,
+            27,
+            34
+          ],
+          "R": [
+            13,
+            17,
+            46,
+            57,
+            47,
+            29
+          ]
+        }
+      },
+      "W": {
+        "silhouette_minimum_iou": 0.8735,
+        "silhouette_mean_changed_px": 60.33,
+        "head_minimum_iou": 0.9055,
+        "head_mean_changed_px": 13.33,
+        "minimum_visible_boot_px": {
+          "L": 34,
+          "R": 0
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            36,
+            39,
+            51,
+            48,
+            43,
+            34
+          ],
+          "R": [
+            39,
+            11,
+            0,
+            22,
+            3,
+            12
+          ]
+        }
+      },
+      "NW": {
+        "silhouette_minimum_iou": 0.8781,
+        "silhouette_mean_changed_px": 82.67,
+        "head_minimum_iou": 0.898,
+        "head_mean_changed_px": 22.33,
+        "minimum_visible_boot_px": {
+          "L": 45,
+          "R": 5
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            45,
+            51,
+            49,
+            50,
+            48,
+            51
+          ],
+          "R": [
+            53,
+            38,
+            22,
+            5,
+            18,
+            43
+          ]
+        }
+      },
+      "N": {
+        "silhouette_minimum_iou": 0.9049,
+        "silhouette_mean_changed_px": 69.33,
+        "head_minimum_iou": 0.8924,
+        "head_mean_changed_px": 22.0,
+        "minimum_visible_boot_px": {
+          "L": 27,
+          "R": 28
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            27,
+            31,
+            37,
+            37,
+            36,
+            34
+          ],
+          "R": [
+            39,
+            36,
+            33,
+            28,
+            33,
+            38
+          ]
+        }
+      },
+      "NE": {
+        "silhouette_minimum_iou": 0.8611,
+        "silhouette_mean_changed_px": 92.67,
+        "head_minimum_iou": 0.8863,
+        "head_mean_changed_px": 24.0,
+        "minimum_visible_boot_px": {
+          "L": 9,
+          "R": 45
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            9,
+            17,
+            43,
+            49,
+            39,
+            20
+          ],
+          "R": [
+            51,
+            51,
+            49,
+            45,
+            51,
+            53
+          ]
+        }
+      },
+      "E": {
+        "silhouette_minimum_iou": 0.887,
+        "silhouette_mean_changed_px": 62.33,
+        "head_minimum_iou": 0.92,
+        "head_mean_changed_px": 12.33,
+        "minimum_visible_boot_px": {
+          "L": 9,
+          "R": 34
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            32,
+            12,
+            10,
+            38,
+            10,
+            9
+          ],
+          "R": [
+            55,
+            46,
+            42,
+            34,
+            48,
+            53
+          ]
+        }
+      },
+      "SE": {
+        "silhouette_minimum_iou": 0.8798,
+        "silhouette_mean_changed_px": 81.0,
+        "head_minimum_iou": 0.9167,
+        "head_mean_changed_px": 20.33,
+        "minimum_visible_boot_px": {
+          "L": 12,
+          "R": 28
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            56,
+            51,
+            29,
+            12,
+            20,
+            48
+          ],
+          "R": [
+            33,
+            28,
+            43,
+            53,
+            49,
+            46
+          ]
+        }
+      }
+    },
+    "per_pose_lowest_boot_voxel_z_by_side": [
+      {
+        "R": 0.0,
+        "L": 0.0
+      },
+      {
+        "R": 1.0,
+        "L": 0.0
+      },
+      {
+        "R": 1.5,
+        "L": 0.0
+      },
+      {
+        "R": 0.0,
+        "L": 0.0
+      },
+      {
+        "R": 0.0,
+        "L": 1.0
+      },
+      {
+        "R": 0.0,
+        "L": 1.5
+      }
+    ],
+    "speed_scenarios": {
+      "0.6": {
+        "fps": 5.3999999999999995,
+        "model_units_per_second": 10.259999999999998,
+        "integer_boundary_drift_max_px": {
+          "S": 0.0,
+          "SW": 1.0,
+          "W": 1.0,
+          "NW": 1.0,
+          "N": 0.0,
+          "NE": 1.0,
+          "E": 1.0,
+          "SE": 1.0
+        }
+      },
+      "1.0": {
+        "fps": 9.0,
+        "model_units_per_second": 17.099999999999998,
+        "integer_boundary_drift_max_px": {
+          "S": 0.0,
+          "SW": 1.0,
+          "W": 1.0,
+          "NW": 1.0,
+          "N": 0.0,
+          "NE": 1.0,
+          "E": 1.0,
+          "SE": 1.0
+        }
+      },
+      "1.6": {
+        "fps": 14.4,
+        "model_units_per_second": 27.36,
+        "integer_boundary_drift_max_px": {
+          "S": 0.0,
+          "SW": 1.0,
+          "W": 1.0,
+          "NW": 1.0,
+          "N": 0.0,
+          "NE": 1.0,
+          "E": 1.0,
+          "SE": 1.0
+        }
+      }
+    },
+    "toe_world_stance_max_by_side": {
+      "L": {
+        "stance_world_max": 0.0,
+        "min_z": 0.0,
+        "max_z": 0.0,
+        "projected_max_px": {
+          "S": 0.0,
+          "SW": 0.0,
+          "W": 0.0,
+          "NW": 0.0,
+          "N": 0.0,
+          "NE": 0.0,
+          "E": 0.0,
+          "SE": 0.0
+        }
+      },
+      "R": {
+        "stance_world_max": 0.0,
+        "min_z": 0.0,
+        "max_z": 0.0,
+        "projected_max_px": {
+          "S": 0.0,
+          "SW": 0.0,
+          "W": 0.0,
+          "NW": 0.0,
+          "N": 0.0,
+          "NE": 0.0,
+          "E": 0.0,
+          "SE": 0.0
+        }
+      }
+    },
+    "head_3D_height_range": 0.6199999999999974
+  },
+  "new": {
+    "directions": {
+      "S": {
+        "silhouette_minimum_iou": 0.9182,
+        "silhouette_mean_changed_px": 66.0,
+        "head_minimum_iou": 0.9188,
+        "head_mean_changed_px": 14.67,
+        "minimum_visible_boot_px": {
+          "L": 33,
+          "R": 30
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            47,
+            47,
+            43,
+            43,
+            33,
+            47
+          ],
+          "R": [
+            39,
+            30,
+            46,
+            51,
+            47,
+            40
+          ]
+        }
+      },
+      "SW": {
+        "silhouette_minimum_iou": 0.8803,
+        "silhouette_mean_changed_px": 78.0,
+        "head_minimum_iou": 0.9306,
+        "head_mean_changed_px": 13.33,
+        "minimum_visible_boot_px": {
+          "L": 16,
+          "R": 16
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            51,
+            44,
+            39,
+            38,
+            16,
+            43
+          ],
+          "R": [
+            16,
+            18,
+            51,
+            54,
+            47,
+            23
+          ]
+        }
+      },
+      "W": {
+        "silhouette_minimum_iou": 0.888,
+        "silhouette_mean_changed_px": 61.33,
+        "head_minimum_iou": 0.9151,
+        "head_mean_changed_px": 15.33,
+        "minimum_visible_boot_px": {
+          "L": 20,
+          "R": 2
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            33,
+            40,
+            50,
+            50,
+            43,
+            20
+          ],
+          "R": [
+            35,
+            14,
+            2,
+            17,
+            2,
+            20
+          ]
+        }
+      },
+      "NW": {
+        "silhouette_minimum_iou": 0.8834,
+        "silhouette_mean_changed_px": 71.0,
+        "head_minimum_iou": 0.9579,
+        "head_mean_changed_px": 8.0,
+        "minimum_visible_boot_px": {
+          "L": 43,
+          "R": 6
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            48,
+            47,
+            52,
+            50,
+            50,
+            43
+          ],
+          "R": [
+            55,
+            38,
+            6,
+            12,
+            19,
+            47
+          ]
+        }
+      },
+      "N": {
+        "silhouette_minimum_iou": 0.92,
+        "silhouette_mean_changed_px": 61.33,
+        "head_minimum_iou": 0.9534,
+        "head_mean_changed_px": 8.67,
+        "minimum_visible_boot_px": {
+          "L": 28,
+          "R": 24
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            32,
+            35,
+            40,
+            41,
+            41,
+            28
+          ],
+          "R": [
+            43,
+            41,
+            24,
+            33,
+            37,
+            41
+          ]
+        }
+      },
+      "NE": {
+        "silhouette_minimum_iou": 0.8609,
+        "silhouette_mean_changed_px": 90.67,
+        "head_minimum_iou": 0.9379,
+        "head_mean_changed_px": 12.0,
+        "minimum_visible_boot_px": {
+          "L": 7,
+          "R": 43
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            10,
+            19,
+            45,
+            53,
+            38,
+            7
+          ],
+          "R": [
+            53,
+            50,
+            43,
+            44,
+            47,
+            56
+          ]
+        }
+      },
+      "E": {
+        "silhouette_minimum_iou": 0.8957,
+        "silhouette_mean_changed_px": 57.67,
+        "head_minimum_iou": 0.9338,
+        "head_mean_changed_px": 11.67,
+        "minimum_visible_boot_px": {
+          "L": 11,
+          "R": 36
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            32,
+            14,
+            18,
+            33,
+            11,
+            22
+          ],
+          "R": [
+            55,
+            46,
+            36,
+            41,
+            50,
+            52
+          ]
+        }
+      },
+      "SE": {
+        "silhouette_minimum_iou": 0.881,
+        "silhouette_mean_changed_px": 77.67,
+        "head_minimum_iou": 0.931,
+        "head_mean_changed_px": 13.33,
+        "minimum_visible_boot_px": {
+          "L": 18,
+          "R": 24
+        },
+        "visible_boot_px_by_frame": {
+          "L": [
+            57,
+            49,
+            25,
+            18,
+            21,
+            51
+          ],
+          "R": [
+            36,
+            24,
+            48,
+            53,
+            47,
+            38
+          ]
+        }
+      }
+    },
+    "per_pose_lowest_boot_voxel_z_by_side": [
+      {
+        "R": 0.0,
+        "L": 0.0
+      },
+      {
+        "R": 2.0,
+        "L": 0.0
+      },
+      {
+        "R": 2.0,
+        "L": 0.0
+      },
+      {
+        "R": 0.0,
+        "L": 0.0
+      },
+      {
+        "R": 0.0,
+        "L": 2.0
+      },
+      {
+        "R": 0.0,
+        "L": 2.0
+      }
+    ],
+    "speed_scenarios": {
+      "0.6": {
+        "fps": 5.3999999999999995,
+        "model_units_per_second": 10.259999999999998,
+        "integer_boundary_drift_max_px": {
+          "S": 0.0,
+          "SW": 1.0,
+          "W": 1.0,
+          "NW": 1.0,
+          "N": 0.0,
+          "NE": 1.0,
+          "E": 1.0,
+          "SE": 1.0
+        }
+      },
+      "1.0": {
+        "fps": 9.0,
+        "model_units_per_second": 17.099999999999998,
+        "integer_boundary_drift_max_px": {
+          "S": 0.0,
+          "SW": 1.0,
+          "W": 1.0,
+          "NW": 1.0,
+          "N": 0.0,
+          "NE": 1.0,
+          "E": 1.0,
+          "SE": 1.0
+        }
+      },
+      "1.6": {
+        "fps": 14.4,
+        "model_units_per_second": 27.36,
+        "integer_boundary_drift_max_px": {
+          "S": 0.0,
+          "SW": 1.0,
+          "W": 1.0,
+          "NW": 1.0,
+          "N": 0.0,
+          "NE": 1.0,
+          "E": 1.0,
+          "SE": 1.0
+        }
+      }
+    },
+    "toe_world_stance_max_by_side": {
+      "L": {
+        "stance_world_max": 0.0,
+        "min_z": 0.0,
+        "max_z": 0.0,
+        "projected_max_px": {
+          "S": 0.0,
+          "SW": 0.0,
+          "W": 0.0,
+          "NW": 0.0,
+          "N": 0.0,
+          "NE": 0.0,
+          "E": 0.0,
+          "SE": 0.0
+        }
+      },
+      "R": {
+        "stance_world_max": 0.0,
+        "min_z": 0.0,
+        "max_z": 0.0,
+        "projected_max_px": {
+          "S": 0.0,
+          "SW": 0.0,
+          "W": 0.0,
+          "NW": 0.0,
+          "N": 0.0,
+          "NE": 0.0,
+          "E": 0.0,
+          "SE": 0.0
+        }
+      }
+    },
+    "head_3D_height_range": 0.06599999999999895
+  }
+}

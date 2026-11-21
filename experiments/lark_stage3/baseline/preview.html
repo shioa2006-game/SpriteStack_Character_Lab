@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LARK | Sprite Stacking Animation</title>
+<style>
+:root{color-scheme:dark;font:16px system-ui,sans-serif;--bg:#111d28;--panel:#1e3040;--line:#426170;--ink:#edf4f1;--dim:#b7ced0;--gold:#ebbf82}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#233b4d,var(--bg) 65%);color:var(--ink);min-height:100vh}
+main{max-width:54rem;margin:auto;padding:clamp(1rem,4vw,3rem)}
+p{margin:0 0 1rem;line-height:1.65;color:var(--dim)}
+.kicker{font-size:.76rem;letter-spacing:.18em;color:var(--gold);margin-bottom:.55rem}
+h1{font-size:clamp(1.7rem,6vw,3rem);margin:0 0 .45rem;line-height:1}
+.workspace{display:grid;grid-template-columns:minmax(270px,1fr) minmax(245px,1fr);gap:1rem;margin:1.5rem 0 1rem}
+.stage,.controls{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:1rem;min-width:0}
+.stage{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:278px;gap:.7rem}
+.framebox{width:100%;height:clamp(224px,38vw,272px);display:grid;place-items:center;max-width:100%}
+canvas{display:block;image-rendering:pixelated;background:#142430;background-image:conic-gradient(#253b49 25%,#192c38 0 50%,#253b49 0 75%,#192c38 0);background-size:24px 24px;outline:1px solid #5b7581}
+.stage output{font: .85rem ui-monospace, monospace;color:var(--gold);min-height:1.1rem}
+fieldset{border:0;padding:0;margin:0 0 1rem;min-width:0}
+legend{color:var(--dim);font-size:.88rem;margin:0 0 .42rem}
+button{font:inherit;border:1px solid #6d858e;background:#223948;color:var(--ink);border-radius:7px;min-height:2.35rem;padding:.25rem .55rem;cursor:pointer}
+button:disabled{opacity:.45;cursor:default}
+button[aria-pressed=true]{color:#1e201f;background:var(--gold);border-color:#f6d6a6}
+button:focus-visible,input:focus-visible{outline:2px solid white;outline-offset:3px}
+.dirs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.36rem}
+.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem}
+.row{display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;margin-bottom:.75rem}
+.slider{display:grid;grid-template-columns:2.3rem minmax(0,1fr) 1.6rem;align-items:center;gap:.45rem;width:100%;margin-bottom:.8rem}
+.slider output{text-align:right;font-variant-numeric:tabular-nums;color:var(--gold)}
+label{font-size:.88rem;color:var(--dim)}
+input{accent-color:var(--gold)}
+footer{font-size:.82rem;color:var(--dim);line-height:1.7}
+.status-error{color:#ffb5a7!important}
+@media(max-width:630px){.workspace{grid-template-columns:1fr}.stage{min-height:270px}}
+@media(max-width:315px){.framebox{height:194px}}
+</style>
+<main>
+  <p class="kicker">SPRITE STACKING / MOTION TEST</p>
+  <h1>LARK / THE BLUE SQUIRE</h1>
+  <p>静止・歩行・斬撃を方向別に比較。描画は焼き出し済みPNGの切り出しだけです。</p>
+  <div class="workspace">
+    <div class="stage">
+      <div class="framebox"><canvas id="sprite" width="48" height="48" role="img" aria-label="LARK のスプライト"></canvas></div>
+      <output id="frame" aria-live="off">読み込み中</output>
+    </div>
+    <div class="controls">
+      <fieldset><legend>方向</legend><div id="directions" class="dirs"></div></fieldset>
+      <fieldset><legend>動作</legend><div id="modes" class="modes"></div></fieldset>
+      <div class="row">
+        <button type="button" id="toggle" disabled>再生</button>
+        <button type="button" id="step" disabled>1コマ進む</button>
+      </div>
+      <div class="slider"><label for="fps">FPS</label><input type="range" id="fps" min="2" max="20" value="8"><output id="fpsValue" for="fps">8</output></div>
+      <div class="row">
+        <label><input type="checkbox" id="native"> 原寸 1×</label>
+        <label><input type="checkbox" id="repeat"> 攻撃もループ</label>
+      </div>
+    </div>
+  </div>
+  <footer>48 px基準の足元アンカー：(24, 40)　·　拡張セルの余白は中心を揃えて描画<br>ZIPを解凍して preview.html を開いてください。output フォルダーは同じ階層に置きます。</footer>
+</main>
+<script>
+'use strict';
+const SIZE = 48, POSES = 6;
+const dirs = ['S','SW','W','NW','N','NE','E','SE'];
+const names = {idle:'静止',walk:'歩行',attack:'攻撃'};
+const qs = id => document.getElementById(id);
+const canvas = qs('sprite'), ctx = canvas.getContext('2d');
+const state = {mode:'idle',dir:1,index:0,running:false,ended:false,last:null,elapsed:0};
+const directionButtons = [], modeButtons = {};
+const images = {};
+let stageWidth=SIZE, stageHeight=SIZE;
+function loadImage(mode) {
+  return new Promise((resolve,reject) => {
+    const image = new Image();
+    image.onload = () => {
+      const columns=mode==='idle'?dirs.length:POSES, rows=mode==='idle'?1:dirs.length;
+      const w=image.naturalWidth/columns, h=image.naturalHeight/rows;
+      if (!Number.isInteger(w) || !Number.isInteger(h) || w<SIZE || h<SIZE ||
+          (mode==='idle' && (w!==SIZE || h!==SIZE)) ||
+          (w-SIZE)%2!==0 || (h-SIZE)%2!==0) {
+        reject(new Error(mode + '.png のサイズが想定と異なります。')); return;
+      }
+      images[mode]={image,w,h}; resolve();
+    };
+    image.onerror = () => reject(new Error('output/' + mode + '.png を読み込めません。'));
+    image.src = 'output/' + mode + '.png';
+  });
+}
+let ready = false;
+function button(text, parent, action) {
+  const b = document.createElement('button');
+  b.type='button'; b.textContent=text; b.setAttribute('aria-pressed','false');
+  b.addEventListener('click',action); parent.append(b); return b;
+}
+dirs.forEach((d,i)=>directionButtons.push(button(d,qs('directions'),()=>{
+  state.dir=i; paint();
+})));
+Object.keys(names).forEach(mode=>modeButtons[mode]=button(names[mode],qs('modes'),()=>{
+  state.mode=mode; state.index=0; state.ended=false;
+  setRunning(mode!=='idle'); paint();
+}));
+function paint() {
+  directionButtons.forEach((b,i)=>b.setAttribute('aria-pressed',String(state.dir===i)));
+  Object.entries(modeButtons).forEach(([k,b])=>b.setAttribute('aria-pressed',String(state.mode===k)));
+  if (!ready || !ctx) return;
+  const idle = state.mode==='idle';
+  const {image,w,h}=images[state.mode];
+  const sx=(idle ? state.dir : state.index)*w, sy=(idle ? 0 : state.dir)*h;
+  const dx=(stageWidth-w)/2, dy=(stageHeight-h)/2;
+  ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,stageWidth,stageHeight);
+  ctx.drawImage(image,sx,sy,w,h,dx,dy,w,h);
+  canvas.dataset.mode=state.mode; canvas.dataset.direction=dirs[state.dir]; canvas.dataset.frame=String(state.index);
+  qs('frame').textContent=dirs[state.dir]+' / '+names[state.mode]+' / '+(state.index+1)+' / '+(idle?1:POSES)+'  ·  '+w+'×'+h+' px';
+  qs('toggle').disabled=idle; qs('step').disabled=idle;
+  qs('toggle').textContent=state.running?'一時停止':state.ended?'もう一度':'再生';
+}
+function setRunning(on) {
+  state.running=on; state.last=null; state.elapsed=0;
+}
+function advance() {
+  if (state.mode==='attack' && state.index===POSES-1 && !qs('repeat').checked) {
+    state.ended=true;setRunning(false);
+  } else {
+    state.index=(state.index+1)%POSES;
+  }
+  paint();
+}
+function tick(now) {
+  if (ready && state.running && state.mode!=='idle') {
+    if (state.last!==null) state.elapsed+=Math.min(now-state.last,100);
+    state.last=now;
+    const interval=1000/Number(qs('fps').value);
+    if (state.elapsed>=interval) {
+      state.elapsed-=interval; advance();
+    }
+  }
+  requestAnimationFrame(tick);
+}
+qs('toggle').addEventListener('click',()=>{
+  if (!ready || state.mode==='idle') return;
+  if (state.ended) {state.index=0;state.ended=false;}
+  setRunning(!state.running); paint();
+});
+qs('step').addEventListener('click',()=>{
+  if (!ready || state.mode==='idle') return;
+  setRunning(false);state.ended=false;state.index=(state.index+1)%POSES;paint();
+});
+qs('fps').addEventListener('input',()=>{qs('fpsValue').textContent=qs('fps').value;state.elapsed=0;});
+function applySize() {
+  const framebox=canvas.parentElement;
+  const fit=Math.floor(Math.min(framebox.clientWidth/stageWidth,framebox.clientHeight/stageHeight,5));
+  const zoom=qs('native').checked?1:Math.max(1,fit);
+  canvas.style.width=stageWidth*zoom+'px'; canvas.style.height=stageHeight*zoom+'px';
+}
+window.addEventListener('resize',applySize); qs('native').addEventListener('change',applySize);applySize();paint();
+if (!ctx) {
+  qs('frame').className='status-error';qs('frame').textContent='Canvas 2D を利用できません。';
+} else {
+  Promise.all(Object.keys(names).map(loadImage))
+    .then(()=>{
+      stageWidth=Math.max(...Object.values(images).map(s=>s.w));
+      stageHeight=Math.max(...Object.values(images).map(s=>s.h));
+      canvas.width=stageWidth;canvas.height=stageHeight;applySize();
+      ready=true;paint();requestAnimationFrame(tick);
+    })
+    .catch(err=>{qs('frame').className='status-error';qs('frame').textContent=err.message;});
+}
+</script>
+</html>

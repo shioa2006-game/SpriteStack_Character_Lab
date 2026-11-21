@@ -1,0 +1,301 @@
+{
+  "kind": "Node + @napi-rs/canvas; canvas drawing and input callbacks exercised, not a browser",
+  "assets": {
+    "old": {
+      "idle": [
+        384,
+        48
+      ],
+      "walk": [
+        288,
+        384
+      ],
+      "attack": [
+        384,
+        512
+      ]
+    },
+    "new": {
+      "idle": [
+        384,
+        48
+      ],
+      "walk": [
+        288,
+        384
+      ],
+      "attack": [
+        576,
+        512
+      ]
+    }
+  },
+  "velocities": [
+    {
+      "ver": "old",
+      "speed": 0.6,
+      "distance_units": 10.259999999999991,
+      "screen_travel_px": 12.209399999999988,
+      "projected_vertical_px": 4.96601036996967,
+      "frameRate": 5.3999999999999995,
+      "stride": 1.9
+    },
+    {
+      "ver": "old",
+      "speed": 1,
+      "distance_units": 17.1,
+      "screen_travel_px": 20.349,
+      "projected_vertical_px": 8.276683949949458,
+      "frameRate": 9,
+      "stride": 1.9
+    },
+    {
+      "ver": "old",
+      "speed": 1.6,
+      "distance_units": 27.36000000000001,
+      "screen_travel_px": 32.55840000000001,
+      "projected_vertical_px": 13.242694319919137,
+      "frameRate": 14.4,
+      "stride": 1.9
+    },
+    {
+      "ver": "new",
+      "speed": 0.6,
+      "distance_units": 10.259999999999991,
+      "screen_travel_px": 12.209399999999988,
+      "projected_vertical_px": 4.96601036996967,
+      "frameRate": 5.3999999999999995,
+      "stride": 1.9
+    },
+    {
+      "ver": "new",
+      "speed": 1,
+      "distance_units": 17.1,
+      "screen_travel_px": 20.349,
+      "projected_vertical_px": 8.276683949949458,
+      "frameRate": 9,
+      "stride": 1.9
+    },
+    {
+      "ver": "new",
+      "speed": 1.6,
+      "distance_units": 27.36000000000001,
+      "screen_travel_px": 32.55840000000001,
+      "projected_vertical_px": 13.242694319919137,
+      "frameRate": 14.4,
+      "stride": 1.9
+    }
+  ],
+  "movementRows": [
+    {
+      "ver": "old",
+      "dir": "S",
+      "row": 0,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "SW",
+      "row": 1,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "W",
+      "row": 2,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "NW",
+      "row": 3,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "N",
+      "row": 4,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "NE",
+      "row": 5,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "E",
+      "row": 6,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "old",
+      "dir": "SE",
+      "row": 7,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "S",
+      "row": 0,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "SW",
+      "row": 1,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "W",
+      "row": 2,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "NW",
+      "row": 3,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "N",
+      "row": 4,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "NE",
+      "row": 5,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "E",
+      "row": 6,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    },
+    {
+      "ver": "new",
+      "dir": "SE",
+      "row": 7,
+      "walkFrame": 1,
+      "anchorPreserved": true
+    }
+  ],
+  "attacks": [
+    {
+      "ver": "old",
+      "timing": "authored",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sampledStartsMs": [
+        0,
+        150,
+        280,
+        440,
+        515,
+        640
+      ],
+      "totalMs": 810
+    },
+    {
+      "ver": "old",
+      "timing": "equal",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "sampledStartsMs": [
+        0,
+        135,
+        270,
+        405,
+        540,
+        675
+      ],
+      "totalMs": 810
+    },
+    {
+      "ver": "new",
+      "timing": "authored",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "sampledStartsMs": [
+        0,
+        75,
+        160,
+        265,
+        370,
+        415,
+        465,
+        560,
+        660
+      ],
+      "totalMs": 800
+    },
+    {
+      "ver": "new",
+      "timing": "equal",
+      "frames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "sampledStartsMs": [
+        0,
+        90,
+        180,
+        270,
+        360,
+        445,
+        535,
+        625,
+        715
+      ],
+      "totalMs": 800
+    }
+  ]
+}
