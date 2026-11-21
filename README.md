@@ -7,9 +7,9 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | 状態 | 対象 |
 | --- | --- |
 | 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、Canvasギャラリー |
-| 検証済み | LARK の32層モデル、装備込み17部位、基準PNGとのRGBA・レイアウト・再生時間の一致 |
+| 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
 | 未実装 | ウェイト変形、別の骨格構成、キャラクターの自動生成 |
-| 検証課題 | 別キャラクターでの再利用、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
+| 検証課題 | 他の体形への転用範囲、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
 方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
 
@@ -19,6 +19,7 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | --- | --- |
 | [spritestack/](spritestack/) | 共通CLI、設定読込、二足歩行リグ、ボクセル再スライス、描画、ベイク |
 | [characters/lark/](characters/lark/) | LARKのモデル・モーション参照、材質、リグ、表示と計測の設定 |
+| [characters/bram/](characters/bram/) | BRAMの独立モデル、部位マスク、設定、攻撃目標の転用手順 |
 | [experiments/lark_stage3/](experiments/lark_stage3/) | ZIPから移植した基準コード・モデル・検証スクリプト・元のプレビュー |
 | [experiments/lark_stage3/baseline/](experiments/lark_stage3/baseline/) | 旧版と、再生成に必要な元モデル・水平断面 |
 | [experiments/lark_stage3/output/](experiments/lark_stage3/output/) | 8方向 PNG、関節・計測 JSON、水平断面・部位 ID の NPZ |
@@ -74,7 +75,19 @@ $rebuild = Join-Path $run 'common'
 2. 体形に合わせて `rig.rest`、部位マスク、装備の取り付けを定義します。既存モーションを試し、接地や手の目標値と描画範囲を必要に応じて調整します。各セルを同じアンカーで切り出せるよう、描画用セルとの差を偶数にします。
 3. CLIの `--character` を新しい設定に変えて生成し、8方向の左右、接地、装備、アンカー、テンポを確認します。採用したモデル、設定、モーション、基準PNGを追跡します。
 
-共通側は二足歩行の関節名と歩行・攻撃の計算方式を共有します。LARKのモデルを作る手続き、材質から部位を割り当てる処理、過去の比較・検証スクリプトは実験ディレクトリにあります。新しい体形での再利用はPhase 3で検証します。
+共通側は二足歩行の関節名と歩行・攻撃の計算方式を共有します。LARKのモデルを作る手続き、材質から部位を割り当てる処理、過去の比較・検証スクリプトは実験ディレクトリにあります。
+
+### BRAMの生成と検証
+
+BRAMは低い身長、幅広い胴、短い四肢を持つドワーフ戦士です。LARKと歩行クリップを共有し、攻撃は元のタイミングと刃の向きを使い、右手の目標だけを肩と腕の長さに合わせています。
+
+~~~powershell
+$bram = Join-Path $run 'bram'
+& $python -B -m spritestack --character characters/bram/character.json --out $bram
+& $python -B -m research.verify_bram $bram
+~~~
+
+モデルと部位NPZを別フォルダへ作るには `python characters/bram/build_model.py --out <出力先>`、転用した攻撃クリップを再計算するには `python -m characters.bram.retarget_attack --out <JSONの出力先>` を使います。設計と検証の記録は[Phase 3レポート](research/PHASE3_VERIFICATION.md)を参照してください。
 
 ## 旧コードと同梱成果物の検証
 
@@ -106,13 +119,13 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-初回は静止 PNG とメタデータを読み込みます。歩行・攻撃のシートは、該当するモーションの初回選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvas は足元アンカーを揃えて表示します。攻撃は既存のコマごとの時間配分で1回再生し、ボタンで再試行できます。`docs/assets/` の4ファイルは `output/` の対応ファイルのコピーです。
+キャラクター欄でLARKとBRAMを切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。攻撃はコマごとの時間配分で1回再生し、ボタンで再生し直せます。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/` にあります。
 
-GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[LARK ギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
+GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 
 ## 今後の研究
 
-Phase 3では別の体形で同じエンジンを使い、共通モーションの接地・持ち手・8方向での見え方を確認します。ウェイト変形、装備バリエーション、レンダリングの高速化、ゲームへの組み込みも研究対象です。[研究ロードマップ](research/ROADMAP.md)
+次の研究では、共通のモーション目標を体形に合わせて転用できる範囲と、剛体部位の継ぎ目を改善するウェイト変形を検討します。[研究ロードマップ](research/ROADMAP.md)
 
 ## ライセンス
 

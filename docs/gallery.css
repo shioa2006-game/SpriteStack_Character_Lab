@@ -41,6 +41,7 @@ h1 {
 }
 
 h1 span { font-size: .42em; color: #d4e1f5; }
+h1 strong { font-weight: inherit; }
 
 .gallery {
   display: grid;

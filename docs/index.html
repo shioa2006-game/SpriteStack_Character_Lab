@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LARKの静止・歩行・攻撃を8方向のPNGスプライトで確認。">
-  <title>LARK — SpriteStack Character Lab</title>
+  <meta name="description" content="LARKとBRAMの静止・歩行・攻撃を8方向のPNGスプライトで確認。">
+  <title>SpriteStack Character Lab</title>
   <link rel="stylesheet" href="gallery.css">
   <script src="gallery.js" defer></script>
 </head>
@@ -12,10 +12,10 @@
   <main>
     <header class="heading">
       <p class="lab-name">SpriteStack Character Lab</p>
-      <h1>LARK <span lang="en">The Blue Squire</span></h1>
+      <h1><strong id="character-name">LARK</strong> <span id="character-subtitle" lang="en">The Blue Squire</span></h1>
     </header>
 
-    <section class="gallery" aria-label="LARK スプライトギャラリー">
+    <section class="gallery" aria-label="スプライトギャラリー">
       <figure class="viewer">
         <div class="stage">
           <canvas id="sprite" width="256" height="256" role="img" aria-label="LARK のスプライト">LARK のスプライト</canvas>
@@ -27,6 +27,13 @@
       </figure>
 
       <div class="controls">
+        <div class="playback">
+          <label for="character">キャラクター</label>
+          <select id="character">
+            <option value="lark">LARK · 青の従士</option>
+            <option value="bram">BRAM · ドワーフ戦士</option>
+          </select>
+        </div>
         <fieldset>
           <legend>モーション</legend>
           <div class="motions">

@@ -7,7 +7,7 @@ AIを活用し、ゲーム用ピクセルアートキャラクターの自動生
 ## 現在の実装
 
 - `spritestack/` は NumPy と Pillow を使い、設定読込、2関節IK、剛体変形、再スライス、正投影、RGBAベイクを担当する。`characters/lark/character.json` に材質と部位のNPZ参照、関節座標、装備の取り付け、カメラ、モーション調整値を置く。材質 `slices` と部位 `parts` は同形状の Z/Y/X 配列。[共通コード](spritestack/) · [LARK設定](characters/lark/character.json)
-- 対象は二足歩行の共通リグ。LARK は装備込み17部位を0.5単位のボクセルへ再スライスする。静止・歩行・攻撃をモデルから描画する。ウェイト変形は未実装で、別キャラクターでの利用はPhase 3で検証する。旧生成コードと正式な基準PNGは実験ディレクトリに保持する。[実験資産](experiments/lark_stage3/)
+- 対象は二足歩行の共通リグ。LARKとBRAMは装備込み17部位を0.5単位のボクセルへ再スライスする。静止・歩行・攻撃をモデルから描画する。ウェイト変形は未実装。旧生成コードとLARKの基準PNGは実験ディレクトリに保持する。[実験資産](experiments/lark_stage3/)
 - LARKのカメラは仰角24°、1.19 px/モデル単位。方向順は **S、SW、W、NW、N、NE、E、SE**。配置・タイミングの契約はメタデータにある。[基準メタデータ](experiments/lark_stage3/output/metadata.json)
 
 | モーション | セル | アンカー (x, y) | 配置 |
@@ -23,3 +23,4 @@ AIを活用し、ゲーム用ピクセルアートキャラクターの自動生
 3. エンジン変更時は `python -m spritestack --character characters/lark/character.json --out <新しい出力先>` でLARKを再生成する。`research/verify_rebuild.py` で寸法、RGBA、方向順、アンカー、コマ数、タイミングを比較する。描画の合否はデコード後のRGBAを使う。[再生成手順](README.md#共通エンジンでの生成)
 4. `validate_package.py`、`verify_walk.py`、`verify_attack.py` は作業用コピーで実行する。技術的な合否と動作の自然さを別に評価し、仕様・不具合・未確認事項を分けて記録する。[旧コードの検証手順](README.md#旧コードと同梱成果物の検証)
 5. 同じ骨格のキャラクターは `characters/<名前>/` に設定、材質・部位NPZ、モーションクリップを追加する。元の関節名と部位ID契約を守り、先に共通モーションの接地と装備の向きを確認する。未依頼の大規模なリファクタリングを行わず、設計変更の理由と影響範囲を記録する。[設定仕様と追加手順](README.md#キャラクター設定-v1)
+6. BRAMの歩行はLARKと同じクリップを参照する。攻撃は `characters.bram.retarget_attack` で右手の目標だけを転用する。調整時は `python -m research.verify_bram <出力先>` で接地、装備の接続、部位の残存、PNGを検査し、見た目も8方向で確認する。[Phase 3レポート](research/PHASE3_VERIFICATION.md)
