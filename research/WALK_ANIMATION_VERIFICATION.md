@@ -9,6 +9,8 @@ MAREN、CRYSTAL MAGE、AZURE RONINの歩行を、8方向×6コマ（48×48、9 f
 - 3体の静止PNGとモデルは変えていない。
 - 攻撃は今回制作していない。
 
+> **追記（2026-11-22）**：このあと、歩行時の頭部の連動を標準仕様 `walk.head` として追加した。3体の胴の上下動（`root_bob_scale`）を深くし、頭が肩と一緒に1 px上下するようにしたため、公開中の歩行PNGはこのレポートの時点から変わっている。この版の歩行は [research/head/baseline/](head/baseline/) に保持している。[頭部連動レポート](HEAD_MOTION_VERIFICATION.md)
+
 | | 結果 |
 | --- | --- |
 | 技術検証 `research.verify_walk` | 3体とも PASS 13、WARNING 0、FAIL 0、SKIP 0（公開版との照合を含む） |

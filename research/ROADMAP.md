@@ -16,6 +16,7 @@
 - 静止だけのベイク（`--modes idle`）と、設定ファイルで条件を変える汎用品質検証を共通化。[検証レポート](SHARED_IDLE_BAKE_AND_VALIDATION.md)
 - 画像からの生成実験03で、共通化後の基盤だけを使い、スカーフで顔を隠した剣士AZURE RONINを制作。高い位置のポニーテール、平たいスカーフの端、2層の裾、反りのある片手剣を立体化し、装備1つ（16部位）の構成を確認。描画上の細い装備の途切れと、同じ材質の一部の可視画素は汎用検証の外にあることを記録。[実験レポート](IMAGE_TO_CHARACTER_03.md)
 - MAREN・CRYSTAL MAGE・AZURE RONINの歩行8方向×6コマを、共通の歩行クリップと体格別の調整値で制作。布・髪の従属運動（裾は脚、房は胴の動きを遅れて追う）を共通機能 `walk.secondary` として実装し、汎用の歩行検証 `research.verify_walk` を追加。共通クリップの腕が同じ側の脚と一緒に前へ出ることを記録（LARK・BRAMは変更せず）。[歩行レポート](WALK_ANIMATION_VERIFICATION.md)
+- 歩行時の頭部の連動を標準仕様 `walk.head` として共通リグに追加。頭は首に乗って胴の上下動を追い、移動は顔のボクセルが崩れない1.0単位刻み。3体で頭が全8方向・肩と一緒に1 px上下し、目の画素はコマで変わらない。検証に `walk.head.motion`・`walk.head.neck`・`walk.head.face` を追加。[頭部連動レポート](HEAD_MOTION_VERIFICATION.md)
 
 LARKとBRAMの標準生成は部位ごとの剛体変形を使う。ウェイト試作の評価範囲はBRAMの6関節。異なる骨格・装備配置への汎用転用は研究対象。LARK固有の歩行・攻撃の視認性と離散ポーズの制約は[元の技術検証](../experiments/lark_stage3/LARK_第3段階A_技術検証.md)に記録されている。
 

@@ -8,7 +8,8 @@ character live in the "walk" section of the quality file next to character.json
 research.verify_character: PASS, WARNING, FAIL and SKIP. The exit code is 1 when
 any check FAILs.
 
-Technical checks only. Whether the walk looks natural is judged on the GIFs.
+walk.head (when character.json has it) checks that the head moves, stays on the
+neck and keeps its face features in every frame. Technical checks only. Whether the walk looks natural is judged on the GIFs.
 """
 
 import argparse
@@ -21,8 +22,8 @@ from PIL import Image
 
 from research.verify_character import DIRECTIONS, Report, components, resolve
 from spritestack.character import load_character
-from spritestack.render import reslice
-from spritestack.rig import Biped
+from spritestack.render import Renderer, reslice
+from spritestack.rig import Biped, transform
 from spritestack.secondary import Secondary
 
 
@@ -299,6 +300,80 @@ def check_secondary(report, character, rig, quality):
                moving_voxels=secondary.moving_count)
 
 
+def check_head(report, character, rig, out, slices, poses, quality):
+    """walk.head: the head moves in every direction, stays on the neck and keeps its face.
+
+    Motion is read from the part atlas (the topmost head row of each frame). The neck
+    offset is the distance between the head's neck point and the chest's neck joint.
+    Face features are materials (by default "eyes") counted in a material ID render of
+    the head alone, in every frame and direction: a feature that is drawn in some frames
+    of a direction and missing in others flickers while the character walks. The head is
+    rendered without the other parts, so an arm or a held item passing in front of the
+    face is not counted; that is judged on the GIFs.
+    """
+    if rig.head is None:
+        report.add("walk.head", "SKIP", "character.json has no walk.head; the older head is used")
+        return
+    rules = quality.get("head", {})
+    view = character.config["view"]
+    cell = character.config["walk"]["cell"]
+    head_id = character.parts["head"]
+    with Image.open(out / "walk_part_ids.png") as image:
+        atlas = np.asarray(image)
+    count = len(rig.walk_clip["poses"])
+    tops = {}
+    for row, direction in enumerate(view["directions"]):
+        tops[direction] = []
+        for index in range(count):
+            tile = atlas[row * cell:(row + 1) * cell, index * cell:(index + 1) * cell]
+            rows = np.where((tile == head_id).any(axis=1))[0]
+            tops[direction].append(int(rows.min()) if len(rows) else None)
+    still = [d for d, values in tops.items() if None in values or max(values) == min(values)]
+    needed = rules.get("min_moving_directions", len(tops))
+    report.add("walk.head.motion", "PASS" if len(tops) - len(still) >= needed else "WARNING",
+               f"the head's top row moves in {len(tops) - len(still)} of {len(tops)} directions "
+               f"(at least {needed})" + (f"; still in {still}" if still else ""), head_top_row=tops)
+
+    offsets, rises = [], []
+    for index in range(count):
+        joints, transforms = rig.pose("walk", index)
+        offset = transform(transforms["head"], rig.rest["neck"]) - joints["neck"]
+        offsets.append(round(float(np.linalg.norm(offset)), 3))
+        rises.append(round(float(offset[2]), 3))
+    limit, rise_limit = rules.get("max_neck_offset", 1.5), rules.get("max_neck_rise", .5)
+    ok = max(offsets) <= limit and max(rises) <= rise_limit
+    report.add("walk.head.neck", "PASS" if ok else "FAIL",
+               f"the head's neck point stays within {max(offsets)} units of the neck joint (limit {limit}) and "
+               f"rises at most {max(rises)} above it (limit {rise_limit})",
+               neck_offset_units=offsets, neck_rise_units=rises)
+
+    names = [material["name"] for material in character.config["model"]["palette"]]
+    features = rules.get("features", ["eyes"] if "eyes" in names else [])
+    unknown = sorted(set(features) - set(names))
+    if not features or unknown:
+        report.add("walk.head.face", "SKIP" if not unknown else "FAIL",
+                   "no face features to count" if not unknown else f"unknown feature materials {unknown}")
+        return
+    renderer = Renderer(character)
+    parts = np.zeros(character.posed_grid.size_xyz[::-1], dtype=np.uint8)
+    counts = {}
+    for direction, yaw in view["directions"].items():
+        counts[direction] = {}
+        rendered = [renderer.render(np.where(poses[f"walk_{index:02}"] == head_id, slices[f"walk_{index:02}"], 0),
+                                    parts, character.posed_grid, yaw, view["render_cell"], view["posed_rays"])
+                    for index in range(count)]
+        for feature in features:
+            material = names.index(feature) + 1
+            counts[direction][feature] = [int((ids == material).sum()) for ids in rendered]
+    lost = {d: f for d, by in counts.items() for f, values in by.items() if min(values) == 0 < max(values)}
+    flicker = {d: f for d, by in counts.items() for f, values in by.items() if 0 < min(values) < max(values)}
+    status = "FAIL" if lost else "WARNING" if flicker else "PASS"
+    report.add("walk.head.face", status,
+               f"face features {features} of the head alone keep the same pixel count in all frames of each direction"
+               if status == "PASS" else f"features vanish in some frames: {lost}; change size: {flicker}",
+               feature_px=counts)
+
+
 def check_published(report, out, meta, published):
     if published is None:
         report.add("walk.published", "SKIP", "no published folder in the quality file")
@@ -341,6 +416,8 @@ def verify(character_path, out, quality_path=None, published="quality"):
     check_arm_phase(report, rig, joints, quality)
     check_visibility(report, character, measurements, quality)
     check_secondary(report, character, rig, quality)
+    with np.load(out / "posed_slices.npz", allow_pickle=False) as slices,             np.load(out / "posed_part_ids.npz", allow_pickle=False) as poses:
+        check_head(report, character, rig, out, slices, poses, quality)
     check_published(report, out, meta, published)
     return report
 

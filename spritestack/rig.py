@@ -88,6 +88,67 @@ def walk_clip(clip, tuning):
     return scaled
 
 
+def cyclic(values, at):
+    """Linear interpolation in a cyclic list at a fractional index."""
+    count = len(values)
+    low = math.floor(at)
+    t = at - low
+    return (1 - t) * values[low % count] + t * values[(low + 1) % count]
+
+
+# walk.head: how the head rides on the neck during the walk. Characters without the
+# block keep the older head (a share of the neck's sway and the root bob, no turn), so
+# their walks bake exactly as before. See README.md ("walk.head"). The head is drawn
+# one ray per pixel, and its eyes and mouth are single voxels about 0.6 px across: a
+# shift of half a voxel or a small turn changes which voxels the rays hit, and the face
+# can lose its eyes. So the head moves away from the older head position only in whole
+# steps of snap units (1.0 = two posed voxels, about one pixel), and the turns default to 0.
+HEAD_DEFAULTS = {
+    "snap": 1.0,
+    "follow": [1.0, 1.0, 1.0],
+    "forward_offset": 0.0,
+    "bob": 0.0,
+    "surge": 0.0,
+    "sway": 0.0,
+    "lag_frames": 0.25,
+    "yaw_follow": 0.0,
+    "pitch_follow": 0.0,
+    "nod_deg": 0.0,
+    "tilt_deg": 0.0,
+}
+HEAD_LIMITS = {
+    "snap": (0, 2), "follow": (0, 1.5), "forward_offset": (-1, 1), "bob": (0, 1.5), "surge": (-1, 1), "sway": (-1, 1),
+    "lag_frames": (0, 3), "yaw_follow": (0, 1), "pitch_follow": (0, 1), "nod_deg": (-6, 6), "tilt_deg": (-6, 6),
+}
+
+
+def head_settings(walk):
+    """The walk.head block with its defaults filled in, or None when it is absent."""
+    if "head" not in walk:
+        return None
+    given = walk["head"]
+    unknown = set(given) - set(HEAD_DEFAULTS) - {"description"}
+    if unknown:
+        raise ValueError(f"walk.head: unknown keys {sorted(unknown)}")
+    head = {key: given.get(key, value) for key, value in HEAD_DEFAULTS.items()}
+    head["follow"] = [float(v) for v in np.broadcast_to(np.asarray(head["follow"], dtype=float), 3)]
+    for key, (low, high) in HEAD_LIMITS.items():
+        values = head[key] if key == "follow" else [head[key]]
+        if not all(low <= float(v) <= high for v in values):
+            raise ValueError(f"walk.head.{key} must be within [{low}, {high}]")
+    return head
+
+
+def head_rhythm(clip, lag):
+    """Per frame, lag frames late: (depth, side). depth is the root bob as a share of its
+    deepest value (1 at the lowest frame), side the root sway as a share of its widest."""
+    bob, sway = clip["root_bob"], clip["root_sway"]
+    deepest, widest = min(bob), max(abs(v) for v in sway)
+    depth = [v / deepest if deepest < 0 else 0. for v in bob]
+    side = [v / widest if widest > 0 else 0. for v in sway]
+    return [(cyclic(depth, index - lag), cyclic(side, index - lag)) for index in range(len(bob))]
+
+
 def per_side(value, side):
     """A tuning value given once for both sides, or as {"R": ..., "L": ...}."""
     return value[side] if isinstance(value, dict) else value
@@ -102,6 +163,8 @@ class Biped:
         self.config = character.config
         self.motions = character.motions
         self.walk_clip = walk_clip(character.motions["walk"], self.config["walk"]["tuning"])
+        self.head = head_settings(self.config["walk"])
+        self.head_rhythm = head_rhythm(self.walk_clip, self.head["lag_frames"]) if self.head else None
         self.parts = character.parts
         self.rest = {name: vec(point) for name, point in self.config["rig"]["rest"].items()}
         self.attachments = self.config["rig"]["attachments"]
@@ -181,9 +244,10 @@ class Biped:
         self._torso(root, yaw, clip["torso_lean"], tuning["hip_yaw_scale"], joints, transforms)
 
         neck = self.rest["neck"]
-        offset = vec([(joints["neck"] - neck)[0] * tuning["head_lateral_scale"],
-                      tuning["head_forward_offset"], clip["root_level"] + bob * tuning["head_bob_scale"]])
-        transforms["head"] = about(np.eye(3), neck, neck + offset)
+        if self.head is None:
+            transforms["head"] = about(np.eye(3), neck, neck + self._legacy_head(bob, joints["neck"]))
+        else:
+            transforms["head"] = self._walk_head(index, yaw, bob, joints["neck"])
         joints["head"] = transform(transforms["head"], self.rest["head"])
 
         for side, sign in (("R", -1), ("L", 1)):
@@ -215,6 +279,35 @@ class Biped:
                      @ rotate([0, 0, 1], yaw * tuning["wrist_yaw_scale"]))
             self._arm(side, shoulder, hand, wrist, outward(tuning["elbow_pole"], sign),
                       joints, transforms)
+
+    def _legacy_head(self, bob, posed_neck):
+        """Translation of the head used without walk.head: a share of the neck's sway and
+        of the root bob, a fixed forward offset."""
+        tuning, neck = self.config["walk"]["tuning"], self.rest["neck"]
+        return vec([(posed_neck - neck)[0] * tuning["head_lateral_scale"], tuning["head_forward_offset"],
+                    self.walk_clip["root_level"] + bob * tuning["head_bob_scale"]])
+
+    def _walk_head(self, index, yaw, bob, posed_neck):
+        """The head rides on the neck joint (a share of its sway, lean and bob) and, lag
+        frames behind the body, settles down and forward with the root bob and shifts
+        sideways with the sway. The difference from the older head at rest is rounded
+        to whole snap steps. Optional small turns about the neck: a share of the chest's twist
+        and lean, a nod with the bob and a sideways tilt with the sway."""
+        head = self.head
+        depth, side = self.head_rhythm[index]
+        neck = self.rest["neck"]
+        offset = (vec(head["follow"]) * (posed_neck - neck)
+                  + vec([head["sway"] * side, head["forward_offset"] + head["surge"] * depth,
+                         -head["bob"] * depth]))
+        if head["snap"] > 0:
+            # The older head at rest: no sway, no bob. A whole-step move from it shifts
+            # the head voxels exactly, so the face is drawn as in the older walk.
+            base = self._legacy_head(0, neck)
+            offset = base + head["snap"] * np.floor((offset - base) / head["snap"] + .5)
+        pitch = self.walk_clip["torso_lean"] * head["pitch_follow"] + head["nod_deg"] * depth
+        rotation = (rotate([0, 0, 1], yaw * head["yaw_follow"]) @ rotate([1, 0, 0], -pitch)
+                    @ rotate([0, 1, 0], head["tilt_deg"] * side))
+        return about(rotation, neck, neck + offset)
 
     def _attack(self, key, joints, transforms):
         tuning = self.config["attack"]["tuning"]

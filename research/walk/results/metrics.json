@@ -12,15 +12,15 @@
     ],
     "secondary_angles_deg_min_max_limit": {
       "long hair": [
-        7.31,
-        11.03,
-        12
+        6.85,
+        12.08,
+        13
       ]
     },
     "share_inside_other_parts": {
       "coat skirt": {
-        "rigid": 0.055,
-        "secondary": 0.0341
+        "rigid": 0.049,
+        "secondary": 0.0315
       },
       "long hair": {
         "rigid": 0.0034,
@@ -28,11 +28,11 @@
       }
     },
     "arm_phase_correlation": {
-      "R": 0.914637012802606,
+      "R": 0.9146370128026059,
       "L": 0.9146370128026059
     },
     "verify_walk_summary": {
-      "PASS": 11,
+      "PASS": 14,
       "WARNING": 0,
       "FAIL": 0,
       "SKIP": 2
@@ -72,8 +72,8 @@
       "L": 0.9116198273491196
     },
     "verify_walk_summary": {
-      "PASS": 11,
-      "WARNING": 0,
+      "PASS": 13,
+      "WARNING": 1,
       "FAIL": 0,
       "SKIP": 2
     },
@@ -93,20 +93,20 @@
     ],
     "secondary_angles_deg_min_max_limit": {
       "ponytail": [
-        7.76,
-        12.97,
+        7.05,
+        14.12,
         18
       ],
       "scarf tail": [
-        3.49,
-        9.1,
+        2.58,
+        10.44,
         12
       ]
     },
     "share_inside_other_parts": {
       "waist cloth": {
-        "rigid": 0.0431,
-        "secondary": 0.0393
+        "rigid": 0.0446,
+        "secondary": 0.0388
       },
       "ponytail": {
         "rigid": 0.0,
@@ -118,11 +118,11 @@
       }
     },
     "arm_phase_correlation": {
-      "R": 0.9120717681108675,
+      "R": 0.9120717681108679,
       "L": 0.9120717681108677
     },
     "verify_walk_summary": {
-      "PASS": 11,
+      "PASS": 14,
       "WARNING": 0,
       "FAIL": 0,
       "SKIP": 2

@@ -43,7 +43,7 @@ import math
 import numpy as np
 
 from .render import reslice
-from .rig import about, align, transform, vec
+from .rig import about, align, cyclic, transform, vec
 
 KINDS = ("skirt", "pendulum")
 SUBSAMPLES = 3
@@ -73,14 +73,6 @@ def relative_turn(parent, child):
     if sine < 1e-9:
         return vec([1, 0, 0]), 0.
     return skew / (2 * sine), math.degrees(math.atan2(sine, cosine))
-
-
-def cyclic(values, at):
-    """Linear interpolation in a cyclic list at a fractional index."""
-    count = len(values)
-    low = math.floor(at)
-    t = at - low
-    return (1 - t) * values[low % count] + t * values[(low + 1) % count]
 
 
 class Secondary:

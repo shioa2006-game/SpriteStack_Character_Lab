@@ -412,17 +412,18 @@ README（実装状況、ディレクトリ構成、生成と検証の節、ギ�
 
 ## 8.5 歩行を加える（任意）
 
-静止を公開したあとで歩行を作る手順。MAREN・CRYSTAL MAGE・AZURE RONINで使った（[歩行レポート](WALK_ANIMATION_VERIFICATION.md)）。歩行クリップは共通のものを参照したまま、`walk.tuning` と `walk.secondary` だけで体格と衣装に合わせる。キャラクター用の歩行システムやスクリプトは作らない。
+静止を公開したあとで歩行を作る手順。MAREN・CRYSTAL MAGE・AZURE RONINで使った（[歩行レポート](WALK_ANIMATION_VERIFICATION.md)）。歩行クリップは共通のものを参照したまま、`walk.tuning`、`walk.secondary`、`walk.head` だけで体格・衣装・頭の動きを合わせる。キャラクター用の歩行システムやスクリプトは作らない。
 
 1. `python -m spritestack --character characters/<name>/character.json --modes walk --out <新しい出力先>` で焼き、8方向×6コマを拡大して見る。最初は共通の設定のまま焼き、比較の基準にする。
 2. 歩幅：`stride_scale` を脚の長さ（股関節から足首）の比に合わせる。LARKの脚は約7.3単位。MARENは11.6単位で1.4、CRYSTAL MAGEとAZURE RONINは10.6単位で、落ち着いた魔法使いは1.15、身軽な剣士は1.35にした。`stance_start_y` は踏み出しの位置で、倍率と一緒に前へ出す。足が届かないと「unreachable walk stance ankle」で止まる。
 3. 腕：共通クリップは腕が同じ側の脚と一緒に前へ出る。`arm_swing_scale` を右は負、左は正にすると、反対側の脚と逆に振れる。重い盾や持った本は振りを小さくする。
 4. 高い装備：静止で上端に近い装備（CRYSTAL MAGEの杖頭はW方向で上端1 px）は、手を上げると48 pxセルを出る。`hand_lift` を左右別に指定し、`root_level` の下げ幅を打ち消す程度にとどめ、`wrist_pitch` で前へ傾けて床から浮かせる。`quality.json` の `walk.lowest_z_at_least` で床より下に出ないことを検査する。
 5. 布：骨盤から下がる裾は `skirt`。長い裾は既定の `drive: "leg"`（股関節から足首の線）にすると、後ろへ蹴り上げたかかとが裾を押す。太ももを包む短い裾は `drive: "thigh"` と `follow` 1.0 にする。
-6. 髪・端：`pendulum`。背中に乗る長髪やポニーテールは `driver: "chest"`（頭は歩行中ほとんど動かないため）。上下の弾みは `follow` の z を2.5〜4にする。`max_deg` に張り付くと動きが平らになり、横に突き出た端は棒に見えるので、角度の範囲を検証の出力で見て下げる。
-7. `python -m research.verify_walk --character ... --out ...` でFAILを0にする。`walk.secondary.intrusion` は、布・髪が他の部位に入り込む割合を剛体のままの場合と比べる。悪化したらWARNINGになる。`quality.json` に `walk` 節（装備の床、装備の可視画素、腕の位相、公開先）を書く。可視画素の下限は、48コマで測った最小値か、それより少し低い値にする。体に隠れる方向がある装備（本、鍔）は規則にしない。
-8. `python -m research.walk.compare --after <各キャラクターの出力の親> --out <出力先> --characters <name>` で、調整前後のGIFと比較画像を作り、8方向のGIFを原寸と拡大で見る。
-9. 公開：`walk.png` と、`metadata.json` の歩行の項目を `{"animations": {"walk": ...}}` にした `walk.json` を `docs/assets/<name>/` に置く。静止の `metadata.json` は変えない（汎用検証が静止の公開版と照合するため）。`gallery.js` の `characters` に `extraAnimations: ["walk"]` を加える。
+6. 髪・端：`pendulum`。背中に乗る長髪やポニーテールは `driver: "chest"`（頭の動きは1 px単位なので、なめらかに動く胴を追わせる）。上下の弾みは `follow` の z を2.5〜4にする。`max_deg` に張り付くと動きが平らになり、横に突き出た端は棒に見えるので、角度の範囲を検証の出力で見て下げる。
+7. 頭：`walk.head` を必ず書く（標準）。`follow` を `[1, 1, 1]` にして頭を首に乗せ、胴の上下動 `root_bob_scale` を、最も低いコマで0.5単位を超える程度にする（MAREN 2.9で約0.64単位）。こうすると頭は肩と一緒に1 px下がる。装備が床に近い、細い前腕が残存の下限を割るなどで胴を沈められない体形では、`bob`（0.15〜0.45）で頭だけを少し沈める。回転（`yaw_follow`・`pitch_follow`・`nod_deg`・`tilt_deg`）と、1.0単位未満の `snap` は、48 pxでは目が消えるので使わない。`walk.head.face` で頭だけを描いたときの目の画素数を見て、方向ごとにコマで変わらないことを確かめる。[頭部連動レポート](HEAD_MOTION_VERIFICATION.md)
+8. `python -m research.verify_walk --character ... --out ...` でFAILを0にする。`walk.secondary.intrusion` は、布・髪が他の部位に入り込む割合を剛体のままの場合と比べる。悪化したらWARNINGになる。`quality.json` に `walk` 節（装備の床、装備の可視画素、腕の位相、公開先）を書く。可視画素の下限は、48コマで測った最小値か、それより少し低い値にする。体に隠れる方向がある装備（本、鍔）は規則にしない。
+9. `python -m research.walk.compare --after <各キャラクターの出力の親> --out <出力先> --characters <name>` で、調整前後のGIFと比較画像を作り、8方向のGIFを原寸と拡大で見る。頭の動きは `python -m research.head.compare` の頭と肩の拡大図で、肩と一緒に下がること、顔が崩れないことを見る。
+10. 公開：`walk.png` と、`metadata.json` の歩行の項目を `{"animations": {"walk": ...}}` にした `walk.json` を `docs/assets/<name>/` に置く。静止の `metadata.json` は変えない（汎用検証が静止の公開版と照合するため）。`gallery.js` の `characters` に `extraAnimations: ["walk"]` を加える。
 
 ## 9. コミットと公開
 
@@ -450,3 +451,4 @@ URL：https://shioa2006-game.github.io/SpriteStack_Character_Lab/
 - [ ] ギャラリーをローカルで確認した
 - [ ] コミット、push、公開ページで確認した
 - [ ] （歩行を作る場合）歩行検証でFAILが0。GIFで8方向の自然さを確認し、裾・髪・装備の破綻を記録した
+- [ ] （歩行を作る場合）`walk.head` で頭が全8方向で肩と一緒に動き、目の画素数がコマで変わらない

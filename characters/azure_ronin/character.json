@@ -119,8 +119,13 @@
       "elbow_pole": [4, -2.7, -4.5],
       "stride_scale": 1.35,
       "swing_lift_scale": 1.2,
-      "root_bob_scale": 1.2,
+      "root_bob_scale": 2.0,
       "root_level_offset": -0.2
+    },
+    "head": {
+      "description": "The head rides on the neck: a lighter dip than MAREN (about 0.44 units; a deeper one thins the sword forearm below the parts limit in one frame) and a small settle (bob 0.15), so the head drops one pixel with the shoulders on the loading frames.",
+      "follow": [1, 1, 1],
+      "bob": 0.15
     },
     "secondary": [
       {

@@ -127,6 +127,11 @@
       "swing_lift_scale": 1.05,
       "wrist_pitch": {"R": -6, "L": 0}
     },
+    "head": {
+      "description": "A calm walk: the shoulders keep the shared clip's small dip (a deeper one lowers the staff foot below the floor) and the head alone settles one pixel on the loading frames (bob 0.45).",
+      "follow": [1, 1, 1],
+      "bob": 0.45
+    },
     "secondary": [
       {
         "name": "cape",
