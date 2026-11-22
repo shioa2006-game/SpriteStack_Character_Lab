@@ -221,7 +221,7 @@
   },
   "posed_volume": {
     "origin_xyz": [-24.0, -23.0, -2.0],
-    "limit_xyz": [24.0, 25.0, 44.0],
+    "limit_xyz": [24.0, 26.0, 44.0],
     "voxel_size": 0.5
   },
   "walk": {

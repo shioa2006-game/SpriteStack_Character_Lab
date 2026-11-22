@@ -15,6 +15,7 @@ const characterName = document.querySelector("#character-name");
 const characterSubtitle = document.querySelector("#character-subtitle");
 const replay = document.querySelector("#replay");
 const attackGif = document.querySelector("#attack-gif");
+const comparisonGif = document.querySelector("#comparison-gif");
 const motionNote = document.querySelector("#motion-note");
 const motionButtons = [...document.querySelectorAll("[data-motion]")];
 const directionButtons = [...document.querySelectorAll("[data-direction]")];
@@ -24,6 +25,7 @@ const characters = {
   bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram", variants: true },
   maren: {
     name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
+    attackComparison: "slash-comparison.gif",
     // Motions published next to an idle-only metadata.json, each as <name>.json and <name>.png.
     extraAnimations: ["walk", "attack"],
   },
@@ -174,6 +176,7 @@ async function showSelection() {
   const chosen = characters[character.value];
   cancelAnimationFrame(animation);
   attackGif.hidden = true;
+  comparisonGif.hidden = true;
   if (characterName.textContent !== chosen.name) {
     characterName.textContent = chosen.name;
     characterSubtitle.textContent = chosen.subtitle;
@@ -211,6 +214,10 @@ async function showSelection() {
     canvas.setAttribute("aria-label", chosen.name + " " + status.textContent);
     attackGif.hidden = name !== "attack" || !!chosen.variants;
     if (!attackGif.hidden) attackGif.href = chosen.assets + "/attack.gif";
+    if (name === "attack" && chosen.attackComparison) {
+      comparisonGif.href = chosen.assets + "/" + chosen.attackComparison;
+      comparisonGif.hidden = false;
+    }
     resize();
     if (name !== "idle") animation = requestAnimationFrame(animate);
   } catch {

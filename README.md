@@ -2,7 +2,7 @@
 
 AIを活用したゲーム用ピクセルアートキャラクターの自動生成を研究するリポジトリです。中心技術は **Sprite Stacking × Skeletal Rig × Weight Deformation × PNG Baking**。ブラウザゲームで使える透過PNGスプライトシートの生成を目指します。
 
-[3体の攻撃GIF・検証結果・再生成手順](research/SAMPLE_ATTACK_VERIFICATION.md)
+[3体の攻撃GIF・検証結果・再生成手順](research/SAMPLE_ATTACK_VERIFICATION.md) · [MARENの新旧斬撃を原寸で比較](research/MAREN_DYNAMIC_SLASH.md)
 
 ## 現在の実装状況
 

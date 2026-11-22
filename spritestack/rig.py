@@ -326,6 +326,7 @@ class Biped:
         for side, sign in (("R", -1), ("L", 1)):
             ankle = self.rest["ankle_" + side].copy()
             if side == tuning["step_side"]:
+                ankle[0] += sign * key.get("front_outward", 0)
                 ankle[1] += key["front_step"]
                 ankle[2] += key.get("front_lift", 0)
             self._leg(side, ankle, 0, outward(tuning["knee_pole"], sign), joints, transforms)

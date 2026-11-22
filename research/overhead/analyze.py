@@ -21,6 +21,7 @@ def guard_key(rig):
     tuning = rig.config["attack"]["tuning"]
     return {
         "root": [0, 0, 0], "yaw": 0, "lean": 0, "front_step": 0, "front_lift": 0, "wrist_roll": 0,
+        "front_outward": 0,
         "hand_R": rest["hand_R"],
         "elbow_pole_R": rest["elbow_R"] - rest["shoulder_R"],
         "blade": unit(vec(tuning["weapon_axis"])),
@@ -98,7 +99,8 @@ def measure(character):
         left_target = (rig.rest["hand_L"] + key["root"] + key["shield_delta"]
                        + [0, float(key["yaw"]) * tuning["support_yaw_offset"], tuning["support_hand_lift"]])
         support_errors.append(float(np.linalg.norm(points["hand_L"] - left_target)))
-        step_target = rig.rest["ankle_R"] + [0, float(key["front_step"]), float(key["front_lift"])]
+        step_target = rig.rest["ankle_R"] + [-float(key["front_outward"]), float(key["front_step"]),
+                                              float(key["front_lift"])]
         ankle_errors.append(float(max(np.linalg.norm(points["ankle_R"] - step_target),
                                       np.linalg.norm(points["ankle_L"] - rig.rest["ankle_L"]))))
         curve.append({

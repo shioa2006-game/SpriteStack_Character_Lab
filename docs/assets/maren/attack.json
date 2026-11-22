@@ -22,17 +22,17 @@
       ],
       "fps": 12,
       "loop": false,
-      "rgba_sha256": "cb831474d5c06cd955081845fac52651824d4ae16ee4bdf7a9b17622d550391d",
+      "rgba_sha256": "ae3285df609fb099ca12861a24e9e5df35302bbfb4e041aecfc00e9338ea78aa",
       "durations_ms": [
         60,
-        90,
-        100,
-        130,
+        70,
+        80,
+        160,
         50,
-        90,
-        90,
+        140,
+        70,
         100,
-        90
+        70
       ],
       "phase_names": [
         "guard",

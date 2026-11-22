@@ -1,10 +1,12 @@
 # 仕上げ Phase 1　盾剣・刀・杖の8方向攻撃
 
+MARENの数値と所見は初版（425e1ec）の記録。現在の斬撃は[振りかぶりの再制作と新旧比較](MAREN_DYNAMIC_SLASH.md)を参照。
+
 各GIFは左上から S、SW、W、NW、下段に N、NE、E、SE を並べ、PNGと同じ9コマ・同じ時間配分で繰り返す。[ギャラリー](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)では方向を選んで1回ずつ再生できる。
 
 | 動作 | セル・足元アンカー | 時間 | 主要局面で8方向中最少の可視画素 | 手と装備の最少接触面数 |
 | --- | --- | ---: | --- | --- |
-| [MARENの斬撃](../docs/assets/maren/attack.gif) | 72×72・(36, 52) | 800 ms | 斬撃の直剣11 px | 剣24、盾28 |
+| [MARENの初版](https://github.com/shioa2006-game/SpriteStack_Character_Lab/blob/425e1ec/docs/assets/maren/attack.gif) | 72×72・(36, 52) | 800 ms | 斬撃の直剣11 px | 剣24、盾28 |
 | [AZURE RONINの速斬り](../docs/assets/azure_ronin/attack.gif) | 64×64・(32, 48) | 520 ms | 斬撃の刀6 px | 刀14 |
 | [CRYSTAL MAGEの詠唱・発動](../docs/assets/crystal_mage/attack.gif) | 64×64・(32, 48) | 1000 ms | 発動時の水晶4 px | 杖9、本22 |
 

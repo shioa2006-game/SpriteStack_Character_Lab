@@ -72,6 +72,7 @@ canvas { display: block; image-rendering: pixelated; }
 
 figcaption {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px;
   padding: 12px 16px;

@@ -55,7 +55,8 @@ def check_path(character, feature):
         for side in ("R", "L"):
             ankle = rig.rest["ankle_" + side].copy()
             if side == tuning["step_side"]:
-                ankle += [0, key["front_step"], key["front_lift"]]
+                outward = -key["front_outward"] if side == "R" else key["front_outward"]
+                ankle += [outward, key["front_step"], key["front_lift"]]
             assert np.linalg.norm(joints["ankle_" + side] - ankle) < 1e-6, (i, side, "ankle")
         off = key.get("support_delta", key.get("shield_delta"))
         left = rig.rest["hand_L"] + key["root"] + off + [
