@@ -6,9 +6,9 @@
     "palette": "palette_provenance.json",
     "samples": "reference_palette.json"
   },
+  "attack": {"feature": "crystal", "phase": "release", "minimum_visible_px": 2},
   "motions": {
-    "walk": {"same_as": "../lark/character.json"},
-    "attack": {"same_as": "../lark/character.json"}
+    "walk": {"same_as": "../lark/character.json"}
   },
   "items": {
     "main": {"part": "staff", "hand": "hand_R", "marker": "staff_tip"},

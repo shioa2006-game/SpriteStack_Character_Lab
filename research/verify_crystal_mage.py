@@ -76,11 +76,11 @@ def check_sources(character):
             assert all(item[tone] == sampled[source["source"]][tone] for tone in ("shadow", "base", "light")), \
                 f"{item['name']} is marked extracted but differs from the sample"
     lark = load_character(LARK)
-    assert character.motions == lark.motions, "walk and attack must stay LARK's loader placeholders"
+    assert character.motions["walk"] == lark.motions["walk"], "shared walk clip differs"
     methods = [item["method"] for item in provenance.values()]
     print(f"Model NPZ rebuilt from source ({len(used)} materials, {len(character.parts)} parts); "
           f"palette provenance {dict((m, methods.count(m)) for m in ('extracted', 'adjusted', 'derived'))}, "
-          "extracted tones match the samples; walk/attack clips are LARK's (placeholders, not baked)")
+          "extracted tones match the samples; walk clip shared with LARK")
 
 
 def check_rig(character):

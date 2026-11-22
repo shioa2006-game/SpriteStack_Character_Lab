@@ -31,11 +31,11 @@ def check_sources(character):
     used = set(np.unique(character.model[character.model > 0]).tolist())
     assert used == set(range(1, len(character.config["model"]["palette"]) + 1)), "unused palette entry"
     assert character.motions["walk"] == load_character(LARK).motions["walk"]
-    assert character.motions["attack"] == retarget()
+    assert read(ROOT / "characters/maren/attack_motion.json") == retarget()
     provenance = read(ROOT / "characters/maren/palette_provenance.json")["materials"]
     assert set(provenance) == {item["name"] for item in character.config["model"]["palette"]}
     print(f"Model NPZ rebuilt from source ({len(used)} materials, {len(character.parts)} parts); "
-          "walk clip shared with LARK; attack clip matches the retarget rule")
+          "walk clip shared with LARK; archived attack matches the retarget rule")
 
 
 def check_handedness(character):

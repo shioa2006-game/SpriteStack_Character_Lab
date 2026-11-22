@@ -14,28 +14,29 @@ const character = document.querySelector("#character");
 const characterName = document.querySelector("#character-name");
 const characterSubtitle = document.querySelector("#character-subtitle");
 const replay = document.querySelector("#replay");
+const attackGif = document.querySelector("#attack-gif");
 const motionNote = document.querySelector("#motion-note");
 const motionButtons = [...document.querySelectorAll("[data-motion]")];
 const directionButtons = [...document.querySelectorAll("[data-direction]")];
 
 const characters = {
-  lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets" },
-  bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram" },
+  lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets", variants: true },
+  bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram", variants: true },
   maren: {
     name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
     // Motions published next to an idle-only metadata.json, each as <name>.json and <name>.png.
-    extraAnimations: ["walk"],
+    extraAnimations: ["walk", "attack"],
   },
   crystal_mage: {
     name: "CRYSTAL MAGE", subtitle: "Staff and Tome", assets: "assets/crystal_mage",
     // Idle sheets of the same model at two pixel densities; null keeps the standard idle.png.
     idleSheets: { 48: null, 64: "idle-64" },
-    extraAnimations: ["walk"],
+    extraAnimations: ["walk", "attack"],
   },
   azure_ronin: {
     name: "AZURE RONIN", subtitle: "Scarf Swordsman", assets: "assets/azure_ronin",
     idleSheets: { 48: null, 64: "idle-64" },
-    extraAnimations: ["walk"],
+    extraAnimations: ["walk", "attack"],
   },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
@@ -172,6 +173,7 @@ async function showSelection() {
   const ticket = ++selection;
   const chosen = characters[character.value];
   cancelAnimationFrame(animation);
+  attackGif.hidden = true;
   if (characterName.textContent !== chosen.name) {
     characterName.textContent = chosen.name;
     characterSubtitle.textContent = chosen.subtitle;
@@ -187,10 +189,10 @@ async function showSelection() {
     const name = motion;
     const facing = direction;
     const idleVariant = name === "idle" && chosen.idleSheets ? chosen.idleSheets[resolution.value] : null;
-    const sheetName = name === "attack" ? attackSheets[attackVariant.value] : idleVariant ?? name;
+    const sheetName = name === "attack" && chosen.variants ? attackSheets[attackVariant.value] : idleVariant ?? name;
     speed.disabled = name === "idle";
     replay.hidden = name !== "attack";
-    attackVariantRow.hidden = name !== "attack";
+    attackVariantRow.hidden = name !== "attack" || !chosen.variants;
     resolutionRow.hidden = !(name === "idle" && chosen.idleSheets);
     const label = motionButtons.find(button => button.dataset.motion === name).textContent;
     const [image, variantLayout] = await Promise.all([
@@ -207,6 +209,8 @@ async function showSelection() {
     };
     status.textContent = label + " · " + facing + (chosen.idleSheets && name === "idle" ? " · " + layout.cell.join("×") : "");
     canvas.setAttribute("aria-label", chosen.name + " " + status.textContent);
+    attackGif.hidden = name !== "attack" || !!chosen.variants;
+    if (!attackGif.hidden) attackGif.href = chosen.assets + "/attack.gif";
     resize();
     if (name !== "idle") animation = requestAnimationFrame(animate);
   } catch {

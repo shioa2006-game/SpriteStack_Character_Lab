@@ -77,7 +77,8 @@ def blade_shape(name, rest):
 
 
 class Blade:
-    def __init__(self, name, rig=None):
+    def __init__(self, name, rig=None, mode="walk"):
+        self.mode = mode
         self.character = load_character(ROOT / f"characters/{name}/character.json")
         self.rig = rig or Biped(self.character)
         config = self.character.config
@@ -85,7 +86,7 @@ class Blade:
         camera = self.view["camera"]
         self.scale, self.pitch = camera["pixels_per_unit"], math.radians(camera["pitch_deg"])
         self.cell = self.view["render_cell"]
-        self.crop = (self.cell - config["walk"]["cell"]) // 2
+        self.crop = (self.cell - config[mode]["cell"]) // 2
         self.pivot = Renderer(self.character).anchor(self.cell)
         self.inside, self.start, self.end = blade_shape(name, self.rig.rest)
         names = [material["name"] for material in config["model"]["palette"]]
@@ -111,7 +112,7 @@ class Blade:
         """Points (cell px) of the blade drawn from its formula, 4x4 rays per pixel."""
         key = (index, yaw)
         if key not in self.references:
-            rotation, translation = self.rig.pose("walk", index)[1]["sword"]
+            rotation, translation = self.rig.pose(self.mode, index)[1]["sword"]
             right, eye, up = self.basis(yaw)
             # Rays only in a box around the projected blade (its ends plus its width).
             ends = [transform((rotation, translation), p) for p in (self.start, self.end)]

@@ -316,7 +316,11 @@ class Biped:
 
         head = (rotate([0, 0, 1], yaw * tuning["head_yaw_scale"])
                 @ rotate([1, 0, 0], -lean * tuning["head_lean_scale"]))
-        transforms["head"] = about(head, self.rest["neck"], joints["neck"])
+        neck = joints["neck"]
+        if snap := tuning.get("head_snap"):
+            delta = (neck - self.rest["neck"]) * vec(tuning.get("head_follow", [1, 1, 1]))
+            neck = self.rest["neck"] + snap * np.floor(delta / snap + .5)
+        transforms["head"] = about(head, self.rest["neck"], neck)
         joints["head"] = transform(transforms["head"], self.rest["head"])
 
         for side, sign in (("R", -1), ("L", 1)):
@@ -329,15 +333,16 @@ class Biped:
             shoulder = transform(transforms["chest"], self.rest["shoulder_" + side])
             if side == tuning["main_hand_side"]:
                 hand = vec(key["hand_" + side])
-                wrist = align(vec(tuning["weapon_axis"]), vec(key["blade"]))
+                axis = key["aim"] if "aim" in key else key["blade"]
+                wrist = align(vec(tuning["weapon_axis"]), vec(axis))
                 if roll := float(key.get("wrist_roll", 0)):
-                    wrist = rotate(key["blade"], roll) @ wrist
+                    wrist = rotate(axis, roll) @ wrist
                 elbow_pole = vec(key["elbow_pole_" + side])
             else:
-                hand = self.rest["hand_" + side] + root + vec(key["shield_delta"]) + vec([
+                hand = self.rest["hand_" + side] + root + vec(key["support_delta"] if "aim" in key else key["shield_delta"]) + vec([
                     0, yaw * tuning["support_yaw_offset"], tuning["support_hand_lift"],
                 ])
                 wrist = (rotate([0, 0, 1], yaw * tuning["support_wrist_yaw_scale"])
-                         @ rotate([1, 0, 0], tuning["support_wrist_pitch"]))
+                         @ rotate([1, 0, 0], key.get("support_pitch", tuning["support_wrist_pitch"])))
                 elbow_pole = vec(tuning["support_elbow_pole"])
             self._arm(side, shoulder, hand, wrist, elbow_pole, joints, transforms)

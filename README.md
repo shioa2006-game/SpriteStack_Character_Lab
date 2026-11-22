@@ -2,14 +2,16 @@
 
 AIを活用したゲーム用ピクセルアートキャラクターの自動生成を研究するリポジトリです。中心技術は **Sprite Stacking × Skeletal Rig × Weight Deformation × PNG Baking**。ブラウザゲームで使える透過PNGスプライトシートの生成を目指します。
 
+[3体の攻撃GIF・検証結果・再生成手順](research/SAMPLE_ATTACK_VERIFICATION.md)
+
 ## 現在の実装状況
 
 | 状態 | 対象 |
 | --- | --- |
-| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、静止と歩行だけのベイク、歩行の体格別の調整値、布・髪の従属運動（`walk.secondary`）、歩行時の頭部の連動（`walk.head`）、細い剣の歩行の描画（`walk.fine`）、設定ファイルで条件を変えられる汎用品質検証と歩行検証、Canvasギャラリー |
+| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、静止と歩行だけのベイク、歩行の体格別の調整値、布・髪の従属運動（`walk.secondary`）、歩行時の頭部の連動（`walk.head`）、細い剣の歩行の描画（`walk.fine`）、設定ファイルで条件を変えられる汎用品質検証、歩行・攻撃検証、剣士2体の斬撃と魔法使いの詠唱・発動、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
 | 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMAREN、魔法使いCRYSTAL MAGE、スカーフの剣士AZURE RONINの静止8方向（CRYSTAL MAGEとAZURE RONINは48×48と64×64の比較）と歩行8方向×6コマ |
-| 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、MARENの攻撃、CRYSTAL MAGEの杖の攻撃、AZURE RONINの攻撃、攻撃中の布・髪の従属運動、杖を地面に突く歩き方 |
+| 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、杖を地面に突く歩き方 |
 | 検証課題 | 他の体形への転用範囲、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
 方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
@@ -235,7 +237,7 @@ $weighted = Join-Path $trial 'weighted'
 
 ### MARENの生成と検証（画像からの生成実験01）
 
-MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。全モードの標準CLIは転用した攻撃が64 pxセルを越えて止まるため、静止8方向は `--modes idle` で焼きます。旧来の `characters.maren.bake_idle` と `research.verify_maren` も残しており、同じ出力と合否になります。歩行は `--modes walk` で焼いて公開しています。コートの裾は脚に、長髪は胴の動きに付いて揺れ、頭は肩と一緒に上下します。直剣は `walk.fine` で描き、E方向でも途切れません（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)、[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)）。
+MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。標準CLIは剣と盾の斬撃を72 pxセルで焼きます。旧転用クリップは比較用です。旧来の `characters.maren.bake_idle` と `research.verify_maren` も残しており、同じ出力と合否になります。歩行は `--modes walk` で焼いて公開しています。コートの裾は脚に、長髪は胴の動きに付いて揺れ、頭は肩と一緒に上下します。直剣は `walk.fine` で描き、E方向でも途切れません（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)、[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)）。
 
 ~~~powershell
 $maren = Join-Path $run 'maren'
@@ -250,7 +252,7 @@ $maren = Join-Path $run 'maren'
 
 CRYSTAL MAGE（仮名 `crystal_mage`）は参考イラスト1枚から作った魔法使いです。長いローブ、左右と背面へ広がるマント、首のフード、右手の水晶の杖、左手の魔法書を立体化しました。杖と本は、LARKで剣と盾が入る2つの取り付け枠に入れています。参考画像は追跡せず、採色範囲の座標と抽出色だけを置いています。
 
-公開するのは静止8方向と歩行8方向です。`--modes idle` は標準の48×48シートと、`comparison_view` に従って同じモデルを4/3倍の画素密度で描いた64×64の比較シートを焼きます。歩行は `--modes walk` で焼き、杖を前に傾けて床から浮かせて持ち、マントと裾が揺れ、頭が控えめに沈みます（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)）。攻撃の設定は読込のためにLARKのクリップを参照するだけで、焼いていません。全モードの標準CLIは、剣の攻撃の姿勢で杖が姿勢ボリュームを出て止まります。旧来の `characters.crystal_mage.bake_idle` と `research.verify_crystal_mage` も残しており、同じ出力と合否になります。
+静止・歩行・杖の詠唱と発動を8方向で公開しています。`--modes idle` は標準の48×48シートと、`comparison_view` に従って同じモデルを4/3倍の画素密度で描いた64×64の比較シートを焼きます。歩行は `--modes walk` で焼き、杖を前に傾けて床から浮かせて持ち、マントと裾が揺れ、頭が控えめに沈みます（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)）。攻撃は右手の杖を前へ向け、左手の本を支え、水晶を発動時に発光させます。旧来の `characters.crystal_mage.bake_idle` と `research.verify_crystal_mage` も残しており、同じ出力と合否になります。
 
 ~~~powershell
 $mage = Join-Path $run 'crystal_mage'
@@ -265,7 +267,7 @@ $mage = Join-Path $run 'crystal_mage'
 
 AZURE RONIN（`azure_ronin`）は参考イラスト1枚から作った軽装の剣士です。高い位置で束ねた紺の髪と青い結び紐、鼻から下を覆う濃灰のスカーフと後ろに垂れる端、ベージュの上衣と青い布の2層の裾、濃色のズボン、右手の反りのある片手剣を立体化しました。左手は空で、取り付け枠は剣の1つだけです（16部位）。参考画像は追跡せず、採色範囲の座標と抽出色だけを置いています。
 
-共通化後に作った最初のキャラクターで、キャラクター用のベイク・検証スクリプトはありません。静止は共通CLIの `--modes idle` で48×48の標準と64×64の比較を焼き、`quality.json` の条件で汎用検証します。歩行は `--modes walk` で焼いて公開しています。腰布は脚に、ポニーテールとスカーフの端は胴の動きに付いて揺れ、頭は肩と一緒に上下します。反りのある刀は `walk.fine` で描き、E方向でも途切れません（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)、[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)）。攻撃の設定は読込のためにLARKのクリップを参照するだけで、公開していません。
+共通化後に作った最初のキャラクターで、キャラクター用のベイク・検証スクリプトはありません。静止は共通CLIの `--modes idle` で48×48の標準と64×64の比較を焼き、`quality.json` の条件で汎用検証します。歩行は `--modes walk` で焼いて公開しています。腰布は脚に、ポニーテールとスカーフの端は胴の動きに付いて揺れ、頭は肩と一緒に上下します。反りのある刀は `walk.fine` で描き、E方向でも途切れません（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)、[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)）。攻撃は刀専用の9コマ・520 msのクリップです。
 
 ~~~powershell
 $ronin = Join-Path $run 'azure_ronin'
@@ -308,7 +310,7 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-キャラクター欄でLARK、BRAM、MAREN、CRYSTAL MAGE、AZURE RONINを切り替えられます。MAREN、CRYSTAL MAGE、AZURE RONINは静止と歩行の8方向を公開し、攻撃のボタンは無効になります。3体の歩行は、静止だけの `metadata.json` の隣に置いた `walk.json` と `walk.png` から読み込みます（`gallery.js` の `extraAnimations`）。CRYSTAL MAGEとAZURE RONINでは「セル解像度」欄で48×48の標準と64×64の比較を切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃は64×64のセルで、Canvasは足元アンカーを揃えます。「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/`、MARENの素材は `docs/assets/maren/`、CRYSTAL MAGEの素材は `docs/assets/crystal_mage/`、AZURE RONINの素材は `docs/assets/azure_ronin/` にあります。
+キャラクター欄でLARK、BRAM、MAREN、CRYSTAL MAGE、AZURE RONINを切り替えられます。3体の追加モーションは静止用メタデータの隣の `walk.json` と `attack.json` から読み込みます。攻撃を選ぶと、同じタイミングの8方向GIFも開けます。CRYSTAL MAGEとAZURE RONINでは「セル解像度」欄で48×48の標準と64×64の比較を切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃はMARENが72×72、他が64×64のセルで、Canvasは足元アンカーを揃えます。LARK・BRAMで「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/`、MARENの素材は `docs/assets/maren/`、CRYSTAL MAGEの素材は `docs/assets/crystal_mage/`、AZURE RONINの素材は `docs/assets/azure_ronin/` にあります。
 
 GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 

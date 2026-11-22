@@ -1,0 +1,50 @@
+{
+  "animations": {
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        48
+      ],
+      "fps": 12,
+      "loop": false,
+      "rgba_sha256": "c51a35b798c166e985876357bbbbeaffd85ebec92deefc7ef9a6d4701d43fd57",
+      "durations_ms": [
+        70,
+        100,
+        150,
+        180,
+        100,
+        60,
+        100,
+        140,
+        100
+      ],
+      "phase_names": [
+        "ready",
+        "open tome",
+        "invoke",
+        "channel",
+        "focus",
+        "release",
+        "hold",
+        "lower staff",
+        "ready"
+      ]
+    }
+  }
+}

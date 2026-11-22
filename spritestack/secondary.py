@@ -78,8 +78,9 @@ def relative_turn(parent, child):
 class Secondary:
     """Per-voxel weights of the walk.secondary regions and the posing of each frame."""
 
-    def __init__(self, character, clip, rest):
-        regions = character.config["walk"].get("secondary", [])
+    def __init__(self, character, clip, rest, *, mode="walk"):
+        self.mode = mode
+        regions = character.config["walk"].get("secondary", [])  # The same garment masks in either motion.
         names = [material["name"] for material in character.config["model"]["palette"]]
         grid = character.source_grid
         coords = np.argwhere(character.part_ids != 0)
@@ -153,17 +154,28 @@ class Secondary:
         """The hinge, axis and full angle of the strand in each frame."""
         part = region["part"]
         pivot, tip = vec(region["pivot"]), vec(region["tip"])
-        travel = self.clip["forward_each_frame"] * float(region.get("travel", 1))
+        travel = self.clip.get("forward_each_frame", 0) * float(region.get("travel", 1))
         lag = float(region["lag_frames"])
         follow = np.broadcast_to(np.asarray(region["follow"], dtype=float), 3)
         driver = region.get("driver", part)
         carried = [transform(transforms[driver], tip) for transforms in frames]
         result = []
+        if self.mode == "attack":
+            durations = self.clip["durations_ms"]
+            times = np.r_[0, np.cumsum(durations[:-1])]
+            delay_ms = lag * np.mean(durations)
         for index, transforms in enumerate(frames):
             hinge = transform(transforms[part], pivot)
             direction = transform(transforms[part], tip) - hinge
             # The tip trails where it was lag frames ago; the ground moved on since then.
-            trail = cyclic(carried, index - lag) - carried[index] - vec([0, travel * lag, 0])
+            if self.mode == "attack":
+                previous = np.interp(times[index] - delay_ms,
+                                     times, np.arange(len(frames)))
+                trail = cyclic(carried, previous) - carried[index]
+                if not self.clip["keys"][index]:
+                    trail = np.zeros(3)
+            else:
+                trail = cyclic(carried, index - lag) - carried[index] - vec([0, travel * lag, 0])
             target = direction + follow * trail
             axis = np.cross(direction, target)
             sine = np.linalg.norm(axis)

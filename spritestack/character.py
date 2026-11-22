@@ -58,6 +58,9 @@ def check_motion_lengths(motions):
         raise ValueError("attack keys, pose names and frame durations must have the same length")
     if any(duration <= 0 for duration in attack["durations_ms"]):
         raise ValueError("attack frame durations must be positive")
+    for key in attack["keys"]:
+        if "glow" in key and not 0 <= key["glow"] <= 1:
+            raise ValueError("attack key glow must be between 0 and 1")
     if any(clip["fps"] <= 0 for clip in motions.values()):
         raise ValueError("fps must be positive")
 

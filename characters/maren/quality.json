@@ -6,9 +6,9 @@
     "palette": "palette_provenance.json",
     "samples": "reference_palette.json"
   },
+  "attack": {"feature": "blade", "phase": "cut", "minimum_visible_px": 10},
   "motions": {
-    "walk": {"same_as": "../lark/character.json"},
-    "attack": {"call": "characters.maren.retarget_attack:retarget"}
+    "walk": {"same_as": "../lark/character.json"}
   },
   "items": {
     "main": {"part": "sword", "hand": "hand_R", "marker": "sword_tip"},

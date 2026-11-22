@@ -155,6 +155,13 @@ def render_motion(character, renderer, mode, poses, neutral):
         for row, (direction, yaw) in enumerate(directions.items()):
             frame, ids, part_ids = renderer.render(volume, parts, character.posed_grid,
                                                     yaw, render_cell, view["posed_rays"], surface, fine)
+            if mode == "attack" and (glow := character.motions[mode]["keys"][index].get("glow", 0)):
+                # Only the visible material pixels emit light, preserving the staff silhouette and occlusion.
+                materials = character.config[mode]["glow_materials"]
+                mask = np.isin(ids, materials)
+                rgba = np.array(frame)
+                rgba[mask, :3] = np.rint((1 - glow) * rgba[mask, :3] + glow * 255).astype(np.uint8)
+                frame = Image.fromarray(rgba)
             if guard:
                 # A neutral key uses the same static drawing and anchor as idle.
                 frame = Image.new("RGBA", (render_cell, render_cell))
@@ -214,7 +221,12 @@ def bake(character, out, *, pose_volume=reslice, motions=("walk", "attack")):
         posed = [rig.pose(mode, index) for index in range(count)]
         for points, transforms in posed:
             check_attachment(rig, points, transforms)
-        if mode == "walk" and secondary:
+        if mode == "attack" and character.config["attack"].get("follow_cloth"):
+            if pose_volume is not reslice:
+                raise ValueError("attack.follow_cloth requires the rigid pose volume")
+            cloth = Secondary(character, clips[mode], rig.rest, mode=mode)
+            volumes_of_mode = cloth.pose_volumes(character, [t for _, t in posed])
+        elif mode == "walk" and secondary:
             volumes_of_mode = secondary.pose_volumes(character, [t for _, t in posed])
         else:
             volumes_of_mode = [pose_volume(character, transforms) for _, transforms in posed]

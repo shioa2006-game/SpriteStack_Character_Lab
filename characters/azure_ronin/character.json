@@ -3,7 +3,7 @@
   "status": {
     "idle": "published: 48x48 standard sheet and a 64x64 comparison sheet of the same model (python -m spritestack --modes idle)",
     "walk": "published: 8 directions x 6 frames at 48x48 (python -m spritestack --modes walk). LARK's shared walk clip with this character's walk.tuning scale factors and walk.secondary cloth and hair regions",
-    "attack": "loader placeholder only: LARK's sword attack clip and tuning; a katana attack is not designed; not baked or published"
+    "attack": "Authored eight-direction katana slash"
   },
   "model": {
     "materials": "materials.npz",
@@ -175,16 +175,19 @@
     ]
   },
   "attack": {
-    "clip": "../../experiments/lark_stage3/attack_motion.json",
+    "clip": "slash.json",
     "cell": 64,
+    "follow_cloth": true,
+    "fine": {"description": "The sword is drawn with 4x4 rays per pixel: a pixel at least half covered, or the most covered pixel across a thin blade with at least a quarter, shows the blade where it is in front at least as often as hidden. The blade keeps its tones in front of another surface and the dark seam goes on the surface behind it. Without this the blade seen edge-on (E) breaks into dots. See research/SWORD_WALK_VERIFICATION.md.", "parts": ["sword"], "rays": 4, "coverage": 0.5, "line": 0.25, "seam": "behind"},
     "tuning": {
       "hip_yaw_scale": 0.24,
-      "head_yaw_scale": 0.48,
-      "head_lean_scale": 0.37,
+      "head_snap": 1.0,
+      "head_yaw_scale": 0,
+      "head_lean_scale": 0,
       "step_side": "R",
       "knee_pole": [0.85, 8, -0.3],
       "main_hand_side": "R",
-      "weapon_axis": [-6.35, 2.45, -8.85],
+      "weapon_axis": [-6.1, 5.4, -9.3],
       "support_yaw_offset": 0.031,
       "support_hand_lift": 0.25,
       "support_wrist_yaw_scale": 0.35,
