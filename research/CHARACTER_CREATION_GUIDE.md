@@ -421,6 +421,7 @@ README（実装状況、ディレクトリ構成、生成と検証の節、ギ�
 5. 布：骨盤から下がる裾は `skirt`。長い裾は既定の `drive: "leg"`（股関節から足首の線）にすると、後ろへ蹴り上げたかかとが裾を押す。太ももを包む短い裾は `drive: "thigh"` と `follow` 1.0 にする。
 6. 髪・端：`pendulum`。背中に乗る長髪やポニーテールは `driver: "chest"`（頭の動きは1 px単位なので、なめらかに動く胴を追わせる）。上下の弾みは `follow` の z を2.5〜4にする。`max_deg` に張り付くと動きが平らになり、横に突き出た端は棒に見えるので、角度の範囲を検証の出力で見て下げる。
 7. 頭：`walk.head` を必ず書く（標準）。`follow` を `[1, 1, 1]` にして頭を首に乗せ、胴の上下動 `root_bob_scale` を、最も低いコマで0.5単位を超える程度にする（MAREN 2.9で約0.64単位）。こうすると頭は肩と一緒に1 px下がる。装備が床に近い、細い前腕が残存の下限を割るなどで胴を沈められない体形では、`bob`（0.15〜0.45）で頭だけを少し沈める。回転（`yaw_follow`・`pitch_follow`・`nod_deg`・`tilt_deg`）と、1.0単位未満の `snap` は、48 pxでは目が消えるので使わない。`walk.head.face` で頭だけを描いたときの目の画素数を見て、方向ごとにコマで変わらないことを確かめる。[頭部連動レポート](HEAD_MOTION_VERIFICATION.md)
+   - 細い剣：E方向などで刀身が真横に近くなる剣は、`walk.fine`（`parts: ["sword"]`、`rays: 4`、`coverage: 0.5`、`line: 0.25`、`seam: "behind"`）で描く。刀身を太くしたり手首を回したりせずに、途切れと暗い点線を直せる。`python -m research.sword.compare` の拡大GIFで、E・NEの刃が1本につながり、Nで手袋の画素が残ることを見る。[剣の修正レポート](SWORD_WALK_VERIFICATION.md)
 8. `python -m research.verify_walk --character ... --out ...` でFAILを0にする。`walk.secondary.intrusion` は、布・髪が他の部位に入り込む割合を剛体のままの場合と比べる。悪化したらWARNINGになる。`quality.json` に `walk` 節（装備の床、装備の可視画素、腕の位相、公開先）を書く。可視画素の下限は、48コマで測った最小値か、それより少し低い値にする。体に隠れる方向がある装備（本、鍔）は規則にしない。
 9. `python -m research.walk.compare --after <各キャラクターの出力の親> --out <出力先> --characters <name>` で、調整前後のGIFと比較画像を作り、8方向のGIFを原寸と拡大で見る。頭の動きは `python -m research.head.compare` の頭と肩の拡大図で、肩と一緒に下がること、顔が崩れないことを見る。
 10. 公開：`walk.png` と、`metadata.json` の歩行の項目を `{"animations": {"walk": ...}}` にした `walk.json` を `docs/assets/<name>/` に置く。静止の `metadata.json` は変えない（汎用検証が静止の公開版と照合するため）。`gallery.js` の `characters` に `extraAnimations: ["walk"]` を加える。
@@ -452,3 +453,4 @@ URL：https://shioa2006-game.github.io/SpriteStack_Character_Lab/
 - [ ] コミット、push、公開ページで確認した
 - [ ] （歩行を作る場合）歩行検証でFAILが0。GIFで8方向の自然さを確認し、裾・髪・装備の破綻を記録した
 - [ ] （歩行を作る場合）`walk.head` で頭が全8方向で肩と一緒に動き、目の画素数がコマで変わらない
+- [ ] （細い剣を持つ場合）`walk.fine` を書き、E・NEの刀身が途切れず、握りの手が残る

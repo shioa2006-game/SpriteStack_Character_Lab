@@ -1,0 +1,2130 @@
+{
+ "maren": {
+  "walk_fine": {
+   "description": "The sword is drawn with 4x4 rays per pixel: a pixel at least half covered, or the most covered pixel across a thin blade with at least a quarter, shows the blade where it is in front at least as often as hidden. The blade keeps its tones in front of another surface and the dark seam goes on the surface behind it. Without this the blade seen edge-on (E) breaks into dots. See research/SWORD_WALK_VERIFICATION.md.",
+   "parts": [
+    "sword"
+   ],
+   "rays": 4,
+   "coverage": 0.5,
+   "line": 0.25,
+   "seam": "behind"
+  },
+  "summary": {
+   "before": {
+    "S": {
+     "deviation": 1.06,
+     "pieces": 1,
+     "gaps": 1,
+     "px": 28.7,
+     "width": 1.9,
+     "no_hand": 0,
+     "hand_px": 4.3
+    },
+    "SW": {
+     "deviation": 0.87,
+     "pieces": 1,
+     "gaps": 2,
+     "px": 29.0,
+     "width": 2.07,
+     "no_hand": 0,
+     "hand_px": 4.0
+    },
+    "W": {
+     "deviation": 0.97,
+     "pieces": 2,
+     "gaps": 6,
+     "px": 12.7,
+     "width": 1.33,
+     "no_hand": 2,
+     "hand_px": 2.2
+    },
+    "NW": {
+     "deviation": 1.01,
+     "pieces": 1,
+     "gaps": 12,
+     "px": 5.2,
+     "width": 0.87,
+     "no_hand": 6,
+     "hand_px": 0.0
+    },
+    "N": {
+     "deviation": 1.16,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 22.5,
+     "width": 2.01,
+     "no_hand": 0,
+     "hand_px": 2.3
+    },
+    "NE": {
+     "deviation": 0.88,
+     "pieces": 1,
+     "gaps": 3,
+     "px": 24.7,
+     "width": 1.67,
+     "no_hand": 0,
+     "hand_px": 4.7
+    },
+    "E": {
+     "deviation": 0.85,
+     "pieces": 3,
+     "gaps": 8,
+     "px": 14.8,
+     "width": 0.99,
+     "no_hand": 0,
+     "hand_px": 4.8
+    },
+    "SE": {
+     "deviation": 0.65,
+     "pieces": 1,
+     "gaps": 1,
+     "px": 23.7,
+     "width": 1.64,
+     "no_hand": 0,
+     "hand_px": 4.0
+    }
+   },
+   "after": {
+    "S": {
+     "deviation": 0.86,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 32.2,
+     "width": 2.13,
+     "no_hand": 0,
+     "hand_px": 4.0
+    },
+    "SW": {
+     "deviation": 0.89,
+     "pieces": 1,
+     "gaps": 2,
+     "px": 30.8,
+     "width": 2.21,
+     "no_hand": 0,
+     "hand_px": 3.5
+    },
+    "W": {
+     "deviation": 1.01,
+     "pieces": 2,
+     "gaps": 6,
+     "px": 14.2,
+     "width": 1.49,
+     "no_hand": 2,
+     "hand_px": 1.8
+    },
+    "NW": {
+     "deviation": 1.01,
+     "pieces": 1,
+     "gaps": 11,
+     "px": 6.5,
+     "width": 1.08,
+     "no_hand": 6,
+     "hand_px": 0.0
+    },
+    "N": {
+     "deviation": 0.89,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 24.3,
+     "width": 2.17,
+     "no_hand": 0,
+     "hand_px": 2.3
+    },
+    "NE": {
+     "deviation": 0.72,
+     "pieces": 1,
+     "gaps": 3,
+     "px": 26.0,
+     "width": 1.76,
+     "no_hand": 0,
+     "hand_px": 4.5
+    },
+    "E": {
+     "deviation": 0.75,
+     "pieces": 1,
+     "gaps": 2,
+     "px": 17.2,
+     "width": 1.15,
+     "no_hand": 0,
+     "hand_px": 4.7
+    },
+    "SE": {
+     "deviation": 0.65,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 27.3,
+     "width": 1.89,
+     "no_hand": 0,
+     "hand_px": 3.8
+    }
+   }
+  },
+  "frames": {
+   "before": {
+    "S": [
+     {
+      "px": 29,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.82,
+      "width": 1.91,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 33,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.63,
+      "width": 2.18,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 1.06,
+      "width": 1.72,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.44,
+      "width": 1.8,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.4,
+      "width": 1.73,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 31,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.82,
+      "width": 2.05,
+      "hand": true,
+      "hand_px": 5
+     }
+    ],
+    "SW": [
+     {
+      "px": 29,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.87,
+      "width": 2.14,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 31,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.39,
+      "width": 2.27,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 30,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.4,
+      "width": 2.13,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 29,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.6,
+      "width": 2.02,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 28,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.85,
+      "width": 1.95,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.44,
+      "width": 1.94,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "W": [
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.4,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.47,
+      "width": 1.61,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 9,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.97,
+      "width": 0.95,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 10,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.89,
+      "width": 1.03,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 11,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.97,
+      "width": 1.13,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 14,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.34,
+      "width": 1.47,
+      "hand": true,
+      "hand_px": 4
+     }
+    ],
+    "NW": [
+     {
+      "px": 1,
+      "pieces": 1,
+      "gaps": 5,
+      "deviation": 1.01,
+      "width": 0.13,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 1,
+      "pieces": 1,
+      "gaps": 5,
+      "deviation": 1.01,
+      "width": 0.13,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 7,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.77,
+      "width": 1.11,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 10,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.44,
+      "width": 1.87,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 7,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.64,
+      "width": 1.24,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 5,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.71,
+      "width": 0.73,
+      "hand": false,
+      "hand_px": 0
+     }
+    ],
+    "N": [
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.6,
+      "width": 2.1,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 24,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 1.16,
+      "width": 2.03,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.65,
+      "width": 1.9,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.32,
+      "width": 1.72,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 22,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.45,
+      "width": 2.08,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.89,
+      "width": 2.21,
+      "hand": true,
+      "hand_px": 4
+     }
+    ],
+    "NE": [
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.63,
+      "width": 1.69,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.43,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.72,
+      "width": 1.56,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 24,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.88,
+      "width": 1.64,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.57,
+      "width": 1.57,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.56,
+      "width": 1.76,
+      "hand": true,
+      "hand_px": 5
+     }
+    ],
+    "E": [
+     {
+      "px": 16,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.75,
+      "width": 1.07,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 14,
+      "pieces": 3,
+      "gaps": 2,
+      "deviation": 0.41,
+      "width": 0.93,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 14,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.64,
+      "width": 0.94,
+      "hand": true,
+      "hand_px": 6
+     },
+     {
+      "px": 15,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.5,
+      "width": 1.01,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 14,
+      "pieces": 2,
+      "gaps": 1,
+      "deviation": 0.85,
+      "width": 0.94,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.74,
+      "width": 1.07,
+      "hand": true,
+      "hand_px": 7
+     }
+    ],
+    "SE": [
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.52,
+      "width": 1.42,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.54,
+      "width": 1.56,
+      "hand": true,
+      "hand_px": 6
+     },
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.65,
+      "width": 1.73,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.54,
+      "width": 1.77,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.44,
+      "width": 1.76,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.65,
+      "width": 1.57,
+      "hand": true,
+      "hand_px": 4
+     }
+    ]
+   },
+   "after": {
+    "S": [
+     {
+      "px": 31,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.64,
+      "width": 2.05,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 35,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.63,
+      "width": 2.31,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 31,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.78,
+      "width": 2.05,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 30,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.86,
+      "width": 2.0,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 32,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.69,
+      "width": 2.13,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 34,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.77,
+      "width": 2.25,
+      "hand": true,
+      "hand_px": 5
+     }
+    ],
+    "SW": [
+     {
+      "px": 32,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.87,
+      "width": 2.36,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 32,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.39,
+      "width": 2.35,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 30,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.4,
+      "width": 2.13,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 30,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.6,
+      "width": 2.08,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 32,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.41,
+      "width": 2.23,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 29,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.89,
+      "width": 2.08,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "W": [
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.4,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.55,
+      "width": 2.04,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 10,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 1.01,
+      "width": 1.05,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 10,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.89,
+      "width": 1.03,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 13,
+      "pieces": 2,
+      "gaps": 2,
+      "deviation": 0.97,
+      "width": 1.33,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.34,
+      "width": 1.68,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "NW": [
+     {
+      "px": 1,
+      "pieces": 1,
+      "gaps": 5,
+      "deviation": 1.01,
+      "width": 0.13,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 3,
+      "pieces": 1,
+      "gaps": 4,
+      "deviation": 1.01,
+      "width": 0.4,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 8,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.77,
+      "width": 1.27,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 12,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.93,
+      "width": 2.24,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 9,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.64,
+      "width": 1.59,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 6,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.71,
+      "width": 0.87,
+      "hand": false,
+      "hand_px": 0
+     }
+    ],
+    "N": [
+     {
+      "px": 28,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.84,
+      "width": 2.35,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.68,
+      "width": 2.2,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 22,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.65,
+      "width": 1.99,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.61,
+      "width": 1.92,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 24,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.7,
+      "width": 2.27,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.89,
+      "width": 2.3,
+      "hand": true,
+      "hand_px": 4
+     }
+    ],
+    "NE": [
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.54,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 29,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.43,
+      "width": 1.96,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.72,
+      "width": 1.56,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.52,
+      "width": 1.78,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.57,
+      "width": 1.71,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.56,
+      "width": 1.76,
+      "hand": true,
+      "hand_px": 4
+     }
+    ],
+    "E": [
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.75,
+      "width": 1.2,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.41,
+      "width": 1.13,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.64,
+      "width": 1.14,
+      "hand": true,
+      "hand_px": 6
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.67,
+      "width": 1.21,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.63,
+      "width": 1.07,
+      "hand": true,
+      "hand_px": 5
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.74,
+      "width": 1.13,
+      "hand": true,
+      "hand_px": 6
+     }
+    ],
+    "SE": [
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.52,
+      "width": 1.75,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.59,
+      "width": 1.83,
+      "hand": true,
+      "hand_px": 6
+     },
+     {
+      "px": 29,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.37,
+      "width": 2.01,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 28,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.38,
+      "width": 1.98,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.47,
+      "width": 1.9,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 27,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.65,
+      "width": 1.85,
+      "hand": true,
+      "hand_px": 4
+     }
+    ]
+   }
+  }
+ },
+ "azure_ronin": {
+  "walk_fine": {
+   "description": "The sword is drawn with 4x4 rays per pixel: a pixel at least half covered, or the most covered pixel across a thin blade with at least a quarter, shows the blade where it is in front at least as often as hidden. The blade keeps its tones in front of another surface and the dark seam goes on the surface behind it. Without this the blade seen edge-on (E) breaks into dots. See research/SWORD_WALK_VERIFICATION.md.",
+   "parts": [
+    "sword"
+   ],
+   "rays": 4,
+   "coverage": 0.5,
+   "line": 0.25,
+   "seam": "behind"
+  },
+  "summary": {
+   "before": {
+    "S": {
+     "deviation": 1.28,
+     "pieces": 1,
+     "gaps": 2,
+     "px": 17.5,
+     "width": 1.3,
+     "no_hand": 0,
+     "hand_px": 1.8
+    },
+    "SW": {
+     "deviation": 1.0,
+     "pieces": 1,
+     "gaps": 4,
+     "px": 18.0,
+     "width": 1.41,
+     "no_hand": 0,
+     "hand_px": 3.2
+    },
+    "W": {
+     "deviation": 0.86,
+     "pieces": 2,
+     "gaps": 8,
+     "px": 8.8,
+     "width": 0.99,
+     "no_hand": 3,
+     "hand_px": 1.3
+    },
+    "NW": {
+     "deviation": 1.13,
+     "pieces": 1,
+     "gaps": 4,
+     "px": 5.5,
+     "width": 1.01,
+     "no_hand": 3,
+     "hand_px": 0.8
+    },
+    "N": {
+     "deviation": 1.0,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 14.3,
+     "width": 1.49,
+     "no_hand": 0,
+     "hand_px": 1.3
+    },
+    "NE": {
+     "deviation": 0.74,
+     "pieces": 1,
+     "gaps": 5,
+     "px": 17.0,
+     "width": 1.3,
+     "no_hand": 0,
+     "hand_px": 2.8
+    },
+    "E": {
+     "deviation": 0.89,
+     "pieces": 1,
+     "gaps": 3,
+     "px": 16.2,
+     "width": 1.2,
+     "no_hand": 0,
+     "hand_px": 2.5
+    },
+    "SE": {
+     "deviation": 0.79,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 21.0,
+     "width": 1.62,
+     "no_hand": 0,
+     "hand_px": 2.7
+    }
+   },
+   "after": {
+    "S": {
+     "deviation": 0.89,
+     "pieces": 1,
+     "gaps": 1,
+     "px": 20.0,
+     "width": 1.48,
+     "no_hand": 0,
+     "hand_px": 1.8
+    },
+    "SW": {
+     "deviation": 1.0,
+     "pieces": 1,
+     "gaps": 2,
+     "px": 20.0,
+     "width": 1.57,
+     "no_hand": 0,
+     "hand_px": 2.5
+    },
+    "W": {
+     "deviation": 0.83,
+     "pieces": 1,
+     "gaps": 5,
+     "px": 11.0,
+     "width": 1.24,
+     "no_hand": 3,
+     "hand_px": 1.2
+    },
+    "NW": {
+     "deviation": 1.13,
+     "pieces": 1,
+     "gaps": 2,
+     "px": 7.0,
+     "width": 1.27,
+     "no_hand": 3,
+     "hand_px": 0.8
+    },
+    "N": {
+     "deviation": 1.05,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 16.3,
+     "width": 1.7,
+     "no_hand": 0,
+     "hand_px": 1.3
+    },
+    "NE": {
+     "deviation": 0.74,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 19.5,
+     "width": 1.49,
+     "no_hand": 0,
+     "hand_px": 2.5
+    },
+    "E": {
+     "deviation": 0.72,
+     "pieces": 1,
+     "gaps": 1,
+     "px": 18.7,
+     "width": 1.39,
+     "no_hand": 0,
+     "hand_px": 2.0
+    },
+    "SE": {
+     "deviation": 0.77,
+     "pieces": 1,
+     "gaps": 0,
+     "px": 23.5,
+     "width": 1.81,
+     "no_hand": 0,
+     "hand_px": 2.0
+    }
+   }
+  },
+  "frames": {
+   "before": {
+    "S": [
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.54,
+      "width": 1.25,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.84,
+      "width": 1.33,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.92,
+      "width": 1.26,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 1.28,
+      "width": 1.27,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.68,
+      "width": 1.42,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.58,
+      "width": 1.26,
+      "hand": true,
+      "hand_px": 1
+     }
+    ],
+    "SW": [
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.59,
+      "width": 1.37,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.58,
+      "width": 1.28,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 1.0,
+      "width": 1.25,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.88,
+      "width": 1.54,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.35,
+      "width": 1.54,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.71,
+      "width": 1.49,
+      "hand": true,
+      "hand_px": 4
+     }
+    ],
+    "W": [
+     {
+      "px": 10,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.73,
+      "width": 1.14,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 11,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.53,
+      "width": 1.26,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 5,
+      "pieces": 2,
+      "gaps": 4,
+      "deviation": 0.61,
+      "width": 0.56,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 7,
+      "pieces": 1,
+      "gaps": 2,
+      "deviation": 0.86,
+      "width": 0.77,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 10,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.8,
+      "width": 1.1,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 10,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.59,
+      "width": 1.12,
+      "hand": true,
+      "hand_px": 4
+     }
+    ],
+    "NW": [
+     {
+      "px": 4,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 1.13,
+      "width": 0.6,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 3,
+      "pieces": 1,
+      "gaps": 2,
+      "deviation": 0.81,
+      "width": 0.46,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 8,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.77,
+      "width": 1.46,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 8,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.15,
+      "width": 1.69,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 6,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.38,
+      "width": 1.2,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 4,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.46,
+      "width": 0.67,
+      "hand": false,
+      "hand_px": 0
+     }
+    ],
+    "N": [
+     {
+      "px": 13,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.56,
+      "width": 1.27,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.88,
+      "width": 1.58,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 13,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 1.0,
+      "width": 1.36,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.44,
+      "width": 1.66,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 14,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.56,
+      "width": 1.54,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.8,
+      "width": 1.54,
+      "hand": true,
+      "hand_px": 1
+     }
+    ],
+    "NE": [
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.38,
+      "width": 1.44,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.42,
+      "width": 1.14,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.74,
+      "width": 1.15,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.71,
+      "width": 1.54,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.59,
+      "width": 1.38,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.63,
+      "width": 1.15,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "E": [
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.59,
+      "width": 1.11,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.51,
+      "width": 1.19,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.56,
+      "width": 1.19,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.89,
+      "width": 1.2,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.47,
+      "width": 1.34,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.72,
+      "width": 1.19,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "SE": [
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.79,
+      "width": 1.74,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 24,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.48,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 22,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.51,
+      "width": 1.71,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.54,
+      "width": 1.66,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.52,
+      "width": 1.26,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.77,
+      "width": 1.53,
+      "hand": true,
+      "hand_px": 2
+     }
+    ]
+   },
+   "after": {
+    "S": [
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.54,
+      "width": 1.47,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.84,
+      "width": 1.55,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 22,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.89,
+      "width": 1.63,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.59,
+      "width": 1.42,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.68,
+      "width": 1.49,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.58,
+      "width": 1.33,
+      "hand": true,
+      "hand_px": 1
+     }
+    ],
+    "SW": [
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.59,
+      "width": 1.69,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.84,
+      "width": 1.6,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 1.0,
+      "width": 1.33,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.59,
+      "width": 1.61,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 22,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.52,
+      "width": 1.69,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.71,
+      "width": 1.49,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "W": [
+     {
+      "px": 12,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.73,
+      "width": 1.37,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 12,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.53,
+      "width": 1.38,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 8,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.61,
+      "width": 0.9,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 10,
+      "pieces": 1,
+      "gaps": 2,
+      "deviation": 0.51,
+      "width": 1.1,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 11,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.8,
+      "width": 1.21,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 13,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.83,
+      "width": 1.46,
+      "hand": true,
+      "hand_px": 3
+     }
+    ],
+    "NW": [
+     {
+      "px": 4,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 1.13,
+      "width": 0.6,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 4,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.81,
+      "width": 0.62,
+      "hand": false,
+      "hand_px": 0
+     },
+     {
+      "px": 9,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.27,
+      "width": 1.64,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 8,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.15,
+      "width": 1.69,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 7,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.38,
+      "width": 1.4,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 10,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.48,
+      "width": 1.68,
+      "hand": false,
+      "hand_px": 0
+     }
+    ],
+    "N": [
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.95,
+      "width": 1.66,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 1.05,
+      "width": 1.77,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 15,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 1.0,
+      "width": 1.57,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.44,
+      "width": 1.77,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.56,
+      "width": 1.76,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 16,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.8,
+      "width": 1.64,
+      "hand": true,
+      "hand_px": 1
+     }
+    ],
+    "NE": [
+     {
+      "px": 22,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.57,
+      "width": 1.67,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.55,
+      "width": 1.44,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 17,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.74,
+      "width": 1.3,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 21,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.71,
+      "width": 1.61,
+      "hand": true,
+      "hand_px": 4
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.62,
+      "width": 1.46,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.63,
+      "width": 1.45,
+      "hand": true,
+      "hand_px": 2
+     }
+    ],
+    "E": [
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.59,
+      "width": 1.33,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 1,
+      "deviation": 0.51,
+      "width": 1.34,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.7,
+      "width": 1.42,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 19,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.59,
+      "width": 1.42,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.57,
+      "width": 1.49,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 18,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.72,
+      "width": 1.34,
+      "hand": true,
+      "hand_px": 2
+     }
+    ],
+    "SE": [
+     {
+      "px": 25,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.38,
+      "width": 1.89,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 24,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.48,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 26,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.68,
+      "width": 2.02,
+      "hand": true,
+      "hand_px": 2
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.54,
+      "width": 1.82,
+      "hand": true,
+      "hand_px": 3
+     },
+     {
+      "px": 20,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.5,
+      "width": 1.57,
+      "hand": true,
+      "hand_px": 1
+     },
+     {
+      "px": 23,
+      "pieces": 1,
+      "gaps": 0,
+      "deviation": 0.77,
+      "width": 1.76,
+      "hand": true,
+      "hand_px": 2
+     }
+    ]
+   }
+  }
+ }
+}

@@ -103,6 +103,14 @@
   "walk": {
     "clip": "../../experiments/lark_stage3/walk_motion.json",
     "cell": 48,
+    "fine": {
+      "description": "The sword is drawn with 4x4 rays per pixel: a pixel at least half covered, or the most covered pixel across a thin blade with at least a quarter, shows the blade where it is in front at least as often as hidden. The blade keeps its tones in front of another surface and the dark seam goes on the surface behind it. Without this the blade seen edge-on (E) breaks into dots. See research/SWORD_WALK_VERIFICATION.md.",
+      "parts": ["sword"],
+      "rays": 4,
+      "coverage": 0.5,
+      "line": 0.25,
+      "seam": "behind"
+    },
     "tuning": {
       "hip_yaw_scale": 0.24,
       "head_lateral_scale": 0.25,

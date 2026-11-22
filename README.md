@@ -6,7 +6,7 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 
 | 状態 | 対象 |
 | --- | --- |
-| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、静止と歩行だけのベイク、歩行の体格別の調整値、布・髪の従属運動（`walk.secondary`）、歩行時の頭部の連動（`walk.head`）、設定ファイルで条件を変えられる汎用品質検証と歩行検証、Canvasギャラリー |
+| 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、静止と歩行だけのベイク、歩行の体格別の調整値、布・髪の従属運動（`walk.secondary`）、歩行時の頭部の連動（`walk.head`）、細い剣の歩行の描画（`walk.fine`）、設定ファイルで条件を変えられる汎用品質検証と歩行検証、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
 | 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMAREN、魔法使いCRYSTAL MAGE、スカーフの剣士AZURE RONINの静止8方向（CRYSTAL MAGEとAZURE RONINは48×48と64×64の比較）と歩行8方向×6コマ |
 | 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、MARENの攻撃、CRYSTAL MAGEの杖の攻撃、AZURE RONINの攻撃、攻撃中の布・髪の従属運動、杖を地面に突く歩き方 |
@@ -31,6 +31,7 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 | [docs/](docs/) | 生成済み PNG を表示する GitHub Pages 用ギャラリー |
 | [research/walk/](research/walk/) | 3体の歩行のGIF・調整前後の比較画像・計測値を作るスクリプトと結果 |
 | [research/head/](research/head/) | 頭部の連動（`walk.head`）を入れる前の公開歩行、前後比較のGIF・頭の拡大図・計測値を作るスクリプトと結果 |
+| [research/sword/](research/sword/) | 剣の描画（`walk.fine`）を入れる前のMARENとAZURE RONINの公開歩行、前後比較のGIF・剣の拡大図・計測値を作るスクリプトと結果 |
 | [research/](research/) | [ロードマップ](research/ROADMAP.md)と[Phase 1 検証記録](research/PHASE1_VERIFICATION.md) |
 
 移植元は `LARK_Stage_3A_GitHub_Import.zip` です。生成コード、モデル構成および同梱成果物は、ZIP 内の相対パスとファイル内容を保持して格納しました。元の仕様と既知の見た目の課題は[同梱 README](experiments/lark_stage3/README.md)と[技術検証レポート](experiments/lark_stage3/LARK_第3段階A_技術検証.md)を参照してください。
@@ -95,6 +96,12 @@ $rebuild = Join-Path $run 'common'
 
 `walk.head` を入れる前の公開歩行（[research/head/baseline/](research/head/baseline/)）と新しい歩行を並べ、8方向のGIF、頭と肩の拡大図、頭・胸の上端の行と目の画素数を書き出します。公開中の結果は [research/head/results/](research/head/results/)、経緯は[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)にあります。
 
+```powershell
+& $python -B -m research.sword.compare --after output/sword --out (Join-Path $run 'sword-comparison')
+```
+
+`walk.fine` を入れる前のMAREN・AZURE RONINの公開歩行（[research/sword/baseline/](research/sword/baseline/)）と新しい歩行を並べ、8方向のGIF、NE・E・W・NWの剣の周りの拡大GIF、全コマの剣の拡大図を書き出します。剣身の画素数、片の数、途切れ、理想形状からの中心線のずれ、幅、手との接触も計測します。公開中の結果は [research/sword/results/](research/sword/results/)、経緯は[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)にあります。
+
 ### キャラクターの汎用検証
 
 `research.verify_character` は、キャラクター名で分岐せず、設定ファイルと静止シートからモデル、リグと装備、シートを検査します。結果は PASS、WARNING（問題の可能性）、FAIL（仕様違反・生成不具合）、SKIP（未実施）で、FAILがあると終了コード1になります。
@@ -133,7 +140,7 @@ $refined = Join-Path $run 'refined-lark'
 | `rig` | `parts` の並びを部位IDの1始まりと重なり時の優先順に使用する。胴体の `head`、`chest`、`pelvis`、左右の `thigh`、`shin`、`boot`、`upper`、`fore`、`hand`（`_R`、`_L`）と、装備の部位を指定する。`rest` は構えの関節座標、`attachments` は装備部位ごとの手と基準点の名前 |
 | `posed_volume` | ポーズ後のボクセル原点・上限（X/Y/Z）と共通のボクセル間隔。各姿勢の全部位が余白付きで収まる大きさ |
 | `view` | 挿入順で並ぶ8方向のヨー角、カメラ仰角、1単位当たりの画素数、足元アンカー、静止セルと描画用セル、静止・動作のレイの開始・終了・刻み、輪郭色 |
-| `walk` | 既存形式の歩行クリップ、セル、歩幅に合わせる支持足・頭・腕の調整値。コマ別配列を `poses` に揃え、左右の接地は循環する連続区間、遊脚配列は接地外のコマ数に揃える。体格に合わせる任意の倍率（`stride_scale`、`swing_lift_scale`、`root_bob_scale`、`root_sway_scale`、`twist_scale`）、`root_level_offset`、`torso_lean`、左右別の `hand_lift`・`hand_outward`・`wrist_pitch_scale`、一定の手首角度 `wrist_pitch` を書ける。省略時はクリップのまま。任意の `secondary` に布・髪の領域を並べ、任意の `head` で頭部の連動を指定する（下記） |
+| `walk` | 既存形式の歩行クリップ、セル、歩幅に合わせる支持足・頭・腕の調整値。コマ別配列を `poses` に揃え、左右の接地は循環する連続区間、遊脚配列は接地外のコマ数に揃える。体格に合わせる任意の倍率（`stride_scale`、`swing_lift_scale`、`root_bob_scale`、`root_sway_scale`、`twist_scale`）、`root_level_offset`、`torso_lean`、左右別の `hand_lift`・`hand_outward`・`wrist_pitch_scale`、一定の手首角度 `wrist_pitch` を書ける。省略時はクリップのまま。任意の `secondary` に布・髪の領域を並べ、任意の `head` で頭部の連動を、任意の `fine` で細い剣の描画を指定する（下記） |
 | `attack` | 既存形式の攻撃クリップ、セル、踏み出す側・主手・装備の軸・反対側の腕の調整値。非空キーに足と手の目標値、主手に合わせた `hand_R`/`hand_L` と `elbow_pole_R`/`elbow_pole_L` を指定する。`shield_delta` は反対側の手の相対オフセット。`wrist_roll` は刃の軸回りの手首角度（度、省略時は0）。`keys`、`poses`、`durations_ms` の長さを揃える |
 | `measurements` | `lowest_z` は計測名と材質IDリスト、`visibility` は計測名と部位名・材質IDリストの組。計測項目がなければ空オブジェクトを指定できる |
 
@@ -165,6 +172,22 @@ $refined = Join-Path $run 'refined-lark'
 | `nod_deg`・`tilt_deg` | 0 | 上下動に合わせたうなずき、左右動に合わせた傾き（度、±6以下）。同上 |
 
 頭の上下は胴の上下動（`walk.tuning.root_bob_scale`）と合わせて決めます。胴の沈みが `snap` の半分（0.5単位）を超えれば、頭は肩と一緒に1 px下がります。胴を深く沈められない体形では、`bob` で頭だけを少し沈めます。検証は `research.verify_walk` の `walk.head.motion`（全8方向で頭が動く）、`walk.head.neck`（首との距離）、`walk.head.face`（頭だけを描いたときの目の画素数がコマで変わらない）です。しきい値は `quality.json` の `walk.head` に `min_moving_directions`・`max_neck_offset`・`max_neck_rise`・`features` として書けます。
+
+### 歩行の細い剣の描画（`walk.fine`）
+
+歩行だけに効く任意の設定で、MARENとAZURE RONINが使います。ない場合の描画は変わらず、LARK・BRAM・CRYSTAL MAGEの出力も、静止と攻撃も変わりません。剣を真横に近い向きから見ると、投影した刀身は1画素より細くなり、1画素に光線1本の描画では点線のように途切れます。また、別の面の前にある幅1 pxの刀身は、全体が境界線として最も暗い色になり、暗い服の上で消えて見えます。
+
+`walk.fine` があると、`parts` の部位の周りの画素だけを1画素あたり `rays`×`rays` 本の光線で描き直します（[spritestack/render.py](spritestack/render.py) の `Renderer._fine`）。剣の形が `coverage` 以上覆う画素と、刀身を横切る方向で最も覆われ `line` 以上覆う画素を剣にします。手前の物（握りの手、腕、体）に隠れる光線のほうが多い画素は、これまでどおり手前の物を描きます。1本の光線で剣になる画素はそのまま残します。`seam` を `behind` にすると、剣の画素は暗くせず、剣の後ろの面に境界線を引きます。
+
+| キー | 内容 |
+| --- | --- |
+| `parts` | 描き直す部位（例 `["sword"]`） |
+| `rays` | 1画素の1辺の光線数（2〜8。両体は4） |
+| `coverage` | 剣の形がこの割合以上覆う画素を剣にする（両体は0.5） |
+| `line` | 刀身を横切る方向で最も覆われた画素を、この割合以上で剣にする（両体は0.25）。省略時は `coverage` だけで決める |
+| `seam` | `front`（既定、従来の境界線）か `behind`（剣の後ろの面に境界線を引く） |
+
+2体のE方向で、剣は1本につながり、最も暗い色で描かれる刀身の画素は約半分から1割以下になりました。刀身の幅は11〜16%増えます。手首角度の変更、刀身を太くするモデル変更、覆いの割合だけで決める方法との比較は[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)にあります。
 
 ### 同じ骨格のキャラクターを追加する手順
 
@@ -212,7 +235,7 @@ $weighted = Join-Path $trial 'weighted'
 
 ### MARENの生成と検証（画像からの生成実験01）
 
-MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。全モードの標準CLIは転用した攻撃が64 pxセルを越えて止まるため、静止8方向は `--modes idle` で焼きます。旧来の `characters.maren.bake_idle` と `research.verify_maren` も残しており、同じ出力と合否になります。歩行は `--modes walk` で焼いて公開しています。コートの裾は脚に、長髪は胴の動きに付いて揺れ、頭は肩と一緒に上下します（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)）。
+MARENは参考イラスト1枚から作った青髪の剣士です。参考画像は権利を確認できないため追跡せず、採色範囲の座標と抽出色だけを置いています。全モードの標準CLIは転用した攻撃が64 pxセルを越えて止まるため、静止8方向は `--modes idle` で焼きます。旧来の `characters.maren.bake_idle` と `research.verify_maren` も残しており、同じ出力と合否になります。歩行は `--modes walk` で焼いて公開しています。コートの裾は脚に、長髪は胴の動きに付いて揺れ、頭は肩と一緒に上下します。直剣は `walk.fine` で描き、E方向でも途切れません（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)、[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)）。
 
 ~~~powershell
 $maren = Join-Path $run 'maren'
@@ -242,7 +265,7 @@ $mage = Join-Path $run 'crystal_mage'
 
 AZURE RONIN（`azure_ronin`）は参考イラスト1枚から作った軽装の剣士です。高い位置で束ねた紺の髪と青い結び紐、鼻から下を覆う濃灰のスカーフと後ろに垂れる端、ベージュの上衣と青い布の2層の裾、濃色のズボン、右手の反りのある片手剣を立体化しました。左手は空で、取り付け枠は剣の1つだけです（16部位）。参考画像は追跡せず、採色範囲の座標と抽出色だけを置いています。
 
-共通化後に作った最初のキャラクターで、キャラクター用のベイク・検証スクリプトはありません。静止は共通CLIの `--modes idle` で48×48の標準と64×64の比較を焼き、`quality.json` の条件で汎用検証します。歩行は `--modes walk` で焼いて公開しています。腰布は脚に、ポニーテールとスカーフの端は胴の動きに付いて揺れ、頭は肩と一緒に上下します（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)）。攻撃の設定は読込のためにLARKのクリップを参照するだけで、公開していません。
+共通化後に作った最初のキャラクターで、キャラクター用のベイク・検証スクリプトはありません。静止は共通CLIの `--modes idle` で48×48の標準と64×64の比較を焼き、`quality.json` の条件で汎用検証します。歩行は `--modes walk` で焼いて公開しています。腰布は脚に、ポニーテールとスカーフの端は胴の動きに付いて揺れ、頭は肩と一緒に上下します。反りのある刀は `walk.fine` で描き、E方向でも途切れません（[歩行レポート](research/WALK_ANIMATION_VERIFICATION.md)、[頭部連動レポート](research/HEAD_MOTION_VERIFICATION.md)、[剣の修正レポート](research/SWORD_WALK_VERIFICATION.md)）。攻撃の設定は読込のためにLARKのクリップを参照するだけで、公開していません。
 
 ~~~powershell
 $ronin = Join-Path $run 'azure_ronin'

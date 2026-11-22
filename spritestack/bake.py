@@ -9,7 +9,7 @@ import json
 import numpy as np
 from PIL import Image
 
-from .render import Renderer, normals, reslice
+from .render import Renderer, fine_parts, normals, reslice
 from .rig import Biped, transform
 from .secondary import Secondary
 
@@ -147,13 +147,14 @@ def render_motion(character, renderer, mode, poses, neutral):
     part_atlas = np.zeros((sheet.height, sheet.width), dtype=np.uint8)
     measurements = {}
     visibility = character.config["measurements"]["visibility"]
+    fine = fine_parts(character, mode)
 
     for index, (volume, parts) in enumerate(poses):
         surface = normals(volume, character.posed_grid)
         guard = mode == "attack" and not character.motions[mode]["keys"][index]
         for row, (direction, yaw) in enumerate(directions.items()):
             frame, ids, part_ids = renderer.render(volume, parts, character.posed_grid,
-                                                    yaw, render_cell, view["posed_rays"], surface)
+                                                    yaw, render_cell, view["posed_rays"], surface, fine)
             if guard:
                 # A neutral key uses the same static drawing and anchor as idle.
                 frame = Image.new("RGBA", (render_cell, render_cell))
@@ -165,7 +166,8 @@ def render_motion(character, renderer, mode, poses, neutral):
                     part_id = character.parts[item["part"]]
                     materials = item["materials"]
                     solo = renderer.render(np.where(parts == part_id, volume, 0), parts,
-                                           character.posed_grid, yaw, render_cell, view["posed_rays"])
+                                           character.posed_grid, yaw, render_cell, view["posed_rays"],
+                                           fine=fine)
                     seen = np.isin(ids, materials) & (part_ids == part_id)
                     isolated = np.isin(solo, materials)
                     if np.any(seen & ~isolated):
