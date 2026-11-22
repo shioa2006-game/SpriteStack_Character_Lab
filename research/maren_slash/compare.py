@@ -1,4 +1,4 @@
-"""Place two MAREN attacks side by side at their original pixel density and timing."""
+"""Place two attacks side by side at their original pixel density and timing."""
 
 import argparse
 from bisect import bisect_right
@@ -23,7 +23,7 @@ def paste_tile(panel, version, direction, frame, x, y):
     panel.paste(tile, (x, y), tile)
 
 
-def compare(before, after, out):
+def compare(before, after, out, directions=("S", "W", "E", "NW")):
     versions = [load(before), load(after)]
     old, new = (layout for _, layout in versions)
     for key in ("cell", "anchor", "rows", "phase_names"):
@@ -48,9 +48,8 @@ def compare(before, after, out):
     frames[0].save(out / "slash-comparison.gif", save_all=True, append_images=frames[1:],
                    duration=[b-a for a, b in zip(bounds, bounds[1:])], disposal=2, loop=0)
 
-    panel = Image.new("RGB", (8*w + 34, 4*h + 36), background)
+    panel = Image.new("RGB", (8*w + 34, len(directions)*h + 36), background)
     label = ImageDraw.Draw(panel)
-    directions = ("S", "W", "E", "NW")
     for row, direction in enumerate(directions):
         label.text((1, 36 + row*h + h//2), direction, fill="white")
     for i, version in enumerate(versions):
@@ -69,5 +68,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     for arg in ("before", "after", "out"):
         parser.add_argument("--" + arg, required=True, type=Path)
+    parser.add_argument("--directions", nargs="+", choices="S SW W NW N NE E SE".split(),
+                        default=("S", "W", "E", "NW"), help="rows in the pose comparison PNG")
     args = parser.parse_args()
-    compare(args.before, args.after, args.out)
+    compare(args.before, args.after, args.out, args.directions)

@@ -37,6 +37,7 @@ const characters = {
   },
   azure_ronin: {
     name: "AZURE RONIN", subtitle: "Scarf Swordsman", assets: "assets/azure_ronin",
+    attackComparison: "slash-comparison.gif",
     idleSheets: { 48: null, 64: "idle-64" },
     extraAnimations: ["walk", "attack"],
   },

@@ -6,7 +6,7 @@
     "palette": "palette_provenance.json",
     "samples": "reference_palette.json"
   },
-  "attack": {"feature": "blade", "phase": "cut", "minimum_visible_px": 4},
+  "attack": {"feature": "blade", "phase": "cut", "minimum_visible_px": 7},
   "motions": {
     "walk": {"same_as": "../lark/character.json"}
   },

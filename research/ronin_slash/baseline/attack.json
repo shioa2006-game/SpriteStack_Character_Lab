@@ -1,0 +1,50 @@
+{
+  "animations": {
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        48
+      ],
+      "fps": 12,
+      "loop": false,
+      "rgba_sha256": "9bad176e48d0b113d8324d0c6cf5a0a0cbdfbf1342ad4acd336aa20367a02b46",
+      "durations_ms": [
+        50,
+        50,
+        60,
+        80,
+        40,
+        50,
+        60,
+        70,
+        60
+      ],
+      "phase_names": [
+        "guard",
+        "draw back",
+        "raise",
+        "coil",
+        "cut",
+        "follow through",
+        "settle",
+        "recover",
+        "guard"
+      ]
+    }
+  }
+}
