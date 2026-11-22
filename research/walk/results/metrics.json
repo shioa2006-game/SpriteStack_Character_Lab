@@ -1,0 +1,132 @@
+{
+  "maren": {
+    "stride_model_units_per_frame": 2.66,
+    "stance_start_y": 4.2,
+    "arm_swing_scale": {
+      "R": -1.0,
+      "L": 0.5
+    },
+    "secondary_regions": [
+      "coat skirt",
+      "long hair"
+    ],
+    "secondary_angles_deg_min_max_limit": {
+      "long hair": [
+        7.31,
+        11.03,
+        12
+      ]
+    },
+    "share_inside_other_parts": {
+      "coat skirt": {
+        "rigid": 0.055,
+        "secondary": 0.0341
+      },
+      "long hair": {
+        "rigid": 0.0034,
+        "secondary": 0.0025
+      }
+    },
+    "arm_phase_correlation": {
+      "R": 0.914637012802606,
+      "L": 0.9146370128026059
+    },
+    "verify_walk_summary": {
+      "PASS": 11,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 2
+    },
+    "before_stride_model_units_per_frame": 1.9
+  },
+  "crystal_mage": {
+    "stride_model_units_per_frame": 2.185,
+    "stance_start_y": 3.4,
+    "arm_swing_scale": {
+      "R": -0.35,
+      "L": 0.2
+    },
+    "secondary_regions": [
+      "cape",
+      "robe skirt"
+    ],
+    "secondary_angles_deg_min_max_limit": {
+      "cape": [
+        4.05,
+        5.59,
+        10
+      ]
+    },
+    "share_inside_other_parts": {
+      "cape": {
+        "rigid": 0.0109,
+        "secondary": 0.0106
+      },
+      "robe skirt": {
+        "rigid": 0.154,
+        "secondary": 0.0653
+      }
+    },
+    "arm_phase_correlation": {
+      "R": 0.9116198273491194,
+      "L": 0.9116198273491196
+    },
+    "verify_walk_summary": {
+      "PASS": 11,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 2
+    },
+    "before_stride_model_units_per_frame": 1.9
+  },
+  "azure_ronin": {
+    "stride_model_units_per_frame": 2.565,
+    "stance_start_y": 4.0,
+    "arm_swing_scale": {
+      "R": -0.9,
+      "L": 1.0
+    },
+    "secondary_regions": [
+      "waist cloth",
+      "ponytail",
+      "scarf tail"
+    ],
+    "secondary_angles_deg_min_max_limit": {
+      "ponytail": [
+        7.76,
+        12.97,
+        18
+      ],
+      "scarf tail": [
+        3.49,
+        9.1,
+        12
+      ]
+    },
+    "share_inside_other_parts": {
+      "waist cloth": {
+        "rigid": 0.0431,
+        "secondary": 0.0393
+      },
+      "ponytail": {
+        "rigid": 0.0,
+        "secondary": 0.0
+      },
+      "scarf tail": {
+        "rigid": 0.0,
+        "secondary": 0.0
+      }
+    },
+    "arm_phase_correlation": {
+      "R": 0.9120717681108675,
+      "L": 0.9120717681108677
+    },
+    "verify_walk_summary": {
+      "PASS": 11,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 2
+    },
+    "before_stride_model_units_per_frame": 1.9
+  }
+}

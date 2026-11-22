@@ -2,7 +2,7 @@
   "version": 1,
   "status": {
     "idle": "published: 48x48 standard sheet and a 64x64 comparison sheet of the same model (bake_idle.py)",
-    "walk": "loader placeholder only: LARK's walk clip and tuning so the shared loader accepts the manifest; not baked or published",
+    "walk": "published: 8 directions x 6 frames at 48x48 (python -m spritestack --modes walk). LARK's shared walk clip with this character's walk.tuning scale factors and walk.secondary cloth and hair regions",
     "attack": "loader placeholder only: LARK's sword attack clip and tuning; a staff attack is not designed; not baked or published"
   },
   "model": {
@@ -114,16 +114,45 @@
       "head_lateral_scale": 0.25,
       "head_forward_offset": 0.12,
       "head_bob_scale": 0.3,
-      "stance_start_y": 3,
+      "stance_start_y": 3.4,
       "knee_pole": [1.12, 8, -0.15],
-      "arm_swing_scale": {"R": 1, "L": -0.57},
+      "arm_swing_scale": {"R": -0.35, "L": 0.2},
       "hand_outward": 0.12,
       "hand_lift_scale": 0.18,
-      "hand_lift": 0.29,
+      "hand_lift": {"R": 0.8, "L": 0.29},
       "wrist_pitch_scale": 4.3,
       "wrist_yaw_scale": 0.27,
-      "elbow_pole": [4, -2.7, -4.5]
-    }
+      "elbow_pole": [4, -2.7, -4.5],
+      "stride_scale": 1.15,
+      "swing_lift_scale": 1.05,
+      "wrist_pitch": {"R": -6, "L": 0}
+    },
+    "secondary": [
+      {
+        "name": "cape",
+        "kind": "pendulum",
+        "part": "chest",
+        "materials": ["cape", "cape lining"],
+        "box": {"z": [0, 17.5]},
+        "pivot": [0, -2.0, 19.0],
+        "tip": [0, -5.1, 5.9],
+        "lag_frames": 1.0,
+        "follow": [1.0, 0.5, 3.0],
+        "max_deg": 10
+      },
+      {
+        "name": "robe skirt",
+        "kind": "skirt",
+        "part": "pelvis",
+        "materials": ["robe", "robe lining"],
+        "box": {"z": [0, 12.5]},
+        "top_z": 13.0,
+        "hem_z": 8.0,
+        "follow": 1.0,
+        "side_width": 1.6,
+        "drive": "thigh"
+      }
+    ]
   },
   "attack": {
     "clip": "../../experiments/lark_stage3/attack_motion.json",

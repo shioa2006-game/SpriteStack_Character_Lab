@@ -57,6 +57,42 @@ def solve(a, c, length_a, length_b, pole):
     return a + along * direction + height * perpendicular, c
 
 
+# Optional walk.tuning keys that scale the shared walk clip for one character's body.
+# Absent keys leave the clip unchanged, so existing characters bake exactly as before.
+WALK_SCALES = {
+    "stride_scale": ("forward_each_frame", "swing_forward"),
+    "swing_lift_scale": ("swing_lift",),
+    "root_bob_scale": ("root_bob",),
+    "root_sway_scale": ("root_sway",),
+    "twist_scale": ("twist",),
+}
+
+
+def walk_clip(clip, tuning):
+    """Return the walk clip as this character walks it: the shared clip with the
+    tuning's optional scale factors and root_level_offset applied."""
+    scaled = dict(clip)
+    for key, fields in WALK_SCALES.items():
+        if key in tuning:
+            factor = float(tuning[key])
+            if not factor > 0:
+                raise ValueError(f"walk.tuning.{key} must be positive")
+            for field in fields:
+                value = clip[field]
+                scaled[field] = ([round(v * factor, 6) for v in value] if isinstance(value, list)
+                                 else round(value * factor, 6))
+    if "root_level_offset" in tuning:
+        scaled["root_level"] = round(clip["root_level"] + float(tuning["root_level_offset"]), 6)
+    if "torso_lean" in tuning:
+        scaled["torso_lean"] = float(tuning["torso_lean"])
+    return scaled
+
+
+def per_side(value, side):
+    """A tuning value given once for both sides, or as {"R": ..., "L": ...}."""
+    return value[side] if isinstance(value, dict) else value
+
+
 def outward(offset, sign):
     return vec([sign * offset[0], offset[1], offset[2]])
 
@@ -65,6 +101,7 @@ class Biped:
     def __init__(self, character):
         self.config = character.config
         self.motions = character.motions
+        self.walk_clip = walk_clip(character.motions["walk"], self.config["walk"]["tuning"])
         self.parts = character.parts
         self.rest = {name: vec(point) for name, point in self.config["rig"]["rest"].items()}
         self.attachments = self.config["rig"]["attachments"]
@@ -136,7 +173,7 @@ class Biped:
         transforms[hand] = about(wrist, base_hand, joints[hand])
 
     def _walk(self, index, joints, transforms):
-        clip = self.motions["walk"]
+        clip = self.walk_clip
         tuning = self.config["walk"]["tuning"]
         bob = clip["root_bob"][index]
         yaw = clip["twist"][index]
@@ -169,10 +206,12 @@ class Biped:
             shoulder = transform(transforms["chest"], self.rest["shoulder_" + side])
             swing = clip["right_arm_swing"][index] * tuning["arm_swing_scale"][side]
             hand = self.rest["hand_" + side] + root + vec([
-                sign * tuning["hand_outward"], swing,
-                abs(swing) * tuning["hand_lift_scale"] + tuning["hand_lift"],
+                sign * per_side(tuning["hand_outward"], side), swing,
+                abs(swing) * tuning["hand_lift_scale"] + per_side(tuning["hand_lift"], side),
             ])
-            wrist = (rotate([1, 0, 0], -swing * tuning["wrist_pitch_scale"])
+            pitch = (per_side(tuning.get("wrist_pitch", 0), side)
+                     - swing * per_side(tuning["wrist_pitch_scale"], side))
+            wrist = (rotate([1, 0, 0], pitch)
                      @ rotate([0, 0, 1], yaw * tuning["wrist_yaw_scale"]))
             self._arm(side, shoulder, hand, wrist, outward(tuning["elbow_pole"], sign),
                       joints, transforms)

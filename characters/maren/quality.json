@@ -26,5 +26,15 @@
   "presence": [
     {"label": "long hair below the shoulders", "part": "head", "materials": ["hair", "hair shade"], "lowest_z_at_most": 20.0}
   ],
+  "walk": {
+    "description": "Thresholds for research.verify_walk. Item pixels are the smallest count measured over the 48 walk frames (blade 1 px in NW, shield 3 px in NE) or slightly below; the blade may be 1.5 units above the floor at its lowest.",
+    "lowest_z_at_least": {"sole_floor": 0.0, "blade_min_z": 0.5},
+    "visibility_min_px": {"blade": 1, "shield": 2},
+    "arm_swing": "contralateral",
+    "max_fragment_voxels": 2,
+    "max_center_drift_px": 3,
+    "intrusion_slack": 0.01,
+    "published": "../../docs/assets/maren"
+  },
   "published": "../../docs/assets/maren"
 }

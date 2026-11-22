@@ -11,6 +11,7 @@ from PIL import Image
 
 from .render import Renderer, normals, reslice
 from .rig import Biped, transform
+from .secondary import Secondary
 
 
 def write_json(path, value):
@@ -181,13 +182,17 @@ def render_motion(character, renderer, mode, poses, neutral):
     return sheet, part_atlas, measurements
 
 
-def bake(character, out, *, pose_volume=reslice):
+def bake(character, out, *, pose_volume=reslice, motions=("walk", "attack")):
+    """Bake idle and the given motions (walk, attack or both, in that order)."""
+    if not motions or set(motions) - {"walk", "attack"} or len(set(motions)) != len(motions):
+        raise ValueError("motions must be walk, attack or both")
     view = character.config["view"]
     directions = list(view["directions"])
     renderer = Renderer(character)
     rig = Biped(character)
-    clips = character.motions
-    counts = {"rest": 1, "walk": len(clips["walk"]["poses"]), "attack": len(clips["attack"]["keys"])}
+    clips = {mode: clip for mode, clip in character.motions.items() if mode in motions}
+    lengths = {"walk": lambda clip: len(clip["poses"]), "attack": lambda clip: len(clip["keys"])}
+    counts = {"rest": 1, **{mode: lengths[mode](clip) for mode, clip in clips.items()}}
     pose_groups = {}
     joints = {}
     volumes = {}
@@ -195,13 +200,23 @@ def bake(character, out, *, pose_volume=reslice):
     ground = {}
     lowest_z = character.config["measurements"]["lowest_z"]
 
+    secondary = None
+    if "walk" in clips and character.config["walk"].get("secondary"):
+        if pose_volume is not reslice:
+            raise ValueError("walk.secondary cannot be combined with another pose_volume")
+        secondary = Secondary(character, rig.walk_clip, rig.rest)
+
     for mode, count in counts.items():
         pose_groups[mode] = []
         joints[mode] = []
-        for index in range(count):
-            points, transforms = rig.pose(mode, index)
+        posed = [rig.pose(mode, index) for index in range(count)]
+        for points, transforms in posed:
             check_attachment(rig, points, transforms)
-            volume, part_ids = pose_volume(character, transforms)
+        if mode == "walk" and secondary:
+            volumes_of_mode = secondary.pose_volumes(character, [t for _, t in posed])
+        else:
+            volumes_of_mode = [pose_volume(character, transforms) for _, transforms in posed]
+        for index, ((points, transforms), (volume, part_ids)) in enumerate(zip(posed, volumes_of_mode)):
             pose_groups[mode].append((volume, part_ids))
             key = f"{mode}_{index:02}"
             volumes[key], parts[key] = volume, part_ids
@@ -239,7 +254,7 @@ def bake(character, out, *, pose_volume=reslice):
             "rgba_sha256": hashlib.sha256(sheet.tobytes()).hexdigest(),
         }
         if mode == "walk":
-            animation["suggested_forward_per_frame_model_units"] = clip["forward_each_frame"]
+            animation["suggested_forward_per_frame_model_units"] = rig.walk_clip["forward_each_frame"]
             animation.update((key, clip[key]) for key in ("poses", "contact"))
         else:
             animation["durations_ms"] = clip["durations_ms"]
@@ -254,7 +269,10 @@ def bake(character, out, *, pose_volume=reslice):
     np.savez_compressed(out / "posed_part_ids.npz", **parts)
     write_json(out / "joints.json", joints)
     write_json(out / "metadata.json", metadata)
-    write_json(out / "measurements.json", {
+    measurements = {
         "vol_ground": ground,
         "visibility_px_full_solo": motion_visibility,
-    })
+    }
+    if secondary:
+        measurements["walk_secondary_deg"] = secondary.angles
+    write_json(out / "measurements.json", measurements)

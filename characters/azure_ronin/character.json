@@ -2,7 +2,7 @@
   "version": 1,
   "status": {
     "idle": "published: 48x48 standard sheet and a 64x64 comparison sheet of the same model (python -m spritestack --modes idle)",
-    "walk": "loader placeholder only: LARK's walk clip and tuning so the shared loader accepts the manifest; not baked or published",
+    "walk": "published: 8 directions x 6 frames at 48x48 (python -m spritestack --modes walk). LARK's shared walk clip with this character's walk.tuning scale factors and walk.secondary cloth and hair regions",
     "attack": "loader placeholder only: LARK's sword attack clip and tuning; a katana attack is not designed; not baked or published"
   },
   "model": {
@@ -108,19 +108,58 @@
       "head_lateral_scale": 0.25,
       "head_forward_offset": 0.12,
       "head_bob_scale": 0.3,
-      "stance_start_y": 3,
+      "stance_start_y": 4.0,
       "knee_pole": [1.12, 8, -0.15],
-      "arm_swing_scale": {
-        "R": 1,
-        "L": -0.57
-      },
+      "arm_swing_scale": {"R": -0.9, "L": 1.0},
       "hand_outward": 0.12,
       "hand_lift_scale": 0.18,
       "hand_lift": 0.29,
       "wrist_pitch_scale": 4.3,
       "wrist_yaw_scale": 0.27,
-      "elbow_pole": [4, -2.7, -4.5]
-    }
+      "elbow_pole": [4, -2.7, -4.5],
+      "stride_scale": 1.35,
+      "swing_lift_scale": 1.2,
+      "root_bob_scale": 1.2,
+      "root_level_offset": -0.2
+    },
+    "secondary": [
+      {
+        "name": "waist cloth",
+        "kind": "skirt",
+        "part": "pelvis",
+        "materials": ["tunic", "tunic shade", "blue lining", "blue cloth"],
+        "box": {"z": [0, 13.0]},
+        "top_z": 13.5,
+        "hem_z": 7.0,
+        "follow": 0.75,
+        "side_width": 1.2
+      },
+      {
+        "name": "ponytail",
+        "kind": "pendulum",
+        "part": "head",
+        "materials": ["ponytail", "hair ribbon"],
+        "box": {"z": [0, 27.5]},
+        "pivot": [0, -3.0, 27.7],
+        "tip": [-3.2, -4.7, 20.25],
+        "lag_frames": 1.0,
+        "follow": [1.6, 0.6, 2.5],
+        "max_deg": 18,
+        "driver": "chest"
+      },
+      {
+        "name": "scarf tail",
+        "kind": "pendulum",
+        "part": "chest",
+        "materials": ["scarf", "scarf shade"],
+        "box": {"z": [0, 18.5], "y": [-9, -1.5]},
+        "pivot": [-1.5, -2.5, 18.5],
+        "tip": [-5.2, -6.1, 10.4],
+        "lag_frames": 1.0,
+        "follow": [1.0, 0.45, 2.5],
+        "max_deg": 12
+      }
+    ]
   },
   "attack": {
     "clip": "../../experiments/lark_stage3/attack_motion.json",

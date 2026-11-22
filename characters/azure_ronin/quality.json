@@ -38,5 +38,15 @@
     {"label": "scarf tail hangs below the waist", "part": "chest", "materials": ["scarf", "scarf shade"], "lowest_z_at_most": 11.0},
     {"label": "long back panels", "part": "pelvis", "materials": ["tunic", "tunic shade"], "lowest_z_at_most": 7.5}
   ],
+  "walk": {
+    "description": "Thresholds for research.verify_walk. The blade is at least 2 px in every walk frame (NW is the smallest); the hilt is hidden by the body in NW, as in idle, so it has no walk pixel rule. The sword tip stays at least 1 unit above the floor.",
+    "lowest_z_at_least": {"sole_floor": 0.0, "sword_tip": 1.0},
+    "visibility_min_px": {"blade": 1},
+    "arm_swing": "contralateral",
+    "max_fragment_voxels": 2,
+    "max_center_drift_px": 3,
+    "intrusion_slack": 0.01,
+    "published": "../../docs/assets/azure_ronin"
+  },
   "published": "../../docs/assets/azure_ronin"
 }

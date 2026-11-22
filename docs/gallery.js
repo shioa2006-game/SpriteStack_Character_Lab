@@ -21,15 +21,21 @@ const directionButtons = [...document.querySelectorAll("[data-direction]")];
 const characters = {
   lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets" },
   bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram" },
-  maren: { name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren" },
+  maren: {
+    name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
+    // Motions published next to an idle-only metadata.json, each as <name>.json and <name>.png.
+    extraAnimations: ["walk"],
+  },
   crystal_mage: {
     name: "CRYSTAL MAGE", subtitle: "Staff and Tome", assets: "assets/crystal_mage",
     // Idle sheets of the same model at two pixel densities; null keeps the standard idle.png.
     idleSheets: { 48: null, 64: "idle-64" },
+    extraAnimations: ["walk"],
   },
   azure_ronin: {
     name: "AZURE RONIN", subtitle: "Scarf Swordsman", assets: "assets/azure_ronin",
     idleSheets: { 48: null, 64: "idle-64" },
+    extraAnimations: ["walk"],
   },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
@@ -139,10 +145,23 @@ function animate(now) {
   }
 }
 
+async function loadCharacterData(chosen) {
+  const data = await loadMetadata(chosen.assets + "/metadata.json");
+  if (!chosen.extraAnimations) return data;
+  const extras = await Promise.all(chosen.extraAnimations.map(
+    name => loadMetadata(chosen.assets + "/" + name + ".json")));
+  const animations = { ...data.animations };
+  for (const extra of extras) Object.assign(animations, extra.animations);
+  return { ...data, animations };
+}
+
 function selectAvailableMotion(data) {
   const available = new Set(["idle", ...Object.keys(data.animations)]);
   for (const button of motionButtons) button.disabled = !available.has(button.dataset.motion);
   motionNote.hidden = motionButtons.every(button => !button.disabled);
+  motionNote.textContent = available.size === 1
+    ? "このキャラクターは静止8方向のみ公開しています。"
+    : "このキャラクターは攻撃を公開していません。";
   if (!available.has(motion)) {
     motion = "idle";
     for (const option of motionButtons) option.setAttribute("aria-pressed", option.dataset.motion === motion);
@@ -162,7 +181,7 @@ async function showSelection() {
     status.textContent = "画像を読み込み中…";
   }
   try {
-    const data = await loadMetadata(chosen.assets + "/metadata.json");
+    const data = await loadCharacterData(chosen);
     if (ticket !== selection) return;
     selectAvailableMotion(data);
     const name = motion;
