@@ -38,6 +38,11 @@ const characters = {
     idleSheets: { 48: null, 64: "idle-64" },
     extraAnimations: ["walk", "attack"],
   },
+  fleur_knight: {
+    name: "FLEUR KNIGHT", subtitle: "Knight of the Gilded Lily", assets: "assets/fleur_knight",
+    attackComparison: "slash-comparison.gif",
+    extraAnimations: ["walk", "attack"],
+  },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };

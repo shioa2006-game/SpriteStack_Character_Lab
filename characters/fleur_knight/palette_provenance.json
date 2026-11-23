@@ -1,0 +1,79 @@
+{
+  "materials": {
+    "plate": {
+      "source": "silver",
+      "method": "adjusted",
+      "note": "Cool the warm reflection so silver separates from the brass."
+    },
+    "ridge": {
+      "source": "silver",
+      "method": "adjusted",
+      "note": "Polished ridges catch the light."
+    },
+    "lame": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Overlapping lower lames are darker than the main plate."
+    },
+    "mail": {
+      "source": "mail",
+      "method": "adjusted",
+      "note": "Dark mail in the gaps between rigid plates."
+    },
+    "navy": {
+      "source": "navy",
+      "method": "adjusted",
+      "note": "Separate the hanging cloth from both steel and deep shadow."
+    },
+    "leather": {
+      "source": "leather",
+      "method": "extracted",
+      "note": "Sampled belt leather."
+    },
+    "gilt": {
+      "source": "gold",
+      "method": "adjusted",
+      "note": "Warm trim contrasts with the cool plate."
+    },
+    "skin": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "Expand the sampled lit cheek into three distinguishable tones."
+    },
+    "hair": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Dark fringe under the raised visor."
+    },
+    "eyes": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Dark eyes and brows."
+    },
+    "field": {
+      "source": "azure",
+      "method": "adjusted",
+      "note": "Deep heraldic blue, separated from the tabard."
+    },
+    "lily": {
+      "source": "gold",
+      "method": "adjusted",
+      "note": "The gold charge must remain legible against the blue even in shadow."
+    },
+    "rim": {
+      "source": "gold",
+      "method": "adjusted",
+      "note": "Muted rim keeps the central charge brightest."
+    },
+    "blade": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Silver in a separate shading group."
+    },
+    "edge": {
+      "source": "silver",
+      "method": "adjusted",
+      "note": "Bright bevel along the cutting edges."
+    }
+  }
+}

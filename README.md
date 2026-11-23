@@ -1,12 +1,14 @@
 # SpriteStack Character Lab
 
-参考イラスト1枚から、ゲーム用キャラクターの**静止・歩行・攻撃の8方向透過PNG**を制作する研究環境です。制作AIが画像を読み、見えない背面の形、部位の寸法、配色、装備の動きを設計します。その設計をPythonとJSONに残すと、同じボクセルモデルと共通リグから全方向を焼き直せます。[GitHub Pagesで3体を再生](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
+参考イラスト1枚から、ゲーム用キャラクターの**静止・歩行・攻撃の8方向透過PNG**を制作する研究環境です。制作AIが画像を読み、見えない背面の形、部位の寸法、配色、装備の動きを設計します。その設計をPythonとJSONに残すと、同じボクセルモデルと共通リグから全方向を焼き直せます。[GitHub Pagesで8方向を再生](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 
 | 正式サンプル | 造形と動きの見どころ | 素材 |
 | --- | --- | --- |
 | [MAREN](characters/maren/) | 長い青髪、長剣と丸盾。頭上で溜め、踏み込んで低く振り抜く | [攻撃GIF](docs/assets/maren/attack.gif) |
 | [CRYSTAL MAGE](characters/crystal_mage/) | ローブとマント。本を掲げて詠唱し、右手の水晶から放つ | [攻撃GIF](docs/assets/crystal_mage/attack.gif) |
 | [AZURE RONIN](characters/azure_ronin/) | スカーフとポニーテール。肩へ刀を引き、短い踏み込みで払い切る | [攻撃GIF](docs/assets/azure_ronin/attack.gif) |
+
+実験04では、新しい参考画像から銀のプレートアーマーと青い百合盾の **FLEUR KNIGHT** を制作しました。ギャラリーのキャラクター欄で再生できます。[制作・検証記録](research/IMAGE_TO_CHARACTER_04.md) · [試作と完成版の原寸比較](docs/assets/fleur_knight/slash-comparison.gif)
 
 **新しい画像を受け取ったら**、[開発規約](AGENTS.md) と [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) を使ってください。制作ガイドに、採色から原寸評価、公開までの手順があります。
 

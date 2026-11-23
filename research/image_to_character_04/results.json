@@ -1,0 +1,99 @@
+{
+  "directions": ["S", "SW", "W", "NW", "N", "NE", "E", "SE"],
+  "checks": {
+    "idle": {
+      "PASS": 30,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "walk": {
+      "PASS": 16,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "attack_sample_count": 97,
+    "attack_minimum_grip_contacts": {
+      "sword": 30,
+      "shield": 32
+    },
+    "shield_overlaps_with_other_parts_excluding_hand_L": {
+      "walk_6_keys": 0,
+      "attack_97_samples": 0
+    }
+  },
+  "idle_visible_pixels": {
+    "open_face": {
+      "S": 25,
+      "SW": 16,
+      "SE": 15
+    },
+    "fleur_de_lis": {
+      "S": 38,
+      "SW": 40
+    },
+    "plate_cuirass": {
+      "S": 61,
+      "SW": 27,
+      "W": 29,
+      "NW": 60,
+      "N": 70,
+      "NE": 60,
+      "E": 31,
+      "SE": 59
+    },
+    "blade": {
+      "S": 31,
+      "SW": 31,
+      "W": 9,
+      "NW": 5,
+      "N": 22,
+      "NE": 27,
+      "E": 20,
+      "SE": 28
+    },
+    "shield": {
+      "S": 196,
+      "SW": 190,
+      "W": 96,
+      "NW": 111,
+      "N": 136,
+      "NE": 46,
+      "E": 73,
+      "SE": 127
+    }
+  },
+  "attack_cut_visible_blade_pixels": {
+    "S": 25,
+    "SW": 25,
+    "W": 31,
+    "NW": 18,
+    "N": 11,
+    "NE": 10,
+    "E": 21,
+    "SE": 28
+  },
+  "regenerated_rgba_sha256": {
+    "maren": {
+      "idle": "4d7edc16b21ee79b5d4d4fff9585219bbb4ec64a05a5cb6bea69dedae89cd609",
+      "walk": "fb394463ac4f19faa7c0d7c7f100939e6fca056fafe8b945e7611a06506a1b72",
+      "attack": "ae3285df609fb099ca12861a24e9e5df35302bbfb4e041aecfc00e9338ea78aa"
+    },
+    "crystal_mage": {
+      "idle": "123290a8bb8c6406f4a8f44f3eccba0a2cd4173e1ba097ea85106eedc27592ca",
+      "walk": "6bb70dfd0dd6e884876ac95f029d8f30880fcb91e86f32226cbe736dbc3762e4",
+      "attack": "5f1bd1c982d39ad0f2cab22abaf2835fe880676be7421316dae4e2ec9d94a455"
+    },
+    "azure_ronin": {
+      "idle": "0a5ff22baa7b128b7ac0d52547cf348cee54c6a5be24eedc75b83b9fb6e6e971",
+      "walk": "be0d6ba59dcd6e5c71ba74dd93aee1ffa84694794d543c2d81f6b60b7e2a7da7",
+      "attack": "7e7a6d1a3f7aace89b777850c8890d9951aa1d84a0e66a8c505287efaee9f1f4"
+    },
+    "fleur_knight": {
+      "idle": "769eb618682317c42c48270919e1f7258bddf8a82cc6870734b91f1045b6aacd",
+      "walk": "99457bf64ff423899bc1db6c3b19b1c0860268f6143016f99fd351569e55fcb5",
+      "attack": "cbc47e4244aa0fcfae8882035f6656d45d1764eaf6c8c4a0d4cf56812e3cc3b9"
+    }
+  }
+}

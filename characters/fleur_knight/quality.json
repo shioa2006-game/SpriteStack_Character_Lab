@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "description": "Open-faced plate harness, cut blade and kite-shield heraldry at native scale.",
+  "model_builder": "characters.fleur_knight.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "attack": {
+    "feature": "blade",
+    "phase": "cut",
+    "minimum_visible_px": 10
+  },
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "sword",
+      "hand": "hand_R",
+      "marker": "sword_tip"
+    },
+    "off": {
+      "part": "shield",
+      "hand": "hand_L",
+      "marker": "shield_center"
+    }
+  },
+  "cells": [48],
+  "visibility": [
+    {
+      "label": "open face",
+      "part": "head",
+      "materials": ["skin"],
+      "min_px": 4,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "label": "fleur de lis",
+      "part": "shield",
+      "materials": ["lily"],
+      "min_px": 8,
+      "directions": ["S", "SW"]
+    },
+    {
+      "label": "plate cuirass",
+      "part": "chest",
+      "materials": ["plate", "ridge", "lame"],
+      "min_px": 10,
+      "directions": "all"
+    },
+    {
+      "label": "blade",
+      "part": "sword",
+      "materials": ["edge", "blade"],
+      "min_px": 2,
+      "directions": "all"
+    },
+    {
+      "label": "shield",
+      "part": "shield",
+      "materials": ["field", "lily", "rim", "leather"],
+      "min_px": 4,
+      "directions": "all"
+    }
+  ],
+  "presence": [],
+  "walk": {
+    "description": "Shield remains gripped and the sword clears the ground throughout the stride.",
+    "lowest_z_at_least": {
+      "blade_min_z": 0
+    },
+    "visibility_min_px": {
+      "blade": 1,
+      "shield": 2
+    },
+    "arm_swing": "contralateral",
+    "max_fragment_voxels": 2,
+    "max_center_drift_px": 3,
+    "intrusion_slack": 0.01,
+    "published": "../../docs/assets/fleur_knight"
+  },
+  "published": "../../docs/assets/fleur_knight"
+}
