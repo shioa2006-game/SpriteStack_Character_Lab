@@ -1,0 +1,64 @@
+{
+  "materials": {
+    "indigo": {
+      "source": "blue",
+      "method": "adjusted",
+      "note": "帽子とローブに共通する濃い藍を基調にした。"
+    },
+    "navy": {
+      "source": "navy",
+      "method": "adjusted",
+      "note": "つばの裏と胴のひだを暗くし、帽子と銀髪の境界を残した。"
+    },
+    "embroidery": {
+      "source": "gold",
+      "method": "adjusted",
+      "note": "縁飾りと杖の爪を、淡い衣や氷と区別できる金色にした。"
+    },
+    "underskirt": {
+      "source": "white",
+      "method": "adjusted",
+      "note": "前身頃はわずかに青みのある白にした。"
+    },
+    "skin": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "つばの下の顔と杖を包む指に暖色を残した。"
+    },
+    "eyes": {
+      "source": "navy",
+      "method": "adjusted",
+      "note": "瞳は暗い青灰色にして銀髪から分けた。"
+    },
+    "silver": {
+      "source": "silver",
+      "method": "adjusted",
+      "note": "長い房の正面を青紫がかった銀白にした。"
+    },
+    "silver shade": {
+      "source": "silver",
+      "method": "adjusted",
+      "note": "背中の房の境目に明度を下げた銀紫を置いた。"
+    },
+    "leather": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "ブーツとベルトは青いローブに合う暗い革色とした。"
+    },
+    "staff wood": {
+      "source": "wood",
+      "method": "adjusted",
+      "note": "杖の木軸は金具から分かる赤褐色にした。"
+    },
+    "crystal": {
+      "source": "crystal",
+      "method": "adjusted",
+      "note": "小さい杖頭にも青い面が残るよう水晶の中間色を濃くした。"
+    },
+    "ice": {
+      "source": "crystal",
+      "method": "adjusted",
+      "note": "白い反射は水晶中央から少し外側の一面に限った。"
+    }
+  }
+}

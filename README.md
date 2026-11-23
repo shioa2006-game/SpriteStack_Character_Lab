@@ -2,6 +2,16 @@
 
 参考イラスト1枚から、ゲーム用キャラクターの**静止・歩行・攻撃の8方向透過PNG**を制作する研究環境です。制作AIが画像を読み、見えない背面の形、部位の寸法、配色、装備の動きを設計します。その設計をPythonとJSONに残すと、同じボクセルモデルと共通リグから全方向を焼き直せます。[GitHub Pagesで8方向を再生](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 
+## 冒険者の一行
+
+ガルド、リコ、セナを同じ床面に並べ、8方向の待機4コマと歩行6コマを再生できます。共通セルは64×64、足元アンカーは (32, 57)。歩行は重戦士が7 fps、斥候が11 fps、術師が8 fpsです。[3人のブラウザプレビュー](docs/party.html) · [ゲームへの組み込み・再生成・検証記録](research/adventurers/README.md)
+
+| キャラクター | 待機 | 歩行 | ゲーム用シートとメタデータ |
+| --- | --- | --- | --- |
+| ガルド | [GIF](docs/assets/gard/breathe.gif) | [GIF](docs/assets/gard/walk.gif) | [gard](docs/assets/gard/) |
+| リコ | [GIF](docs/assets/rico/breathe.gif) | [GIF](docs/assets/rico/walk.gif) | [rico](docs/assets/rico/) |
+| セナ | [GIF](docs/assets/sena/breathe.gif) | [GIF](docs/assets/sena/walk.gif) | [sena](docs/assets/sena/) |
+
 | 正式サンプル | 造形と動きの見どころ | 素材 |
 | --- | --- | --- |
 | [MAREN](characters/maren/) | 長い青髪、長剣と丸盾。頭上で溜め、踏み込んで低く振り抜く | [攻撃GIF](docs/assets/maren/attack.gif) |

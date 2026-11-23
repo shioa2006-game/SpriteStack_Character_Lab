@@ -1,0 +1,84 @@
+{
+  "materials": {
+    "moss": {
+      "source": "moss",
+      "method": "adjusted",
+      "note": "フードとマントの面を、革と区別できるオリーブ緑にした。"
+    },
+    "forest": {
+      "source": "moss",
+      "method": "adjusted",
+      "note": "フードの折り返しとマントのひだを落ち着いた深緑にした。"
+    },
+    "copper": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "フードの下からのぞく短い前髪を、肌より赤い橙にした。"
+    },
+    "saffron": {
+      "source": "scarf",
+      "method": "adjusted",
+      "note": "首の巻き布を生成りの上着より鮮やかな黄に寄せた。"
+    },
+    "linen": {
+      "source": "shirt",
+      "method": "adjusted",
+      "note": "生成りの袖が黄色のスカーフに溶けないよう彩度を下げた。"
+    },
+    "skin": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "膝下と空いた手が、ブーツの革から読める暖色を残した。"
+    },
+    "eyes": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "小さい顔でも左右の瞳が見える濃褐色。"
+    },
+    "shorts": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "短パンをブーツより暗くして、露出した膝を挟んだ。"
+    },
+    "leather": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "ブーツ、手甲、矢筒に共通の革色を使った。"
+    },
+    "suede": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "短パンの折り返しと鞄の縁を革本体より明るくした。"
+    },
+    "brass": {
+      "source": "rope",
+      "method": "adjusted",
+      "note": "矢筒の口と弓の握りに、縄より深い真鍮色を使った。"
+    },
+    "rope": {
+      "source": "rope",
+      "method": "adjusted",
+      "note": "腰の巻き縄には革より明るい黄褐色を置いた。"
+    },
+    "wood": {
+      "source": "wood",
+      "method": "adjusted",
+      "note": "木製の弓は指と握りから分けるため橙褐色にした。"
+    },
+    "string": {
+      "source": "rope",
+      "method": "adjusted",
+      "note": "細い弦には木枠より彩度の低い麻色を使った。"
+    },
+    "iron": {
+      "source": "iron",
+      "method": "adjusted",
+      "note": "縄の先の鉤だけを冷たい金属色にした。"
+    },
+    "fletching": {
+      "source": "shirt",
+      "method": "adjusted",
+      "note": "矢羽は筒とフードの背面から読める淡い羽色とした。"
+    }
+  }
+}

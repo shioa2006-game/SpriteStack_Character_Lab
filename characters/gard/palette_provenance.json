@@ -1,0 +1,69 @@
+{
+  "materials": {
+    "plate": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "胸甲と肩甲は原画の銀に青灰色の影を加え、深紅の布から分けた。"
+    },
+    "bright steel": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "兜の縁、膝甲と打撃面に、板金より明るい反射を置いた。"
+    },
+    "mail": {
+      "source": "mail",
+      "method": "adjusted",
+      "note": "鎖帷子と篭手は暗くして関節の切れ目を残した。"
+    },
+    "hammer iron": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "槌頭の中央部は打撃面より暗い鋼色とした。"
+    },
+    "crimson": {
+      "source": "cape",
+      "method": "adjusted",
+      "note": "大きな背面で赤が一色にならないよう、中間色を深紅に寄せた。"
+    },
+    "wine": {
+      "source": "cape",
+      "method": "adjusted",
+      "note": "マントの谷には同系色の暗い赤を用いた。"
+    },
+    "gold": {
+      "source": "gold",
+      "method": "adjusted",
+      "note": "盾の翼、縁、槌の口金には同じ黄味の金を用いた。"
+    },
+    "bronze": {
+      "source": "shield",
+      "method": "adjusted",
+      "note": "盾の地色を金の紋章より暗く、マントより低彩度にした。"
+    },
+    "leather": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "柄の革巻きと盾裏を赤褐色にまとめた。"
+    },
+    "skin": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "露出した目元と鼻に暖色を残し、白髭から分けた。"
+    },
+    "eyes": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "眉下の瞳が兜の影に埋もれない濃色を選んだ。"
+    },
+    "silver hair": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "後頭部と顎髭の根元には少し紫を含む灰白を使った。"
+    },
+    "beard light": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "前へ張り出す口髭と顎髭の房にだけ暖かい白を使った。"
+    }
+  }
+}

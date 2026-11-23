@@ -1,0 +1,34 @@
+{
+  "animations": {
+    "breathe": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 4,
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        57
+      ],
+      "fps": 3,
+      "loop": true,
+      "rgba_sha256": "b5b874f769c3be6ba39f13809e1e6673c2d5921bb121f9d2fdf35b202275114b",
+      "poses": [
+        "rest",
+        "inhaling",
+        "full breath",
+        "exhaling"
+      ]
+    }
+  }
+}

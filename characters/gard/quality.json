@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "model_builder": "characters.gard.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    },
+    "breathe": {
+      "clip": "../../motions/breathe.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "hammer",
+      "hand": "hand_R",
+      "marker": "hammer_head"
+    },
+    "off": {
+      "part": "shield",
+      "hand": "hand_L",
+      "marker": "shield_center"
+    }
+  },
+  "cells": [64],
+  "continuous": [
+    {
+      "part": "hammer",
+      "through": ["hand_R"]
+    },
+    {
+      "part": "shield",
+      "through": ["hand_L"]
+    }
+  ],
+  "visibility": [
+    {
+      "label": "beard",
+      "part": "head",
+      "materials": ["silver hair", "beard light"],
+      "min_px": 5,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "label": "griffin",
+      "part": "shield",
+      "materials": ["gold"],
+      "min_px": 5,
+      "directions": ["S", "SW", "W"]
+    },
+    {
+      "label": "cape",
+      "part": "chest",
+      "materials": ["crimson", "wine"],
+      "min_px": 15,
+      "directions": ["N", "NW", "NE"]
+    },
+    {
+      "label": "hammer",
+      "part": "hammer",
+      "materials": ["hammer iron", "bright steel"],
+      "min_px": 2,
+      "directions": "all"
+    }
+  ],
+  "walk": {
+    "arm_swing": "contralateral",
+    "lowest_z_at_least": {
+      "hammer_floor": 1.5,
+      "shield_floor": 1.5
+    },
+    "visibility_min_px": {
+      "hammer": 6,
+      "shield": 30
+    },
+    "max_center_drift_px": 3
+  },
+  "published": "../../docs/assets/gard"
+}

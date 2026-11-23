@@ -1,0 +1,79 @@
+{
+  "source_sha256": "2cb284ac60b5aa2bf63c22092e8264de6dde4be7ef7ab19787bea3a8004aaf22",
+  "percentile_bands": {
+    "shadow": [10, 30],
+    "base": [45, 70],
+    "light": [80, 95]
+  },
+  "materials": {
+    "steel": {
+      "shadow": "aa8379",
+      "base": "d7ab9c",
+      "light": "e8cecb",
+      "pixels": 1217
+    },
+    "mail": {
+      "shadow": "2c2327",
+      "base": "302528",
+      "light": "3d282b",
+      "pixels": 837
+    },
+    "skin": {
+      "shadow": "ba816b",
+      "base": "edaf90",
+      "light": "f6c0a4",
+      "pixels": 374
+    },
+    "hair": {
+      "shadow": "d7b6a9",
+      "base": "f7dfd2",
+      "light": "fae3d7",
+      "pixels": 486
+    },
+    "cape": {
+      "shadow": "60343a",
+      "base": "793c41",
+      "light": "98474b",
+      "pixels": 3492
+    },
+    "gold": {
+      "shadow": "70544c",
+      "base": "e0a27a",
+      "light": "f0bc96",
+      "pixels": 572
+    },
+    "shield": {
+      "shadow": "715652",
+      "base": "88645b",
+      "light": "af7a66",
+      "pixels": 1023
+    },
+    "leather": {
+      "shadow": "413130",
+      "base": "714e47",
+      "light": "835e54",
+      "pixels": 693
+    }
+  },
+  "family_area_share": {
+    "steel": 0.1474,
+    "mail": 0.0746,
+    "skin": 0.0573,
+    "hair": 0.0487,
+    "cape": 0.2018,
+    "gold": 0.0866,
+    "shield": 0.2239,
+    "leather": 0.1598
+  },
+  "figure_pixels": 503560,
+  "height_fraction_above_sole": {
+    "sole": 0.0,
+    "hair_top": 1.0,
+    "skull_top": 0.972,
+    "chin": 0.883,
+    "shoulder": 0.8443,
+    "waist": 0.6354,
+    "knee": 0.3211
+  },
+  "heads_tall": 10.92
+}

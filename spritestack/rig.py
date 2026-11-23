@@ -163,6 +163,8 @@ class Biped:
         self.config = character.config
         self.motions = character.motions
         self.walk_clip = walk_clip(character.motions["walk"], self.config["walk"]["tuning"])
+        if "fps" in self.config["walk"]:
+            self.walk_clip["fps"] = self.config["walk"]["fps"]
         self.head = head_settings(self.config["walk"])
         self.head_rhythm = head_rhythm(self.walk_clip, self.head["lag_frames"]) if self.head else None
         self.parts = character.parts
@@ -185,6 +187,18 @@ class Biped:
             return joints, transforms
         if mode == "walk":
             self._walk(index, joints, transforms)
+        elif mode == "breathe":
+            key = self.motions[mode]["keys"][index]
+            pivot = self.rest["pelvis"]
+            lift = key["lift"] * self.config[mode]["lift_scale"]
+            lean = key["lean"] * self.config[mode]["lean_scale"]
+            upper = about(rotate([1, 0, 0], lean), pivot, pivot + vec([0, 0, lift]))
+            # Rib cage, neck, arms and grips rise together over the resting hips.
+            for part in ("chest", "head", "upper_R", "fore_R", "hand_R", "upper_L", "fore_L", "hand_L"):
+                transforms[part] = upper
+            for name in ("chest", "neck", "head", "shoulder_R", "elbow_R", "hand_R",
+                         "shoulder_L", "elbow_L", "hand_L"):
+                joints[name] = transform(upper, self.rest[name])
         elif mode == "attack":
             key = self.motions[mode]["keys"][index]
             if key:

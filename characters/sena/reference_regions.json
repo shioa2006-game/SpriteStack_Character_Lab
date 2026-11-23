@@ -1,0 +1,76 @@
+{
+  "image": {
+    "size": [1500, 1125]
+  },
+  "regions": {
+    "navy": {
+      "boxes": [
+        [1225, 312, 1245, 341]
+      ]
+    },
+    "blue": {
+      "boxes": [
+        [1163, 130, 1188, 153]
+      ]
+    },
+    "gold": {
+      "boxes": [
+        [1180, 202, 1205, 218]
+      ]
+    },
+    "silver": {
+      "boxes": [
+        [1093, 337, 1115, 369]
+      ]
+    },
+    "skin": {
+      "boxes": [
+        [1220, 203, 1242, 228]
+      ]
+    },
+    "white": {
+      "boxes": [
+        [1274, 873, 1292, 905]
+      ]
+    },
+    "wood": {
+      "boxes": [
+        [1328, 826, 1338, 860]
+      ]
+    },
+    "crystal": {
+      "boxes": [
+        [1414, 124, 1433, 151]
+      ]
+    },
+    "leather": {
+      "boxes": [
+        [1236, 995, 1253, 1025]
+      ]
+    }
+  },
+  "exclude_boxes": [
+    [0, 0, 1032, 1125],
+    [0, 1060, 1500, 1125]
+  ],
+  "families": {
+    "navy": ["navy"],
+    "blue": ["blue"],
+    "gold": ["gold"],
+    "silver": ["silver"],
+    "skin": ["skin"],
+    "white": ["white"],
+    "wood": ["wood"],
+    "crystal": ["crystal"],
+    "leather": ["leather"]
+  },
+  "landmarks_y": {
+    "sole": 1061,
+    "hair_top": 80,
+    "skull_top": 162,
+    "chin": 247,
+    "shoulder": 291,
+    "waist": 401,
+    "knee": 754
+  }
+}

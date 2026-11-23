@@ -13,7 +13,7 @@ def main():
     parser.add_argument("--character", required=True, type=Path, help="path to character.json")
     parser.add_argument("--out", required=True, type=Path, help="new output directory")
     parser.add_argument("--modes", choices=("all", "idle", "walk"), default="all",
-                        help="all: idle, walk and attack (default). idle: only the idle eight "
+                        help="all: neutral and every configured animation (default). idle: only the idle eight "
                              "directions from the rest model, without walk or attack poses. "
                              "walk: idle and walk, without attack")
     parser.add_argument("--cells", type=int, nargs="+", metavar="PX",

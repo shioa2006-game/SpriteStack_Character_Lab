@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "model_builder": "characters.sena.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    },
+    "breathe": {
+      "clip": "../../motions/breathe.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "staff",
+      "hand": "hand_R",
+      "marker": "crystal_tip"
+    }
+  },
+  "cells": [64],
+  "continuous": [
+    {
+      "part": "staff",
+      "through": ["hand_R"]
+    }
+  ],
+  "visibility": [
+    {
+      "label": "silver locks",
+      "part": "head",
+      "materials": ["silver", "silver shade"],
+      "min_px": 7,
+      "directions": ["N", "NW", "NE"]
+    },
+    {
+      "label": "open front",
+      "part": "pelvis",
+      "materials": ["underskirt"],
+      "min_px": 4,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "label": "gem",
+      "part": "staff",
+      "materials": ["crystal", "ice"],
+      "min_px": 2,
+      "directions": "all"
+    }
+  ],
+  "walk": {
+    "arm_swing": "contralateral",
+    "lowest_z_at_least": {
+      "staff_floor": 1.5
+    },
+    "visibility_min_px": {
+      "staff": 6,
+      "gem": 3
+    },
+    "max_center_drift_px": 3
+  },
+  "published": "../../docs/assets/sena"
+}

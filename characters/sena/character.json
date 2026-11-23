@@ -1,0 +1,251 @@
+{
+  "version": 1,
+  "model": {
+    "materials": "materials.npz",
+    "part_ids": "part_ids.npz",
+    "origin_xyz": [-20, -10, 0],
+    "shape_zyx": [80, 48, 80],
+    "voxel_size_xyz": [0.5, 0.5, 0.5],
+    "palette": [
+      {
+        "name": "indigo",
+        "group": "robe",
+        "shadow": "2f375a",
+        "base": "454f80",
+        "light": "666fa1"
+      },
+      {
+        "name": "navy",
+        "group": "robe",
+        "shadow": "252c48",
+        "base": "363e65",
+        "light": "515b86"
+      },
+      {
+        "name": "embroidery",
+        "group": "embroidery",
+        "shadow": "a77d55",
+        "base": "d7b583",
+        "light": "f6dba4"
+      },
+      {
+        "name": "underskirt",
+        "group": "lining",
+        "shadow": "a5a4bb",
+        "base": "d0cddb",
+        "light": "ece6e6"
+      },
+      {
+        "name": "skin",
+        "group": "skin",
+        "shadow": "bb8775",
+        "base": "e8b69b",
+        "light": "fbd6b8"
+      },
+      {
+        "name": "eyes",
+        "group": "face",
+        "shadow": "38465e",
+        "base": "425571",
+        "light": "5d7394"
+      },
+      {
+        "name": "silver",
+        "group": "hair",
+        "shadow": "a6a0b7",
+        "base": "d4cfdd",
+        "light": "f4eaf0"
+      },
+      {
+        "name": "silver shade",
+        "group": "hair",
+        "shadow": "918fae",
+        "base": "b9b4cc",
+        "light": "ddd8e4"
+      },
+      {
+        "name": "leather",
+        "group": "leather",
+        "shadow": "383342",
+        "base": "544756",
+        "light": "78616a"
+      },
+      {
+        "name": "staff wood",
+        "group": "staff",
+        "shadow": "58404b",
+        "base": "825d54",
+        "light": "a7846b"
+      },
+      {
+        "name": "crystal",
+        "group": "crystal",
+        "shadow": "285f9d",
+        "base": "409dcf",
+        "light": "83d2ed"
+      },
+      {
+        "name": "ice",
+        "group": "crystal",
+        "shadow": "77bde0",
+        "base": "b7eef9",
+        "light": "effbff"
+      }
+    ]
+  },
+  "rig": {
+    "parts": ["head", "chest", "pelvis", "thigh_R", "shin_R", "boot_R", "upper_R", "fore_R", "hand_R", "thigh_L", "shin_L", "boot_L", "upper_L", "fore_L", "hand_L", "staff"],
+    "rest": {
+      "pelvis": [0, 0, 14.0],
+      "chest": [0, 0, 17.8],
+      "neck": [0, 0.1, 21.5],
+      "head": [0, 0.3, 24.6],
+      "shoulder_R": [-3.32, -0.18, 20.29],
+      "elbow_R": [-4.74, -0.38, 17.05],
+      "hand_R": [-7.42, 2.63, 15.3],
+      "hip_R": [-1.68, 0, 13.7],
+      "knee_R": [-1.92, 1.04, 8.2],
+      "ankle_R": [-2.03, 0.32, 1.9],
+      "toe_R": [-2.03, 2.07, 0],
+      "shoulder_L": [3.32, -0.18, 20.29],
+      "elbow_L": [4.74, -0.38, 17.05],
+      "hand_L": [6.29, 1.87, 14.2],
+      "hip_L": [1.68, 0, 13.7],
+      "knee_L": [1.92, 1.04, 8.2],
+      "ankle_L": [2.03, -0.32, 1.9],
+      "toe_L": [2.03, 1.43, 0],
+      "crystal_tip": [-8.48, 3.87, 34.98]
+    },
+    "attachments": {
+      "staff": {
+        "hand": "hand_R",
+        "marker": "crystal_tip"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.5,
+      "base_pivot": [32, 57]
+    },
+    "neutral_cell": 64,
+    "render_cell": 64,
+    "neutral_rays": [46, -32, -0.18],
+    "posed_rays": [46, -32, -0.18],
+    "outline_rgb": [37, 29, 41]
+  },
+  "posed_volume": {
+    "origin_xyz": [-24, -16, -3],
+    "limit_xyz": [24, 18, 43],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../motions/walk.json",
+    "stance_note": "Advance the root by suggested_forward_per_frame_model_units each frame.",
+    "cell": 64,
+    "fps": 8,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 2.622,
+      "knee_pole": [1.12, 8, -0.15],
+      "arm_swing_scale": {
+        "R": -0.42,
+        "L": 0.82
+      },
+      "hand_outward": 0.12,
+      "hand_lift_scale": 0.18,
+      "hand_lift": 0.21,
+      "wrist_pitch_scale": {
+        "R": 1.3,
+        "L": 1.3
+      },
+      "wrist_yaw_scale": 0.16,
+      "elbow_pole": [4, -2.7, -4.5],
+      "stride_scale": 0.92,
+      "swing_lift_scale": 1.08,
+      "root_bob_scale": 2.55,
+      "root_level_offset": -0.18,
+      "root_sway_scale": 0.7,
+      "twist_scale": 0.7,
+      "torso_lean": 1.5
+    },
+    "head": {
+      "follow": [1, 1, 1],
+      "snap": 0.5
+    },
+    "secondary": [
+      {
+        "name": "cloak hem",
+        "kind": "pendulum",
+        "part": "chest",
+        "materials": ["indigo", "navy"],
+        "pivot": [0, -2, 20.5],
+        "tip": [0, -4, 7.3],
+        "lag_frames": 1,
+        "follow": [1.2, 0.42, 1.3],
+        "max_deg": 9,
+        "driver": "chest"
+      },
+      {
+        "name": "robe panels",
+        "kind": "skirt",
+        "part": "pelvis",
+        "materials": ["indigo", "navy", "underskirt", "embroidery"],
+        "box": {
+          "z": [0, 13.9]
+        },
+        "top_z": 14.5,
+        "hem_z": 5.0,
+        "follow": 0.52,
+        "side_width": 1.5
+      },
+      {
+        "name": "silver locks",
+        "kind": "pendulum",
+        "part": "head",
+        "materials": ["silver", "silver shade"],
+        "pivot": [0, -2, 24],
+        "tip": [0, -3.7, 15],
+        "lag_frames": 1,
+        "follow": [1.6, 0.47, 1.8],
+        "max_deg": 9,
+        "driver": "chest"
+      }
+    ]
+  },
+  "breathe": {
+    "clip": "../../motions/breathe.json",
+    "cell": 64,
+    "lift_scale": 1.04,
+    "lean_scale": 0.8
+  },
+  "measurements": {
+    "lowest_z": {
+      "staff_floor": [10, 3, 11, 12]
+    },
+    "visibility": {
+      "staff": {
+        "part": "staff",
+        "materials": [10, 3, 11, 12]
+      },
+      "gem": {
+        "part": "staff",
+        "materials": [11, 12]
+      }
+    }
+  }
+}

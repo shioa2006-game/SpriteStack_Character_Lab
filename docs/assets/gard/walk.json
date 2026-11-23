@@ -1,0 +1,60 @@
+{
+  "animations": {
+    "walk": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 6,
+      "cell": [
+        64,
+        64
+      ],
+      "anchor": [
+        32,
+        57
+      ],
+      "fps": 7,
+      "loop": true,
+      "rgba_sha256": "50a67c2ea68d98f8601cab44ddd4caaff3fae62352df34f51995d06fc222e1bc",
+      "suggested_forward_per_frame_model_units": 2.052,
+      "poses": [
+        "left heel contact",
+        "left loading",
+        "right passing",
+        "right heel contact",
+        "right loading",
+        "left passing"
+      ],
+      "contact": {
+        "index_base": 0,
+        "cycle_frames": 6,
+        "inclusive_stance_cyclic": {
+          "L": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "R": [
+            3,
+            4,
+            5,
+            0
+          ]
+        },
+        "sole_markers": {
+          "L": "toe_L",
+          "R": "toe_R"
+        },
+        "stance_note": "Advance the root by suggested_forward_per_frame_model_units each frame."
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "fps": 3,
+  "poses": ["rest", "inhaling", "full breath", "exhaling"],
+  "keys": [
+    {"lift": 0, "lean": 0},
+    {"lift": 0.45, "lean": -1.2},
+    {"lift": 0.90, "lean": 0},
+    {"lift": 0.45, "lean": 0.8}
+  ]
+}

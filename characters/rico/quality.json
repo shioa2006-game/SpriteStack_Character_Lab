@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "model_builder": "characters.rico.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    },
+    "breathe": {
+      "clip": "../../motions/breathe.json"
+    }
+  },
+  "items": {
+    "off": {
+      "part": "bow",
+      "hand": "hand_L",
+      "marker": "bow_tip"
+    }
+  },
+  "cells": [64],
+  "loop_visibility": [{"feature": "hook", "rows": ["S", "NE", "E", "SE"], "min_px": 2}],
+  "continuous": [
+    {
+      "part": "bow",
+      "through": ["hand_L"]
+    }
+  ],
+  "visibility": [
+    {
+      "label": "hair",
+      "part": "head",
+      "materials": ["copper"],
+      "min_px": 3,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "label": "bow",
+      "part": "bow",
+      "materials": ["wood", "string"],
+      "min_px": 2,
+      "directions": ["S", "SW", "W", "NW", "N", "SE"]
+    },
+    {
+      "label": "hook",
+      "part": "pelvis",
+      "materials": ["iron"],
+      "min_px": 1,
+      "directions": ["S", "SE"]
+    },
+    {
+      "label": "quiver fletching",
+      "part": "chest",
+      "materials": ["fletching"],
+      "min_px": 2,
+      "directions": ["N", "NW", "NE"]
+    }
+  ],
+  "walk": {
+    "arm_swing": "contralateral",
+    "lowest_z_at_least": {
+      "bow_floor": 1.5
+    },
+    "visibility_min_px": {
+      "bow": 10,
+      "arrows": 1
+    },
+    "max_center_drift_px": 3
+  },
+  "published": "../../docs/assets/rico"
+}

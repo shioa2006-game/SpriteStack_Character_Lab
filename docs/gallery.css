@@ -20,6 +20,7 @@ body {
 main { max-width: 900px; margin: auto; }
 
 .heading { margin-block-end: 30px; }
+.party-link { display: inline-block; margin-bottom: 8px; color: var(--accent); }
 .lab-name {
   margin: 0 0 8px;
   color: var(--accent);

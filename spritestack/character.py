@@ -52,6 +52,14 @@ def check_motion_lengths(motions):
                 "swing_forward", "swing_lift", "swing_pitch")):
             raise ValueError("walk swing arrays must match the number of non-stance frames")
 
+    if any(clip["fps"] <= 0 for clip in motions.values()):
+        raise ValueError("fps must be positive")
+    if "breathe" in motions:
+        clip = motions["breathe"]
+        if not clip["poses"] or len(clip["poses"]) != len(clip["keys"]):
+            raise ValueError("breathe needs a key for each named pose")
+    if "attack" not in motions:
+        return
     attack = motions["attack"]
     count = len(attack["keys"])
     if count < 1 or len(attack["poses"]) != count or len(attack["durations_ms"]) != count:
@@ -63,8 +71,6 @@ def check_motion_lengths(motions):
             raise ValueError("attack key glow must be between 0 and 1")
         if "glint" in key and (not isinstance(key["glint"], bool) or (key["glint"] and not key.get("glow"))):
             raise ValueError("attack key glint must be a boolean and requires glow when enabled")
-    if any(clip["fps"] <= 0 for clip in motions.values()):
-        raise ValueError("fps must be positive")
 
 
 def load_character(path: Path):
@@ -120,7 +126,8 @@ def load_character(path: Path):
     directions = view["directions"]
     if len(directions) != 8 or len(set(directions.values())) != 8:
         raise ValueError("view.directions must define eight distinct yaw angles")
-    cells = [view["neutral_cell"], config["walk"]["cell"], config["attack"]["cell"]]
+    modes = ["walk", *(mode for mode in ("breathe", "attack") if mode in config)]
+    cells = [view["neutral_cell"], *(config[mode]["cell"] for mode in modes)]
     render_cell = view["render_cell"]
     if (type(render_cell) is not int or
             any(type(cell) is not int or not 0 < cell <= render_cell
@@ -129,7 +136,9 @@ def load_character(path: Path):
     if view["camera"]["pixels_per_unit"] <= 0:
         raise ValueError("camera pixels_per_unit must be positive")
 
-    motions = {mode: read_json(folder / config[mode]["clip"]) for mode in ("walk", "attack")}
+    motions = {mode: read_json(folder / config[mode]["clip"]) for mode in modes}
+    if config["walk"].get("fps", motions["walk"]["fps"]) <= 0:
+        raise ValueError("walk.fps must be positive")
     check_motion_lengths(motions)
     return Character(config, model, part_ids, parts, palette, shade_groups,
                      source_grid, posed_grid, motions)

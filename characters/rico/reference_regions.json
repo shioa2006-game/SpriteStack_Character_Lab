@@ -1,0 +1,77 @@
+{
+  "image": {
+    "size": [1500, 1125]
+  },
+  "regions": {
+    "moss": {
+      "boxes": [
+        [838, 242, 867, 264]
+      ]
+    },
+    "hair": {
+      "boxes": [
+        [791, 280, 812, 298]
+      ]
+    },
+    "scarf": {
+      "boxes": [
+        [863, 378, 899, 398]
+      ]
+    },
+    "skin": {
+      "boxes": [
+        [712, 311, 735, 338]
+      ]
+    },
+    "leather": {
+      "boxes": [
+        [841, 550, 873, 574]
+      ]
+    },
+    "shirt": {
+      "boxes": [
+        [845, 455, 870, 485]
+      ]
+    },
+    "rope": {
+      "boxes": [
+        [790, 609, 802, 636]
+      ]
+    },
+    "wood": {
+      "boxes": [
+        [1005, 476, 1016, 510]
+      ]
+    },
+    "iron": {
+      "boxes": [
+        [751, 733, 760, 747]
+      ]
+    }
+  },
+  "exclude_boxes": [
+    [0, 0, 653, 1125],
+    [1031, 0, 1500, 1125],
+    [0, 1060, 1500, 1125]
+  ],
+  "families": {
+    "moss": ["moss"],
+    "hair": ["hair"],
+    "scarf": ["scarf"],
+    "skin": ["skin"],
+    "leather": ["leather"],
+    "shirt": ["shirt"],
+    "rope": ["rope"],
+    "wood": ["wood"],
+    "iron": ["iron"]
+  },
+  "landmarks_y": {
+    "sole": 1056,
+    "hair_top": 225,
+    "skull_top": 255,
+    "chin": 339,
+    "shoulder": 369,
+    "waist": 528,
+    "knee": 784
+  }
+}

@@ -1,0 +1,97 @@
+# 冒険者の一行
+
+ガルドの白髭と盾、リコのフードと左手の弓、セナの折れた尖り帽子と水晶杖を、同じ24°の正投影で描いた。各人物に一つの材質格子と部位格子があり、全方向・全コマがその立体を共有する。[隊列プレビュー](../../docs/party.html)
+
+![同じ石畳にガルド、リコ、セナを並べたブラウザ画面](preview.jpg)
+
+## ゲームで使う
+
+| 名称 | 立体・リグ・材質・品質条件 | 待機シート | 歩行シート | コマ送り | 1コマの前進量 |
+| --- | --- | --- | --- | --- | ---: |
+| ガルド | [gard](../../characters/gard/) | [PNG](../../docs/assets/gard/breathe.png) | [PNG](../../docs/assets/gard/walk.png) | 3 / 7 fps | 2.052 |
+| リコ | [rico](../../characters/rico/) | [PNG](../../docs/assets/rico/breathe.png) | [PNG](../../docs/assets/rico/walk.png) | 3 / 11 fps | 1.406 |
+| セナ | [sena](../../characters/sena/) | [PNG](../../docs/assets/sena/breathe.png) | [PNG](../../docs/assets/sena/walk.png) | 3 / 8 fps | 1.748 |
+
+前進量の単位はモデル座標。コマ送りは待機／歩行の順。描画密度は全員1.50 px/単位。各セルは64×64の透過RGBAで、左上から (32, 57) が床面上の同一アンカー。
+
+| ファイル | 配置と読み方 |
+| --- | --- |
+| `breathe.png` と `breathe.json` | 256×512。方向が行、時刻が列。4コマをループ。先頭が静止姿勢と画素単位で一致 |
+| `walk.png` と `walk.json` | 384×512。同じ行順で6コマをループ。`contact` は0始まりの支持区間を含む |
+| `idle.png` と `metadata.json` | 512×64。造形確認・初期表示用の静止8方向。こちらは方向が列 |
+| `breathe.gif` と `walk.gif` | 8方向を横に並べた原寸ループ。GIFの時間は各コマ境界を10 ms単位へ丸めている |
+| `preview.js` | 同梱プレビューが読む再生設定。エクスポート時に上記メタデータから生成 |
+
+方向順は **S / SW / W / NW / N / NE / E / SE**。モーションJSONの `animations[モード名]` から `rows`、`columns`、`cell`、`anchor`、`fps` を読む。描画先はワールド座標を投影した点からアンカーを引いた位置。歩くときはコマの進みとともに `suggested_forward_per_frame_model_units` だけルートを前進させる。停止は両足が着く0または3コマ目に合わせると、片足を上げたまま静止へ戻る段差を避けられる。
+
+## プレビュー
+
+各人物のカードで単独表示、「3人を並べる」で隊列へ戻る。1×がゲーム原寸。歩行中に「歩幅に合わせて床面を移動」を選ぶと先頭の人物をカメラが追い、ほかの人物も自分の歩幅とテンポで進む。床模様と支持足の関係を見たいときに使う。
+
+PowerShellでリポジトリのルートから起動し、[ローカルのプレビュー](http://127.0.0.1:8000/party.html) を開く。
+
+```powershell
+.\.venv\Scripts\python.exe -m http.server 8000 --bind 127.0.0.1 --directory docs
+```
+
+## 原画から立体にした箇所
+
+- **ガルド**　MARENの左右の手装備とFLEUR KNIGHTの板金構造を参考に、幅のある胸甲、上下に重なる大腿甲、開いた兜と前に張り出す白髭を作った。盾の紋章は翼と尾を持つ金の鳥に簡略化。盾の裏面は革と推定した。ハンマーを低く浮かせ、右後方へ流すことで、盾と重なる真横でも頭部が残る。
+- **リコ**　AZURE RONINのスカーフ追従を参考に、短い脚、大きめのフード、銅色の前髪、革の短パンを設計した。原画の弓は本人の左手。木枠・弦・握りを一体化し、右手を空けた。背面は右肩の後ろへ矢羽が出る斜めの矢筒、右腰は輪にした縄と二股の鉤とした。
+- **セナ**　CRYSTAL MAGEの杖と裾の追従を参考に、金縁の折れ帽、銀髪の房、前を開いた重ね着を作った。杖は指定どおり右手。水晶の青い面を白い反射より広く取り、斜め後ろでも金の爪と区別できるようにした。後ろ裾を少し高く仕立て、後方視点で支持足が見える長さにした。
+
+各キャラクターの `reference_regions.json` に1500×1125原画での採色矩形とランドマーク、`reference_palette.json` に取得画素数・代表色・元画像SHA-256、`palette_provenance.json` に材質と採色領域の対応を保存した。最終3階調は、銀髭と板金、黄布と生成り、氷と金縁の色面が分かれるよう調整した。人物ごとの面積比は矩形内の概算で、隣人の装備が重なる領域もある。元画像は配布物に含めていない。
+
+## 再生成
+
+[リポジトリのPython環境](../../README.md#windowsのpython環境) を用いる。以下は新しい作業先へ3体をベイクし、同梱済みのモデル・素材と照合する手順。モデルの再生成そのものは静止検証器がメモリ上でも照合する。
+
+```powershell
+$py = (Resolve-Path .\.venv\Scripts\python.exe).Path
+$run = Join-Path $PWD ('.phase1/party-' + [guid]::NewGuid())
+foreach ($id in 'gard','rico','sena') {
+    $char = "characters/$id"
+    $cfg = "$char/character.json"
+    & $py -W error::RuntimeWarning -m "characters.$id.build_model" --out "$run/$id-model"
+    & $py -m spritestack --character $cfg --modes idle --out "$run/$id-neutral"
+    & $py -m research.verify_character --character $cfg --out "$run/$id-neutral"
+    & $py -m spritestack --character $cfg --out "$run/$id-all"
+    & $py -m research.verify_walk --character $cfg --out "$run/$id-all"
+    & $py -m research.export_loops --neutral "$run/$id-neutral" --animated "$run/$id-all" --out "$run/$id-assets"
+    & $py -m research.verify_loops --character $cfg --out "$run/$id-all" --published "docs/assets/$id"
+}
+```
+
+造形を更新する際は、モデル生成後に `$run/$id-model` の `materials.npz` と `part_ids.npz` を対象の `characters/$id/` へ反映してからベイクする。確認後、`$run/$id-assets` の全ファイルを対応する `docs/assets/$id/` へコピーする。作業ベイクには各ポーズの `joints.json`、再スライスした立体、可視部位IDアトラス、装備の床面距離と可視画素測定も出力される。共通モーションは [呼吸](../../motions/breathe.json) と [歩行](../../motions/walk.json)。
+
+原画から代表色を再取得する場合は、ローカルにある同じ画像を指定する。モデル・スプライトの再生成には画像ファイルは不要。
+
+```powershell
+$id = 'gard'
+& $py -m characters.maren.extract_reference --image $reference --regions "characters/$id/reference_regions.json" --out "$run/$id-palette.json"
+```
+
+## 技術検証
+
+新しい作業先からの再ベイクで静止・待機・歩行のデコード後RGBAと公開メタデータが一致した。GIFは全コマを元シートと照合し、ループの時間も確認した。静止検証のPASSはガルド32、リコ30、セナ29。歩行は各16。3体ともWARNING・FAIL・SKIPは0だった。
+
+| 実測値 | ガルド | リコ | セナ |
+| --- | --- | --- | --- |
+| 歩行48コマでの装備の最小可視画素 | ハンマー11、盾62 | 弓23、矢羽2 | 杖全体13、水晶8 |
+| 待機32コマでの最小可視画素 | ハンマー26、盾71 | 弓34、矢羽1 | 杖全体9、水晶7 |
+| 歩行中の装備の最低高さ（モデル単位） | ハンマー2.0、盾4.5 | 弓2.5 | 杖2.5 |
+| 待機／歩行の最小透明余白 | 3 / 1 px | 4 / 3 px | 2 / 2 px |
+
+全員の支持足マーカーは規定前進量を相殺して静止し、ブーツは支持区間だけ床面に接する。描画した靴底と床面投影の差は全方向で最大1 px。待機では両ブーツの立体が全コマで静止姿勢に一致する。手と装備は全コマで接触し、歩行時の目の材質は各方向で可視画素数を維持する。
+
+共通処理には任意の呼吸クリップ、攻撃クリップの省略、体格別の歩行fpsを追加した。正式3体は静止・歩行・攻撃を再生成し、公開RGBAとJSONが一致。LARKとBRAMも保存基準と一致した。既存サンプルの警告はMARENとCRYSTAL MAGEの静止部位断片、およびCRYSTAL MAGEのSW・SE歩行での目の画素数変動で、既知の結果を再現した。
+
+## 見た目の確認と制約
+
+ブラウザの同じ石畳に3人を並べ、1×・通常速度で全8方向を再生した。各方向で3人それぞれの待機4コマ、歩行6コマが一巡することを表示コマからも確認した。単独表示、停止と再開、待機と歩行の往復、表示倍率と床面移動を操作した。
+
+- **ガルド**　Sでは白髭、銀の肩甲、左右の装備が分かれる。Wでは盾が前、ハンマーが奥に回る。初版の歩行4コマ目ではハンマーが完全に隠れたため、頭部の位置を右後方へ移した。最終版はWでも輪郭が残り、Nでは深紅の背面と交互に出る靴底が見える。
+- **リコ**　S・SEでは黄布と短いズボン、NW・Nではフードから外に出た矢羽と斜めの矢筒が目印になる。左手の弓は横向きに細くなる。鉤は右腰に固定されており、奥側になるW・NWでは身体に隠れる。S・NE・E・SEの待機と歩行では金属の鉤を継続して確認できる。
+- **セナ**　S・SEでは淡色の前身頃が開き、N・NEでは濃い背面に銀髪が重なる。W・NWの待機で上端に触れた杖は、画素密度と杖冠の高さを調整した。歩行の片脚支持でも裾から靴が見え、水晶の位置は握りと一緒に移る。
+
+原寸では盾の羽根、ロープの撚り、ローブの刺繍を色のまとまりに簡略化した。6コマの歩行は一定速度の平地ループ。方向転換の補間、段差・坂道への接地、実ゲーム側の当たり判定は検証範囲外。

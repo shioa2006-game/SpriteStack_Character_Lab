@@ -164,12 +164,19 @@ def render_motion(character, renderer, mode, poses, neutral):
     fine = fine_parts(character, mode)
 
     for index, (volume, parts) in enumerate(poses):
-        surface = normals(volume, character.posed_grid)
+        grid = character.posed_grid
+        rays = view["posed_rays"]
+        if mode == "breathe":
+            key = character.motions[mode]["keys"][index]
+            if key["lift"] == key["lean"] == 0:
+                # Match the neutral renderer exactly, including which side of a voxel edge a ray hits.
+                volume, parts, grid = character.model, character.part_ids, character.source_grid
+                rays = view["neutral_rays"]
+        surface = normals(volume, grid)
         clip_key = character.motions[mode]["keys"][index] if mode == "attack" else {}
         guard = mode == "attack" and not clip_key
         for row, (direction, yaw) in enumerate(directions.items()):
-            frame, ids, part_ids = renderer.render(volume, parts, character.posed_grid,
-                                                    yaw, render_cell, view["posed_rays"], surface, fine)
+            frame, ids, part_ids = renderer.render(volume, parts, grid, yaw, render_cell, rays, surface, fine)
             if glow := clip_key.get("glow", 0):
                 # Use visible emitter pixels so an occluded source produces no light.
                 materials = character.config[mode]["glow_materials"]
@@ -190,7 +197,7 @@ def render_motion(character, renderer, mode, poses, neutral):
                     part_id = character.parts[item["part"]]
                     materials = item["materials"]
                     solo = renderer.render(np.where(parts == part_id, volume, 0), parts,
-                                           character.posed_grid, yaw, render_cell, view["posed_rays"],
+                                           grid, yaw, render_cell, rays,
                                            fine=fine)
                     seen = np.isin(ids, materials) & (part_ids == part_id)
                     isolated = np.isin(solo, materials)
@@ -208,17 +215,18 @@ def render_motion(character, renderer, mode, poses, neutral):
     return sheet, part_atlas, measurements
 
 
-def bake(character, out, *, pose_volume=reslice, motions=("walk", "attack")):
-    """Bake idle and the given motions (walk, attack or both, in that order)."""
-    if not motions or set(motions) - {"walk", "attack"} or len(set(motions)) != len(motions):
-        raise ValueError("motions must be walk, attack or both")
+def bake(character, out, *, pose_volume=reslice, motions=None):
+    """Bake neutral and the requested (by default all configured) motion sheets."""
+    if motions is None:
+        motions = tuple(character.motions)
+    if not motions or set(motions) - character.motions.keys() or len(set(motions)) != len(motions):
+        raise ValueError("requested motions must be distinct and present in the manifest")
     view = character.config["view"]
     directions = list(view["directions"])
     renderer = Renderer(character)
     rig = Biped(character)
     clips = {mode: clip for mode, clip in character.motions.items() if mode in motions}
-    lengths = {"walk": lambda clip: len(clip["poses"]), "attack": lambda clip: len(clip["keys"])}
-    counts = {"rest": 1, **{mode: lengths[mode](clip) for mode, clip in clips.items()}}
+    counts = {"rest": 1, **{mode: len(clip["poses"]) for mode, clip in clips.items()}}
     pose_groups = {}
     joints = {}
     volumes = {}
@@ -280,13 +288,17 @@ def bake(character, out, *, pose_volume=reslice, motions=("walk", "attack")):
             "columns": counts[mode],
             "cell": [cell, cell],
             "anchor": renderer.anchor(cell),
-            "fps": clip["fps"],
-            "loop": mode == "walk",
+            "fps": rig.walk_clip["fps"] if mode == "walk" else clip["fps"],
+            "loop": mode != "attack",
             "rgba_sha256": hashlib.sha256(sheet.tobytes()).hexdigest(),
         }
         if mode == "walk":
             animation["suggested_forward_per_frame_model_units"] = rig.walk_clip["forward_each_frame"]
             animation.update((key, clip[key]) for key in ("poses", "contact"))
+            if note := character.config["walk"].get("stance_note"):
+                animation["contact"] = {**clip["contact"], "stance_note": note}
+        elif mode == "breathe":
+            animation["poses"] = clip["poses"]
         else:
             animation["durations_ms"] = clip["durations_ms"]
             animation["phase_names"] = clip["poses"]

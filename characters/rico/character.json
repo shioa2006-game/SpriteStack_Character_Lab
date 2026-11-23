@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "model": {
+    "materials": "materials.npz",
+    "part_ids": "part_ids.npz",
+    "origin_xyz": [-20, -10, 0],
+    "shape_zyx": [80, 48, 80],
+    "voxel_size_xyz": [0.5, 0.5, 0.5],
+    "palette": [
+      {
+        "name": "moss",
+        "group": "cloak",
+        "shadow": "434c39",
+        "base": "68774a",
+        "light": "95975a"
+      },
+      {
+        "name": "forest",
+        "group": "cloak",
+        "shadow": "303d34",
+        "base": "4b5c40",
+        "light": "73824f"
+      },
+      {
+        "name": "copper",
+        "group": "hair",
+        "shadow": "9b4b2e",
+        "base": "d37637",
+        "light": "f4a356"
+      },
+      {
+        "name": "saffron",
+        "group": "scarf",
+        "shadow": "bf7b33",
+        "base": "e8a338",
+        "light": "ffcd56"
+      },
+      {
+        "name": "linen",
+        "group": "linen",
+        "shadow": "ab8e78",
+        "base": "d6bda1",
+        "light": "f3dec0"
+      },
+      {
+        "name": "skin",
+        "group": "skin",
+        "shadow": "be8063",
+        "base": "e9ad85",
+        "light": "ffce9c"
+      },
+      {
+        "name": "eyes",
+        "group": "face",
+        "shadow": "392b32",
+        "base": "573831",
+        "light": "73452e"
+      },
+      {
+        "name": "shorts",
+        "group": "leather",
+        "shadow": "4b3734",
+        "base": "6c503e",
+        "light": "917157"
+      },
+      {
+        "name": "leather",
+        "group": "leather",
+        "shadow": "543b33",
+        "base": "80543b",
+        "light": "a87a51"
+      },
+      {
+        "name": "suede",
+        "group": "leather",
+        "shadow": "735440",
+        "base": "a8835f",
+        "light": "c9a17b"
+      },
+      {
+        "name": "brass",
+        "group": "brass",
+        "shadow": "956c46",
+        "base": "c6985c",
+        "light": "edcf8c"
+      },
+      {
+        "name": "rope",
+        "group": "rope",
+        "shadow": "a17950",
+        "base": "d4ab70",
+        "light": "f0d09a"
+      },
+      {
+        "name": "wood",
+        "group": "bow",
+        "shadow": "805035",
+        "base": "b17546",
+        "light": "dcaa6c"
+      },
+      {
+        "name": "string",
+        "group": "bowstring",
+        "shadow": "978372",
+        "base": "c1af8c",
+        "light": "dfd0a8"
+      },
+      {
+        "name": "iron",
+        "group": "iron",
+        "shadow": "58606b",
+        "base": "97a5aa",
+        "light": "d5d8cb"
+      },
+      {
+        "name": "fletching",
+        "group": "arrows",
+        "shadow": "a38063",
+        "base": "dbc4a4",
+        "light": "f4e5c7"
+      }
+    ]
+  },
+  "rig": {
+    "parts": ["head", "chest", "pelvis", "thigh_R", "shin_R", "boot_R", "upper_R", "fore_R", "hand_R", "thigh_L", "shin_L", "boot_L", "upper_L", "fore_L", "hand_L", "bow"],
+    "rest": {
+      "pelvis": [0, 0, 10.8],
+      "chest": [0, 0, 14],
+      "neck": [0, 0.1, 17.8],
+      "head": [0, 0.3, 21.1],
+      "shoulder_R": [-3.02, -0.18, 16.8],
+      "elbow_R": [-4.0, -0.1, 13.85],
+      "hand_R": [-4.78, 1.65, 11.35],
+      "hip_R": [-1.55, 0, 10.5],
+      "knee_R": [-1.79, 1.04, 6.45],
+      "ankle_R": [-1.91, 0.32, 1.9],
+      "toe_R": [-1.91, 2.07, 0],
+      "shoulder_L": [3.02, -0.18, 16.8],
+      "elbow_L": [4.0, -0.1, 13.85],
+      "hand_L": [5.28, 3.65, 11.65],
+      "hip_L": [1.55, 0, 10.5],
+      "knee_L": [1.79, 1.04, 6.45],
+      "ankle_L": [1.91, -0.32, 1.9],
+      "toe_L": [1.91, 1.43, 0],
+      "bow_tip": [9.03, 1.45, 20.25]
+    },
+    "attachments": {
+      "bow": {
+        "hand": "hand_L",
+        "marker": "bow_tip"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.5,
+      "base_pivot": [32, 57]
+    },
+    "neutral_cell": 64,
+    "render_cell": 64,
+    "neutral_rays": [46, -32, -0.18],
+    "posed_rays": [46, -32, -0.18],
+    "outline_rgb": [37, 29, 41]
+  },
+  "posed_volume": {
+    "origin_xyz": [-24, -16, -3],
+    "limit_xyz": [24, 18, 43],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../motions/walk.json",
+    "stance_note": "Advance the root by suggested_forward_per_frame_model_units each frame.",
+    "cell": 64,
+    "fps": 11,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 2.109,
+      "knee_pole": [1.12, 8, -0.15],
+      "arm_swing_scale": {
+        "R": -1.14,
+        "L": 0.54
+      },
+      "hand_outward": 0.12,
+      "hand_lift_scale": 0.18,
+      "hand_lift": 0.21,
+      "wrist_pitch_scale": {
+        "R": 1.3,
+        "L": 1.3
+      },
+      "wrist_yaw_scale": 0.16,
+      "elbow_pole": [4, -2.7, -4.5],
+      "stride_scale": 0.74,
+      "swing_lift_scale": 0.83,
+      "root_bob_scale": 2.9,
+      "root_level_offset": -0.18,
+      "root_sway_scale": 0.7,
+      "twist_scale": 0.7,
+      "torso_lean": 1.5
+    },
+    "head": {
+      "follow": [1, 1, 1],
+      "snap": 1.0
+    },
+    "secondary": [
+      {
+        "name": "cloak hem",
+        "kind": "pendulum",
+        "part": "chest",
+        "materials": ["moss", "forest"],
+        "pivot": [0, -2, 17.5],
+        "tip": [0, -4, 7.3],
+        "lag_frames": 1,
+        "follow": [1.2, 0.42, 1.3],
+        "max_deg": 9,
+        "driver": "chest"
+      },
+      {
+        "name": "scarf end",
+        "kind": "pendulum",
+        "part": "chest",
+        "materials": ["saffron"],
+        "pivot": [0, 2, 17.5],
+        "tip": [3.15, 3.55, 13.7],
+        "lag_frames": 1,
+        "follow": [1.55, 0.5, 1.7],
+        "max_deg": 9,
+        "driver": "chest"
+      }
+    ]
+  },
+  "breathe": {
+    "clip": "../../motions/breathe.json",
+    "cell": 64,
+    "lift_scale": 0.9,
+    "lean_scale": 1.75
+  },
+  "measurements": {
+    "lowest_z": {
+      "bow_floor": [13, 11, 14]
+    },
+    "visibility": {
+      "bow": {
+        "part": "bow",
+        "materials": [13, 11, 14]
+      },
+      "hook": {
+        "part": "pelvis",
+        "materials": [15]
+      },
+      "arrows": {
+        "part": "chest",
+        "materials": [16]
+      }
+    }
+  }
+}

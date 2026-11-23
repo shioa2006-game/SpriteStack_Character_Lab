@@ -1,0 +1,70 @@
+{
+  "image": {
+    "size": [1500, 1125]
+  },
+  "regions": {
+    "steel": {
+      "boxes": [
+        [365, 239, 399, 275]
+      ]
+    },
+    "mail": {
+      "boxes": [
+        [209, 362, 240, 389]
+      ]
+    },
+    "skin": {
+      "boxes": [
+        [337, 79, 359, 96]
+      ]
+    },
+    "hair": {
+      "boxes": [
+        [342, 120, 369, 139]
+      ]
+    },
+    "cape": {
+      "boxes": [
+        [69, 572, 105, 669]
+      ]
+    },
+    "gold": {
+      "boxes": [
+        [556, 362, 578, 388]
+      ]
+    },
+    "shield": {
+      "boxes": [
+        [535, 292, 566, 325]
+      ]
+    },
+    "leather": {
+      "boxes": [
+        [280, 365, 313, 386]
+      ]
+    }
+  },
+  "exclude_boxes": [
+    [649, 0, 1500, 1125],
+    [0, 1060, 1500, 1125]
+  ],
+  "families": {
+    "steel": ["steel"],
+    "mail": ["mail"],
+    "skin": ["skin"],
+    "hair": ["hair"],
+    "cape": ["cape"],
+    "gold": ["gold"],
+    "shield": ["shield"],
+    "leather": ["leather"]
+  },
+  "landmarks_y": {
+    "sole": 1054,
+    "hair_top": 20,
+    "skull_top": 49,
+    "chin": 141,
+    "shoulder": 181,
+    "waist": 397,
+    "knee": 722
+  }
+}

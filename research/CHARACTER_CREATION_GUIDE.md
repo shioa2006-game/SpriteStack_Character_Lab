@@ -43,7 +43,7 @@ Get-FileHash -LiteralPath $reference -Algorithm SHA256
 
 ## 3. モデルを生成し、リグに装着する
 
-雛形の `character.json`、`build_model.py`、`quality.json` と専用攻撃クリップを新キャラクター用に編集する。旧来の個別 `bake_idle.py` は不要。モデルの相対パス、生成モジュール名、公開先、品質条件に雛形の名前を残さない。静止から始める場合も `walk.clip` に `../../motions/walk.json`、`attack.clip` に読み込める攻撃クリップを指定する。キャラクターの状態説明は実際に完成した工程に合わせる。
+雛形の `character.json`、`build_model.py`、`quality.json` を新キャラクター用に編集する。旧来の個別 `bake_idle.py` は不要。モデルの相対パス、生成モジュール名、公開先、品質条件に雛形の名前を残さない。`walk.clip` に `../../motions/walk.json` を指定し、呼吸待機を作る場合は `breathe`、専用攻撃を作る場合は `attack` を設定する。[待機4コマ・歩行6コマの制作例](adventurers/README.md)
 
 - `build(config)` で楕円体・カプセル・箱・殻などを組み、材質と所属部位を一緒に塗る。顔・髪は頭、肩の布は胸、腰の裾は骨盤へ割り当てる。後に塗る形状が前の所属を上書きするので、握りは手が柄を包む順序にする。[剣と盾の生成例](../characters/maren/build_model.py)
 - 静止の格子はビルダーの `SHAPE`（Z/Y/X）、`model.origin_xyz`、`voxel_size_xyz` で決まる。手・裾・装備の全端点を囲むように取る。動かした剣先や布の端が越える場合は、別に `posed_volume` の境界を見直す。
