@@ -1,5 +1,7 @@
 # MAREN・AZURE RONIN 歩行の剣のしなり修正
 
+本稿の対象は歩行の輪郭改善。後に同じ描画設定を剣士2体の攻撃にも適用した。[MARENの攻撃](MAREN_DYNAMIC_SLASH.md) · [RONINの攻撃](AZURE_RONIN_QUICK_SLASH.md)
+
 2026-11-22。MARENとAZURE RONINの歩行で、剣がしなったり、折れたり、途切れて見える問題を直した。武器を独立した資産に分けることはせず、既存のモデル、共通リグ、ベイクの仕組みはそのまま使った。歩行の描画だけに、剣の画素の決め方の設定 `walk.fine` を加えた。原因の分析は[武器分離の設計調査](WEAPON_SEPARATION_DESIGN.md)による。
 
 ## 結論

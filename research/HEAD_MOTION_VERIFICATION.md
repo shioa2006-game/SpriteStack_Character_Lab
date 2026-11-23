@@ -58,7 +58,7 @@
 
 ## 3. 標準仕様 `walk.head`
 
-`character.json` の `walk` に `head` を書くと有効になる。キーと既定値は [README](../README.md#歩行時の頭部の連動walkhead) にまとめた。計算は次のとおり。
+`character.json` の `walk` に `head` を書くと有効になる。現行のキーと既定値は [技術設計](../docs/TECHNICAL_DESIGN.md#歩行と頭部連動) にまとめた。計算は次のとおり。
 
 1. 頭の位置は首の関節の移動に `follow`（既定 `[1, 1, 1]`）を掛けたもの。さらに、上下動の深さ（最も低いコマで1）を `lag_frames`（既定0.25）コマ遅らせた値で `bob` だけ下げ、`surge` だけ前へ出す。左右動の割合で `sway` だけ横へずらす。
 2. 従来の頭の静止位置（左右0、前後 `head_forward_offset`、上下 `root_level`）からの差を、`snap`（既定1.0単位）の倍数に丸める。

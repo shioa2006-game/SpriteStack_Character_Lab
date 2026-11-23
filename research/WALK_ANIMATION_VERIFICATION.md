@@ -37,7 +37,7 @@ MAREN、CRYSTAL MAGE、AZURE RONINの歩行を、8方向×6コマ（48×48、9 f
 
 | 共通処理（全キャラクター） | キャラクター固有の値 |
 | --- | --- |
-| 歩行クリップ `experiments/lark_stage3/walk_motion.json`（変更なし）。6コマの接地区間、遊脚、骨盤の上下・左右・ねじれ、腕の振り | `walk.tuning` の倍率：`stride_scale`、`swing_lift_scale`、`root_bob_scale`、`root_level_offset`。踏み出し位置 `stance_start_y` |
+| [正式サンプルの共通歩行](../motions/walk.json)（実験当時は `experiments/lark_stage3/walk_motion.json` の同一内容を参照）。6コマの接地区間、遊脚、骨盤の上下・左右・ねじれ、腕の振り | `walk.tuning` の倍率：`stride_scale`、`swing_lift_scale`、`root_bob_scale`、`root_level_offset`。踏み出し位置 `stance_start_y` |
 | `rig.walk_clip`：クリップに倍率を掛けた、そのキャラクターの歩行。メタデータの推奨移動量もこの値 | 腕：`arm_swing_scale` の符号と大きさ。左右別の `hand_lift`。一定の手首角度 `wrist_pitch` |
 | `spritestack/secondary.py`：`skirt` と `pendulum` の2種類の従属運動 | `walk.secondary`：領域の材質、範囲、回転の支点と先端、追従の強さ、遅れ、上限角 |
 | `--modes walk`：静止と歩行だけを焼く | — |

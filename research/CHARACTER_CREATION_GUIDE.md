@@ -1,456 +1,168 @@
-# 参考画像からのキャラクター制作ガイド
+# 参考画像1枚から静止・歩行・攻撃を作る
 
-参考画像を1枚渡されたClaude Codeが、画像分析から立体モデル、8方向PNG、品質検証、公開まで進めるための手順。実験01（MAREN）と実験02（CRYSTAL MAGE）の工程と問題を元にしている。2実験の比較と、共通化の提案は [IMAGE_TO_CHARACTER_COMPARISON.md](IMAGE_TO_CHARACTER_COMPARISON.md) にある。
+完成品は、同じ二足歩行モデルから焼いた8方向の透過PNG、再生用JSON、攻撃GIF、原寸で確認できるギャラリー。**制作AIが決めるのは、画像を何の形・配色・関節・ポーズに置き換えるか**。決めた内容はモデル生成コードと設定に残す。ベイクと検証は既存のCLIで繰り返せる。作業前に [開発規約](../AGENTS.md) を確認する。寸法、座標軸、出力配置を調べる場合は [技術設計](../docs/TECHNICAL_DESIGN.md) を使う。
 
-現在の共通エンジン（`spritestack/`）を変えずに作る手順を示す。共通エンジン、LARK・BRAM・既存キャラクターの成果物は変更しない。静止8方向のベイクは共通CLIの `--modes idle`、品質検証は `research.verify_character` を使う（[共通化の検証レポート](SHARED_IDLE_BAKE_AND_VALIDATION.md)）。キャラクターごとに書くのは、モデル生成コード、設定、品質設定だけ。モデル生成コードの複写元は、マント・杖など装備と衣装が多い場合はCRYSTAL MAGE、剣と盾ならMAREN。
+## 1. 画像を読み、何を残すか決める
 
-### 従来の手順との違い
+元画像を原寸と拡大で見る。人物を識別する特徴を三つ、優先順に書く。例えばMARENなら長い青髪・長剣・丸盾、MAGEなら長いローブ・水晶杖・本、RONINならポニーテール・スカーフ・反りのある刀。雛形は配色の近さよりも、**動かす部位と装備構成**で選ぶ。[MAREN](../characters/maren/) · [CRYSTAL MAGE](../characters/crystal_mage/) · [AZURE RONIN](../characters/azure_ronin/)
 
-| 段階 | 実験01・02の手順 | 現在の手順 |
-| --- | --- | --- |
-| 静止のベイク | `bake_idle.py` を複写して書き換える | `python -m spritestack --character ... --modes idle --out ...`。比較用セルは `character.json` の `comparison_view` |
-| 品質検証 | `research/verify_<name>.py` を複写し、定数と検査を書き換える | `characters/<name>/quality.json` を書き、`python -m research.verify_character` |
-| 反復のプレビュー | キャラクターの `bake_idle` を読み込む | `spritestack.bake.bake_idle` を読み込む |
-| 回帰テスト | キャラクターごとの検証コマンド | MAREN・CRYSTAL MAGEも同じ汎用検証 |
-| 変わらない部分 | 画像分析、採色、配色、`build_model.py`、目視の評価、比較図、レポート、ギャラリー | 同じ |
+| 記録するもの | 次工程での用途 |
+| --- | --- |
+| 足底、足首、膝、腰、肩、顎、頭頂。肩・裾・装備の幅 | 身長を1とした高さと幅を求め、関節と外形を別々に決める |
+| 髪の流れ、服の重なり、装備の付け根・握り・先端 | 所属部位、左右、揺れる領域、攻撃時に追う点を決める |
+| 見えない背面・装備の裏、絵の遠近やなびき | 観察と推定を分けて記録する。衣装の構造が側面・背面へ連続する形を選ぶ |
+| 原寸で消えそうな小物、隣り合う同系色 | 色を分ける、配置をずらす、装飾を省略する候補を決める |
 
-旧来の `characters/maren/bake_idle.py`、`characters/crystal_mage/bake_idle.py`、`research/verify_maren.py`、`research/verify_crystal_mage.py` は互換のために残っている。新しいキャラクターでは複写しない。
+以下はルートで実行するPowerShell。先に [Python環境](../README.md#windowsのpython環境) を用意する。`new_character` は新規のPython識別子に、画像パスは渡されたファイルに置き換える。反復ごとに新しい `$run` を取る。
 
-## 0. 全体の流れと成果物
-
-| 段階 | 作業 | 完了の条件 |
-| --- | --- | --- |
-| 1 | 準備：文書を読み、参考画像をローカルに置く | 画像の寸法とSHA-256を記録した |
-| 2 | 画像分析：特徴、比率、配色、装備、難所を表にする | 優先順位と、推測が必要な部分の一覧がある |
-| 3 | 採色範囲と目印を座標で記録し、色と比率を抽出 | 抽出JSONができ、範囲の確認図を目視した |
-| 4 | 設計：頭身、高さの予算、部位、描画順、配色 | 48 pxに収まる寸法を計算した |
-| 5 | `character.json` と `build_model.py` を書く | 全材質・全部位が使われ、警告なしで生成できる |
-| 6 | 静止8方向を焼き、見て直す | 6. の確認表を満たす |
-| 7 | 品質設定を書き、汎用検証と回帰テスト | FAILが0。WARNINGを確認して記録した |
-| 8 | 比較図、レポート、ギャラリー、文書 | 公開素材と検証が一致 |
-| 9 | コミット、push、GitHub Pagesの確認 | 公開ページで8方向を確認した |
-
-`<name>` は小文字とアンダースコアのフォルダ名（例：`crystal_mage`）。モジュール名に使うため、Pythonの識別子にする。
-
-~~~text
-characters/<name>/
-  reference_regions.json   採色範囲・目印の座標（画像は置かない）
-  reference_palette.json   抽出した色と比率
-  extract_reference.py     抽出のコマンド（MARENの extract を読み込む）
-  palette_provenance.json  材質ごとの色の出典と理由
-  character.json           材質、部位、関節、装備、カメラ、計測、状態
-  build_model.py           立体モデルの生成
-  materials.npz            材質ID（Z/Y/X、uint8）
-  part_ids.npz             部位ID（同じ形状）
-  quality.json             汎用検証の条件（装備、可視画素、公開先など）
-docs/assets/<name>/        公開する idle.png と metadata.json（比較用があれば idle-64.*）
-research/image_to_character_NN/compare.py と results/   比較図と計測
-research/IMAGE_TO_CHARACTER_NN.md                        実験レポート
-~~~
-
-## 1. 準備
-
-1. [AGENTS.md](../AGENTS.md)、[README.md](../README.md)、[実験01](IMAGE_TO_CHARACTER_01.md)・[実験02](IMAGE_TO_CHARACTER_02.md)のレポートを読む。特に「調整の経緯」と「既存エンジンの制約」。
-2. Python環境を確認する（README「Windows の Python 環境」）。以下では `$python` を使う。
-3. 参考画像を、無視されるフォルダに複写する。画像は追跡も公開もしない。
-
-~~~powershell
+```powershell
+git status -sb
 $python = (Resolve-Path .\.venv\Scripts\python.exe).Path
 $name = 'new_character'
-$work = Join-Path $PWD ".phase1/$name"
-New-Item -ItemType Directory -Force $work | Out-Null
-$source = 'C:\path\to\image.png'  # 渡された画像のパスに置き換える
-Copy-Item $source (Join-Path $work 'reference.png')
-(Get-FileHash (Join-Path $work 'reference.png') -Algorithm SHA256).Hash
-~~~
+$char = "characters/$name"
+$config = "$char/character.json"
+$reference = 'C:\path\to\reference.png'
+$run = Join-Path $PWD ('.phase1/' + $name + '-' + [guid]::NewGuid())
+New-Item -ItemType Directory -Path $run | Out-Null
+Get-FileHash -LiteralPath $reference -Algorithm SHA256
+```
 
-4. `git status` が空であることを確認する。作業中は既存のファイルを変更しない。ギャラリーと文書は8. で変更する。
+**次へ進む条件**　目印・主要な色・本人基準の左右が分かり、原寸で残す特徴と背面をどう補うかが説明できる。権利が不明な元画像やそれを含む確認図は公開フォルダへ置かない。
 
-## 2. 画像分析
+## 2. 採色し、体形・衣装・装備を設計する
 
-画像を必ず実際に見る。全体を見た後、頭、上半身、下半身、装備を拡大して見る。座標を読むため、20 pxごとの格子を重ねた2倍の拡大図を `.phase1/<name>/` に作る。作り方は実験02と同じで、Pillowで線と座標を描く一時的なコードでよい。
+選んだ雛形を基に新しい `$char` を用意し、`reference_regions.json` に原画像の寸法、材質別の複数の矩形、除外領域、色の系統、ランドマークを記入する。矩形の右端・下端は含まない。原画像に矩形を重ねて見て、髪に背景、肌に服の影が混ざっていないか確かめる。採色は [MARENの抽出関数](../characters/maren/extract_reference.py) を再利用し、必要な追加計測だけ自分の抽出モジュールに書く。例は [RONINの刀の反りと幅の計測](../characters/azure_ronin/extract_reference.py)。
 
-次の表を作り、レポートの「参考画像から抽出した特徴」に使う。
+```powershell
+& $python -m "characters.$name.extract_reference" --image $reference --regions "$char/reference_regions.json" --out "$char/reference_palette.json"
+```
 
-| 項目 | 記録する内容 |
+抽出処理は指定領域の画素を明度で並べ、帯域ごとに代表色を求める。既存の背景除去は白に近い背景を想定するので、複雑な背景や透過画像では抽出に使った画素を点検する。採用色は `model.palette` に、出典と理由は `palette_provenance.json` に `extracted`・`adjusted`・`derived` として残す。MAGEの髪とマントは似た明度だったため、髪を暗くし、間に明るいフードを置いた。RONINのポニーテールは髪と同色の別材質・陰影グループにすると、背面で境界が立ち、可視画素も測れる。[配色と衣装](IMAGE_TO_CHARACTER_02.md) · [髪と刀](IMAGE_TO_CHARACTER_03.md)
+
+**次へ進む条件**　抽出結果が画像の印象と一致し、大小の色面、前後の層、主要装備の握りと先端を設計できた。参考画像から変えた頭身、左右、色には理由がある。
+
+## 3. モデルを生成し、リグに装着する
+
+雛形の `character.json`、`build_model.py`、`quality.json` と専用攻撃クリップを新キャラクター用に編集する。旧来の個別 `bake_idle.py` は不要。モデルの相対パス、生成モジュール名、公開先、品質条件に雛形の名前を残さない。静止から始める場合も `walk.clip` に `../../motions/walk.json`、`attack.clip` に読み込める攻撃クリップを指定する。キャラクターの状態説明は実際に完成した工程に合わせる。
+
+- `build(config)` で楕円体・カプセル・箱・殻などを組み、材質と所属部位を一緒に塗る。顔・髪は頭、肩の布は胸、腰の裾は骨盤へ割り当てる。後に塗る形状が前の所属を上書きするので、握りは手が柄を包む順序にする。[剣と盾の生成例](../characters/maren/build_model.py)
+- 静止の格子はビルダーの `SHAPE`（Z/Y/X）、`model.origin_xyz`、`voxel_size_xyz` で決まる。手・裾・装備の全端点を囲むように取る。動かした剣先や布の端が越える場合は、別に `posed_volume` の境界を見直す。
+- `rig.rest` の肩・肘・手、股・膝・足首を実際の形に置き、`rig.attachments` と装備マーカーを対応づける。既存の検証が扱う標準は右主手・任意の左副手。空の手側にダミー装備を作る必要はない。
+- 立体の表面に裏地が点々と現れるなら殻の外層と内側の突出を点検する。細い杖は軸の連続性を、刀は刃を横から見た厚みを確かめる。実験02の杖半径0.6、実験03の刀身厚さ0.9モデル単位は、当時の格子と投影で途切れを防いだ例。[実験間の比較](IMAGE_TO_CHARACTER_COMPARISON.md)
+- `quality.json` の `model_builder`、`provenance`、`motions.walk.clip`、`items`、`visibility`、`presence` と必要な `continuous` を自分のモデルに合わせる。装備名・材質ID・目印は `character.json` の `measurements` とも突き合わせる。[品質設定と検出例](SHARED_IDLE_BAKE_AND_VALIDATION.md)
+
+```powershell
+& $python -W error::RuntimeWarning "$char/build_model.py" --out "$run/model"
+Copy-Item "$run/model/materials.npz","$run/model/part_ids.npz" -Destination $char
+```
+
+このコピー先は制作中の新キャラクター。既存サンプルで手順を試す場合は作業出力に留める。**次へ進む条件**　設定が読む2つのNPZがそろい、空と占有の位置、部位ID、関節と握りが [モデルの契約](../docs/TECHNICAL_DESIGN.md#水平断面と部位の所属) に合う。
+
+## 4. 静止8方向で造形を確定する
+
+```powershell
+& $python -m spritestack --character $config --modes idle --out "$run/idle"
+& $python -m research.verify_character --character $config --out "$run/idle" --no-published --verbose
+```
+
+`--no-published` は初回制作中の比較を省く。比較セルを使うなら `comparison_view` と品質設定の `cells` を揃える。MAGE・RONINは標準48と比較64を同じ立体から焼く。S・SW・SEでは顔と装備の左右、W・Eでは横顔と握り、NW・N・NEでは髪・襟・背面装備の重なりを見る。装備が方向によって見えないときは単独描画と全身描画を比較する。MAGEはWで杖頭の上に1 pxしか残らず、静止でさらに杖を高くすると歩行の余裕も失う。[静止実験01](IMAGE_TO_CHARACTER_01.md) · [静止実験02](IMAGE_TO_CHARACTER_02.md)
+
+**次へ進む条件**　モデル再生成、接続、余白、RGBA、方向順が合格し、初めに選んだ特徴が1×で読める。閾値は実測と必要な見え方から設定する。背面で自然に隠れる本を全方向可視の条件にしない。
+
+## 5. 共通歩行を体格に合わせる
+
+```powershell
+& $python -m spritestack --character $config --modes walk --out "$run/walk"
+& $python -m research.verify_walk --character $config --out "$run/walk" --no-published --verbose
+```
+
+最初の `walk.png` を比較用に残す。脚長に合わせて `walk.tuning.stride_scale` と支持足の開始位置 `stance_start_y` を一緒に調整する。届かない足首をIKに渡すとベイクが止まる。接地中の足が滑る、腕と同じ側の脚が同時に前へ出る、盾が振れすぎる、といった症状は歩幅・腕振りの符号・左右別の振幅を順に見る。MAGEでは腕を上げると杖頭がセルを越えたため、手の高さを抑え、手首で杖を前へ傾けた。[3体の歩幅・位相・装備の比較](WALK_ANIMATION_VERIFICATION.md)
+
+**次へ進む条件**　8方向×6コマで接地、足元アンカー、装備の接続・床との位置に破綻がなく、6→1コマ目も自然につながる。歩行の `quality.json.walk` には測る装備・材質・床の下限等を指定する。
+
+## 6. 頭、髪、布を歩きに連動させる
+
+| 原寸で見える症状 | 調整箇所と手本 |
 | --- | --- |
-| 人物 | 性別・年齢の印象、体形、表情、画風（写実寄りか） |
-| 比率 | 足底を0、頭頂（髪の先）を1とした、頭蓋の頂・目・顎・肩・腰ベルト・裾・膝・足首の高さ。頭身 |
-| 幅 | 肩幅、裾の半幅、外套や装備の左右の広がり（身長に対する比） |
-| 髪 | 色、長さ、前髪、毛先の向き、左右差 |
-| 衣装 | 層の順（内→外）、色、裾の高さ、開き、留め具、ベルト |
-| 装備 | どちらの手か（本人基準）、形、長さ（身長比）、傾き、握り位置 |
-| 配色の衝突 | 明度が近い大きな塊の組（例：髪と外套、肌と明るい布）。採色後に数値で確かめる |
-| 見えない部分 | 背面、側面、足底、装備の裏、髪の後ろ |
-| 難所 | 風になびく布、細い装飾、手に持つ小物、背の高い装備 |
+| 脚だけ歩き、頭が全コマで止まる／目がちらつく | `walk.head` で首の移動に追従させ、胴の上下動と `snap` を合わせる。まず回転0・移動1単位刻みを試す。目・首の距離・肩との動きを並べて見る。[頭部連動の試行](HEAD_MOTION_VERIFICATION.md) |
+| 裾が太ももを突き抜ける／長髪が棒に見える | 裾は `skirt` の起点と `drive`（長い裾は脚全体、短い裾は太ももが候補）、房は `pendulum` の付け根・先端・遅れ・最大角を調整する。背中に乗る髪は胸を追わせる。RONINのスカーフの端だけ選ぶには材質と領域を絞る。[歩行と衣装](WALK_ANIMATION_VERIFICATION.md) |
+| E・NEで剣が点線に見える | 元モデルの厚みと握りを点検し、剣だけ `walk.fine` の再サンプリングを試す。手前の手袋が残り、自然な反りが1本につながって見えるか確認する。[剣の比較](SWORD_WALK_VERIFICATION.md) |
 
-**左右の確認。** 画像を正面向きの人物として見ると、画面左が本人の右手。主装備は右手、副装備は左手が規約。画像と逆なら入れ替え、レポートに「規約による変更」と書く（MARENは入れ替えた）。
+手順5のコマンドを新しい出力先で再実行する。**次へ進む条件**　頭が肩と一緒に動き、顔が読める。固定すべき布の付け根は残り、裾や先端に追従が見える。検証の `walk.head`、衣装の干渉、部位の残存を確認し、初回と最終の歩行を原寸で比べる。
 
-**装備の割り当て。** リグの装備枠は手に付くものだけ（`Biped.__init__`）。部位名は自由に付けられる（例：`staff`、`book`）。片手が空なら枠は1つでよい（実験03のAZURE RONINは右手の剣だけの16部位。`quality.json` の `items` も `main` だけ）。両手持ちの装備や背中の装備は今のリグでは表現できない。その場合は依頼者に相談するか、片手に持たせてレポートに記録する。
+歩行GIFだけを取り出すときは既存の比較器の読込・保存関数を使える。次の例では8方向が左から順に並び、各方向を48×48のまま再生する。
 
-**優先順位。** 依頼文に優先順位があればそのまま使う。なければ、シルエット、最大の衣装、主装備、副装備、髪、細部の順にする。6. の目視確認と、7. の品質設定のしきい値に写す。
-
-## 3. 採色範囲と目印
-
-1. [crystal_mage/reference_regions.json](../characters/crystal_mage/reference_regions.json) を複写し、`characters/<name>/reference_regions.json` を作る。
-   - `regions`：材質ごとの採色範囲 `[x0, y0, x1, y1]`。境界や線を避け、塗りの中央に置く。1材質に2〜4範囲。小さい部位（目、留め具）は `filter` を使う（`dark`、`bright`、`saturated_blue`）。
-   - `landmarks_y`：`hair_top`、`skull_top`、`chin`、`sole` は必須（頭身と比率の計算に使う）。他の目印は自由。
-   - `families`：面積比を出すための色系統。各材質をどれか1つに入れる。
-   - 長い装備や幅の情報は、`staff_y`、`widths_x` のように別のキーに置く。
-2. 範囲を描き込んだ確認図を `.phase1/<name>/` に作り、目視する。白い背景が多い範囲、隣の材質にかかる範囲を直す。実験02では範囲を2回直した（1回目に手袋と髪、2回目に髪とフード）。
-3. 抽出を実行する。抽出の規則は [maren/extract_reference.py](../characters/maren/extract_reference.py) の `extract` を共有する。長い装備などの追加の比が必要なら、[crystal_mage/extract_reference.py](../characters/crystal_mage/extract_reference.py) のように読み込んで足す。
-
-~~~powershell
-Copy-Item characters/crystal_mage/extract_reference.py characters/$name/
-# 中の staff_and_widths を新キャラクターの追加情報に合わせて書き換えるか削除する
-& $python -B -m characters.$name.extract_reference --image (Join-Path $work 'reference.png') --out characters/$name/reference_palette.json
-~~~
-
-4. 抽出結果を確かめる。
-   - 各材質の3階調が、見た目の色と合っているか。範囲に線や背景が多いと、灰色や茶色に寄る。
-   - `heads_tall` と比率が目視と合うか。
-   - 色の衝突の組の基色の明度差（例：実験02の髪 #696378 とマント #6b6b84 はほぼ同じ）。
-
-## 4. 設計
-
-### 頭身と寸法
-
-画像由来の2体は3.3〜3.7頭身（身長30.5〜33単位）、LARK・BRAMはさらに頭が大きい。顔と髪が読めるよう、頭蓋の頂から顎まで約7.5〜8単位にする（MAREN 約8.1、CRYSTAL MAGE 7.5）。参考画像の比率は、膝・裾・装備の長さを優先して合わせ、肩は頭を大きくした分だけ下がってよい。
-
-### 48 pxセルの高さの予算
-
-標準セル48×48、アンカー (24, 40)、1.19 px/単位、仰角24°。描画の式（`spritestack/render.py`）から、輪郭と1 pxの余白を残す条件は次の通り。
-
-- 上端：`0.9135·z + 0.4067·d ≤ 31.5`
-- 下端：`0.9135·z − 0.4067·d' ≥ −4.6`
-- 左右：`|p·right| ≤ 18.0`
-
-`z` は高さ（単位）。`d` はカメラから遠ざかる距離、`d'` はカメラへ近づく距離（単位）。カメラの向き `forward = (−sin θ, cos θ, 0)` と画面右 `right = (cos θ, sin θ, 0)` は、方向の角度 θ（`view.directions`）から決まる。x は本人の左、y は前。
-
-| 方向 | カメラの位置（forward） | 画面右（right） |
-| --- | --- | --- |
-| S | 正面（+y） | 本人の左（+x） |
-| SW | 左前（+x, +y） | 左後ろ（+x, −y） |
-| W | 本人の左側（+x） | 背中側（−y） |
-| NW | 左後ろ（+x, −y） | 右後ろ（−x, −y） |
-| N | 背面（−y） | 本人の右（−x） |
-| NE | 右後ろ（−x, −y） | 右前（−x, +y） |
-| E | 本人の右側（−x） | 前（+y） |
-| SE | 右前（−x, +y） | 左前（+x, +y） |
-
-例：本人の右側 x = −7 に立てた杖の頂点は、Wでは7単位遠い。`0.9135·z + 0.4067·7 ≤ 31.5` から z ≤ 31.4。実験02の杖頭はこの上限にあり、Wの上端の余白はちょうど1 pxだった。高い装備、横に長い装備、後ろへ長い外套は、焼く前にこの式で上限を確かめる。
-
-比較用に64×64（同じモデル、1.5867 px/単位、アンカー (32, 53)）を焼く場合も、比率が同じなので上限はほぼ同じ。
-
-### 部位と描画順
-
-共通の17部位を使う。衣装や髪は動く親の部位に所属させる。
-
-| 形状 | 所属 | 先例 |
-| --- | --- | --- |
-| 髪、顔、目、首 | `head` | 両方 |
-| 胴の衣装、スカーフ、肩の外套・マント、フード、胸の留め具 | `chest` | 両方 |
-| 裾、腰の外套、ベルト | `pelvis` | MARENの外套、CRYSTAL MAGEのローブの裾 |
-| 袖、手袋、籠手 | 腕6部位 | 両方 |
-| 主装備・副装備 | 装備の2枠 | 剣・盾、杖・本 |
-
-`paint` は後に塗った形状が勝つ。描画順は見た目を決めるので、意図を書き残す。
-
-- ベルトや留め具は胴の後に塗る。
-- 体の後ろに垂れる布は腕より先に、肩を覆う布は腕の後に塗る。
-- 握る手は装備の後に塗り、拳が装備を包んで見えるようにする。
-- 殻（外套、マント）の中に別の部位の形状を置くと、殻を突き抜けた1ボクセルが迷い画素になる。突き抜けない大きさにする。
-
-### 設計規則（2実験の問題から）
-
-| 対象 | 規則 | 由来 |
-| --- | --- | --- |
-| 外套・マント・裾の殻 | 全体の厚さ ≥ 1.1 単位、外側の層 ≥ 0.8 単位。内側を裏地の色にする | 両方で裏地が点状に透けた |
-| 細長い装備（杖、柄） | 半径 ≥ 0.6 単位。0.5単位のボクセルで2個以上の幅 | 実験02の杖が64 pxで切れた |
-| 主役の小物（結晶、紋章） | 2.4×4.5単位以上。前後を装飾で覆わない | 実験02の結晶が枝に隠れた |
-| 手に持つ本・小物 | 3.3×4.1×1.8単位程度。体と色が違う面（小口）をカメラ側へ傾ける | 実験02の本 |
-| 目 | 髪・肌と別の暗色 | 実験01で目が髪に埋もれた |
-| 同系色の大きな塊 | 明度差をつけ、間に別色の帯を置く | 両方の髪と外套 |
-| 明るい布と肌 | 色相か明度をずらす | 実験02のローブと顔 |
-| 輪郭の近くの暗い色 | 輪郭色 #241c2a より十分明るくする | 実験01の外套、ブーツ |
-| 毛束 | 付け根の半径 ≥ 0.7、先端 ≥ 0.3、長さ ≥ 2 単位 | 実験02の髪 |
-| 横髪・持ち物 | E・Wで顔の前に来ない | 実験02の横顔 |
-| 頭頂の明るい帯 | 置かない（ヘアバンドに見える） | 実験01 |
-| 刀身など平たく細い装備 | 幅 ≥ 1.0、厚さ ≥ 0.9 単位。薄いと刃を横から見る方向で描画が途切れる。描画上の塊の数を比較スクリプトで数える | 実験03の剣（厚さ0.6でS・Eで途切れた） |
-| 頭から出る髪束（ポニーテール） | 束を髪の殻の外に置き、頭から1単位以上離して弧を描かせる。同じ色の別材質・別の陰影グループにすると、背面で頭との境界に線が入り、可視画素も数えられる | 実験03（殻の中に埋もれて見えなかった） |
-| 顔を覆う布 | 上端を目の中心より1単位以上下げる（48 pxでは目とその下の布の間が1 px前後） | 実験03（目が布に隠れた） |
-| 体の後ろの細い装備 | 前へ出して、側面から脚の前に見えるようにする。反対側の背面斜め（例：右手の剣ならNW）は自然な遮蔽として別の規則にする | 実験03のW・NW |
-
-### 配色
-
-抽出色を出発点にし、48 pxで読めない場合だけ調整する。材質ごとに [palette_provenance.json](../characters/crystal_mage/palette_provenance.json) へ記録する。
-
-- `extracted`：3階調をそのまま使う。検証で抽出結果と一致を確認する。
-- `adjusted`：抽出色を変えた。理由（何と同化したか）を書く。
-- `derived`：直接の採色がない。どの色から作ったかを書く。
-
-陰影グループ（`group`）を分けると、深さの差がある境界に段差線が入る。髪と肌、腕と胴、外套と裏地は別のグループにする。
-
-## 5. 設定とモデル生成
-
-### character.json
-
-[crystal_mage/character.json](../characters/crystal_mage/character.json) を複写して書き換える。
-
-| キー | 書き換える内容 |
-| --- | --- |
-| `status` | 静止・歩行・攻撃の状態。未実装のモーションは「読込用の仮の参照、焼かない」と書く |
-| `model.origin_xyz`、格子 | 外套や装備が収まる範囲。`build_model.py` の `SHAPE` と合わせる |
-| `model.palette` | 4. の配色 |
-| `rig.parts` | 体の15部位の後に装備2つ（主装備、副装備の順）。合計17部位 |
-| `rig.rest` | 関節座標と装備の目印。目印は装備のボクセルから1.5単位以内に置く（検証の `rig.markers`） |
-| `rig.attachments` | 主装備は `hand_R`、副装備は `hand_L` |
-| `view` | LARKと同じ値のまま |
-| `comparison_view` | 64×64の比較を焼く場合だけ。`pixels_per_unit`、`neutral_cell`、`base_pivot`（[crystal_mage](../characters/crystal_mage/character.json) は 1.5867、64、[32, 53]） |
-| `posed_volume`、`walk`、`attack` | 読込に必要。静止から始める場合も、歩行は `motions/walk.json`、攻撃と調整値は装備構成の近い正式サンプルの設定を使う |
-| `measurements` | 装備の材質IDを書き換える |
-
-### build_model.py
-
-先例を複写し、`build()` の中身を書き直す。`paint`、`ellipsoid`、`capsule`、`tube`、`main` はそのまま使う。
-
-1. 脚、骨盤の衣装とベルト、胴、体の後ろの布、腕、肩の布、留め具、フード、頭（首、毛束、髪の殻、顔、目）、主装備と右手、副装備と左手の順に書く。描画順の意図はコメントに残す。
-2. 生成して、配列の形と使用状況を確かめる。
-
-~~~powershell
-& $python -B -W error::RuntimeWarning characters/$name/build_model.py --out characters/$name
-~~~
-
-`RuntimeWarning` を止めるのは、負の数の小数乗などによるNaNを見逃さないため（実験02で発生）。
-
-### 静止のベイク
-
-ベイクのスクリプトは作らない。共通CLIの `--modes idle` を使う。全モードの標準CLI（`--modes all`）は静止・歩行・攻撃を一括で焼き、1つでも収まらないと何も出力しない。画像由来のキャラクターは静止だけから始める。
-
-~~~powershell
-& $python -B -m spritestack --character characters/$name/character.json --modes idle --out (Join-Path $run 'idle')
-~~~
-
-出力は `idle.png`、`metadata.json`、`rest_part_ids.npz`。`comparison_view` があれば `idle-64.png` と `idle-64.json` も出る。`--cells 48` で標準セルだけにできる。
-
-## 6. 焼き出しと反復
-
-反復には、生成、NPZの保存、ベイク、拡大図をまとめた一時的なスクリプトを `.phase1/<name>/preview.py` に置く（追跡しない）。実験02で使った形は次の通り。
-
-~~~python
-import json, shutil, sys
+```powershell
+@'
 from pathlib import Path
-import numpy as np
-from PIL import Image, ImageDraw
+import sys
+from research.walk.compare import sheet_frames, save_gif
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
-NAME = "new_character"
-from importlib import import_module
-build = import_module(f"characters.{NAME}.build_model").build
-from spritestack.bake import bake_idle
-from spritestack.character import load_character
+folder = Path(sys.argv[1])
+layout, frames = sheet_frames(folder)
+save_gif(folder / "walk-x1.gif", [frames], layout["fps"], 1)
+'@ | & $python - "$run/walk"
+```
 
-config_path = ROOT / f"characters/{NAME}/character.json"
-materials, parts = build(json.loads(config_path.read_text(encoding="utf-8")))
-np.savez_compressed(config_path.parent / "materials.npz", slices=materials)
-np.savez_compressed(config_path.parent / "part_ids.npz", parts=parts)
-out = ROOT / f".phase1/{NAME}/{sys.argv[1]}"
-shutil.rmtree(out, ignore_errors=True)
-out.mkdir(parents=True)
-bake_idle(load_character(config_path), out, [48])
-sheet = Image.open(out / "idle.png").convert("RGBA")
-zoom = Image.new("RGBA", (4 * 298, 2 * 310 + 120), (58, 66, 84, 255))
-draw = ImageDraw.Draw(zoom)
-for i, d in enumerate(["S", "SW", "W", "NW", "N", "NE", "E", "SE"]):
-    x, y = 10 + (i % 4) * 298, 10 + (i // 4) * 310
-    draw.text((x, y), d, fill=(230, 230, 240))
-    zoom.alpha_composite(sheet.crop((i * 48, 0, i * 48 + 48, 48)).resize((288, 288), Image.NEAREST), (x, y + 12))
-zoom.alpha_composite(sheet, (10, 640))
-zoom.alpha_composite(sheet.resize((768, 96), Image.NEAREST), (410, 620))
-zoom.save(out / "zoom_48.png")
-~~~
+## 7. 装備に合う攻撃を作る
 
-~~~powershell
-& $python -B .phase1/$name/preview.py v1
-~~~
+まず構え、予備動作、最も力を蓄える姿勢、斬撃または発動、振り抜きまたは余韻、復帰を描き分ける。**各局面で「手・先端・腰を直前のコマからどこへ移すか」「どの姿勢を何ms見せるか」を決める。** 先端が奥行き方向に短く投影される正面では、腰、足幅、副手の高低差も手掛かりになる。
 
-`require_margin` が失敗したら、4. の式で上限を決めている部位を探して縮める。
+| 作例 | クリップを編集するときの着眼点 | 原寸での判断 |
+| --- | --- | --- |
+| [MARENの踏み込み斬り](MAREN_DYNAMIC_SLASH.md) | 剣先を背後から頭上、前方、膝より下へ通す。盾を引き寄せ、軸足を残して腰を沈める | S・W・E・NWで溜めと斬撃と振り抜きの3枚を区別できるか |
+| [RONINの速斬り](AZURE_RONIN_QUICK_SLASH.md) | 肩へ短く引き、着地で腰を返し、反対側へ払う。短い斬撃の後に低い姿勢を見せる | NE・Eで刀がしならず、NWで切っ先が胴から出るか。速度を上げても軌道が読めるか |
+| [MAGEの詠唱](CRYSTAL_MAGE_CAST.md) | 本を胸へ上げて杖を寝かせ、身体を引いて水晶を起こす。発動で杖を送り本を下げ、余韻で杖を戻す | 発光を外しても詠唱と発動のシルエットが違うか。S・SEで両手の差が見えるか |
 
-### 毎回の確認
+`attack.clip` は各体の `slash.json` または `cast.json` を雛形にする。`poses`・`keys`・`durations_ms` の長さを揃え、始終端を空キー `{}` にして静止と接続する。攻撃の9コマは作例の構成。3〜6コマ目を原寸で横に並べて差を見てから間を詰める。役割の違う武器への転用では、中盤の局面から設計し直す。
 
-拡大図（6倍）と原寸を必ず両方見る。参考画像との並びはローカルにだけ作る。
+- 両足・両手の到達範囲内で `root`・`yaw`・`lean`、踏み足の `front_step`・`front_lift`・任意の `front_outward` を決める。右手の `hand_R` は目標座標、`elbow_pole_R` は肘を曲げる方向。別体形へ手の絶対座標を写すと届かないことがある。
+- 剣は `blade` が方向、`wrist_roll` がその軸回りの角度、副手は `shield_delta`。杖は `aim` と副手の `support_delta`・`support_pitch` を使う。静止時の `weapon_axis` と握りを合わせる。MAGEの `glow`・`glint` はポーズ確定後に使う水晶の演出例。
+- `attack.follow_cloth` は既存の髪・布の領域を使える。剣の `attack.fine`、頭部の `attack.tuning` も歩行とは別に確認する。`quality.json.attack` で `feature` を `measurements.visibility` の部位・材質名に対応するキーへ、`phase` を実際の局面名へ、`minimum_visible_px` をその局面で全方向に必要な画素数へ合わせる。
 
-| 方向 | 確認すること |
-| --- | --- |
-| S・SW・SE | キャラクターと分かるか。最大の衣装、主装備、副装備、顔、髪が読めるか。装備が正しい手にあるか |
-| W・E | 横顔が髪や装備に隠れていないか。装備が浮いていないか。手前の装備が顔を横切っていないか |
-| NW・N・NE | 背面の構造（髪、襟、外套）が一体の塊になっていないか。装備の先端が見えるか |
-| 全方向 | 斑点（殻の透け）、迷い画素、細い部位の切れ、セルの端との余白 |
-| 原寸 | 1×で最も重要な3要素が読めるか。他のキャラクターと並べて体形が区別できるか |
+**次へ進む条件**　支持足・握りを保った状態で、局面ごとに手・装備先端・身体の関係が変わる。剣が髪に完全に埋もれる、発動の前後で杖が同じ場所に留まる場合は、先端の軌道と重心を直して焼き直す。
 
-見つけた問題、原因、直し方を、レポートの「調整の経緯」のために毎回メモする。
+## 8. 全モードを焼き、技術と見た目を別々に判定する
 
-### 終える基準
+```powershell
+& $python -m spritestack --character $config --out "$run/all"
+& $python -m research.verify_walk --character $config --out "$run/all" --no-published
+& $python -m research.verify_attack --character $config --out "$run/all" --gif "$run/all/attack.gif"
+```
 
-- 依頼文の優先順位の上位3つが、原寸で読める。
-- 8方向で配色・装備・体形が一貫し、装備が隠れる方向は自然な遮蔽だけ。
-- 7. の汎用検証でFAILが0。
-- 直す価値のある問題が、48 pxの解像度の限界によるものだけになった。
+**技術判定**　静止専用の検証と合わせてFAIL 0。IK、支持足、装備の固定、主要局面の可視画素、セル内余白、方向順、始終端と静止の一致を確認する。WARNINGは部位・方向・見た目への影響を、SKIPは未公開などの理由を記録する。攻撃検査で補間しているのは指定した点・材質であり、装備全体が全中間姿勢で非交差だとは言えない。[検証範囲](../docs/TECHNICAL_DESIGN.md#検証の適用範囲)
 
-## 7. 検証
+**目視判定**　GIFでタイミングを見て、ギャラリーの1×・通常速度で全8方向を再生する。さらに変更前後の同方向を同時再生し、問題が出たコマだけ拡大する。剣が消える場合は、装備単独でも分断されるかを調べる。全身だけで消えるなら自然な遮蔽か、肝心の局面が読めなくなる配置かを判定する。公開GIFは拡大プレビューなので原寸判定を兼ねない。
 
-### 品質設定
+初回の全ベイクと改善版を手順9の形式で別々の作業フォルダに保存すれば、既存の比較器で1×比較GIFとポーズ表を作れる。以下は既存素材で動く詠唱の例。新キャラクターでは `--before`・`--after` と局面名を替える。両版のセル、アンカー、方向順、局面名の列、総時間が同じ場合に使える。構成自体を変えた版では、それぞれ本来の時間で再生して比較する。
 
-検証スクリプトは書かない。`characters/<name>/quality.json` に、このキャラクターの条件を書く。先例は [maren/quality.json](../characters/maren/quality.json) と [crystal_mage/quality.json](../characters/crystal_mage/quality.json)。全項目は[共通化の検証レポート](SHARED_IDLE_BAKE_AND_VALIDATION.md#品質設定の項目)にある。パスは `quality.json` のフォルダから、材質は配色の名前で書く。
+```powershell
+& $python -m research.maren_slash.compare --before research/mage_cast/baseline --after docs/assets/crystal_mage --out "$run/comparison" --prefix cast --phases invoke channel focus release hold --directions S SW W NW N NE E SE
+```
 
-| キー | 書く内容 |
-| --- | --- |
-| `model_builder` | `"characters.<name>.build_model:build"`。NPZが生成コードと一致するかを調べる |
-| `provenance` | `palette_provenance.json` と `reference_palette.json` |
-| `motions` | 共通歩行は `{"walk": {"clip": "../../motions/walk.json"}}` |
-| `items` | `main`（右手）と `off`（左手）の `part`、`hand`、`marker` |
-| `continuous` | 杖や槍のように途切れてはいけない装備。床に立てるなら `from_floor` |
-| `visibility` | 依頼文の優先順位の上位要素。主役の小物は全方向、副装備は見えるべき方向。依頼文で「見える」とされた要素は既定の FAIL、目安にとどめるものは `"severity": "warning"` |
-| `presence` | 長い髪や裾など形の条件（例：髪の最下点 `lowest_z_at_most`） |
-| `cells` | 比較用セルも検査するなら `[48, 64]` |
-| `published` | `"../../docs/assets/<name>"`。公開前は省くか、実行時に `--no-published` |
+**次へ進む条件**　技術結果と、どの方向の何コマ目で何が読めたかの両方を説明できる。他モードにも関わる変更をした場合は同じ体の全モードを再生成し、共通処理に変更があれば [既存サンプルと旧資産の回帰](../AGENTS.md#検証と公開) を行う。
 
-可視画素の下限は、見た目を確定したシートで `--verbose` を付けて実行し、表示される `px` の半分程度にする（実験01・02の設定と同じ考え方）。
+## 9. 公開形式を組み、ギャラリーで確認する
 
-### 実行
+まず作業フォルダに公開候補を作る。**静止の `metadata.json` は静止専用ベイクから取る。** 歩行と攻撃のレイアウトは全ベイクのメタデータからモードごとに取り出す。次の例はWindows PowerShellでもUTF-8でJSONを保存する。
 
-~~~powershell
-$run = Join-Path $PWD ('.phase1/' + $name + '-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
-& $python -B characters/$name/build_model.py --out (Join-Path $run 'model')
-& $python -B -m spritestack --character characters/$name/character.json --modes idle --out (Join-Path $run 'idle')
-& $python -B -m research.verify_character --character characters/$name/character.json --out (Join-Path $run 'idle') --no-published --verbose
-~~~
+```powershell
+$assets = New-Item -ItemType Directory -Path "$run/assets"
+Copy-Item "$run/idle/idle.png","$run/idle/metadata.json","$run/all/walk.png","$run/all/attack.png","$run/all/attack.gif" -Destination $assets
+Get-ChildItem "$run/idle/idle-*" -File | Copy-Item -Destination $assets
+$meta = Get-Content "$run/all/metadata.json" -Raw -Encoding utf8 | ConvertFrom-Json
+foreach ($mode in 'walk', 'attack') {
+    $layout = @{ animations = @{ $mode = $meta.animations.$mode } }
+    $json = $layout | ConvertTo-Json -Depth 32
+    [IO.File]::WriteAllText((Join-Path $assets.FullName "$mode.json"), $json, [Text.UTF8Encoding]::new($false))
+}
+& $python -m research.verify_character --character $config --out "$run/idle" --published $assets.FullName
+& $python -m research.verify_attack --character $config --out "$run/all" --published $assets.FullName
+```
 
-`model/` のNPZがコミット対象と一致することも確かめる（`model.regenerate` が同じことを調べる）。
+1. 検証した一式を `docs/assets/<name>/` に置く。比較GIF・ポーズ図を公開する場合はそれも加える。`quality.json.published`（歩行側で指定していれば `walk.published` も）を新しい公開先へ向ける。静止・歩行の検証を `--no-published` なしで、攻撃の検証を `--published "docs/assets/$name"` 付きで再実行する。作業用の部位IDやボリュームは公開対象から外す。
+2. [index.html](../docs/index.html) の選択肢と [gallery.js](../docs/gallery.js) の `characters` に同じIDを追加する。値は `name`、`subtitle`、`assets: "assets/<name>"`、`extraAnimations: ["walk", "attack"]`。追加画像がある場合だけ `idleSheets: {48: null, 64: "idle-64"}` と `attackComparison` のファイル名を指定する。
+3. READMEのローカルサーバーを起動する。1×で全方向、静止→歩行→単発攻撃→再生、GIFリンク、比較解像度を確認する。公開を依頼されたらコミット・push後にmainの `/docs` のPages反映と本番画面も確認する。
+4. 制作記録には、画像で確認できた特徴と推定した背面、配色・寸法の変更理由、失敗した方向と局面、改善前後の画像、実行した検証、未評価の状況を残す。権利不明の参考画像や作業フォルダがステージされていないか `git status` で確認する。
 
-### 結果の扱い
-
-- **FAIL** は0にする。装備が手から離れた、左右が違う、余白がない、コマがモデルの描画と違う、可視画素が下限未満など、仕様違反か生成の不具合。
-- **WARNING** は詳細を読み、レポートに記録する。例えば `model.fragments` は、他の部位に覆われて切り離された部位の小片。`drawn_in` が `never drawn` なら静止画には影響しない。動かすときの部位の所有の見直し候補として扱う。検証を通すためだけに造形を変えない。
-- **SKIP** は、品質設定で求めていない検査。意図どおりか確かめる。
-
-検査の内容：
-
-- モデル：数値が有限、読込、全材質・全部位の使用、生成コードとの一致と数値の警告、全体のつながり、部位の切れ端と迷い画素、配色の出典、モーションの出典。
-- リグと装備：リグが受け付け静止で手に追従、規約どおりの持ち手と3次元の左右、目印と装備の距離、装備と手・腕の連鎖の接触、装備と手が一続き、途切れない装備、形の存在条件。
-- シート（セルごと）：方向順・セル・アンカー・カメラ、RGBAと寸法、不透明度、余白、再描画との一致、8コマの重複、反転との一致、画面上の左右、可視画素、公開PNG・JSONとの一致。
-
-検出できないこと（同系色の同化、顔が隠れる、小物が何に見えるか、参考画像との似かた）は、6. の目視で確かめる。
-
-### 回帰テスト
-
-新キャラクターを足しても、既存の出力が変わらないことを確かめる。
-
-~~~powershell
-& $python -B -m spritestack --character experiments/lark/character.json --out (Join-Path $run 'lark')
-& $python research/verify_rebuild.py (Join-Path $run 'lark')
-& $python -B -m spritestack --character experiments/bram/character.json --out (Join-Path $run 'bram')
-& $python -B -m research.verify_bram (Join-Path $run 'bram')
-& $python -B -m spritestack --character characters/maren/character.json --modes idle --out (Join-Path $run 'maren')
-& $python -B -m research.verify_character --character characters/maren/character.json --out (Join-Path $run 'maren')
-& $python -B -m spritestack --character characters/crystal_mage/character.json --modes idle --out (Join-Path $run 'crystal_mage')
-& $python -B -m research.verify_character --character characters/crystal_mage/character.json --out (Join-Path $run 'crystal_mage')
-git diff --stat -- spritestack motions characters experiments docs/assets
-~~~
-
-LARKの `verify_rebuild.py` は、PNGのバイトが一致しなくても（Windowsでは通常そうなる）、メタデータとデコード後のRGBAが一致すれば合格。BRAMは標準CLIの出力と `experiments/bram/baseline/` の静止・歩行・攻撃PNG、メタデータも照合しておく。最後の `git diff` は空であること。
-
-### 標準CLIの試験（任意、公開しない）
-
-`python -m spritestack --character characters/<name>/character.json --out <.phase1の新しいフォルダ>` を試し、止まる場合はどのモード・コマで、何が原因かを記録する。実験01は攻撃のセル、実験02は姿勢ボリュームで止まった。結果は公開しない。
-
-## 8. 比較図、レポート、ギャラリー、文書
-
-### 比較図
-
-[image_to_character_02/compare.py](image_to_character_02/compare.py) を `research/image_to_character_NN/compare.py` に複写し、パス、装備の材質ID（`VISIBLE`）、色系統の色（`FAMILY_COLORS`）を書き換える。追跡する図は抽出色、座標、計測値と生成したPNGだけから作る。参考画像との並びは `--local-out` で `.phase1/` にだけ出す。
-
-~~~powershell
-& $python -B -m research.image_to_character_NN.compare --idle (Join-Path $run 'idle') --out research/image_to_character_NN/results --reference (Join-Path $work 'reference.png') --local-out (Join-Path $run 'reference_comparison.png')
-~~~
-
-### レポート
-
-`research/IMAGE_TO_CHARACTER_NN.md` を、実験02と同じ構成で書く。
-
-1. 結論（技術面と外見面を分ける）
-2. 実験目的
-3. 参考画像から抽出した特徴（数値付き）と、立体化が難しい部分
-4. 立体化の方法（工程表、コマンド、部位と描画順、体の寸法）
-5. 自動生成で成功した点
-6. 人による補完・調整（自動の処理と、制作AIの判断を分けた表。調整の経緯）
-7. 確認できた特徴、推測で補った特徴、規約・解像度による変更、未再現（表）
-8. 8方向の品質（方向ごとの表と可視画素）
-9. 解像度の比較（行った場合）
-10. 既存エンジンの制約と拡張案
-11. 今後の改善候補
-12. 技術検証（実行した検査だけ。環境とバージョン）
-13. 権利と追跡、未確認事項
-
-書く前に、レポートの数値を計測JSON、検証の出力、コードと照合する。実験02では、外形の寸法、裾の高さの向き、装飾のねじれの向き、装備が見える方向の4か所を照合で直した。実行していない検査を実施済みと書かない。
-
-### ギャラリー
-
-1. 焼いた `idle.png`、`metadata.json`（比較シートがあれば `idle-64.png`、`idle-64.json`）を `docs/assets/<name>/` に複写する。`quality.json` の `published` を設定し、汎用検証を `--no-published` なしで再実行して `sheetNN.published` がPASSになることを確かめる。
-2. `docs/index.html` のキャラクター欄に `<option value="<name>">` を足す。
-3. `docs/gallery.js` の `characters` に `{ name, subtitle, assets: "assets/<name>" }` を足す。比較シートがあれば `idleSheets: { 48: null, 64: "idle-64" }` を加える。歩行・攻撃がないキャラクターでは、ボタンが自動で無効になり注記が出る。
-4. ローカルサーバーで確かめる。新キャラクターの8方向（比較シートがあれば両方）、既存キャラクターの攻撃再生、375 px幅で横スクロールがないこと、コンソールエラーがないこと。
-
-~~~powershell
-& $python -m http.server 8000 --bind 127.0.0.1 --directory docs
-~~~
-
-### 文書
-
-README（実装状況、ディレクトリ構成、生成と検証の節、ギャラリーの節）、AGENTS.md（キャラクターの項目を1つ）、[ROADMAP.md](ROADMAP.md)（実装・検証済み）を更新する。
-
-## 8.5 歩行を加える（任意）
-
-静止を公開したあとで歩行を作る手順。MAREN・CRYSTAL MAGE・AZURE RONINで使った（[歩行レポート](WALK_ANIMATION_VERIFICATION.md)）。歩行クリップは共通のものを参照したまま、`walk.tuning`、`walk.secondary`、`walk.head` だけで体格・衣装・頭の動きを合わせる。キャラクター用の歩行システムやスクリプトは作らない。
-
-1. `python -m spritestack --character characters/<name>/character.json --modes walk --out <新しい出力先>` で焼き、8方向×6コマを拡大して見る。最初は共通の設定のまま焼き、比較の基準にする。
-2. 歩幅：`stride_scale` を脚の長さ（股関節から足首）の比に合わせる。LARKの脚は約7.3単位。MARENは11.6単位で1.4、CRYSTAL MAGEとAZURE RONINは10.6単位で、落ち着いた魔法使いは1.15、身軽な剣士は1.35にした。`stance_start_y` は踏み出しの位置で、倍率と一緒に前へ出す。足が届かないと「unreachable walk stance ankle」で止まる。
-3. 腕：共通クリップは腕が同じ側の脚と一緒に前へ出る。`arm_swing_scale` を右は負、左は正にすると、反対側の脚と逆に振れる。重い盾や持った本は振りを小さくする。
-4. 高い装備：静止で上端に近い装備（CRYSTAL MAGEの杖頭はW方向で上端1 px）は、手を上げると48 pxセルを出る。`hand_lift` を左右別に指定し、`root_level` の下げ幅を打ち消す程度にとどめ、`wrist_pitch` で前へ傾けて床から浮かせる。`quality.json` の `walk.lowest_z_at_least` で床より下に出ないことを検査する。
-5. 布：骨盤から下がる裾は `skirt`。長い裾は既定の `drive: "leg"`（股関節から足首の線）にすると、後ろへ蹴り上げたかかとが裾を押す。太ももを包む短い裾は `drive: "thigh"` と `follow` 1.0 にする。
-6. 髪・端：`pendulum`。背中に乗る長髪やポニーテールは `driver: "chest"`（頭の動きは1 px単位なので、なめらかに動く胴を追わせる）。上下の弾みは `follow` の z を2.5〜4にする。`max_deg` に張り付くと動きが平らになり、横に突き出た端は棒に見えるので、角度の範囲を検証の出力で見て下げる。
-7. 頭：`walk.head` を必ず書く（標準）。`follow` を `[1, 1, 1]` にして頭を首に乗せ、胴の上下動 `root_bob_scale` を、最も低いコマで0.5単位を超える程度にする（MAREN 2.9で約0.64単位）。こうすると頭は肩と一緒に1 px下がる。装備が床に近い、細い前腕が残存の下限を割るなどで胴を沈められない体形では、`bob`（0.15〜0.45）で頭だけを少し沈める。回転（`yaw_follow`・`pitch_follow`・`nod_deg`・`tilt_deg`）と、1.0単位未満の `snap` は、48 pxでは目が消えるので使わない。`walk.head.face` で頭だけを描いたときの目の画素数を見て、方向ごとにコマで変わらないことを確かめる。[頭部連動レポート](HEAD_MOTION_VERIFICATION.md)
-   - 細い剣：E方向などで刀身が真横に近くなる剣は、`walk.fine`（`parts: ["sword"]`、`rays: 4`、`coverage: 0.5`、`line: 0.25`、`seam: "behind"`）で描く。刀身を太くしたり手首を回したりせずに、途切れと暗い点線を直せる。`python -m research.sword.compare` の拡大GIFで、E・NEの刃が1本につながり、Nで手袋の画素が残ることを見る。[剣の修正レポート](SWORD_WALK_VERIFICATION.md)
-8. `python -m research.verify_walk --character ... --out ...` でFAILを0にする。`walk.secondary.intrusion` は、布・髪が他の部位に入り込む割合を剛体のままの場合と比べる。悪化したらWARNINGになる。`quality.json` に `walk` 節（装備の床、装備の可視画素、腕の位相、公開先）を書く。可視画素の下限は、48コマで測った最小値か、それより少し低い値にする。体に隠れる方向がある装備（本、鍔）は規則にしない。
-9. `python -m research.walk.compare --after <各キャラクターの出力の親> --out <出力先> --characters <name>` で、調整前後のGIFと比較画像を作り、8方向のGIFを原寸と拡大で見る。頭の動きは `python -m research.head.compare` の頭と肩の拡大図で、肩と一緒に下がること、顔が崩れないことを見る。
-10. 公開：`walk.png` と、`metadata.json` の歩行の項目を `{"animations": {"walk": ...}}` にした `walk.json` を `docs/assets/<name>/` に置く。静止の `metadata.json` は変えない（汎用検証が静止の公開版と照合するため）。`gallery.js` の `characters` に `extraAnimations: ["walk"]` を加える。
-
-## 9. コミットと公開
-
-1. `git status --short --untracked-files=all` で、参考画像と `.phase1/` の中身が含まれていないことを確かめる。
-2. コミットするのは、`characters/<name>/`、`docs/assets/<name>/`、ギャラリー、検証・比較スクリプトと結果、レポート、文書。
-3. 依頼者が求めた場合に、mainへコミットしてpushする（GitHub Pagesの公開元はmainの `/docs`）。
-4. 公開ページで新キャラクターを選び、8方向を確かめる。以前に開いたブラウザでは `gallery.js` が最大10分キャッシュされ、新しいキャラクターを選ぶとエラーになることがある。その場合は再読み込みするか、時間をおいて確認する。
-
-URL：https://shioa2006-game.github.io/SpriteStack_Character_Lab/
-
-## 付録：チェックリスト
-
-- [ ] 参考画像を `.phase1/<name>/` に置き、SHA-256を記録した。画像は追跡していない
-- [ ] 特徴、比率、配色の衝突、左右、装備、難所の表を作った
-- [ ] 採色範囲の確認図を目視し、抽出結果が見た目と合う
-- [ ] 頭身と、48 pxの高さの予算を計算した
-- [ ] 設計規則（殻の厚さ、細い部位の半径、主役の小物、目、同系色の分離）を適用した
-- [ ] 配色の出典を全材質に書いた
-- [ ] `-W error::RuntimeWarning` で生成できる
-- [ ] 8方向を拡大と原寸で確認し、調整の経緯をメモした
-- [ ] `quality.json` を書き、汎用検証でFAILが0。WARNINGの内容をレポートに記録した
-- [ ] 既存の正式サンプル3体と、LARK・BRAMの研究用基準の回帰に合格した
-- [ ] 既存の成果物にGit差分がない
-- [ ] 比較図とレポートを書き、数値を照合した
-- [ ] ギャラリーをローカルで確認した
-- [ ] コミット、push、公開ページで確認した
-- [ ] （歩行を作る場合）歩行検証でFAILが0。GIFで8方向の自然さを確認し、裾・髪・装備の破綻を記録した
-- [ ] （歩行を作る場合）`walk.head` で頭が全8方向で肩と一緒に動き、目の画素数がコマで変わらない
-- [ ] （細い剣を持つ場合）`walk.fine` を書き、E・NEの刀身が途切れず、握りの手が残る
+**完成条件**　別の出力先へ再生成した静止・歩行・攻撃のRGBAとメタデータが公開候補に一致し、ギャラリーとGIFで意図した動作が読める。新しい体形での調整値と残った制約を、次の制作者が再確認できる。

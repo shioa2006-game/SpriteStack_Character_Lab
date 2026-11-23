@@ -1,5 +1,7 @@
 # 画像からのキャラクター自動生成 実験03：AZURE RONIN
 
+この記録の動作範囲とCLIの制約は静止制作時点のもの。現行版は静止・歩行・攻撃を生成できる。[現在の制作手順](CHARACTER_CREATION_GUIDE.md) · [完成した攻撃](AZURE_RONIN_QUICK_SLASH.md)
+
 ## 結論
 
 参考イラスト1枚から、高い位置で髪を束ね、口元を濃色のスカーフで隠した軽装の剣士 **AZURE RONIN**（`azure_ronin`）を作った。モデルは Python / NumPy で材質・部位ボクセルとして生成した。静止8方向は共通CLIの `--modes idle` で焼き、品質は汎用検証 `research.verify_character` で確かめた。共通化後の最初のキャラクターで、`bake_idle.py` と `verify_<name>.py` は作っていない。共通エンジンと汎用検証のコードも変更していない。
@@ -245,7 +247,7 @@
 | しきい値の決定 | 検証コードの定数を焼き直しのたびに調整 | 下書きの設定で1回測り、半分程度を下限にした |
 | 検査の範囲 | キャラクターごとに書いた分だけ | 次の4つを共通の検査で最初から実行できた |
 | 回帰テスト | 既存キャラクターごとの専用検証 | MAREN・CRYSTAL MAGEも同じ汎用検証 |
-| 反復の確認 | 自作のベイク関数を読み込む | `spritestack.bake.bake_idle` を読み込む（[ガイド](CHARACTER_CREATION_GUIDE.md) の形のまま） |
+| 反復の確認 | 自作のベイク関数を読み込む | `spritestack.bake.bake_idle` を読み込む（実験当時の反復用） |
 
 共通の検査で最初から実行できた4つ：
 
