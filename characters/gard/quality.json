@@ -26,6 +26,10 @@
     }
   },
   "cells": [64],
+  "loop_visibility": [
+    {"feature": "hammer metal", "rows": ["W"], "min_px": 20},
+    {"feature": "hammer metal", "rows": ["NW", "NE", "E"], "min_px": 70}
+  ],
   "continuous": [
     {
       "part": "hammer",

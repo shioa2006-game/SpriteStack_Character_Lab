@@ -31,9 +31,9 @@
       {
         "name": "saffron",
         "group": "scarf",
-        "shadow": "bf7b33",
-        "base": "e8a338",
-        "light": "ffcd56"
+        "shadow": "c48931",
+        "base": "ecb138",
+        "light": "ffd657"
       },
       {
         "name": "linen",
@@ -260,6 +260,10 @@
       "hook": {
         "part": "pelvis",
         "materials": [15]
+      },
+      "scarf": {
+        "part": "chest",
+        "materials": [4]
       },
       "arrows": {
         "part": "chest",

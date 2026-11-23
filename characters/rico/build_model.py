@@ -34,25 +34,28 @@ def build(config):
         paint(rod(el+.47*(ha-el), ha, .85, .68), "leather", "fore_"+side)
         paint(oval(ha, (.83, .84, .86)), "skin", "hand_"+side)
     # A loop on the belt faces forwards. A two-tined iron hook hangs from its knot.
-    loop = (np.sqrt(((x+2.42)/1.35)**2 + ((z-9.20)/2.0)**2)-1)**2 + ((y-2.07)/1.6)**2 <= .34**2
+    loop = (np.sqrt(((x+2.5)/1.53)**2 + ((z-9.20)/2.0)**2)-1)**2 + ((y-2.28)/1.6)**2 <= .34**2
     paint(loop, "rope", "pelvis")
-    v.path([(-2.35, 2.1, 11.0), (-2.85, 2.1, 8.2), (-3.25, 2.0, 7.2)], .46, "rope", "pelvis")
-    v.path([(-3.25, 2, 7.45), (-3.55, 2, 6.25), (-4.30, 2, 6.55), (-4.65, 2, 7.25)], .40, "iron", "pelvis")
-    v.path([(-3.55, 2, 6.25), (-2.85, 2, 6.25), (-2.48, 2, 6.81)], .38, "iron", "pelvis")
+    # Lead the loose end off the lower rim, leaving the middle of the coil open.
+    v.path([(-2.50, 2.25, 7.20), (-3.16, 2.32, 7.30), (-3.43, 2.33, 6.95)], .45, "rope", "pelvis")
+    # The hook hangs obliquely so its tips separate in both front and right profile.
+    v.path([(-3.43, 2.33, 7.14), (-3.66, 2.38, 5.98), (-4.58, 2.95, 6.22),
+            (-4.96, 3.21, 7.26)], .46, "iron", "pelvis")
+    v.path([(-3.66, 2.38, 5.98), (-2.77, 1.83, 6.12), (-2.31, 1.55, 6.88)], .43, "iron", "pelvis")
     # Quiver below the right ear. Differing shaft lengths separate the fletchings from behind.
     bottom, mouth = np.array([1.55, -3.70, 10.3]), np.array([-3.10, -3.65, 18.42])
     paint(rod(bottom, mouth, 1.05, 1.32), "leather", "chest")
     paint(rod(mouth+[.17, 0, -.30], mouth, 1.49), "brass", "chest")
-    for dx, dy, length in [(-.83, -.4, 3.85), (.06, -.72, 4.90), (.72, .25, 3.28)]:
+    for dx, dy, length in [(-.90, -.4, 3.85), (.06, -.72, 5.30), (.79, .25, 3.28)]:
         a = mouth + [dx, dy, -.32]
         b = a + [(-.64+.20*dx)*length, -.65, length]
         paint(rod(a, b, .34), "wood", "chest")
-        paint(rod(b+[.34, 0, -.88], b, .59, .34), "fletching", "chest")
+        paint(rod(b+[.64, 0, -1.48], b+[-.15, 0, .12], .70, .34), "fletching", "chest")
     collar = oval((0, -.1, 17.65), (3.69, 2.72, 1.55))
     paint(collar, "moss", "chest")
-    paint(oval((0, .66, 17.45), (2.69, 2.50, 1.15)), "saffron", "chest")
+    paint(oval((0, .76, 17.45), (2.69, 2.55, 1.19)), "saffron", "chest")
     v.path([(.62, 2.18, 17.45), (1.85, 2.75, 16.1), (2.85, 3.35, 14.7),
-            (3.15, 3.55, 13.7)], .74, "saffron", "chest")
+            (3.15, 3.55, 13.7)], .78, "saffron", "chest")
     paint(oval((0, .15, 20.62), (2.98, 2.66, 3.02), 2.25), "skin", "head")
     for s in (-1, 1):
         paint(oval((s*2.66, .36, 20.55), (.71, .83, 1.03)), "skin", "head")

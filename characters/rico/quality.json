@@ -21,7 +21,11 @@
     }
   },
   "cells": [64],
-  "loop_visibility": [{"feature": "hook", "rows": ["S", "NE", "E", "SE"], "min_px": 2}],
+  "loop_visibility": [
+    {"feature": "hook", "rows": ["S", "NE", "E", "SE"], "min_px": 4},
+    {"feature": "arrows", "rows": ["NW", "N", "NE"], "min_px": 12},
+    {"feature": "scarf", "rows": ["S"], "min_px": 30}
+  ],
   "continuous": [
     {
       "part": "bow",
@@ -54,7 +58,7 @@
       "label": "quiver fletching",
       "part": "chest",
       "materials": ["fletching"],
-      "min_px": 2,
+      "min_px": 12,
       "directions": ["N", "NW", "NE"]
     }
   ],

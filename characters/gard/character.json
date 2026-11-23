@@ -121,7 +121,7 @@
       "knee_L": [2.7, 1.04, 8.1],
       "ankle_L": [2.74, -0.32, 1.9],
       "toe_L": [2.74, 1.43, 0],
-      "hammer_head": [-13.5, -4.0, 7.25],
+      "hammer_head": [-13.5, -4.4, 9.2],
       "shield_center": [9.35, 4.95, 15.55]
     },
     "attachments": {
@@ -229,6 +229,10 @@
       "hammer": {
         "part": "hammer",
         "materials": [4, 2, 7, 9]
+      },
+      "hammer metal": {
+        "part": "hammer",
+        "materials": [4, 2]
       },
       "shield": {
         "part": "shield",
