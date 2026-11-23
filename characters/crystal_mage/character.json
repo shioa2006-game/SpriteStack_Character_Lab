@@ -167,6 +167,7 @@
     "tuning": {
       "hip_yaw_scale": 0.24,
       "head_snap": 1.0,
+      "head_follow": [0.6, 0.24, 1.0],
       "head_yaw_scale": 0,
       "head_lean_scale": 0,
       "step_side": "R",

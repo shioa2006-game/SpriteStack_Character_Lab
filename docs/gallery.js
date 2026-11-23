@@ -31,6 +31,7 @@ const characters = {
   },
   crystal_mage: {
     name: "CRYSTAL MAGE", subtitle: "Staff and Tome", assets: "assets/crystal_mage",
+    attackComparison: "cast-comparison.gif",
     // Idle sheets of the same model at two pixel densities; null keeps the standard idle.png.
     idleSheets: { 48: null, 64: "idle-64" },
     extraAnimations: ["walk", "attack"],

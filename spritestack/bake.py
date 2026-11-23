@@ -134,6 +134,20 @@ def render_neutral(character, renderer):
     return sheet, frames
 
 
+def add_glint(rgba, visible):
+    """Add a small flash in the empty space around a visible emitter."""
+    ys, xs = np.nonzero(visible)
+    if not len(xs):
+        return
+    x, y = round(xs.mean()), round(ys.mean())
+    light = rgba[ys, xs, :3].mean(axis=0).round().astype(np.uint8)
+    for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
+        for distance in (3, 4):
+            u, v = x + dx * distance, y + dy * distance
+            if 0 <= v < rgba.shape[0] and 0 <= u < rgba.shape[1] and not rgba[v, u, 3]:
+                rgba[v, u] = (*light, 255)
+
+
 def render_motion(character, renderer, mode, poses, neutral):
     view = character.config["view"]
     directions = view["directions"]
@@ -151,16 +165,19 @@ def render_motion(character, renderer, mode, poses, neutral):
 
     for index, (volume, parts) in enumerate(poses):
         surface = normals(volume, character.posed_grid)
-        guard = mode == "attack" and not character.motions[mode]["keys"][index]
+        clip_key = character.motions[mode]["keys"][index] if mode == "attack" else {}
+        guard = mode == "attack" and not clip_key
         for row, (direction, yaw) in enumerate(directions.items()):
             frame, ids, part_ids = renderer.render(volume, parts, character.posed_grid,
                                                     yaw, render_cell, view["posed_rays"], surface, fine)
-            if mode == "attack" and (glow := character.motions[mode]["keys"][index].get("glow", 0)):
-                # Only the visible material pixels emit light, preserving the staff silhouette and occlusion.
+            if glow := clip_key.get("glow", 0):
+                # Use visible emitter pixels so an occluded source produces no light.
                 materials = character.config[mode]["glow_materials"]
                 mask = np.isin(ids, materials)
                 rgba = np.array(frame)
                 rgba[mask, :3] = np.rint((1 - glow) * rgba[mask, :3] + glow * 255).astype(np.uint8)
+                if clip_key.get("glint", False):
+                    add_glint(rgba, mask)
                 frame = Image.fromarray(rgba)
             if guard:
                 # A neutral key uses the same static drawing and anchor as idle.

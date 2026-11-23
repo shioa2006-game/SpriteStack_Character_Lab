@@ -61,6 +61,8 @@ def check_motion_lengths(motions):
     for key in attack["keys"]:
         if "glow" in key and not 0 <= key["glow"] <= 1:
             raise ValueError("attack key glow must be between 0 and 1")
+        if "glint" in key and (not isinstance(key["glint"], bool) or (key["glint"] and not key.get("glow"))):
+            raise ValueError("attack key glint must be a boolean and requires glow when enabled")
     if any(clip["fps"] <= 0 for clip in motions.values()):
         raise ValueError("fps must be positive")
 

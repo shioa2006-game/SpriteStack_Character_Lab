@@ -22,17 +22,17 @@
       ],
       "fps": 12,
       "loop": false,
-      "rgba_sha256": "c51a35b798c166e985876357bbbbeaffd85ebec92deefc7ef9a6d4701d43fd57",
+      "rgba_sha256": "5f1bd1c982d39ad0f2cab22abaf2835fe880676be7421316dae4e2ec9d94a455",
       "durations_ms": [
         70,
         100,
+        130,
+        170,
         150,
-        180,
+        80,
         100,
-        60,
-        100,
-        140,
-        100
+        120,
+        80
       ],
       "phase_names": [
         "ready",

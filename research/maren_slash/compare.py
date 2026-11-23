@@ -23,7 +23,8 @@ def paste_tile(panel, version, direction, frame, x, y):
     panel.paste(tile, (x, y), tile)
 
 
-def compare(before, after, out, directions=("S", "W", "E", "NW")):
+def compare(before, after, out, directions=("S", "W", "E", "NW"), *,
+            phases=("raise", "coil", "cut", "follow through"), prefix="slash"):
     versions = [load(before), load(after)]
     old, new = (layout for _, layout in versions)
     for key in ("cell", "anchor", "rows", "phase_names"):
@@ -45,23 +46,24 @@ def compare(before, after, out, directions=("S", "W", "E", "NW")):
                 paste_tile(panel, version, direction, bisect_right(ends[i], time), x + i*w, y + 16)
         frames.append(panel)
     out.mkdir(parents=True, exist_ok=True)
-    frames[0].save(out / "slash-comparison.gif", save_all=True, append_images=frames[1:],
+    frames[0].save(out / f"{prefix}-comparison.gif", save_all=True, append_images=frames[1:],
                    duration=[b-a for a, b in zip(bounds, bounds[1:])], disposal=2, loop=0)
 
-    panel = Image.new("RGB", (8*w + 34, len(directions)*h + 36), background)
+    group_width = len(phases) * w
+    panel = Image.new("RGB", (2*group_width + 34, len(directions)*h + 36), background)
     label = ImageDraw.Draw(panel)
     for row, direction in enumerate(directions):
         label.text((1, 36 + row*h + h//2), direction, fill="white")
     for i, version in enumerate(versions):
-        left = 24 + i*(4*w + 8)
+        left = 24 + i*(group_width + 8)
         label.text((left, 0), ("Before", "After")[i], fill="white")
-        for col, phase in enumerate(("raise", "coil", "cut", "follow through")):
+        for col, phase in enumerate(phases):
             x = left + col*w
             label.text((x, 16), phase, fill="#d2d7de")
             for row, direction in enumerate(directions):
                 y = 36 + row*h
                 paste_tile(panel, version, direction, new["phase_names"].index(phase), x, y)
-    panel.resize((2*panel.width, 2*panel.height), Image.Resampling.NEAREST).save(out / "slash-poses.png")
+    panel.resize((2*panel.width, 2*panel.height), Image.Resampling.NEAREST).save(out / f"{prefix}-poses.png")
 
 
 if __name__ == "__main__":
@@ -70,5 +72,8 @@ if __name__ == "__main__":
         parser.add_argument("--" + arg, required=True, type=Path)
     parser.add_argument("--directions", nargs="+", choices="S SW W NW N NE E SE".split(),
                         default=("S", "W", "E", "NW"), help="rows in the pose comparison PNG")
+    parser.add_argument("--phases", nargs="+", default=("raise", "coil", "cut", "follow through"),
+                        help="pose names from attack.json to show in the PNG")
+    parser.add_argument("--prefix", default="slash", help="filename prefix for both comparisons")
     args = parser.parse_args()
-    compare(args.before, args.after, args.out, args.directions)
+    compare(args.before, args.after, args.out, args.directions, phases=args.phases, prefix=args.prefix)
