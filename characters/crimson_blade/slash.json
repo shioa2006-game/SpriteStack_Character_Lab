@@ -1,0 +1,110 @@
+{
+  "fps": 12,
+  "poses": [
+    "guard",
+    "draw",
+    "sink",
+    "coil",
+    "cut",
+    "follow through",
+    "suspend",
+    "recover",
+    "guard"
+  ],
+  "durations_ms": [60, 60, 80, 160, 40, 140, 70, 60, 50],
+  "keys": [
+    {},
+    {
+      "root": [0.25, -0.35, -0.7],
+      "yaw": 16,
+      "lean": -3,
+      "front_step": 0.15,
+      "front_lift": 0.25,
+      "front_outward": 0.2,
+      "hand_R": [-5.448, -3.0216, 14.7337],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [-0.89, 0.3, -0.36],
+      "support_delta": [-0.792, 1.0689, 1.6337],
+      "wrist_roll": -12
+    },
+    {
+      "root": [0.65, -0.75, -1.35],
+      "yaw": 31,
+      "lean": -6,
+      "front_step": 0.65,
+      "front_lift": 1.05,
+      "front_outward": 0.75,
+      "hand_R": [-4.1922, -5.3013, 14.2006],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [-0.93, 0.14, -0.33],
+      "support_delta": [-1.092, 1.6325, 2.7006],
+      "wrist_roll": -20
+    },
+    {
+      "root": [0.86, -0.88, -1.81],
+      "yaw": 44,
+      "lean": -5,
+      "front_step": 1.7,
+      "front_lift": 1.55,
+      "front_outward": 1.9,
+      "hand_R": [-3.5798, -5.8112, 13.9035],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [-0.84, -0.1, -0.55],
+      "support_delta": [-2.4579, 2.9311, 3.7635],
+      "wrist_roll": -30
+    },
+    {
+      "root": [-1.5, 2.17, -2.2],
+      "yaw": -17,
+      "lean": 12,
+      "front_step": 5.9,
+      "front_lift": 0,
+      "front_outward": 4.65,
+      "hand_R": [-5.1814, 9.5234, 14.9968],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [0.88, 0.44, 0.16],
+      "support_delta": [2.5933, -1.9115, 3.9968],
+      "wrist_roll": 12
+    },
+    {
+      "root": [-1.7, 2.65, -2.7],
+      "yaw": -43,
+      "lean": 16,
+      "front_step": 5.9,
+      "front_lift": 0,
+      "front_outward": 4.65,
+      "hand_R": [-0.446, 10.8826, 17.1031],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [0.76, 0.28, 0.58],
+      "support_delta": [2.2115, -3.281, 5.1031],
+      "wrist_roll": 30
+    },
+    {
+      "root": [-1.05, 1.75, -2.0],
+      "yaw": -32,
+      "lean": 10,
+      "front_step": 5.3,
+      "front_lift": 0,
+      "front_outward": 3.85,
+      "hand_R": [-1.1837, 8.8496, 18.0826],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [0.55, 0.39, 0.74],
+      "support_delta": [1.359, -3.0469, 3.6326],
+      "wrist_roll": 22
+    },
+    {
+      "root": [-0.2, 0.55, -0.95],
+      "yaw": -11,
+      "lean": 5,
+      "front_step": 2.55,
+      "front_lift": 0.9,
+      "front_outward": 1.7,
+      "hand_R": [-4.8184, 5.4305, 15.9397],
+      "elbow_pole_R": [-4, -2, -2],
+      "aim": [-0.35, 0.92, 0.16],
+      "support_delta": [0.3159, 0.6194, 1.9397],
+      "wrist_roll": 8
+    },
+    {}
+  ]
+}

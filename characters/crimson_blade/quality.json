@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "description": "Visibility and motion checks for the split sash, high tied hair and right-hand katana.",
+  "model_builder": "characters.crimson_blade.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "attack": {
+    "feature": "blade",
+    "phase": "cut",
+    "minimum_visible_px": 10
+  },
+  "additional_attack_phases": [
+    {"feature": "blade", "phase": "coil", "minimum_visible_px": 8},
+    {"feature": "blade", "phase": "follow through", "minimum_visible_px": 10}
+  ],
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "sword",
+      "hand": "hand_R",
+      "marker": "sword_tip"
+    }
+  },
+  "continuous": [
+    {
+      "part": "sword",
+      "through": ["hand_R"]
+    }
+  ],
+  "cells": [48],
+  "visibility": [
+    {
+      "label": "drawn steel",
+      "part": "sword",
+      "materials": ["blade", "blade edge"],
+      "min_px": 3,
+      "directions": "all"
+    },
+    {
+      "label": "face under swept fringe",
+      "part": "head",
+      "materials": ["skin"],
+      "min_px": 7,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "label": "eyes",
+      "part": "head",
+      "materials": ["eyes"],
+      "min_px": 1,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "label": "high fall at sides and rear",
+      "part": "head",
+      "materials": ["ponytail", "strand"],
+      "min_px": 10,
+      "directions": ["W", "NW", "N", "NE", "E"]
+    },
+    {
+      "label": "crimson wrap",
+      "part": "chest",
+      "materials": ["crimson", "garnet"],
+      "min_px": 7,
+      "directions": ["S", "SW", "N", "SE"]
+    },
+    {
+      "label": "blue waist cloth",
+      "part": "pelvis",
+      "materials": ["blue silk"],
+      "min_px": 12,
+      "directions": "all"
+    },
+    {
+      "label": "ivory selvage",
+      "part": "pelvis",
+      "materials": ["ivory"],
+      "min_px": 3,
+      "directions": "all"
+    },
+    {
+      "label": "high gold hair clasp",
+      "part": "head",
+      "materials": ["gilt"],
+      "min_px": 1,
+      "directions": ["S", "SW", "W", "NW", "N", "E", "SE"]
+    },
+    {
+      "label": "lacquered empty scabbard",
+      "part": "pelvis",
+      "materials": ["sheath"],
+      "min_px": 3,
+      "directions": ["SW", "W", "NW", "N", "E"]
+    },
+    {
+      "label": "left shoulder lamellae",
+      "part": "upper_L",
+      "materials": ["plate", "lame"],
+      "min_px": 3,
+      "directions": ["S", "N", "W", "SW"]
+    },
+    {
+      "label": "right shoulder lamellae",
+      "part": "upper_R",
+      "materials": ["plate", "lame"],
+      "min_px": 3,
+      "directions": ["S", "N", "E", "SE"]
+    }
+  ],
+  "presence": [
+    {
+      "label": "knot rises above crown",
+      "part": "head",
+      "materials": ["ponytail", "strand"],
+      "highest_z_at_least": 28.5
+    },
+    {
+      "label": "ponytail falls below chin",
+      "part": "head",
+      "materials": ["ponytail", "strand"],
+      "lowest_z_at_most": 20.5
+    },
+    {
+      "label": "sash reaches shin",
+      "part": "pelvis",
+      "materials": ["blue silk", "ivory"],
+      "lowest_z_at_most": 6
+    }
+  ],
+  "walk": {
+    "lowest_z_at_least": {
+      "sole_floor": 0,
+      "sword_tip": 1
+    },
+    "visibility_min_px": {
+      "blade": 4,
+      "tail": 12,
+      "sash": 12
+    },
+    "arm_swing": "contralateral",
+    "max_fragment_voxels": 2,
+    "max_center_drift_px": 3,
+    "intrusion_slack": 0.01,
+    "published": "../../docs/assets/crimson_blade"
+  },
+  "published": "../../docs/assets/crimson_blade"
+}

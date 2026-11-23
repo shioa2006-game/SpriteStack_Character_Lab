@@ -1,0 +1,343 @@
+{
+  "version": 1,
+  "status": {
+    "idle": "8 directions, a relaxed standing guard",
+    "walk": "6-frame shared gait with a high tied ponytail and split waist streamers",
+    "attack": "9-key rising diagonal slash"
+  },
+  "model": {
+    "materials": "materials.npz",
+    "part_ids": "part_ids.npz",
+    "origin_xyz": [-16, -14, 0],
+    "voxel_size_xyz": [0.5, 0.5, 0.5],
+    "palette": [
+      {
+        "name": "sole",
+        "group": "boots",
+        "shadow": "342934",
+        "base": "483741",
+        "light": "645058"
+      },
+      {
+        "name": "boot",
+        "group": "boots",
+        "shadow": "483938",
+        "base": "5e4d47",
+        "light": "74615a"
+      },
+      {
+        "name": "crimson",
+        "group": "silk red",
+        "shadow": "792d41",
+        "base": "b4404c",
+        "light": "e26b64"
+      },
+      {
+        "name": "garnet",
+        "group": "silk red",
+        "shadow": "5d2338",
+        "base": "933344",
+        "light": "b84b50"
+      },
+      {
+        "name": "plate",
+        "group": "lacquer",
+        "shadow": "252b47",
+        "base": "394567",
+        "light": "617395"
+      },
+      {
+        "name": "lame",
+        "group": "lacquer",
+        "shadow": "1e263b",
+        "base": "2c3854",
+        "light": "485a79"
+      },
+      {
+        "name": "gilt",
+        "group": "gilt",
+        "shadow": "885b42",
+        "base": "cca06e",
+        "light": "f2d397"
+      },
+      {
+        "name": "obi",
+        "group": "leather",
+        "shadow": "483938",
+        "base": "5e4d47",
+        "light": "74615a"
+      },
+      {
+        "name": "blue silk",
+        "group": "streamer",
+        "shadow": "3b486c",
+        "base": "5f78a1",
+        "light": "829cc2"
+      },
+      {
+        "name": "ivory",
+        "group": "brocade",
+        "shadow": "aa8e80",
+        "base": "e2cdb2",
+        "light": "f7ebd6"
+      },
+      {
+        "name": "skin",
+        "group": "skin",
+        "shadow": "b37c6e",
+        "base": "ecc0a6",
+        "light": "ffddba"
+      },
+      {
+        "name": "eyes",
+        "group": "skin",
+        "shadow": "332433",
+        "base": "442f39",
+        "light": "593c43"
+      },
+      {
+        "name": "hair",
+        "group": "hair",
+        "shadow": "251e29",
+        "base": "382d35",
+        "light": "57434a"
+      },
+      {
+        "name": "ponytail",
+        "group": "tail",
+        "shadow": "211c27",
+        "base": "342a33",
+        "light": "54414a"
+      },
+      {
+        "name": "strand",
+        "group": "tail",
+        "shadow": "342b35",
+        "base": "4b3b44",
+        "light": "71585b"
+      },
+      {
+        "name": "sheath",
+        "group": "scabbard",
+        "shadow": "262331",
+        "base": "363344",
+        "light": "514859"
+      },
+      {
+        "name": "blade",
+        "group": "steel",
+        "shadow": "838598",
+        "base": "bfc2d0",
+        "light": "e1e3ed"
+      },
+      {
+        "name": "blade edge",
+        "group": "steel",
+        "shadow": "c4c4d0",
+        "base": "e5e5ee",
+        "light": "faf5ef"
+      },
+      {
+        "name": "grip",
+        "group": "hilt",
+        "shadow": "332936",
+        "base": "574248",
+        "light": "835d57"
+      }
+    ]
+  },
+  "rig": {
+    "parts": ["head", "chest", "pelvis", "thigh_R", "shin_R", "boot_R", "upper_R", "fore_R", "hand_R", "thigh_L", "shin_L", "boot_L", "upper_L", "fore_L", "hand_L", "sword"],
+    "rest": {
+      "pelvis": [0, 0, 13],
+      "chest": [0, -0.1, 16.6],
+      "neck": [0, 0.1, 20.2],
+      "head": [0, 0.4, 24.4],
+      "shoulder_R": [-3.15, -0.15, 19.15],
+      "elbow_R": [-5.25, -0.1, 16.5],
+      "hand_R": [-5.9, 2.15, 14.45],
+      "shoulder_L": [3.15, -0.15, 19.15],
+      "elbow_L": [4.85, -0.9, 16.25],
+      "hand_L": [5.3, 1.15, 13.7],
+      "hip_R": [-1.45, 0, 12.6],
+      "knee_R": [-1.75, 0.5, 6.6],
+      "ankle_R": [-2, 0.1, 2],
+      "toe_R": [-2.3, 2.2, 0],
+      "hip_L": [1.45, 0, 12.6],
+      "knee_L": [1.75, 0.2, 6.6],
+      "ankle_L": [2.1, -0.3, 2],
+      "toe_L": [2.8, 1.8, 0],
+      "sword_tip": [-13.8, 9.1, 6.55]
+    },
+    "attachments": {
+      "sword": {
+        "hand": "hand_R",
+        "marker": "sword_tip"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.19,
+      "base_pivot": [24, 40]
+    },
+    "neutral_cell": 48,
+    "render_cell": 72,
+    "neutral_rays": [42, -36, -0.18],
+    "posed_rays": [51, -45, -0.18],
+    "outline_rgb": [37, 29, 41]
+  },
+  "posed_volume": {
+    "origin_xyz": [-24, -23, -2],
+    "limit_xyz": [28, 28, 44],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../motions/walk.json",
+    "cell": 48,
+    "fine": {
+      "parts": ["sword"],
+      "rays": 4,
+      "coverage": 0.5,
+      "line": 0.25,
+      "seam": "behind"
+    },
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 3.65,
+      "knee_pole": [1.12, 8, -0.15],
+      "arm_swing_scale": {
+        "R": -0.74,
+        "L": 1.15
+      },
+      "hand_outward": 0.12,
+      "hand_lift_scale": 0.18,
+      "hand_lift": 0.52,
+      "wrist_pitch_scale": 2.3,
+      "wrist_pitch": {"R": -16, "L": 0},
+      "wrist_yaw_scale": 0.27,
+      "elbow_pole": [4, -2.7, -4.5],
+      "stride_scale": 1.26,
+      "swing_lift_scale": 1.16,
+      "root_bob_scale": 2.2,
+      "root_level_offset": -0.2
+    },
+    "head": {
+      "follow": [1, 1, 1],
+      "bob": 0.16,
+      "snap": 1
+    },
+    "secondary": [
+      {
+        "name": "high ponytail",
+        "kind": "pendulum",
+        "part": "head",
+        "materials": ["ponytail", "strand"],
+        "pivot": [-0.35, -2.25, 27.65],
+        "tip": [-9.5, -6.65, 20.15],
+        "driver": "chest",
+        "lag_frames": 1.05,
+        "follow": [1.3, 0.7, 2.1],
+        "max_deg": 19
+      },
+      {
+        "name": "front brocade",
+        "kind": "skirt",
+        "part": "pelvis",
+        "materials": ["blue silk", "ivory", "gilt"],
+        "box": {
+          "y": [1.9, 9],
+          "z": [0, 14]
+        },
+        "top_z": 14.1,
+        "hem_z": 5,
+        "follow": 0.83,
+        "side_width": 1.15
+      },
+      {
+        "name": "back streamer",
+        "kind": "pendulum",
+        "part": "pelvis",
+        "materials": ["blue silk", "ivory", "gilt"],
+        "box": {
+          "y": [-13, -1.8],
+          "z": [0, 13.8]
+        },
+        "pivot": [-1.8, -1.85, 14],
+        "tip": [-7.2, -6.45, 7.2],
+        "lag_frames": 0.85,
+        "follow": [1.2, 0.65, 1.8],
+        "max_deg": 15
+      }
+    ]
+  },
+  "attack": {
+    "clip": "slash.json",
+    "cell": 72,
+    "follow_cloth": true,
+    "fine": {
+      "parts": ["sword"],
+      "rays": 4,
+      "coverage": 0.5,
+      "line": 0.25,
+      "seam": "behind"
+    },
+    "tuning": {
+      "hip_yaw_scale": 0.38,
+      "head_snap": 1,
+      "head_yaw_scale": 0.12,
+      "head_lean_scale": 0.13,
+      "step_side": "R",
+      "knee_pole": [0.85, 8, -0.3],
+      "main_hand_side": "R",
+      "weapon_axis": [-7.9, 6.95, -7.9],
+      "support_yaw_offset": 0.031,
+      "support_hand_lift": 0,
+      "support_wrist_yaw_scale": 0.35,
+      "support_wrist_pitch": 0,
+      "support_elbow_pole": [5, -2.4, -4.2]
+    }
+  },
+  "measurements": {
+    "lowest_z": {
+      "sole_floor": [1],
+      "sword_tip": [17, 18]
+    },
+    "visibility": {
+      "blade": {
+        "part": "sword",
+        "materials": [17, 18]
+      },
+      "hilt": {
+        "part": "sword",
+        "materials": [7, 19]
+      },
+      "tail": {
+        "part": "head",
+        "materials": [14, 15]
+      },
+      "sash": {
+        "part": "pelvis",
+        "materials": [9, 10]
+      },
+      "scabbard": {
+        "part": "pelvis",
+        "materials": [16]
+      }
+    }
+  }
+}

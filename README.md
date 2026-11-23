@@ -10,6 +10,8 @@
 
 実験04では、新しい参考画像から銀のプレートアーマーと青い百合盾の **FLEUR KNIGHT** を制作しました。ギャラリーのキャラクター欄で再生できます。[制作・検証記録](research/IMAGE_TO_CHARACTER_04.md) · [試作と完成版の原寸比較](docs/assets/fleur_knight/slash-comparison.gif)
 
+実験05の **CRIMSON BLADE** は、長い黒髪を高く束ねた紅装の刀剣士です。低く刀を引き、踏み込みながら斜め上へ斬り抜けます。[制作・検証記録](research/IMAGE_TO_CHARACTER_05.md) · [8方向の攻撃GIF](docs/assets/crimson_blade/attack.gif)
+
 **新しい画像を受け取ったら**、[開発規約](AGENTS.md) と [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) を使ってください。制作ガイドに、採色から原寸評価、公開までの手順があります。
 
 ## 仕組み

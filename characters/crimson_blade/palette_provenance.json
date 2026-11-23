@@ -1,0 +1,99 @@
+{
+  "materials": {
+    "sole": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "Keep the contact strip dark."
+    },
+    "boot": {
+      "source": "leather",
+      "method": "extracted",
+      "note": "Belt leather also covers the instep."
+    },
+    "crimson": {
+      "source": "crimson",
+      "method": "adjusted",
+      "note": "Preserve the red field in a few pixels of warm light."
+    },
+    "garnet": {
+      "source": "crimson",
+      "method": "adjusted",
+      "note": "Fold under the crossover collar and behind the trousers."
+    },
+    "plate": {
+      "source": "navy",
+      "method": "adjusted",
+      "note": "Cool blue lacquer separates the armor from black hair."
+    },
+    "lame": {
+      "source": "navy",
+      "method": "adjusted",
+      "note": "Recess the overlapping lower courses."
+    },
+    "gilt": {
+      "source": "gold",
+      "method": "adjusted",
+      "note": "Warm edges catch on the shoulders, knees and sash."
+    },
+    "obi": {
+      "source": "leather",
+      "method": "extracted",
+      "note": "Leather girdle under the waist plates."
+    },
+    "blue silk": {
+      "source": "silk",
+      "method": "adjusted",
+      "note": "Lift the blue cloth away from dark lacquer."
+    },
+    "ivory": {
+      "source": "ivory",
+      "method": "adjusted",
+      "note": "Warm white lining and decorative silk."
+    },
+    "skin": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "Maintain the cheek and bare upper arms in shade."
+    },
+    "eyes": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Dark brow and irises within the face group."
+    },
+    "hair": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Keep the warm black of the crown."
+    },
+    "ponytail": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Use a distinct group where the tied fall overlaps the crown."
+    },
+    "strand": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "A highlight follows the arc of the thickest lock."
+    },
+    "sheath": {
+      "source": "navy",
+      "method": "adjusted",
+      "note": "Matte violet lacquer distinguishes the scabbard from the blade."
+    },
+    "blade": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Cool blade face opposite the warm gold fittings."
+    },
+    "blade edge": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Light cutting edge on the convex side."
+    },
+    "grip": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "Dark wrapped handle held in the right glove."
+    }
+  }
+}

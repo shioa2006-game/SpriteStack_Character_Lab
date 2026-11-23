@@ -1,0 +1,472 @@
+{
+  "directions": [
+    "S",
+    "SW",
+    "W",
+    "NW",
+    "N",
+    "NE",
+    "E",
+    "SE"
+  ],
+  "model_occupied_voxels": 5158,
+  "reference_palette_reextracted": true,
+  "generic_checks": {
+    "idle": {
+      "PASS": 39,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "walk": {
+      "PASS": 16,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "attack": {
+      "sampled_poses": 97,
+      "grip_contacts_by_frame": [6, 5, 5, 7, 7, 7, 5, 9, 6],
+      "baked_cells": 72
+    }
+  },
+  "idle_visibility_px": {
+    "drawn_steel": {
+      "S": 24,
+      "SW": 24,
+      "W": 15,
+      "NW": 5,
+      "N": 19,
+      "NE": 26,
+      "E": 20,
+      "SE": 25
+    },
+    "face_under_swept_fringe": {
+      "S": 17,
+      "SW": 17,
+      "SE": 17
+    },
+    "eyes": {
+      "S": 2,
+      "SW": 5,
+      "SE": 5
+    },
+    "high_fall_at_sides_and_rear": {
+      "W": 36,
+      "NW": 52,
+      "N": 51,
+      "NE": 49,
+      "E": 44
+    },
+    "crimson_wrap": {
+      "S": 22,
+      "SW": 18,
+      "N": 28,
+      "SE": 18
+    },
+    "blue_waist_cloth": {
+      "S": 28,
+      "SW": 29,
+      "W": 35,
+      "NW": 33,
+      "N": 36,
+      "NE": 21,
+      "E": 20,
+      "SE": 23
+    },
+    "ivory_selvage": {
+      "S": 18,
+      "SW": 13,
+      "W": 7,
+      "NW": 5,
+      "N": 4,
+      "NE": 6,
+      "E": 20,
+      "SE": 20
+    },
+    "high_gold_hair_clasp": {
+      "S": 2,
+      "SW": 4,
+      "W": 4,
+      "NW": 5,
+      "N": 4,
+      "E": 3,
+      "SE": 4
+    },
+    "lacquered_empty_scabbard": {
+      "SW": 14,
+      "W": 17,
+      "NW": 15,
+      "N": 10,
+      "E": 15
+    },
+    "left_shoulder_lamellae": {
+      "S": 8,
+      "N": 10,
+      "W": 11,
+      "SW": 14
+    },
+    "right_shoulder_lamellae": {
+      "S": 9,
+      "N": 12,
+      "E": 11,
+      "SE": 17
+    }
+  },
+  "walk": {
+    "layout": {
+      "distinct_frames": [6, 6, 6, 6, 6, 6, 6, 6],
+      "minimum_margin_px": 4,
+      "binary_alpha": true
+    },
+    "contact": {
+      "drift": {
+        "L": 0.0,
+        "R": 0.0
+      },
+      "boot_sole_z": {
+        "L": [0.0, 0.0, 0.0, 0.0, 2.5, 2.5],
+        "R": [0.0, 2.5, 2.5, 0.0, 0.0, 0.0]
+      }
+    },
+    "ground": {
+      "lowest_voxel_z": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+      "items": {
+        "sole_floor": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        "sword_tip": [4.0, 3.5, 4.0, 4.5, 4.0, 4.0]
+      }
+    },
+    "anchor": {
+      "boot_row_minus_projected_sole_px": {
+        "S": [0, 0, -1, 0, 0, 0],
+        "SW": [0, 0, 0, 0, -1, 1],
+        "W": [0, 0, 0, 0, 0, 0],
+        "NW": [0, 0, 0, 0, 0, 0],
+        "N": [0, 0, 0, 0, 0, 0],
+        "NE": [0, 0, 0, 0, 0, 0],
+        "E": [0, 0, 0, 0, 0, 0],
+        "SE": [0, 0, 0, 0, 0, 0]
+      },
+      "centre_range_px": {
+        "S": 0.63,
+        "SW": 0.15,
+        "W": 1.08,
+        "NW": 0.4,
+        "N": 0.41,
+        "NE": 0.33,
+        "E": 0.81,
+        "SE": 0.74
+      }
+    },
+    "arm_phase": {
+      "correlation_with_opposite_ankle": {
+        "R": 0.9073504289548177,
+        "L": 0.9073504289548173
+      }
+    },
+    "visibility": {
+      "minimum_px": {
+        "blade": 9,
+        "tail": 17,
+        "sash": 25
+      }
+    },
+    "secondary.intrusion": {
+      "share_inside_other_parts": {
+        "high ponytail": {
+          "rigid": 0.0,
+          "secondary": 0.0
+        },
+        "front brocade": {
+          "rigid": 0.0851,
+          "secondary": 0.0802
+        },
+        "back streamer": {
+          "rigid": 0.0,
+          "secondary": 0.0
+        }
+      }
+    },
+    "secondary.motion": {
+      "angles_deg": {
+        "high ponytail": [3.32, 11.17, 19],
+        "back streamer": [4.84, 9.06, 15]
+      },
+      "moving_voxels": 758
+    },
+    "head.face": {
+      "feature_px": {
+        "S": {
+          "eyes": [2, 2, 2, 2, 2, 2]
+        },
+        "SW": {
+          "eyes": [5, 5, 5, 5, 5, 5]
+        },
+        "W": {
+          "eyes": [2, 2, 2, 2, 2, 2]
+        },
+        "NW": {
+          "eyes": [0, 0, 0, 0, 0, 0]
+        },
+        "N": {
+          "eyes": [0, 0, 0, 0, 0, 0]
+        },
+        "NE": {
+          "eyes": [0, 0, 0, 0, 0, 0]
+        },
+        "E": {
+          "eyes": [2, 2, 2, 2, 2, 2]
+        },
+        "SE": {
+          "eyes": [5, 5, 5, 5, 5, 5]
+        }
+      }
+    }
+  },
+  "attack_blade_visible_px": {
+    "coil": {
+      "S": 24,
+      "SW": 14,
+      "W": 9,
+      "NW": 20,
+      "N": 27,
+      "NE": 31,
+      "E": 28,
+      "SE": 26
+    },
+    "cut": {
+      "S": 28,
+      "SW": 15,
+      "W": 17,
+      "NW": 26,
+      "N": 15,
+      "NE": 16,
+      "E": 18,
+      "SE": 29
+    },
+    "follow through": {
+      "S": 24,
+      "SW": 15,
+      "W": 14,
+      "NW": 26,
+      "N": 20,
+      "NE": 25,
+      "E": 24,
+      "SE": 28
+    }
+  },
+  "motion_inspection": {
+    "drapery": {
+      "walk": {
+        "high ponytail": {
+          "free_centers": 132,
+          "overlap_by_frame": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        "front brocade": {
+          "free_centers": 68,
+          "overlap_by_frame": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        "back streamer": {
+          "free_centers": 70,
+          "overlap_by_frame": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        }
+      },
+      "attack": {
+        "high ponytail": {
+          "free_centers": 132,
+          "overlap_by_frame": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        "front brocade": {
+          "free_centers": 68,
+          "overlap_by_frame": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        },
+        "back streamer": {
+          "free_centers": 70,
+          "overlap_by_frame": [
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {},
+            {}
+          ]
+        }
+      }
+    },
+    "scabbard_lacquer": {
+      "walk": {
+        "centers": 84,
+        "poses": 6,
+        "overlaps": []
+      },
+      "attack": {
+        "centers": 84,
+        "poses": 97,
+        "overlaps": []
+      }
+    },
+    "isolated_blade": {
+      "idle": {
+        "cells_checked": 8,
+        "disconnected_or_missing": []
+      },
+      "walk": {
+        "cells_checked": 48,
+        "disconnected_or_missing": []
+      },
+      "attack": {
+        "cells_checked": 72,
+        "disconnected_or_missing": []
+      }
+    }
+  },
+  "fresh_bake_rgba_sha256": {
+    "idle": "2fb30bddc652e1bd152804e9ae4ef8a45253cc765dee8ce10bd52101e7a1b936",
+    "walk": "932f62dc05e31509824a9041a9639030e888664385a4c9680052da52739242b7",
+    "attack": "91b37c70a970a6c23159b8ecacd5188b64539f010929ee41206b7561eb37d553"
+  },
+  "matched_metadata_and_attack_gif": true,
+  "existing_characters": {
+    "maren": {
+      "matched_rgba_sha256": {
+        "idle": "4d7edc16b21ee79b5d4d4fff9585219bbb4ec64a05a5cb6bea69dedae89cd609",
+        "walk": "fb394463ac4f19faa7c0d7c7f100939e6fca056fafe8b945e7611a06506a1b72",
+        "attack": "ae3285df609fb099ca12861a24e9e5df35302bbfb4e041aecfc00e9338ea78aa"
+      },
+      "matched_metadata_and_attack_gif": true,
+      "counts": {
+        "idle": {
+          "PASS": 32,
+          "WARNING": 1,
+          "FAIL": 0,
+          "SKIP": 0
+        },
+        "walk": {
+          "PASS": 16,
+          "WARNING": 0,
+          "FAIL": 0,
+          "SKIP": 0
+        }
+      },
+      "warnings": [
+        "model.fragments"
+      ]
+    },
+    "crystal_mage": {
+      "matched_rgba_sha256": {
+        "idle": "123290a8bb8c6406f4a8f44f3eccba0a2cd4173e1ba097ea85106eedc27592ca",
+        "walk": "6bb70dfd0dd6e884876ac95f029d8f30880fcb91e86f32226cbe736dbc3762e4",
+        "attack": "5f1bd1c982d39ad0f2cab22abaf2835fe880676be7421316dae4e2ec9d94a455"
+      },
+      "matched_metadata_and_attack_gif": true,
+      "counts": {
+        "idle": {
+          "PASS": 43,
+          "WARNING": 1,
+          "FAIL": 0,
+          "SKIP": 0
+        },
+        "walk": {
+          "PASS": 15,
+          "WARNING": 1,
+          "FAIL": 0,
+          "SKIP": 0
+        }
+      },
+      "warnings": [
+        "model.fragments",
+        "walk.head.face"
+      ]
+    },
+    "azure_ronin": {
+      "matched_rgba_sha256": {
+        "idle": "0a5ff22baa7b128b7ac0d52547cf348cee54c6a5be24eedc75b83b9fb6e6e971",
+        "walk": "be0d6ba59dcd6e5c71ba74dd93aee1ffa84694794d543c2d81f6b60b7e2a7da7",
+        "attack": "7e7a6d1a3f7aace89b777850c8890d9951aa1d84a0e66a8c505287efaee9f1f4"
+      },
+      "matched_metadata_and_attack_gif": true,
+      "counts": {
+        "idle": {
+          "PASS": 63,
+          "WARNING": 0,
+          "FAIL": 0,
+          "SKIP": 0
+        },
+        "walk": {
+          "PASS": 16,
+          "WARNING": 0,
+          "FAIL": 0,
+          "SKIP": 0
+        }
+      },
+      "warnings": []
+    },
+    "fleur_knight": {
+      "matched_rgba_sha256": {
+        "idle": "769eb618682317c42c48270919e1f7258bddf8a82cc6870734b91f1045b6aacd",
+        "walk": "99457bf64ff423899bc1db6c3b19b1c0860268f6143016f99fd351569e55fcb5",
+        "attack": "cbc47e4244aa0fcfae8882035f6656d45d1764eaf6c8c4a0d4cf56812e3cc3b9"
+      },
+      "matched_metadata_and_attack_gif": true,
+      "counts": {
+        "idle": {
+          "PASS": 30,
+          "WARNING": 0,
+          "FAIL": 0,
+          "SKIP": 0
+        },
+        "walk": {
+          "PASS": 16,
+          "WARNING": 0,
+          "FAIL": 0,
+          "SKIP": 0
+        }
+      },
+      "warnings": []
+    }
+  }
+}

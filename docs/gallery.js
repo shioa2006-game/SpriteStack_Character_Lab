@@ -43,6 +43,11 @@ const characters = {
     attackComparison: "slash-comparison.gif",
     extraAnimations: ["walk", "attack"],
   },
+  crimson_blade: {
+    name: "CRIMSON BLADE", subtitle: "Crimson Silk and Lacquer", assets: "assets/crimson_blade",
+    attackComparison: "slash-comparison.gif",
+    extraAnimations: ["walk", "attack"],
+  },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };
