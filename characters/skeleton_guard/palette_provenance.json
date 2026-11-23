@@ -1,0 +1,94 @@
+{
+  "materials": {
+    "bone": {
+      "source": "ivory",
+      "method": "adjusted",
+      "note": "Warm shafts with a shadow deep enough to read around joints."
+    },
+    "rib": {
+      "source": "ivory",
+      "method": "adjusted",
+      "note": "Light costal arches in front of the weathered vertebrae."
+    },
+    "spine": {
+      "source": "ivory",
+      "method": "adjusted",
+      "note": "Separate vertebrae and posterior processes from the ribs."
+    },
+    "ilium": {
+      "source": "ivory",
+      "method": "adjusted",
+      "note": "Bright flared pelvic wings above the dark girdle."
+    },
+    "socket": {
+      "source": "recess",
+      "method": "adjusted",
+      "note": "Deep eye bowls, nasal aperture and tooth separation."
+    },
+    "eyes": {
+      "source": "ember",
+      "method": "adjusted",
+      "note": "Enlarge the ember in each recess to survive pixel sampling."
+    },
+    "teeth": {
+      "source": "ivory",
+      "method": "extracted",
+      "note": "Sampled ivory in the maxilla and mandible."
+    },
+    "rag": {
+      "source": "rag",
+      "method": "extracted",
+      "note": "Sampled dark red cloth on separated strips."
+    },
+    "fold": {
+      "source": "rag",
+      "method": "adjusted",
+      "note": "Shadowed torn panels behind the legs."
+    },
+    "hide": {
+      "source": "strap",
+      "method": "adjusted",
+      "note": "Sling, hilt, shield back and ankle wraps."
+    },
+    "bronze": {
+      "source": "ochre",
+      "method": "adjusted",
+      "note": "Buckle, boss rivets and crossguard in rubbed bronze."
+    },
+    "iron": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Oxidised bands, pauldron and shield rim."
+    },
+    "oxide": {
+      "source": "rust",
+      "method": "adjusted",
+      "note": "Broad reddish corrosion patches on the pauldron."
+    },
+    "blue": {
+      "source": "field",
+      "method": "adjusted",
+      "note": "Lift the blue on the outward face away from the grey rim."
+    },
+    "device": {
+      "source": "ochre",
+      "method": "adjusted",
+      "note": "A worn ochre trefoil above the shield boss."
+    },
+    "blade": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Matte steel body of the pitted blade."
+    },
+    "edge": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "Bright bevel separating the sword from the bones."
+    },
+    "blade rust": {
+      "source": "rust",
+      "method": "adjusted",
+      "note": "Broken islands of rust inside the steel silhouette."
+    }
+  }
+}

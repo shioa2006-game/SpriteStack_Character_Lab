@@ -1,0 +1,99 @@
+{
+  "source_sha256": "5ba977072abe3fa9785964da3ced8a4c8a837d0688afca3c4363cb2d049d7c44",
+  "percentile_bands": {
+    "shadow": [
+      10,
+      30
+    ],
+    "base": [
+      45,
+      70
+    ],
+    "light": [
+      80,
+      95
+    ]
+  },
+  "materials": {
+    "ivory": {
+      "shadow": "e0c0ac",
+      "base": "f3ded0",
+      "light": "f6e7dd",
+      "pixels": 428
+    },
+    "recess": {
+      "shadow": "3b2d2a",
+      "base": "51423d",
+      "light": "6c5650",
+      "pixels": 92
+    },
+    "ember": {
+      "shadow": "302625",
+      "base": "46302c",
+      "light": "8b5044",
+      "pixels": 42
+    },
+    "rust": {
+      "shadow": "78686e",
+      "base": "a78885",
+      "light": "d1b9b5",
+      "pixels": 522
+    },
+    "steel": {
+      "shadow": "987e7a",
+      "base": "c0a099",
+      "light": "ead7d0",
+      "pixels": 230
+    },
+    "strap": {
+      "shadow": "5a443e",
+      "base": "816257",
+      "light": "b3877b",
+      "pixels": 262
+    },
+    "rag": {
+      "shadow": "57393a",
+      "base": "884e4e",
+      "light": "a86360",
+      "pixels": 363
+    },
+    "field": {
+      "shadow": "585257",
+      "base": "716c77",
+      "light": "8e7b80",
+      "pixels": 324
+    },
+    "ochre": {
+      "shadow": "706a76",
+      "base": "977e7b",
+      "light": "d0ac96",
+      "pixels": 75
+    }
+  },
+  "family_area_share": {
+    "ivory": 0.1135,
+    "recess": 0.1719,
+    "ember": 0.0462,
+    "rust": 0.1289,
+    "steel": 0.1593,
+    "strap": 0.1717,
+    "rag": 0.0832,
+    "field": 0.0718,
+    "ochre": 0.0534
+  },
+  "figure_pixels": 106540,
+  "height_fraction_above_sole": {
+    "hair_top": 1.0,
+    "skull_top": 1.0,
+    "chin": 0.8828,
+    "shoulder": 0.839,
+    "bottom_rib": 0.6879,
+    "pelvis": 0.6412,
+    "belt": 0.5876,
+    "hem": 0.2585,
+    "knee": 0.3531,
+    "ankle": 0.1186,
+    "sole": 0.0
+  },
+  "heads_tall": 8.53
+}

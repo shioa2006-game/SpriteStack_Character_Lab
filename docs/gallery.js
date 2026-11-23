@@ -53,6 +53,11 @@ const characters = {
     attackComparison: "smash-comparison.gif",
     extraAnimations: ["walk", "attack"],
   },
+  skeleton_guard: {
+    name: "SKELETON GUARD", subtitle: "Skeleton with Rusted Sword and Round Shield", assets: "assets/skeleton_guard",
+    attackComparison: "cleave-comparison.gif",
+    extraAnimations: ["walk", "attack"],
+  },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };

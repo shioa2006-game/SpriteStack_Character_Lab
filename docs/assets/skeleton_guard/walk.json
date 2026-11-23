@@ -1,0 +1,60 @@
+{
+  "animations": {
+    "walk": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 6,
+      "cell": [
+        48,
+        48
+      ],
+      "anchor": [
+        24,
+        40
+      ],
+      "fps": 9,
+      "loop": true,
+      "rgba_sha256": "43f59fce4da5dff738d4b256b2e69067cc4a68f168a1269d4109a3bfd4dc2437",
+      "suggested_forward_per_frame_model_units": 1.691,
+      "poses": [
+        "left heel contact",
+        "left loading",
+        "right passing",
+        "right heel contact",
+        "right loading",
+        "left passing"
+      ],
+      "contact": {
+        "index_base": 0,
+        "cycle_frames": 6,
+        "inclusive_stance_cyclic": {
+          "L": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "R": [
+            3,
+            4,
+            5,
+            0
+          ]
+        },
+        "sole_markers": {
+          "L": "toe_L",
+          "R": "toe_R"
+        },
+        "stance_note": "Flat rigid boot, model z=0. Keep a marker fixed on the ground while root advances by 1.9 model units per frame. Both feet touch at frames 0 and 3."
+      }
+    }
+  }
+}

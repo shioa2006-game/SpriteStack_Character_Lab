@@ -1,0 +1,179 @@
+{
+  "version": 1,
+  "description": "Skull sockets, costal arches, exposed ilia and two fixed hand attachments.",
+  "model_builder": "characters.skeleton_guard.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "sword",
+      "hand": "hand_R",
+      "marker": "sword_tip"
+    },
+    "off": {
+      "part": "shield",
+      "hand": "hand_L",
+      "marker": "shield_center"
+    }
+  },
+  "continuous": [
+    {
+      "part": "sword",
+      "through": [
+        "hand_R"
+      ]
+    }
+  ],
+  "cells": [48],
+  "visibility": [
+    {
+      "label": "orbital recesses",
+      "part": "head",
+      "materials": [
+        "socket"
+      ],
+      "min_px": 4,
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ]
+    },
+    {
+      "label": "paired embers",
+      "part": "head",
+      "materials": [
+        "eyes"
+      ],
+      "min_px": 1,
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ]
+    },
+    {
+      "label": "costal arches",
+      "part": "chest",
+      "materials": [
+        "rib"
+      ],
+      "min_px": 7,
+      "directions": "all"
+    },
+    {
+      "label": "exposed hip bones",
+      "part": "pelvis",
+      "materials": [
+        "ilium"
+      ],
+      "min_px": 3,
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ]
+    },
+    {
+      "label": "weathered blade",
+      "part": "sword",
+      "materials": [
+        "blade",
+        "edge",
+        "blade rust"
+      ],
+      "min_px": 3,
+      "directions": "all"
+    },
+    {
+      "label": "round shield",
+      "part": "shield",
+      "materials": [
+        "blue",
+        "hide",
+        "bronze",
+        "iron",
+        "oxide",
+        "device"
+      ],
+      "min_px": 4,
+      "directions": "all"
+    },
+    {
+      "label": "blue shield face",
+      "part": "shield",
+      "materials": [
+        "blue"
+      ],
+      "min_px": 10,
+      "directions": [
+        "S",
+        "SW",
+        "W"
+      ]
+    },
+    {
+      "label": "ragged cloth",
+      "part": "pelvis",
+      "materials": [
+        "rag",
+        "fold"
+      ],
+      "min_px": 4,
+      "directions": "all"
+    }
+  ],
+  "presence": [
+    {
+      "label": "longest torn strip reaches knee",
+      "part": "pelvis",
+      "materials": [
+        "rag",
+        "fold"
+      ],
+      "lowest_z_at_most": 7.25
+    }
+  ],
+  "walk": {
+    "arm_swing": "contralateral",
+    "lowest_z_at_least": {
+      "blade_min_z": 1
+    },
+    "visibility_min_px": {
+      "blade": 3,
+      "shield": 5,
+      "ribs": 6
+    },
+    "published": "../../docs/assets/skeleton_guard"
+  },
+  "attack": {
+    "feature": "blade",
+    "phase": "cleave",
+    "minimum_visible_px": 8
+  },
+  "additional_attack_phases": [
+    {
+      "feature": "blade",
+      "phase": "locked high",
+      "minimum_visible_px": 8
+    },
+    {
+      "feature": "blade",
+      "phase": "low stop",
+      "minimum_visible_px": 7
+    }
+  ],
+  "rib_openings": {
+    "direction": "S",
+    "minimum_transparent_pixels": 1,
+    "minimum_visible_fraction_with_shield": 0.85
+  },
+  "published": "../../docs/assets/skeleton_guard"
+}

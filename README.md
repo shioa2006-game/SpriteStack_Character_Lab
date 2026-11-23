@@ -14,6 +14,8 @@
 
 実験06の **GOBLIN BRUTE** は、大きな耳と短い脚のゴブリン戦士です。右肩の後ろへ木の棍棒を振りかぶり、腰を落として叩きつけます。[制作・検証記録](research/IMAGE_TO_CHARACTER_06.md) · [初版と完成版の攻撃比較](docs/assets/goblin_brute/smash-comparison.gif)
 
+実験07の **SKELETON GUARD** は、象牙色の頭蓋骨、背景が透ける肋骨、青い丸盾を持つ骸骨衛兵です。左の盾を構えたまま、右の錆剣を頭上で止めて斬り下ろします。[制作・検証記録](research/IMAGE_TO_CHARACTER_07.md) · [初版と完成版の攻撃比較](docs/assets/skeleton_guard/cleave-comparison.gif)
+
 **新しい画像を受け取ったら**、[開発規約](AGENTS.md) と [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) を使ってください。制作ガイドに、採色から原寸評価、公開までの手順があります。
 
 ## 仕組み

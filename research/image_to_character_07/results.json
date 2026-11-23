@@ -1,0 +1,835 @@
+{
+  "character": "skeleton_guard",
+  "sampled_palette_reproduced": true,
+  "idle": {
+    "summary": {
+      "PASS": 35,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "checks": [
+      "model.numbers",
+      "model.load",
+      "quality.references",
+      "model.palette",
+      "model.numeric_warnings",
+      "model.regenerate",
+      "model.connectivity",
+      "model.fragments",
+      "model.provenance",
+      "model.motion_walk",
+      "rig.attachments",
+      "rig.handedness",
+      "rig.markers",
+      "rig.contacts",
+      "rig.item_main",
+      "rig.item_off",
+      "rig.continuous_sword",
+      "rig.presence_longest_torn_strip_reaches_knee",
+      "sheet48.layout",
+      "sheet48.image",
+      "sheet48.alpha",
+      "sheet48.margins",
+      "sheet48.redraw",
+      "sheet48.distinct",
+      "sheet48.mirror",
+      "sheet48.screen_side",
+      "sheet48.visible_orbital_recesses",
+      "sheet48.visible_paired_embers",
+      "sheet48.visible_costal_arches",
+      "sheet48.visible_exposed_hip_bones",
+      "sheet48.visible_weathered_blade",
+      "sheet48.visible_round_shield",
+      "sheet48.visible_blue_shield_face",
+      "sheet48.visible_ragged_cloth",
+      "sheet48.published"
+    ],
+    "measurements": {
+      "rig.handedness": {
+        "item_centroid_x": {
+          "sword": -10.18,
+          "shield": 9.27
+        }
+      },
+      "rig.markers": {
+        "distance_to_nearest_voxel": {
+          "sword_tip": 0.29,
+          "shield_center": 0.38
+        }
+      },
+      "rig.contacts": {
+        "contact_voxels": {
+          "sword-hand_R": 20,
+          "shield-hand_L": 20,
+          "hand_R-fore_R": 6,
+          "fore_R-upper_R": 6,
+          "upper_R-chest": 32,
+          "hand_L-fore_L": 10,
+          "fore_L-upper_L": 6,
+          "upper_L-chest": 28
+        }
+      },
+      "sheet48.margins": {
+        "margins": {
+          "S": 4,
+          "SW": 4,
+          "W": 4,
+          "NW": 4,
+          "N": 4,
+          "NE": 4,
+          "E": 4,
+          "SE": 4
+        }
+      },
+      "sheet48.screen_side": {
+        "sides": {
+          "S": {
+            "sword": "left",
+            "shield": "right"
+          },
+          "SW": {
+            "sword": "left",
+            "shield": "right"
+          },
+          "W": {
+            "sword": "left",
+            "shield": "left"
+          },
+          "NW": {
+            "sword": "right",
+            "shield": "left"
+          },
+          "N": {
+            "sword": "right",
+            "shield": "left"
+          },
+          "NE": {
+            "sword": "right",
+            "shield": "left"
+          },
+          "E": {
+            "sword": "right",
+            "shield": "right"
+          },
+          "SE": {
+            "sword": "left",
+            "shield": "right"
+          }
+        }
+      },
+      "sheet48.visible_orbital_recesses": {
+        "px": {
+          "S": 20,
+          "SW": 16,
+          "SE": 16
+        }
+      },
+      "sheet48.visible_paired_embers": {
+        "px": {
+          "S": 2,
+          "SW": 2,
+          "SE": 2
+        }
+      },
+      "sheet48.visible_costal_arches": {
+        "px": {
+          "S": 37,
+          "SW": 22,
+          "W": 24,
+          "NW": 40,
+          "N": 61,
+          "NE": 42,
+          "E": 19,
+          "SE": 32
+        }
+      },
+      "sheet48.visible_exposed_hip_bones": {
+        "px": {
+          "S": 25,
+          "SW": 9,
+          "SE": 25
+        }
+      },
+      "sheet48.visible_weathered_blade": {
+        "px": {
+          "S": 30,
+          "SW": 32,
+          "W": 9,
+          "NW": 12,
+          "N": 24,
+          "NE": 32,
+          "E": 24,
+          "SE": 33
+        }
+      },
+      "sheet48.visible_round_shield": {
+        "px": {
+          "S": 91,
+          "SW": 108,
+          "W": 58,
+          "NW": 49,
+          "N": 74,
+          "NE": 52,
+          "E": 36,
+          "SE": 48
+        }
+      },
+      "sheet48.visible_blue_shield_face": {
+        "px": {
+          "S": 51,
+          "SW": 59,
+          "W": 32
+        }
+      },
+      "sheet48.visible_ragged_cloth": {
+        "px": {
+          "S": 21,
+          "SW": 21,
+          "W": 13,
+          "NW": 25,
+          "N": 20,
+          "NE": 22,
+          "E": 18,
+          "SE": 22
+        }
+      },
+      "sheet48.published": {
+        "file_bytes_equal": {
+          "idle.png": true,
+          "metadata.json": false
+        }
+      }
+    }
+  },
+  "walk": {
+    "summary": {
+      "PASS": 16,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "checks": [
+      "walk.layout",
+      "walk.idle_kept",
+      "walk.contact",
+      "walk.ground",
+      "walk.parts",
+      "walk.items",
+      "walk.fragments",
+      "walk.anchor",
+      "walk.arm_phase",
+      "walk.visibility",
+      "walk.secondary.intrusion",
+      "walk.secondary.motion",
+      "walk.head.motion",
+      "walk.head.neck",
+      "walk.head.face",
+      "walk.published"
+    ],
+    "measurements": {
+      "walk.layout": {
+        "distinct_frames": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "minimum_margin_px": 3,
+        "binary_alpha": true
+      },
+      "walk.contact": {
+        "drift": {
+          "L": 0.0,
+          "R": 0.0
+        },
+        "boot_sole_z": {
+          "L": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.5,
+            2.0
+          ],
+          "R": [
+            0.0,
+            2.0,
+            2.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "walk.ground": {
+        "lowest_voxel_z": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "items": {
+          "blade_min_z": [
+            3.5,
+            3.0,
+            3.5,
+            4.0,
+            3.5,
+            3.5
+          ]
+        }
+      },
+      "walk.parts": {
+        "lowest_ratio": {
+          "head": 0.996,
+          "chest": 0.989,
+          "pelvis": 0.986,
+          "thigh_R": 0.868,
+          "shin_R": 0.892,
+          "boot_R": 1.0,
+          "upper_R": 0.97,
+          "fore_R": 0.898,
+          "hand_R": 1.0,
+          "thigh_L": 0.804,
+          "shin_L": 0.966,
+          "boot_L": 1.0,
+          "upper_L": 0.909,
+          "fore_L": 0.906,
+          "hand_L": 1.0,
+          "sword": 1.0,
+          "shield": 0.991
+        }
+      },
+      "walk.items": {
+        "minimum_face_contacts": {
+          "sword": 7,
+          "shield": 21
+        }
+      },
+      "walk.fragments": {
+        "per_frame": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "walk.anchor": {
+        "boot_row_minus_projected_sole_px": {
+          "S": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "SW": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "W": [
+            -1,
+            -1,
+            -1,
+            -1,
+            0,
+            1
+          ],
+          "NW": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "N": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "NE": [
+            0,
+            0,
+            0,
+            -1,
+            0,
+            0
+          ],
+          "E": [
+            -1,
+            1,
+            1,
+            -1,
+            -1,
+            -1
+          ],
+          "SE": [
+            -1,
+            0,
+            1,
+            0,
+            0,
+            0
+          ]
+        },
+        "centre_range_px": {
+          "S": 0.75,
+          "SW": 0.27,
+          "W": 0.66,
+          "NW": 0.7,
+          "N": 0.67,
+          "NE": 0.48,
+          "E": 0.51,
+          "SE": 1.04
+        }
+      },
+      "walk.arm_phase": {
+        "correlation_with_opposite_ankle": {
+          "R": 0.9050278895162346,
+          "L": 0.9050278895162344
+        }
+      },
+      "walk.visibility": {
+        "minimum_px": {
+          "blade": 6,
+          "shield": 29,
+          "ribs": 18
+        }
+      },
+      "walk.secondary.intrusion": {
+        "share_inside_other_parts": {
+          "torn waist strips": {
+            "rigid": 0.0788,
+            "secondary": 0.0584
+          }
+        }
+      },
+      "walk.secondary.motion": {
+        "angles_deg": {},
+        "moving_voxels": 223
+      },
+      "walk.head.motion": {
+        "head_top_row": {
+          "S": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "SW": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "W": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "NW": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "N": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "NE": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "E": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "SE": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ]
+        }
+      },
+      "walk.head.neck": {
+        "neck_offset_units": [
+          0.261,
+          0.569,
+          0.293,
+          0.261,
+          0.569,
+          0.293
+        ],
+        "neck_rise_units": [
+          0.004,
+          -0.479,
+          0.145,
+          0.004,
+          -0.479,
+          0.145
+        ]
+      },
+      "walk.head.face": {
+        "feature_px": {
+          "S": {
+            "eyes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "SW": {
+            "eyes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "W": {
+            "eyes": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "NW": {
+            "eyes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "N": {
+            "eyes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "NE": {
+            "eyes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "E": {
+            "eyes": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          },
+          "SE": {
+            "eyes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          }
+        }
+      }
+    }
+  },
+  "attack": {
+    "baked_cells": 72,
+    "phase_names": [
+      "watch",
+      "unlatch",
+      "hitch",
+      "locked high",
+      "cleave",
+      "low stop",
+      "recoil",
+      "reset",
+      "watch"
+    ],
+    "durations_ms": [
+      80,
+      60,
+      110,
+      190,
+      40,
+      150,
+      60,
+      90,
+      60
+    ],
+    "verification": [
+      "cleave: blade visible in at least 18 pixels in every direction",
+      "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 5, 'shield': 19}"
+    ]
+  },
+  "inspection": {
+    "idle": {
+      "S": {
+        "rib_gap_empty_rays": 28,
+        "rib_gap_transparent_png_pixels": 2,
+        "ribs_visible_px": 37,
+        "ribs_without_shield_px": 38
+      },
+      "SW": {
+        "rib_gap_empty_rays": 9,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 22,
+        "ribs_without_shield_px": 33
+      },
+      "W": {
+        "rib_gap_empty_rays": 0,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 24,
+        "ribs_without_shield_px": 24
+      },
+      "NW": {
+        "rib_gap_empty_rays": 10,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 40,
+        "ribs_without_shield_px": 40
+      },
+      "N": {
+        "rib_gap_empty_rays": 12,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 61,
+        "ribs_without_shield_px": 61
+      },
+      "NE": {
+        "rib_gap_empty_rays": 10,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 42,
+        "ribs_without_shield_px": 42
+      },
+      "E": {
+        "rib_gap_empty_rays": 0,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 19,
+        "ribs_without_shield_px": 19
+      },
+      "SE": {
+        "rib_gap_empty_rays": 13,
+        "rib_gap_transparent_png_pixels": 0,
+        "ribs_visible_px": 32,
+        "ribs_without_shield_px": 32
+      }
+    },
+    "contacts": {
+      "walk": {
+        "samples": 6,
+        "cloth_keys": 6,
+        "overlaps": []
+      },
+      "attack": {
+        "samples": 97,
+        "cloth_keys": 9,
+        "overlaps": []
+      }
+    },
+    "isolated_blade": {
+      "idle": {
+        "cells_checked": 8,
+        "disconnected_or_missing": []
+      },
+      "walk": {
+        "cells_checked": 48,
+        "disconnected_or_missing": []
+      },
+      "attack": {
+        "cells_checked": 72,
+        "disconnected_or_missing": []
+      }
+    },
+    "attack_visibility": {
+      "cleave": {
+        "S": 41,
+        "SW": 33,
+        "W": 18,
+        "NW": 29,
+        "N": 46,
+        "NE": 31,
+        "E": 21,
+        "SE": 36
+      },
+      "locked high": {
+        "S": 40,
+        "SW": 38,
+        "W": 33,
+        "NW": 39,
+        "N": 29,
+        "NE": 25,
+        "E": 32,
+        "SE": 42
+      },
+      "low stop": {
+        "S": 38,
+        "SW": 27,
+        "W": 16,
+        "NW": 9,
+        "N": 38,
+        "NE": 37,
+        "E": 36,
+        "SE": 38
+      }
+    }
+  },
+  "independent_rebuild_rgba_sha256": {
+    "idle": "36b3766cb849877729a238607c2e3957db49829c3cb52994dedb49e6903049f8",
+    "walk": "43f59fce4da5dff738d4b256b2e69067cc4a68f168a1269d4109a3bfd4dc2437",
+    "attack": "e30fa7a8ddeb433681a9809310d668906bf74a9c90a35a23e03603a5392544fe"
+  },
+  "regressions": {
+    "azure_ronin": {
+      "rgba_sha256": {
+        "idle": "0a5ff22baa7b128b7ac0d52547cf348cee54c6a5be24eedc75b83b9fb6e6e971",
+        "walk": "be0d6ba59dcd6e5c71ba74dd93aee1ffa84694794d543c2d81f6b60b7e2a7da7",
+        "attack": "7e7a6d1a3f7aace89b777850c8890d9951aa1d84a0e66a8c505287efaee9f1f4",
+        "idle-64": "e495a312f59ae4e804fc47e6dd277bbc2cfc5eb1f2cd18170ccf4f727d94cf17"
+      },
+      "character": "PASS 63, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 7 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 15}"
+      ]
+    },
+    "crimson_blade": {
+      "rgba_sha256": {
+        "idle": "2fb30bddc652e1bd152804e9ae4ef8a45253cc765dee8ce10bd52101e7a1b936",
+        "walk": "932f62dc05e31509824a9041a9639030e888664385a4c9680052da52739242b7",
+        "attack": "91b37c70a970a6c23159b8ecacd5188b64539f010929ee41206b7561eb37d553"
+      },
+      "character": "PASS 39, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 15 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 5}"
+      ]
+    },
+    "crystal_mage": {
+      "rgba_sha256": {
+        "idle": "123290a8bb8c6406f4a8f44f3eccba0a2cd4173e1ba097ea85106eedc27592ca",
+        "walk": "6bb70dfd0dd6e884876ac95f029d8f30880fcb91e86f32226cbe736dbc3762e4",
+        "attack": "5f1bd1c982d39ad0f2cab22abaf2835fe880676be7421316dae4e2ec9d94a455",
+        "idle-64": "280a7348c2b4b24e48219b510713a5a9c163660c62762c0b572f320cd47f0e33"
+      },
+      "character": "PASS 43, WARNING 1, FAIL 0, SKIP 0",
+      "walk": "PASS 15, WARNING 1, FAIL 0, SKIP 0",
+      "attack": [
+        "release: crystal visible in at least 3 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'staff': 10, 'book': 22}"
+      ]
+    },
+    "fleur_knight": {
+      "rgba_sha256": {
+        "idle": "769eb618682317c42c48270919e1f7258bddf8a82cc6870734b91f1045b6aacd",
+        "walk": "99457bf64ff423899bc1db6c3b19b1c0860268f6143016f99fd351569e55fcb5",
+        "attack": "cbc47e4244aa0fcfae8882035f6656d45d1764eaf6c8c4a0d4cf56812e3cc3b9"
+      },
+      "character": "PASS 30, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 10 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 30, 'shield': 32}"
+      ]
+    },
+    "goblin_brute": {
+      "rgba_sha256": {
+        "idle": "e24345653332b5c8dfb50b69bdd0b2dc641142e821429e23cf77669629f894cb",
+        "walk": "d80f18aeedbd6ef05002da3e0d96282a37f439305f345a7c639d047bba397ad1",
+        "attack": "414fb08c653535a33b27f8cbbd6f286d4be7a7b0c1dbe2540e2be3f4f0079a2f"
+      },
+      "character": "PASS 32, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "impact: club visible in at least 19 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'club': 20}"
+      ]
+    },
+    "maren": {
+      "rgba_sha256": {
+        "idle": "4d7edc16b21ee79b5d4d4fff9585219bbb4ec64a05a5cb6bea69dedae89cd609",
+        "walk": "fb394463ac4f19faa7c0d7c7f100939e6fca056fafe8b945e7611a06506a1b72",
+        "attack": "ae3285df609fb099ca12861a24e9e5df35302bbfb4e041aecfc00e9338ea78aa"
+      },
+      "character": "PASS 32, WARNING 1, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 14 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 27, 'shield': 21}"
+      ]
+    }
+  },
+  "gallery": {
+    "source": "local docs",
+    "scale": 1,
+    "speed": 1,
+    "matched_cells": 128,
+    "replay": true,
+    "gif_links": 2
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "animations": {
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        72,
+        72
+      ],
+      "anchor": [
+        36,
+        52
+      ],
+      "fps": 12,
+      "loop": false,
+      "rgba_sha256": "e30fa7a8ddeb433681a9809310d668906bf74a9c90a35a23e03603a5392544fe",
+      "durations_ms": [
+        80,
+        60,
+        110,
+        190,
+        40,
+        150,
+        60,
+        90,
+        60
+      ],
+      "phase_names": [
+        "watch",
+        "unlatch",
+        "hitch",
+        "locked high",
+        "cleave",
+        "low stop",
+        "recoil",
+        "reset",
+        "watch"
+      ]
+    }
+  }
+}
