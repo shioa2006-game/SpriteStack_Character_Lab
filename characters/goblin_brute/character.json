@@ -1,0 +1,319 @@
+{
+  "version": 1,
+  "status": {
+    "idle": "Short, crouched goblin with swept pinnae and a heavy right-hand club",
+    "walk": "Six-beat shared walk with a low head and loose waistcloth",
+    "attack": "Nine-key overhead club smash"
+  },
+  "model": {
+    "materials": "materials.npz",
+    "part_ids": "part_ids.npz",
+    "origin_xyz": [-21, -10, 0],
+    "voxel_size_xyz": [0.5, 0.5, 0.5],
+    "palette": [
+      {
+        "name": "sole",
+        "group": "feet",
+        "shadow": "40513c",
+        "base": "61754d",
+        "light": "849958"
+      },
+      {
+        "name": "skin",
+        "group": "hide",
+        "shadow": "516443",
+        "base": "869c55",
+        "light": "b6c779"
+      },
+      {
+        "name": "ear lining",
+        "group": "hide",
+        "shadow": "87594f",
+        "base": "bc8570",
+        "light": "dda382"
+      },
+      {
+        "name": "socket",
+        "group": "face",
+        "shadow": "302f29",
+        "base": "453d32",
+        "light": "62533a"
+      },
+      {
+        "name": "eyes",
+        "group": "face",
+        "shadow": "be8c3d",
+        "base": "f6c746",
+        "light": "ffe586"
+      },
+      {
+        "name": "snout",
+        "group": "hide",
+        "shadow": "906350",
+        "base": "b98961",
+        "light": "d5a679"
+      },
+      {
+        "name": "tusk",
+        "group": "face",
+        "shadow": "c5a490",
+        "base": "e9d1c0",
+        "light": "f0dccb"
+      },
+      {
+        "name": "rag",
+        "group": "cloth",
+        "shadow": "633b38",
+        "base": "984f40",
+        "light": "c27052"
+      },
+      {
+        "name": "rag fold",
+        "group": "cloth",
+        "shadow": "543634",
+        "base": "793e37",
+        "light": "a25143"
+      },
+      {
+        "name": "leather",
+        "group": "leather",
+        "shadow": "443a38",
+        "base": "574642",
+        "light": "765d54"
+      },
+      {
+        "name": "rawhide",
+        "group": "leather",
+        "shadow": "624634",
+        "base": "976a49",
+        "light": "bc8b62"
+      },
+      {
+        "name": "iron",
+        "group": "metal",
+        "shadow": "45414a",
+        "base": "726267",
+        "light": "99867f"
+      },
+      {
+        "name": "stud",
+        "group": "metal",
+        "shadow": "7e6758",
+        "base": "b39c7c",
+        "light": "e0c297"
+      },
+      {
+        "name": "heartwood",
+        "group": "wood",
+        "shadow": "805436",
+        "base": "b28049",
+        "light": "d8a267"
+      },
+      {
+        "name": "bark",
+        "group": "wood",
+        "shadow": "573c30",
+        "base": "845639",
+        "light": "b7804f"
+      },
+      {
+        "name": "hoop",
+        "group": "hoop",
+        "shadow": "433a3a",
+        "base": "645756",
+        "light": "998677"
+      },
+      {
+        "name": "grip",
+        "group": "shaft",
+        "shadow": "584033",
+        "base": "8a6043",
+        "light": "b78b63"
+      },
+      {
+        "name": "brow ridge",
+        "group": "hide",
+        "shadow": "41503b",
+        "base": "708749",
+        "light": "9bae61"
+      }
+    ]
+  },
+  "rig": {
+    "parts": [
+      "head",
+      "chest",
+      "pelvis",
+      "thigh_R",
+      "shin_R",
+      "boot_R",
+      "upper_R",
+      "fore_R",
+      "hand_R",
+      "thigh_L",
+      "shin_L",
+      "boot_L",
+      "upper_L",
+      "fore_L",
+      "hand_L",
+      "club"
+    ],
+    "rest": {
+      "pelvis": [0, -0.5, 9.2],
+      "chest": [0, 0.1, 13.3],
+      "neck": [0, 1.45, 17.5],
+      "head": [0, 2.55, 22.65],
+      "shoulder_R": [-3.55, 0.35, 16.35],
+      "elbow_R": [-7.45, -0.9, 12.95],
+      "hand_R": [-7.5, 2.9, 9.55],
+      "shoulder_L": [3.55, 0.35, 16.35],
+      "elbow_L": [7.35, -0.95, 12.95],
+      "hand_L": [7.9, 2.1, 8.65],
+      "hip_R": [-1.65, -0.5, 9.1],
+      "knee_R": [-3.65, 1.15, 5.35],
+      "ankle_R": [-3.1, -0.85, 1.6],
+      "toe_R": [-3.8, 2.9, 0],
+      "hip_L": [1.65, -0.5, 9.1],
+      "knee_L": [3.5, 1.55, 5.25],
+      "ankle_L": [3.1, -0.5, 1.6],
+      "toe_L": [3.8, 3.25, 0],
+      "club_end": [-16.1, 6.6, 5.05]
+    },
+    "attachments": {
+      "club": {
+        "hand": "hand_R",
+        "marker": "club_end"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.19,
+      "base_pivot": [24, 40]
+    },
+    "neutral_cell": 48,
+    "render_cell": 72,
+    "neutral_rays": [42, -36, -0.18],
+    "posed_rays": [51, -45, -0.18],
+    "outline_rgb": [40, 35, 38]
+  },
+  "posed_volume": {
+    "origin_xyz": [-25, -22, -3],
+    "limit_xyz": [26, 29, 42],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../motions/walk.json",
+    "cell": 48,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 2.35,
+      "knee_pole": [4.8, 6.5, 0.2],
+      "arm_swing_scale": {
+        "R": -1.08,
+        "L": 1.68
+      },
+      "hand_outward": {
+        "R": -0.92,
+        "L": 0.18
+      },
+      "hand_lift_scale": 0.29,
+      "hand_lift": {
+        "R": 1.75,
+        "L": 0.8
+      },
+      "wrist_pitch_scale": {
+        "R": 1.1,
+        "L": 2.4
+      },
+      "wrist_pitch": {
+        "R": 6,
+        "L": 0
+      },
+      "wrist_yaw_scale": 0.27,
+      "elbow_pole": [6, -4, -1.5],
+      "stride_scale": 0.88,
+      "swing_lift_scale": 1.42,
+      "root_bob_scale": 2.8,
+      "root_level_offset": -0.03,
+      "torso_lean": 5,
+      "root_sway_scale": 1.45
+    },
+    "head": {
+      "follow": [0.55, 0.6, 1],
+      "bob": 0.2,
+      "snap": 1,
+      "forward_offset": 0.26
+    },
+    "secondary": [
+      {
+        "name": "torn hide apron",
+        "kind": "skirt",
+        "part": "pelvis",
+        "materials": [
+          "rag",
+          "rag fold"
+        ],
+        "drive": "thigh",
+        "top_z": 10.1,
+        "hem_z": 4.9,
+        "follow": 0.62,
+        "side_width": 0.85
+      }
+    ]
+  },
+  "attack": {
+    "clip": "smash.json",
+    "cell": 72,
+    "follow_cloth": true,
+    "tuning": {
+      "hip_yaw_scale": 0.38,
+      "head_snap": 1,
+      "head_yaw_scale": 0.2,
+      "head_lean_scale": 0.27,
+      "step_side": "R",
+      "knee_pole": [2.5, 7, 0],
+      "main_hand_side": "R",
+      "weapon_axis": [-8.6, 3.7, -4.5],
+      "support_yaw_offset": 0,
+      "support_hand_lift": 0,
+      "support_wrist_yaw_scale": 0.35,
+      "support_wrist_pitch": 0,
+      "support_elbow_pole": [6, -3, -1.2]
+    }
+  },
+  "measurements": {
+    "lowest_z": {
+      "sole_floor": [1],
+      "club_head": [14, 15, 16]
+    },
+    "visibility": {
+      "club": {
+        "part": "club",
+        "materials": [14, 15, 16]
+      },
+      "apron": {
+        "part": "pelvis",
+        "materials": [8, 9]
+      },
+      "ears": {
+        "part": "head",
+        "materials": [3]
+      }
+    }
+  }
+}

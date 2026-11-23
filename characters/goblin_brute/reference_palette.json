@@ -1,0 +1,97 @@
+{
+  "source_sha256": "51a9c1f15fb37543b1e529b78f174b21c43c772661f67e852da3dab423d3c739",
+  "percentile_bands": {
+    "shadow": [
+      10,
+      30
+    ],
+    "base": [
+      45,
+      70
+    ],
+    "light": [
+      80,
+      95
+    ]
+  },
+  "materials": {
+    "hide": {
+      "shadow": "ab9271",
+      "base": "bea480",
+      "light": "c4ab87",
+      "pixels": 1970
+    },
+    "ear": {
+      "shadow": "6c534c",
+      "base": "b28674",
+      "light": "c99e8b",
+      "pixels": 512
+    },
+    "cloth": {
+      "shadow": "7d544e",
+      "base": "9b665d",
+      "light": "ab7369",
+      "pixels": 654
+    },
+    "leather": {
+      "shadow": "443a38",
+      "base": "574642",
+      "light": "765d54",
+      "pixels": 731
+    },
+    "iron": {
+      "shadow": "675958",
+      "base": "7e6d6b",
+      "light": "96827c",
+      "pixels": 642
+    },
+    "wood": {
+      "shadow": "725d55",
+      "base": "b08a78",
+      "light": "c8a28c",
+      "pixels": 669
+    },
+    "ivory": {
+      "shadow": "c5a490",
+      "base": "e9d1c0",
+      "light": "f0dccb",
+      "pixels": 132
+    },
+    "iris": {
+      "shadow": "886c4e",
+      "base": "e0bd7e",
+      "light": "eccd8f",
+      "pixels": 78
+    },
+    "snout": {
+      "shadow": "9e7763",
+      "base": "be9079",
+      "light": "c39681",
+      "pixels": 294
+    }
+  },
+  "family_area_share": {
+    "hide": 0.1816,
+    "ear": 0.1059,
+    "cloth": 0.0613,
+    "leather": 0.2762,
+    "iron": 0.1051,
+    "wood": 0.0617,
+    "ivory": 0.0579,
+    "iris": 0.0514,
+    "snout": 0.099
+  },
+  "figure_pixels": 157364,
+  "height_fraction_above_sole": {
+    "hair_top": 1.0,
+    "skull_top": 1.0,
+    "chin": 0.7173,
+    "shoulder": 0.7696,
+    "belt": 0.5016,
+    "hem": 0.1895,
+    "knee": 0.2925,
+    "ankle": 0.1111,
+    "sole": 0.0
+  },
+  "heads_tall": 3.54
+}

@@ -12,6 +12,8 @@
 
 実験05の **CRIMSON BLADE** は、長い黒髪を高く束ねた紅装の刀剣士です。低く刀を引き、踏み込みながら斜め上へ斬り抜けます。[制作・検証記録](research/IMAGE_TO_CHARACTER_05.md) · [8方向の攻撃GIF](docs/assets/crimson_blade/attack.gif)
 
+実験06の **GOBLIN BRUTE** は、大きな耳と短い脚のゴブリン戦士です。右肩の後ろへ木の棍棒を振りかぶり、腰を落として叩きつけます。[制作・検証記録](research/IMAGE_TO_CHARACTER_06.md) · [初版と完成版の攻撃比較](docs/assets/goblin_brute/smash-comparison.gif)
+
 **新しい画像を受け取ったら**、[開発規約](AGENTS.md) と [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) を使ってください。制作ガイドに、採色から原寸評価、公開までの手順があります。
 
 ## 仕組み

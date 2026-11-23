@@ -1,0 +1,103 @@
+{
+  "fps": 10,
+  "poses": [
+    "stalk",
+    "draw back",
+    "haul",
+    "overhead",
+    "drop",
+    "impact",
+    "drag",
+    "heave up",
+    "stalk"
+  ],
+  "durations_ms": [70, 100, 110, 190, 50, 150, 130, 100, 80],
+  "keys": [
+    {},
+    {
+      "root": [0.15, -0.3, -0.65],
+      "yaw": 12,
+      "lean": -3,
+      "front_step": 0.1,
+      "front_lift": 0.15,
+      "front_outward": 0.25,
+      "hand_R": [-8.7, 1.7, 12.2],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.78, 0.5, 0.375],
+      "support_delta": [0.2, 0.9, 0.7]
+    },
+    {
+      "root": [0.55, -0.85, -1.05],
+      "yaw": 25,
+      "lean": -6,
+      "front_step": 0.45,
+      "front_lift": 0.8,
+      "front_outward": 0.65,
+      "hand_R": [-9.65, -3.35, 16.65],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.65, -0.65, 0.56],
+      "support_delta": [-0.35, 1.6, 2.4]
+    },
+    {
+      "root": [0.5, -0.65, -0.45],
+      "yaw": 30,
+      "lean": -9,
+      "front_step": 1.15,
+      "front_lift": 1.45,
+      "front_outward": 1,
+      "hand_R": [-10.85, -4.15, 21.55],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.59, -0.47, 0.78],
+      "support_delta": [-0.7, 2.7, 3.2]
+    },
+    {
+      "root": [-0.4, 0.75, -0.9],
+      "yaw": 1,
+      "lean": 8,
+      "front_step": 3.4,
+      "front_lift": 0.45,
+      "front_outward": 1.55,
+      "hand_R": [-10.55, 4.15, 18.5],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.5, 0.68, 0.6],
+      "support_delta": [0.2, 0.7, 2.4]
+    },
+    {
+      "root": [-0.65, 1.55, -2.45],
+      "yaw": -24,
+      "lean": 21,
+      "front_step": 4.1,
+      "front_lift": 0,
+      "front_outward": 1.65,
+      "hand_R": [-6.3, 8.4, 7.75],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.783, 0.239, -0.574],
+      "support_delta": [0.5, -1, 2]
+    },
+    {
+      "root": [-0.9, 2.0, -2.95],
+      "yaw": -36,
+      "lean": 23,
+      "front_step": 4.1,
+      "front_lift": 0,
+      "front_outward": 1.65,
+      "hand_R": [-7.5, 9.25, 6.77],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.88, 0.15, -0.45],
+      "support_delta": [0.3, -1.35, 1.6]
+    },
+    {
+      "root": [-0.35, 0.68, -1.35],
+      "yaw": -11,
+      "lean": 9,
+      "front_step": 1.65,
+      "front_lift": 0.55,
+      "front_outward": 0.75,
+      "hand_R": [-6.6, 6.4, 10.1],
+      "elbow_pole_R": [-6, -3.8, -0.4],
+      "aim": [-0.874, 0.267, -0.407],
+      "support_delta": [0.2, -0.35, 0.7]
+    },
+    {}
+  ]
+}

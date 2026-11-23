@@ -1,0 +1,50 @@
+{
+  "animations": {
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        72,
+        72
+      ],
+      "anchor": [
+        36,
+        52
+      ],
+      "fps": 10,
+      "loop": false,
+      "rgba_sha256": "a89236e54cbc478cf4a91d09c0022bcb792d8cb21f25ab29817d556fedeeb0bc",
+      "durations_ms": [
+        70,
+        100,
+        110,
+        190,
+        50,
+        150,
+        130,
+        100,
+        80
+      ],
+      "phase_names": [
+        "stalk",
+        "draw back",
+        "haul",
+        "overhead",
+        "drop",
+        "impact",
+        "drag",
+        "heave up",
+        "stalk"
+      ]
+    }
+  }
+}

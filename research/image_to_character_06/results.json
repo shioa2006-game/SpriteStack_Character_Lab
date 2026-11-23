@@ -1,0 +1,1136 @@
+{
+  "character": "goblin_brute",
+  "palette_resampling_matches": true,
+  "idle": {
+    "summary": {
+      "PASS": 32,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "checks": [
+      "model.numbers",
+      "model.load",
+      "quality.references",
+      "model.palette",
+      "model.numeric_warnings",
+      "model.regenerate",
+      "model.connectivity",
+      "model.fragments",
+      "model.provenance",
+      "model.motion_walk",
+      "rig.attachments",
+      "rig.handedness",
+      "rig.markers",
+      "rig.contacts",
+      "rig.item_main",
+      "rig.continuous_club",
+      "rig.presence_frayed_front_point_reaches_the_knee",
+      "sheet48.layout",
+      "sheet48.image",
+      "sheet48.alpha",
+      "sheet48.margins",
+      "sheet48.redraw",
+      "sheet48.distinct",
+      "sheet48.mirror",
+      "sheet48.screen_side",
+      "sheet48.visible_club_head",
+      "sheet48.visible_torn_apron",
+      "sheet48.visible_ear_cups",
+      "sheet48.visible_yellow_eyes",
+      "sheet48.visible_tusks",
+      "sheet48.visible_beaten_shoulder_plate",
+      "sheet48.published"
+    ],
+    "measurements": {
+      "rig.handedness": {
+        "item_centroid_x": {
+          "club": -13.49
+        }
+      },
+      "rig.markers": {
+        "distance_to_nearest_voxel": {
+          "club_end": 0.43
+        }
+      },
+      "rig.contacts": {
+        "contact_voxels": {
+          "club-hand_R": 35,
+          "hand_R-fore_R": 20,
+          "fore_R-upper_R": 30,
+          "upper_R-chest": 85,
+          "hand_L-fore_L": 20,
+          "fore_L-upper_L": 31,
+          "upper_L-chest": 56
+        }
+      },
+      "sheet48.margins": {
+        "margins": {
+          "S": 2,
+          "SW": 2,
+          "W": 4,
+          "NW": 5,
+          "N": 2,
+          "NE": 2,
+          "E": 3,
+          "SE": 3
+        }
+      },
+      "sheet48.screen_side": {
+        "sides": {
+          "S": {
+            "club": "left"
+          },
+          "SW": {
+            "club": "left"
+          },
+          "W": {
+            "club": "left"
+          },
+          "NW": {
+            "club": "right"
+          },
+          "N": {
+            "club": "right"
+          },
+          "NE": {
+            "club": "right"
+          },
+          "E": {
+            "club": "right"
+          },
+          "SE": {
+            "club": "left"
+          }
+        }
+      },
+      "sheet48.visible_club_head": {
+        "px": {
+          "S": 55,
+          "SW": 53,
+          "W": 38,
+          "NW": 28,
+          "N": 54,
+          "NE": 56,
+          "E": 48,
+          "SE": 53
+        }
+      },
+      "sheet48.visible_torn_apron": {
+        "px": {
+          "S": 38,
+          "SW": 32,
+          "W": 23,
+          "NW": 35,
+          "N": 38,
+          "NE": 35,
+          "E": 21,
+          "SE": 33
+        }
+      },
+      "sheet48.visible_ear_cups": {
+        "px": {
+          "S": 20,
+          "SW": 8,
+          "SE": 8
+        }
+      },
+      "sheet48.visible_yellow_eyes": {
+        "px": {
+          "S": 4,
+          "SW": 3,
+          "SE": 3
+        }
+      },
+      "sheet48.visible_tusks": {
+        "px": {
+          "S": 10,
+          "SW": 7,
+          "SE": 7
+        }
+      },
+      "sheet48.visible_beaten_shoulder_plate": {
+        "px": {
+          "S": 17,
+          "N": 25,
+          "E": 22,
+          "SE": 24
+        }
+      },
+      "sheet48.published": {
+        "file_bytes_equal": {
+          "idle.png": true,
+          "metadata.json": false
+        }
+      }
+    }
+  },
+  "walk": {
+    "summary": {
+      "PASS": 16,
+      "WARNING": 0,
+      "FAIL": 0,
+      "SKIP": 0
+    },
+    "checks": [
+      "walk.layout",
+      "walk.idle_kept",
+      "walk.contact",
+      "walk.ground",
+      "walk.parts",
+      "walk.items",
+      "walk.fragments",
+      "walk.anchor",
+      "walk.arm_phase",
+      "walk.visibility",
+      "walk.secondary.intrusion",
+      "walk.secondary.motion",
+      "walk.head.motion",
+      "walk.head.neck",
+      "walk.head.face",
+      "walk.published"
+    ],
+    "measurements": {
+      "walk.layout": {
+        "distinct_frames": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "minimum_margin_px": 2,
+        "binary_alpha": true
+      },
+      "walk.contact": {
+        "drift": {
+          "L": 0.0,
+          "R": 0.0
+        },
+        "boot_sole_z": {
+          "L": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2.5,
+            3.0
+          ],
+          "R": [
+            0.0,
+            2.5,
+            3.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "walk.ground": {
+        "lowest_voxel_z": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "items": {
+          "sole_floor": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "club_head": [
+            4.5,
+            4.0,
+            4.0,
+            5.0,
+            4.0,
+            4.0
+          ]
+        }
+      },
+      "walk.parts": {
+        "lowest_ratio": {
+          "head": 0.99,
+          "chest": 0.976,
+          "pelvis": 0.91,
+          "thigh_R": 0.828,
+          "shin_R": 0.891,
+          "boot_R": 0.991,
+          "upper_R": 0.978,
+          "fore_R": 0.973,
+          "hand_R": 0.964,
+          "thigh_L": 0.844,
+          "shin_L": 0.903,
+          "boot_L": 1.0,
+          "upper_L": 0.961,
+          "fore_L": 0.97,
+          "hand_L": 0.973,
+          "club": 0.992
+        }
+      },
+      "walk.items": {
+        "minimum_face_contacts": {
+          "club": 19
+        }
+      },
+      "walk.fragments": {
+        "per_frame": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "walk.anchor": {
+        "boot_row_minus_projected_sole_px": {
+          "S": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "SW": [
+            -1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "W": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "NW": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "N": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "NE": [
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ],
+          "E": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "SE": [
+            0,
+            0,
+            1,
+            -1,
+            0,
+            0
+          ]
+        },
+        "centre_range_px": {
+          "S": 0.85,
+          "SW": 0.69,
+          "W": 1.02,
+          "NW": 0.74,
+          "N": 0.99,
+          "NE": 0.75,
+          "E": 0.49,
+          "SE": 0.91
+        }
+      },
+      "walk.arm_phase": {
+        "correlation_with_opposite_ankle": {
+          "R": 0.8898869855945803,
+          "L": 0.8898869855945801
+        }
+      },
+      "walk.visibility": {
+        "minimum_px": {
+          "club": 14,
+          "apron": 13
+        }
+      },
+      "walk.secondary.intrusion": {
+        "share_inside_other_parts": {
+          "torn hide apron": {
+            "rigid": 0.1642,
+            "secondary": 0.1481
+          }
+        }
+      },
+      "walk.secondary.motion": {
+        "angles_deg": {},
+        "moving_voxels": 579
+      },
+      "walk.head.motion": {
+        "head_top_row": {
+          "S": [
+            12,
+            13,
+            12,
+            12,
+            13,
+            12
+          ],
+          "SW": [
+            8,
+            9,
+            8,
+            8,
+            9,
+            8
+          ],
+          "W": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "NW": [
+            8,
+            9,
+            8,
+            8,
+            9,
+            8
+          ],
+          "N": [
+            9,
+            10,
+            9,
+            9,
+            10,
+            9
+          ],
+          "NE": [
+            8,
+            9,
+            8,
+            8,
+            9,
+            8
+          ],
+          "E": [
+            6,
+            7,
+            6,
+            6,
+            7,
+            6
+          ],
+          "SE": [
+            8,
+            9,
+            8,
+            8,
+            9,
+            8
+          ]
+        }
+      },
+      "walk.head.neck": {
+        "neck_offset_units": [
+          0.664,
+          0.61,
+          0.562,
+          0.664,
+          0.61,
+          0.562
+        ],
+        "neck_rise_units": [
+          0.202,
+          -0.182,
+          0.37,
+          0.202,
+          -0.182,
+          0.37
+        ]
+      },
+      "walk.head.face": {
+        "feature_px": {
+          "S": {
+            "eyes": [
+              8,
+              8,
+              8,
+              8,
+              8,
+              8
+            ]
+          },
+          "SW": {
+            "eyes": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          },
+          "W": {
+            "eyes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "NW": {
+            "eyes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "N": {
+            "eyes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "NE": {
+            "eyes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          "E": {
+            "eyes": [
+              2,
+              2,
+              2,
+              2,
+              2,
+              2
+            ]
+          },
+          "SE": {
+            "eyes": [
+              4,
+              4,
+              4,
+              4,
+              4,
+              4
+            ]
+          }
+        }
+      }
+    }
+  },
+  "attack": {
+    "baked_cells": 72,
+    "minimum_grip_faces": 20,
+    "durations_ms": [
+      70,
+      100,
+      110,
+      190,
+      50,
+      150,
+      130,
+      100,
+      80
+    ]
+  },
+  "motion_inspection": {
+    "head_centers": 3552,
+    "ear_centers": 356,
+    "club_centers": 1015,
+    "barrel_centers": 978,
+    "walk": {
+      "samples": 6,
+      "intersections": {},
+      "key_joints_xyz": [
+        {
+          "club_end": [
+            -14.84,
+            8.89,
+            6.84
+          ],
+          "hand_R": [
+            -6.33,
+            4.68,
+            11.06
+          ],
+          "pelvis": [
+            0.25,
+            -0.5,
+            8.44
+          ],
+          "toe_R": [
+            -4.16,
+            1.08,
+            -0.0
+          ],
+          "toe_L": [
+            4.16,
+            6.1,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -14.81,
+            8.32,
+            6.12
+          ],
+          "hand_R": [
+            -6.23,
+            4.22,
+            10.31
+          ],
+          "pelvis": [
+            0.35,
+            -0.5,
+            7.82
+          ],
+          "toe_R": [
+            -4.16,
+            1.93,
+            2.88
+          ],
+          "toe_L": [
+            4.16,
+            4.43,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -14.97,
+            6.5,
+            6.44
+          ],
+          "hand_R": [
+            -6.32,
+            2.45,
+            10.5
+          ],
+          "pelvis": [
+            0.26,
+            -0.5,
+            8.27
+          ],
+          "toe_R": [
+            -4.16,
+            6.25,
+            3.38
+          ],
+          "toe_L": [
+            4.16,
+            2.76,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -15.51,
+            5.2,
+            7.08
+          ],
+          "hand_R": [
+            -6.83,
+            1.12,
+            11.06
+          ],
+          "pelvis": [
+            -0.25,
+            -0.5,
+            8.44
+          ],
+          "toe_R": [
+            -4.16,
+            6.1,
+            -0.0
+          ],
+          "toe_L": [
+            4.16,
+            1.08,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -15.55,
+            5.77,
+            6.32
+          ],
+          "hand_R": [
+            -6.93,
+            1.58,
+            10.31
+          ],
+          "pelvis": [
+            -0.35,
+            -0.5,
+            7.82
+          ],
+          "toe_R": [
+            -4.16,
+            4.43,
+            -0.0
+          ],
+          "toe_L": [
+            4.16,
+            1.93,
+            2.88
+          ]
+        },
+        {
+          "club_end": [
+            -15.38,
+            7.6,
+            6.39
+          ],
+          "hand_R": [
+            -6.84,
+            3.35,
+            10.5
+          ],
+          "pelvis": [
+            -0.26,
+            -0.5,
+            8.27
+          ],
+          "toe_R": [
+            -4.16,
+            2.76,
+            -0.0
+          ],
+          "toe_L": [
+            4.16,
+            6.25,
+            3.38
+          ]
+        }
+      ],
+      "max_grip_length_error": 0.0,
+      "minimum_club_center_z": 4.177
+    },
+    "attack": {
+      "samples": 97,
+      "intersections": {},
+      "key_joints_xyz": [
+        {
+          "club_end": [
+            -16.1,
+            6.6,
+            5.05
+          ],
+          "hand_R": [
+            -7.5,
+            2.9,
+            9.55
+          ],
+          "pelvis": [
+            0.0,
+            -0.5,
+            9.2
+          ],
+          "toe_R": [
+            -3.8,
+            2.9,
+            0.0
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            0.0
+          ]
+        },
+        {
+          "club_end": [
+            -16.81,
+            6.9,
+            16.1
+          ],
+          "hand_R": [
+            -8.7,
+            1.7,
+            12.2
+          ],
+          "pelvis": [
+            0.15,
+            -0.8,
+            8.55
+          ],
+          "toe_R": [
+            -4.05,
+            3.0,
+            0.15
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -15.92,
+            -9.62,
+            22.05
+          ],
+          "hand_R": [
+            -9.65,
+            -3.35,
+            16.65
+          ],
+          "pelvis": [
+            0.55,
+            -1.35,
+            8.15
+          ],
+          "toe_R": [
+            -4.45,
+            3.35,
+            0.8
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -16.5,
+            -8.65,
+            29.02
+          ],
+          "hand_R": [
+            -10.85,
+            -4.15,
+            21.55
+          ],
+          "pelvis": [
+            0.5,
+            -1.15,
+            8.75
+          ],
+          "toe_R": [
+            -4.8,
+            4.05,
+            1.45
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -15.57,
+            10.97,
+            24.52
+          ],
+          "hand_R": [
+            -10.55,
+            4.15,
+            18.5
+          ],
+          "pelvis": [
+            -0.4,
+            0.25,
+            8.3
+          ],
+          "toe_R": [
+            -5.35,
+            6.3,
+            0.45
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -14.43,
+            10.88,
+            1.79
+          ],
+          "hand_R": [
+            -6.3,
+            8.4,
+            7.75
+          ],
+          "pelvis": [
+            -0.65,
+            1.05,
+            6.75
+          ],
+          "toe_R": [
+            -5.45,
+            7.0,
+            0.0
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            0.0
+          ]
+        },
+        {
+          "club_end": [
+            -16.64,
+            10.81,
+            2.09
+          ],
+          "hand_R": [
+            -7.5,
+            9.25,
+            6.77
+          ],
+          "pelvis": [
+            -0.9,
+            1.5,
+            6.25
+          ],
+          "toe_R": [
+            -5.45,
+            7.0,
+            0.0
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            0.0
+          ]
+        },
+        {
+          "club_end": [
+            -15.67,
+            9.17,
+            5.87
+          ],
+          "hand_R": [
+            -6.6,
+            6.4,
+            10.1
+          ],
+          "pelvis": [
+            -0.35,
+            0.18,
+            7.85
+          ],
+          "toe_R": [
+            -4.55,
+            4.55,
+            0.55
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            -0.0
+          ]
+        },
+        {
+          "club_end": [
+            -16.1,
+            6.6,
+            5.05
+          ],
+          "hand_R": [
+            -7.5,
+            2.9,
+            9.55
+          ],
+          "pelvis": [
+            0.0,
+            -0.5,
+            9.2
+          ],
+          "toe_R": [
+            -3.8,
+            2.9,
+            0.0
+          ],
+          "toe_L": [
+            3.8,
+            3.25,
+            0.0
+          ]
+        }
+      ],
+      "max_grip_length_error": 0.0,
+      "minimum_club_center_z": 0.12
+    },
+    "attack_bake": {
+      "visible_px": {
+        "impact": {
+          "S": 54,
+          "SW": 49,
+          "W": 31,
+          "NW": 19,
+          "N": 53,
+          "NE": 56,
+          "E": 48,
+          "SE": 55
+        },
+        "overhead": {
+          "S": 55,
+          "SW": 51,
+          "W": 52,
+          "NW": 59,
+          "N": 52,
+          "NE": 46,
+          "E": 49,
+          "SE": 56
+        },
+        "drag": {
+          "S": 51,
+          "SW": 50,
+          "W": 26,
+          "NW": 39,
+          "N": 56,
+          "NE": 56,
+          "E": 49,
+          "SE": 56
+        }
+      },
+      "club_head_floor_z": [
+        3.0,
+        12.0,
+        17.0,
+        23.0,
+        19.5,
+        0.0,
+        0.0,
+        3.5,
+        3.0
+      ]
+    }
+  },
+  "independent_rebuild_rgba_sha256": {
+    "idle": "e24345653332b5c8dfb50b69bdd0b2dc641142e821429e23cf77669629f894cb",
+    "walk": "d80f18aeedbd6ef05002da3e0d96282a37f439305f345a7c639d047bba397ad1",
+    "attack": "414fb08c653535a33b27f8cbbd6f286d4be7a7b0c1dbe2540e2be3f4f0079a2f"
+  },
+  "regressions": {
+    "azure_ronin": {
+      "rgba_sha256": {
+        "idle": "0a5ff22baa7b128b7ac0d52547cf348cee54c6a5be24eedc75b83b9fb6e6e971",
+        "walk": "be0d6ba59dcd6e5c71ba74dd93aee1ffa84694794d543c2d81f6b60b7e2a7da7",
+        "attack": "7e7a6d1a3f7aace89b777850c8890d9951aa1d84a0e66a8c505287efaee9f1f4"
+      },
+      "character": "PASS 63, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 7 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 15}"
+      ]
+    },
+    "crimson_blade": {
+      "rgba_sha256": {
+        "idle": "2fb30bddc652e1bd152804e9ae4ef8a45253cc765dee8ce10bd52101e7a1b936",
+        "walk": "932f62dc05e31509824a9041a9639030e888664385a4c9680052da52739242b7",
+        "attack": "91b37c70a970a6c23159b8ecacd5188b64539f010929ee41206b7561eb37d553"
+      },
+      "character": "PASS 39, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 15 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 5}"
+      ]
+    },
+    "crystal_mage": {
+      "rgba_sha256": {
+        "idle": "123290a8bb8c6406f4a8f44f3eccba0a2cd4173e1ba097ea85106eedc27592ca",
+        "walk": "6bb70dfd0dd6e884876ac95f029d8f30880fcb91e86f32226cbe736dbc3762e4",
+        "attack": "5f1bd1c982d39ad0f2cab22abaf2835fe880676be7421316dae4e2ec9d94a455"
+      },
+      "character": "PASS 43, WARNING 1, FAIL 0, SKIP 0",
+      "walk": "PASS 15, WARNING 1, FAIL 0, SKIP 0",
+      "attack": [
+        "release: crystal visible in at least 3 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'staff': 10, 'book': 22}"
+      ]
+    },
+    "fleur_knight": {
+      "rgba_sha256": {
+        "idle": "769eb618682317c42c48270919e1f7258bddf8a82cc6870734b91f1045b6aacd",
+        "walk": "99457bf64ff423899bc1db6c3b19b1c0860268f6143016f99fd351569e55fcb5",
+        "attack": "cbc47e4244aa0fcfae8882035f6656d45d1764eaf6c8c4a0d4cf56812e3cc3b9"
+      },
+      "character": "PASS 30, WARNING 0, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 10 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 30, 'shield': 32}"
+      ]
+    },
+    "maren": {
+      "rgba_sha256": {
+        "idle": "4d7edc16b21ee79b5d4d4fff9585219bbb4ec64a05a5cb6bea69dedae89cd609",
+        "walk": "fb394463ac4f19faa7c0d7c7f100939e6fca056fafe8b945e7611a06506a1b72",
+        "attack": "ae3285df609fb099ca12861a24e9e5df35302bbfb4e041aecfc00e9338ea78aa"
+      },
+      "character": "PASS 32, WARNING 1, FAIL 0, SKIP 0",
+      "walk": "PASS 16, WARNING 0, FAIL 0, SKIP 0",
+      "attack": [
+        "cut: blade visible in at least 14 pixels in every direction",
+        "9 frames x 8 directions; 97 sampled poses; minimum grip contacts {'sword': 27, 'shield': 21}"
+      ]
+    }
+  },
+  "gallery": {
+    "source": "local docs",
+    "scale": 1,
+    "speed": 1,
+    "matched_cells": 128,
+    "gif_links": 2,
+    "replay": true
+  }
+}

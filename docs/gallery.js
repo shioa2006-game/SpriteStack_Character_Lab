@@ -48,6 +48,11 @@ const characters = {
     attackComparison: "slash-comparison.gif",
     extraAnimations: ["walk", "attack"],
   },
+  goblin_brute: {
+    name: "GOBLIN BRUTE", subtitle: "Goblin with an Iron-Bound Club", assets: "assets/goblin_brute",
+    attackComparison: "smash-comparison.gif",
+    extraAnimations: ["walk", "attack"],
+  },
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };

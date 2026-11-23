@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "description": "Pinned ears, torn cloth and rigid weighted club of the crouched goblin.",
+  "model_builder": "characters.goblin_brute.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "walk": {
+      "clip": "../../motions/walk.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "club",
+      "hand": "hand_R",
+      "marker": "club_end"
+    }
+  },
+  "continuous": [
+    {
+      "part": "club",
+      "through": [
+        "hand_R"
+      ]
+    }
+  ],
+  "cells": [48],
+  "visibility": [
+    {
+      "label": "club head",
+      "part": "club",
+      "materials": [
+        "heartwood",
+        "bark",
+        "hoop"
+      ],
+      "min_px": 15,
+      "directions": "all"
+    },
+    {
+      "label": "torn apron",
+      "part": "pelvis",
+      "materials": [
+        "rag",
+        "rag fold"
+      ],
+      "min_px": 7,
+      "directions": "all"
+    },
+    {
+      "label": "ear cups",
+      "part": "head",
+      "materials": [
+        "ear lining"
+      ],
+      "min_px": 3,
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ]
+    },
+    {
+      "label": "yellow eyes",
+      "part": "head",
+      "materials": [
+        "eyes"
+      ],
+      "min_px": 1,
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ]
+    },
+    {
+      "label": "tusks",
+      "part": "head",
+      "materials": [
+        "tusk"
+      ],
+      "min_px": 1,
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ]
+    },
+    {
+      "label": "beaten shoulder plate",
+      "part": "upper_R",
+      "materials": [
+        "iron",
+        "stud"
+      ],
+      "min_px": 3,
+      "directions": [
+        "S",
+        "N",
+        "E",
+        "SE"
+      ]
+    }
+  ],
+  "presence": [
+    {
+      "label": "frayed front point reaches the knee",
+      "part": "pelvis",
+      "materials": [
+        "rag",
+        "rag fold"
+      ],
+      "lowest_z_at_most": 5.75
+    }
+  ],
+  "walk": {
+    "lowest_z_at_least": {
+      "sole_floor": 0,
+      "club_head": 1
+    },
+    "visibility_min_px": {
+      "club": 12,
+      "apron": 12
+    },
+    "arm_swing": "contralateral",
+    "published": "../../docs/assets/goblin_brute"
+  },
+  "attack": {
+    "feature": "club",
+    "phase": "impact",
+    "minimum_visible_px": 16
+  },
+  "additional_attack_phases": [
+    {
+      "feature": "club",
+      "phase": "overhead",
+      "minimum_visible_px": 20
+    },
+    {
+      "feature": "club",
+      "phase": "drag",
+      "minimum_visible_px": 13
+    }
+  ],
+  "published": "../../docs/assets/goblin_brute",
+  "attack_ground": {
+    "feature": "club_head",
+    "phase": "impact",
+    "z": 0
+  }
+}

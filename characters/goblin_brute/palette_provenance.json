@@ -1,0 +1,94 @@
+{
+  "materials": {
+    "sole": {
+      "source": "hide",
+      "method": "adjusted",
+      "note": "Callused underside against the floor."
+    },
+    "skin": {
+      "source": "hide",
+      "method": "adjusted",
+      "note": "Shift the sampled ochre towards olive for exposed skin."
+    },
+    "ear lining": {
+      "source": "ear",
+      "method": "adjusted",
+      "note": "Warm inset on the forward surface of the pinna."
+    },
+    "socket": {
+      "source": "hide",
+      "method": "adjusted",
+      "note": "Recess below the brow, nostrils and the split between jaws."
+    },
+    "eyes": {
+      "source": "iris",
+      "method": "adjusted",
+      "note": "Keep a bright patch in the shadow of the brow."
+    },
+    "snout": {
+      "source": "snout",
+      "method": "adjusted",
+      "note": "Warmer end of the projecting nose."
+    },
+    "tusk": {
+      "source": "ivory",
+      "method": "extracted",
+      "note": "Sampled ivory on the paired lower canines."
+    },
+    "rag": {
+      "source": "cloth",
+      "method": "adjusted",
+      "note": "Rust cloth below the dark belt."
+    },
+    "rag fold": {
+      "source": "cloth",
+      "method": "adjusted",
+      "note": "Deep pleat where two strips meet."
+    },
+    "leather": {
+      "source": "leather",
+      "method": "extracted",
+      "note": "Sampled leather on the belt and arm bindings."
+    },
+    "rawhide": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "Worn rims and ties."
+    },
+    "iron": {
+      "source": "iron",
+      "method": "adjusted",
+      "note": "Dull plate with a cool shadow next to the skin."
+    },
+    "stud": {
+      "source": "iron",
+      "method": "adjusted",
+      "note": "Raised rivets and buckle."
+    },
+    "heartwood": {
+      "source": "wood",
+      "method": "adjusted",
+      "note": "Light exposed grain of the broad striking end."
+    },
+    "bark": {
+      "source": "wood",
+      "method": "adjusted",
+      "note": "Dark facets around the wooden core."
+    },
+    "hoop": {
+      "source": "iron",
+      "method": "adjusted",
+      "note": "Dark iron rings cross the long grain."
+    },
+    "grip": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "Narrow leather-wound haft in the fist."
+    },
+    "brow ridge": {
+      "source": "hide",
+      "method": "adjusted",
+      "note": "Shade the slanted brow above each bright eye."
+    }
+  }
+}
