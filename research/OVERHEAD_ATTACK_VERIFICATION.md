@@ -40,7 +40,7 @@ GIFは左が改善前、右が改善後。同じ倍率・足元・背景・1倍�
 | LARK | [GIF](overhead/results/lark/before.gif) | [GIF](overhead/results/lark/comparison.gif) | [PNG](overhead/results/lark/poses.png) | [PNG](overhead/results/lark/trajectory.png) | [JSON](overhead/results/lark/metrics.json) |
 | BRAM | [GIF](overhead/results/bram/before.gif) | [GIF](overhead/results/bram/comparison.gif) | [PNG](overhead/results/bram/poses.png) | [PNG](overhead/results/bram/trajectory.png) | [JSON](overhead/results/bram/metrics.json) |
 
-改善前のシートはギャラリーの既存素材に保持した。計測JSONには、旧・新のキーごとの右手、剣の方向、手首の回転角、肩と肘の角度、腰と胴の回転、踏み込みと補間サンプルを記録した。[旧LARKクリップ](../experiments/lark_stage3/attack_motion.json) · [旧BRAMクリップ](../characters/bram/attack_motion.json)
+改善前のシートはギャラリーの既存素材に保持した。計測JSONには、旧・新のキーごとの右手、剣の方向、手首の回転角、肩と肘の角度、腰と胴の回転、踏み込みと補間サンプルを記録した。[旧LARKクリップ](../experiments/lark_stage3/attack_motion.json) · [旧BRAMクリップ](../experiments/bram/attack_motion.json)
 
 ## 技術検証
 

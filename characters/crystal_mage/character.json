@@ -2,7 +2,7 @@
   "version": 1,
   "status": {
     "idle": "published: 48x48 standard sheet and a 64x64 comparison sheet of the same model (bake_idle.py)",
-    "walk": "published: 8 directions x 6 frames at 48x48 (python -m spritestack --modes walk). LARK's shared walk clip with this character's walk.tuning scale factors and walk.secondary cloth and hair regions",
+    "walk": "published: 8 directions x 6 frames at 48x48 (python -m spritestack --modes walk). the shared motions/walk.json clip with this character's walk.tuning scale factors and walk.secondary cloth and hair regions",
     "attack": "Authored eight-direction staff cast"
   },
   "model": {
@@ -107,7 +107,7 @@
     "voxel_size": 0.5
   },
   "walk": {
-    "clip": "../../experiments/lark_stage3/walk_motion.json",
+    "clip": "../../motions/walk.json",
     "cell": 48,
     "tuning": {
       "hip_yaw_scale": 0.24,

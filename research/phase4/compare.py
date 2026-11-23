@@ -10,7 +10,8 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from research.phase4.skin import joints_for
-from research.verify_bram import BRAM, ROOT, check_sprites, components, face_contacts, read
+from research.verify_bram import BRAM, ROOT, check_sprites, components, read
+from research.verify_character import face_contacts
 from spritestack.character import load_character
 
 
@@ -20,7 +21,7 @@ def rgba(path):
 
 
 def check_layout(rigid, weighted):
-    baseline = ROOT / "docs/assets/bram"
+    baseline = ROOT / "experiments/bram/baseline"
     metadata = read(rigid / "metadata.json")
     assert metadata == read(baseline / "metadata.json"), "rigid BRAM metadata regression"
     assert rgba(rigid / "idle.png").tobytes() == rgba(weighted / "idle.png").tobytes()

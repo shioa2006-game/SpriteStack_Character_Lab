@@ -6,14 +6,14 @@ from pathlib import Path
 
 import numpy as np
 
-from characters.bram.retarget_attack import arm_reach
+from experiments.bram.retarget_attack import arm_reach
 from spritestack.character import check_motion_lengths, load_character, read_json
 from spritestack.rig import about, rotate, transform, unit, vec
 
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-MANIFESTS = {name: ROOT / "characters" / name / "character.json" for name in ("lark", "bram")}
+MANIFESTS = {name: ROOT / "experiments" / name / "character.json" for name in ("lark", "bram")}
 
 
 def leg_length(rest):

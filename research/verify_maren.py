@@ -8,14 +8,14 @@ import numpy as np
 from PIL import Image
 
 from characters.maren.build_model import build
-from characters.maren.retarget_attack import retarget
+from experiments.bram.retarget_attack import retarget
 from spritestack.character import load_character
 from spritestack.render import Renderer, normals
 
 
 ROOT = Path(__file__).resolve().parents[1]
 MAREN = ROOT / "characters/maren/character.json"
-LARK = ROOT / "characters/lark/character.json"
+LARK = ROOT / "experiments/lark/character.json"
 PUBLISHED = ROOT / "docs/assets/maren"
 DIRECTIONS = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"]
 
@@ -31,7 +31,7 @@ def check_sources(character):
     used = set(np.unique(character.model[character.model > 0]).tolist())
     assert used == set(range(1, len(character.config["model"]["palette"]) + 1)), "unused palette entry"
     assert character.motions["walk"] == load_character(LARK).motions["walk"]
-    assert read(ROOT / "characters/maren/attack_motion.json") == retarget()
+    assert read(ROOT / "research/image_to_character/attack_motion.json") == retarget(MAREN)
     provenance = read(ROOT / "characters/maren/palette_provenance.json")["materials"]
     assert set(provenance) == {item["name"] for item in character.config["model"]["palette"]}
     print(f"Model NPZ rebuilt from source ({len(used)} materials, {len(character.parts)} parts); "

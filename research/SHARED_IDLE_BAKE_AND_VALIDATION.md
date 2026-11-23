@@ -107,7 +107,7 @@ FAILが1つでもあれば終了コード1。WARNINGだけなら0。
 | --- | --- | --- |
 | `model_builder` | `module:function`。`function(config)` が材質と部位の配列を返す | 再生成の検査をSKIP |
 | `provenance` | `palette`（配色の出典）と `samples`（抽出結果） | SKIP |
-| `motions` | 各モードの出典。`{"same_as": 他の character.json}` か `{"call": "module:function"}` | SKIP |
+| `motions` | 各モードの出典。`{"clip": 共通クリップJSON}`、`{"same_as": 他の character.json}` または `{"call": "module:function"}` | SKIP |
 | `items` | `main`・`off` の役割ごとに `part`、`hand`、`marker`。任意で `through`（装備と一続きとみなす部位） | `rig.attachments` から、右手を `main`、左手を `off` |
 | `contacts` | 追加で接触を求める部位の組 | 装備と手、手・前腕・上腕・胸の連鎖だけ |
 | `continuous` | `part` が z方向に途切れないこと。`through`、`from_floor` | 検査しない |

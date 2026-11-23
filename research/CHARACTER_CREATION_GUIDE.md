@@ -207,7 +207,7 @@ Copy-Item characters/crystal_mage/extract_reference.py characters/$name/
 | `rig.attachments` | 主装備は `hand_R`、副装備は `hand_L` |
 | `view` | LARKと同じ値のまま |
 | `comparison_view` | 64×64の比較を焼く場合だけ。`pixels_per_unit`、`neutral_cell`、`base_pivot`（[crystal_mage](../characters/crystal_mage/character.json) は 1.5867、64、[32, 53]） |
-| `posed_volume`、`walk`、`attack` | 読込に必要。歩行・攻撃を作らないなら、LARKのクリップと調整値を参照したままにする |
+| `posed_volume`、`walk`、`attack` | 読込に必要。静止から始める場合も、歩行は `motions/walk.json`、攻撃と調整値は装備構成の近い正式サンプルの設定を使う |
 | `measurements` | 装備の材質IDを書き換える |
 
 ### build_model.py
@@ -308,7 +308,7 @@ zoom.save(out / "zoom_48.png")
 | --- | --- |
 | `model_builder` | `"characters.<name>.build_model:build"`。NPZが生成コードと一致するかを調べる |
 | `provenance` | `palette_provenance.json` と `reference_palette.json` |
-| `motions` | 歩行・攻撃を作らないなら、両方 `{"same_as": "../lark/character.json"}` |
+| `motions` | 共通歩行は `{"walk": {"clip": "../../motions/walk.json"}}` |
 | `items` | `main`（右手）と `off`（左手）の `part`、`hand`、`marker` |
 | `continuous` | 杖や槍のように途切れてはいけない装備。床に立てるなら `from_floor` |
 | `visibility` | 依頼文の優先順位の上位要素。主役の小物は全方向、副装備は見えるべき方向。依頼文で「見える」とされた要素は既定の FAIL、目安にとどめるものは `"severity": "warning"` |
@@ -348,18 +348,18 @@ $run = Join-Path $PWD ('.phase1/' + $name + '-' + (Get-Date -Format 'yyyyMMdd-HH
 新キャラクターを足しても、既存の出力が変わらないことを確かめる。
 
 ~~~powershell
-& $python -B -m spritestack --character characters/lark/character.json --out (Join-Path $run 'lark')
+& $python -B -m spritestack --character experiments/lark/character.json --out (Join-Path $run 'lark')
 & $python research/verify_rebuild.py (Join-Path $run 'lark')
-& $python -B -m spritestack --character characters/bram/character.json --out (Join-Path $run 'bram')
+& $python -B -m spritestack --character experiments/bram/character.json --out (Join-Path $run 'bram')
 & $python -B -m research.verify_bram (Join-Path $run 'bram')
 & $python -B -m spritestack --character characters/maren/character.json --modes idle --out (Join-Path $run 'maren')
 & $python -B -m research.verify_character --character characters/maren/character.json --out (Join-Path $run 'maren')
 & $python -B -m spritestack --character characters/crystal_mage/character.json --modes idle --out (Join-Path $run 'crystal_mage')
 & $python -B -m research.verify_character --character characters/crystal_mage/character.json --out (Join-Path $run 'crystal_mage')
-git diff --stat -- spritestack characters/lark characters/bram characters/maren characters/crystal_mage experiments docs/assets
+git diff --stat -- spritestack motions characters experiments docs/assets
 ~~~
 
-LARKの `verify_rebuild.py` は、PNGのバイトが一致しなくても（Windowsでは通常そうなる）、メタデータとデコード後のRGBAが一致すれば合格。BRAMは標準CLIの出力と `docs/assets/bram/` の静止・歩行・攻撃PNG、メタデータも照合しておく。最後の `git diff` は空であること。
+LARKの `verify_rebuild.py` は、PNGのバイトが一致しなくても（Windowsでは通常そうなる）、メタデータとデコード後のRGBAが一致すれば合格。BRAMは標準CLIの出力と `experiments/bram/baseline/` の静止・歩行・攻撃PNG、メタデータも照合しておく。最後の `git diff` は空であること。
 
 ### 標準CLIの試験（任意、公開しない）
 
@@ -446,7 +446,7 @@ URL：https://shioa2006-game.github.io/SpriteStack_Character_Lab/
 - [ ] `-W error::RuntimeWarning` で生成できる
 - [ ] 8方向を拡大と原寸で確認し、調整の経緯をメモした
 - [ ] `quality.json` を書き、汎用検証でFAILが0。WARNINGの内容をレポートに記録した
-- [ ] LARK・BRAM・MAREN・CRYSTAL MAGEの回帰に合格した
+- [ ] 既存の正式サンプル3体と、LARK・BRAMの研究用基準の回帰に合格した
 - [ ] 既存の成果物にGit差分がない
 - [ ] 比較図とレポートを書き、数値を照合した
 - [ ] ギャラリーをローカルで確認した

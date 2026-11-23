@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 from research.blade.outline import TARGETS, measures, views
 from research.overhead.analyze import measure
-from research.overhead.compare import attack_gif, check_layout, check_motion, frame_at, sprite_panel
+from research.overhead.compare import BASELINES, attack_gif, check_layout, check_motion, frame_at, sprite_panel
 from research.overhead.motion import MANIFESTS, ROOT, character_for
 from research.overhead.plots import plot_paths
 from research.verify_bram import DIRECTIONS, read
@@ -112,8 +112,8 @@ def main():
     args = parser.parse_args()
     name = args.character
     source = read(CLIP_PATH)
-    official = ROOT / "docs/assets" / ("bram" if name == "bram" else "")
-    clips, sheets, camera = check_layout(args.before, args.after, official, attack_stem="attack-overhead")
+    overhead = ROOT / "research/overhead/baseline" / name
+    clips, sheets, camera = check_layout(args.before, args.after, BASELINES[name], overhead=overhead)
     models = character_for(name), character_for(name, source)
     baseline, refined = (measure(model) for model in models)
     tests = check_motion(models[1], refined, args.after)

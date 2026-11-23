@@ -8,7 +8,7 @@
   },
   "attack": {"feature": "crystal", "phase": "release", "minimum_visible_px": 2},
   "motions": {
-    "walk": {"same_as": "../lark/character.json"}
+    "walk": {"clip": "../../motions/walk.json"}
   },
   "items": {
     "main": {"part": "staff", "hand": "hand_R", "marker": "staff_tip"},

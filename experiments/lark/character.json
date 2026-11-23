@@ -1,8 +1,8 @@
 {
   "version": 1,
   "model": {
-    "materials": "../../experiments/lark_stage3/baseline/base/knight_materials.npz",
-    "part_ids": "../../experiments/lark_stage3/output/rest_part_ids.npz",
+    "materials": "../lark_stage3/baseline/base/knight_materials.npz",
+    "part_ids": "../lark_stage3/output/rest_part_ids.npz",
     "origin_xyz": [-20.0, -15.0, 0.0],
     "voxel_size_xyz": [0.5, 0.5, 1.0],
     "palette": [
@@ -271,7 +271,7 @@
     "voxel_size": 0.5
   },
   "walk": {
-    "clip": "../../experiments/lark_stage3/walk_motion.json",
+    "clip": "../lark_stage3/walk_motion.json",
     "cell": 48,
     "tuning": {
       "hip_yaw_scale": 0.24,
@@ -293,7 +293,7 @@
     }
   },
   "attack": {
-    "clip": "../../experiments/lark_stage3/attack_motion.json",
+    "clip": "../lark_stage3/attack_motion.json",
     "cell": 64,
     "tuning": {
       "hip_yaw_scale": 0.24,

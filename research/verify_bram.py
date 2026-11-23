@@ -7,14 +7,15 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from characters.bram.build_model import build
-from characters.bram.retarget_attack import retarget
+from experiments.bram.build_model import build
+from experiments.bram.retarget_attack import retarget
+from research.verify_character import face_contacts
 from spritestack.character import load_character
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BRAM = ROOT / "characters/bram/character.json"
-LARK = ROOT / "characters/lark/character.json"
+BRAM = ROOT / "experiments/bram/character.json"
+LARK = ROOT / "experiments/lark/character.json"
 DIRECTIONS = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"]
 
 
@@ -56,15 +57,6 @@ def check_sprites(output, metadata):
         x0, y0, x1, y1 = frame.getbbox()
         assert min(x0, y0, frame.width - x1, frame.height - y1) >= 1
     print(f"{len(all_frames)} RGBA frames, eight directions, margins, anchors and timing: passed")
-
-
-def face_contacts(a, b):
-    count = 0
-    for axis in range(3):
-        front, back = np.moveaxis(a, axis, 0), np.moveaxis(b, axis, 0)
-        count += np.count_nonzero(front[:-1] & back[1:])
-        count += np.count_nonzero(back[:-1] & front[1:])
-    return int(count)
 
 
 def components(mask):

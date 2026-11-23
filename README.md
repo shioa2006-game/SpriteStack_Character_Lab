@@ -4,25 +4,28 @@ AIを活用したゲーム用ピクセルアートキャラクターの自動生
 
 [3体の攻撃GIF・検証結果・再生成手順](research/SAMPLE_ATTACK_VERIFICATION.md) · [MARENの踏み込み斬り](research/MAREN_DYNAMIC_SLASH.md) · [AZURE RONINの速斬り](research/AZURE_RONIN_QUICK_SLASH.md) · [CRYSTAL MAGEの詠唱と発動を原寸で比較](research/CRYSTAL_MAGE_CAST.md)
 
+正式サンプルは **MAREN・CRYSTAL MAGE・AZURE RONIN** の3体です。新しいキャラクターの造形・配色・モーションはこの3体を参照します。LARKとBRAMは研究・回帰検証用に保管しています。[公開ギャラリー](https://shioa2006-game.github.io/SpriteStack_Character_Lab/) · [Phase 2の整理と検証](research/SAMPLE_CLEANUP.md)
+
 ## 現在の実装状況
 
 | 状態 | 対象 |
 | --- | --- |
 | 実装済み | 設定から二足歩行モデルを読み込む共通ベイク、腕・脚の2関節IK、静止・歩行・攻撃の8方向PNG、静止だけのベイク（比較用セル付き）、静止と歩行だけのベイク、歩行の体格別の調整値、布・髪の従属運動（`walk.secondary`）、歩行時の頭部の連動（`walk.head`）、細い剣の歩行の描画（`walk.fine`）、設定ファイルで条件を変えられる汎用品質検証、歩行・攻撃検証、剣士2体の斬撃と魔法使いの詠唱・発動、Canvasギャラリー |
 | 検証済み | LARKの基準PNGとのRGBA・配置・再生時間の一致。ドワーフ戦士BRAMへの共通モーション転用 |
-| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証。参考画像1枚から作ったMAREN、魔法使いCRYSTAL MAGE、スカーフの剣士AZURE RONINの静止8方向（CRYSTAL MAGEとAZURE RONINは48×48と64×64の比較）と歩行8方向×6コマ |
+| 試作 | BRAMの肩・肘・膝のウェイト変形。実験用コマンドで検証 |
 | 未実装 | 量産用のウェイト変形、別の骨格構成、画像からの生成の自動化（採色範囲・形状寸法の自動決定）、杖を地面に突く歩き方 |
 | 検証課題 | 他の体形への転用範囲、側面・背面の斬撃の視認性、停止・旋回、実ゲームでの操作感 |
 
-方向順、セル寸法、アンカー、フレーム配置は[出力メタデータ](experiments/lark_stage3/output/metadata.json)に記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
+各体の方向順、セル寸法、アンカー、フレーム配置は [docs/assets/](docs/assets/) のキャラクター別メタデータに記録されています。開発時の基準は [AGENTS.md](AGENTS.md) を参照してください。
 
 ## ディレクトリ構成
 
 | 場所 | 内容 |
 | --- | --- |
 | [spritestack/](spritestack/) | 共通CLI、設定読込、二足歩行リグ、ボクセル再スライス、布・髪の従属運動、描画、ベイク |
-| [characters/lark/](characters/lark/) | LARKのモデル・モーション参照、材質、リグ、表示と計測の設定 |
-| [characters/bram/](characters/bram/) | BRAMの独立モデル、部位マスク、設定、攻撃目標の転用手順 |
+| [motions/walk.json](motions/walk.json) | 正式3体が参照する6コマの共通歩行クリップ |
+| [experiments/lark/](experiments/lark/) | LARKのモデル・モーション参照、材質、リグ、表示と計測の設定 |
+| [experiments/bram/](experiments/bram/) | BRAMの独立モデル、部位マスク、設定、攻撃目標の転用手順 |
 | [characters/maren/](characters/maren/) | 参考画像から作ったMARENのモデル生成コード、NPZ、設定、品質設定、採色範囲と抽出色、配色の出典、旧来の静止のベイク |
 | [characters/crystal_mage/](characters/crystal_mage/) | 参考画像から作った魔法使いCRYSTAL MAGEのモデル生成コード、NPZ、設定（64×64の比較用の `comparison_view` を含む）、品質設定、採色範囲と抽出色、配色の出典、旧来の静止のベイク |
 | [characters/azure_ronin/](characters/azure_ronin/) | 参考画像から作ったスカーフの剣士AZURE RONINのモデル生成コード、NPZ、設定（装備は右手の剣1つ、64×64の比較用の `comparison_view` を含む）、品質設定、採色範囲と抽出色、配色の出典。ベイクと検証は共通CLIと汎用検証だけを使う |
@@ -52,12 +55,20 @@ $python = (Resolve-Path .\.venv\Scripts\python.exe).Path
 
 ## 共通エンジンでの生成
 
-ルートから `--character` に設定ファイル、`--out` に新しい出力先を指定します。静止も材質ボクセルから描画し、攻撃の空キーでは同じ静止フレームを使います。保存したPNGとJSONは[基準データ](experiments/lark_stage3/output/)と照合できます。
+正式サンプルは次のように全モードを生成し、公開済みの攻撃・歩行と照合できます。
+
+~~~powershell
+& $python -B -m spritestack --character characters/maren/character.json --out output/maren-all
+& $python -B -m research.verify_attack --character characters/maren/character.json --out output/maren-all --published docs/assets/maren
+& $python -B -m research.verify_walk --character characters/maren/character.json --out output/maren-all
+~~~
+
+LARKで旧エンジンとの回帰を検証する場合も、`--character` に設定ファイル、`--out` に新しい出力先を指定します。静止も材質ボクセルから描画し、攻撃の空キーでは同じ静止フレームを使います。保存したPNGとJSONは[基準データ](experiments/lark_stage3/output/)と照合できます。
 
 ~~~powershell
 $run = Join-Path $PWD ('.phase1/phase2-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
 $rebuild = Join-Path $run 'common'
-& $python -B -m spritestack --character characters/lark/character.json --out $rebuild
+& $python -B -m spritestack --character experiments/lark/character.json --out $rebuild
 & $python research/verify_rebuild.py $rebuild
 ~~~
 
@@ -65,7 +76,7 @@ $rebuild = Join-Path $run 'common'
 
 ### 静止8方向だけを焼く
 
-`--modes idle` は静止姿勢のモデルから8方向だけを焼きます。歩行・攻撃の姿勢計算と姿勢ボリュームの検査はしません。攻撃が合わないキャラクター（MAREN、CRYSTAL MAGE）でも静止は出力されます。既定の `--modes all` は従来どおり3モードを焼きます。
+`--modes idle` は静止姿勢のモデルから8方向だけを焼きます。歩行・攻撃の姿勢計算と姿勢ボリュームの検査はしません。既定の `--modes all` は従来どおり3モードを焼きます。
 
 ~~~powershell
 & $python -B -m spritestack --character characters/maren/character.json --modes idle --out output/maren
@@ -118,7 +129,7 @@ $rebuild = Join-Path $run 'common'
 
 ### 振りかぶり攻撃の生成
 
-標準CLIで初期版の攻撃を再現できます。公開ギャラリーの振りかぶり版と輪郭改善版は、同じ剛体リグに攻撃クリップを適用して焼き出します。`--character` は `lark` または `bram`。どちらも9コマ、800 ms、64×64の攻撃セルです。
+標準CLIで初期版の攻撃を再現できます。研究用のLARK・BRAMの振りかぶり版と輪郭改善版は、同じ剛体リグに攻撃クリップを適用して焼き出します。`--character` は `lark` または `bram`。どちらも9コマ、800 ms、64×64の攻撃セルです。
 
 ~~~powershell
 $overhead = Join-Path $run 'overhead-lark'
@@ -133,7 +144,7 @@ $refined = Join-Path $run 'refined-lark'
 
 ## キャラクター設定 v1
 
-[LARKの設定例](characters/lark/character.json)を参照してください。ファイル参照は設定ファイルの位置を基準に解決します。座標は X+ が身体の左、Y+ が前方、Z+ が上方です。
+[MARENの設定例](characters/maren/character.json)を参照してください。ファイル参照は設定ファイルの位置を基準に解決します。座標は X+ が身体の左、Y+ が前方、Z+ が上方です。
 
 | 項目 | 内容 |
 | --- | --- |
@@ -193,7 +204,7 @@ $refined = Join-Path $run 'refined-lark'
 
 ### 同じ骨格のキャラクターを追加する手順
 
-1. `characters/<名前>/` に設定ファイル、材質NPZ、部位NPZ、歩行・攻撃クリップを置きます。LARKの設定を雛形にし、参照先を新しい資産へ更新します。
+1. `characters/<名前>/` に設定ファイル、材質NPZ、部位NPZ、専用の攻撃クリップを置きます。歩行には共通の `motions/walk.json` を指定します。正式サンプルのうち装備構成が近い体の設定を雛形にし、参照先を新しい資産へ更新します。
 2. 体形に合わせて `rig.rest`、部位マスク、装備の取り付けを定義します。既存モーションを試し、接地や手の目標値と描画範囲を必要に応じて調整します。各セルを同じアンカーで切り出せるよう、描画用セルとの差を偶数にします。
 3. CLIの `--character` を新しい設定に変えて生成し、8方向の左右、接地、装備、アンカー、テンポを確認します。採用したモデル、設定、モーション、基準PNGを追跡します。
 
@@ -214,11 +225,11 @@ BRAMは低い身長、幅広い胴、短い四肢を持つドワーフ戦士で�
 
 ~~~powershell
 $bram = Join-Path $run 'bram'
-& $python -B -m spritestack --character characters/bram/character.json --out $bram
+& $python -B -m spritestack --character experiments/bram/character.json --out $bram
 & $python -B -m research.verify_bram $bram
 ~~~
 
-モデルと部位NPZを別フォルダへ作るには `python characters/bram/build_model.py --out <出力先>`、転用した攻撃クリップを再計算するには `python -m characters.bram.retarget_attack --out <JSONの出力先>` を使います。設計と検証の記録は[Phase 3レポート](research/PHASE3_VERIFICATION.md)を参照してください。
+モデルと部位NPZを別フォルダへ作るには `python experiments/bram/build_model.py --out <出力先>`、転用した攻撃クリップを再計算するには `python -m experiments.bram.retarget_attack --out <JSONの出力先>` を使います。設計と検証の記録は[Phase 3レポート](research/PHASE3_VERIFICATION.md)を参照してください。
 
 ### BRAMのウェイト変形を比較する
 
@@ -228,7 +239,7 @@ Phase 4の試作はBRAMの肩・肘・膝のボクセルを局所的に補間し
 $trial = Join-Path $PWD ('.phase1/phase4-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff'))
 $rigid = Join-Path $trial 'rigid'
 $weighted = Join-Path $trial 'weighted'
-& $python -B -m spritestack --character characters/bram/character.json --out $rigid
+& $python -B -m spritestack --character experiments/bram/character.json --out $rigid
 & $python -B -m research.phase4.run --out $weighted
 & $python -B -m research.phase4.compare --rigid $rigid --weighted $weighted --out (Join-Path $trial 'comparison')
 ~~~
@@ -304,13 +315,13 @@ Copy-Item -Recurse -LiteralPath experiments/lark_stage3 -Destination $bundled
 
 ## ギャラリー
 
-ルートからローカルサーバーを起動し、ブラウザで [LARK ギャラリー](http://127.0.0.1:8000/) を開きます。
+ルートからローカルサーバーを起動し、ブラウザで [キャラクターギャラリー](http://127.0.0.1:8000/) を開きます。
 
 ~~~powershell
 & $python -m http.server 8000 --bind 127.0.0.1 --directory docs
 ~~~
 
-キャラクター欄でLARK、BRAM、MAREN、CRYSTAL MAGE、AZURE RONINを切り替えられます。3体の追加モーションは静止用メタデータの隣の `walk.json` と `attack.json` から読み込みます。攻撃を選ぶと、同じタイミングの8方向GIFも開けます。CRYSTAL MAGEとAZURE RONINでは「セル解像度」欄で48×48の標準と64×64の比較を切り替えられます。初回はLARKの静止PNGとメタデータを読み込み、各シートは選択時に読み込みます。静止・歩行は48×48、攻撃はMARENが72×72、他が64×64のセルで、Canvasは足元アンカーを揃えます。LARK・BRAMで「攻撃」を選ぶと輪郭改善版を再生します。攻撃モーション欄で同じ方向・倍率・速度のまま振りかぶり版と初期版に切り替えられます。各攻撃はコマごとの時間配分で1回再生します。LARKの素材は `docs/assets/`、BRAMの素材は `docs/assets/bram/`、MARENの素材は `docs/assets/maren/`、CRYSTAL MAGEの素材は `docs/assets/crystal_mage/`、AZURE RONINの素材は `docs/assets/azure_ronin/` にあります。
+初期表示はMARENです。キャラクター欄でCRYSTAL MAGE・AZURE RONINに切り替え、8方向の静止・歩行・攻撃を確認できます。攻撃は各コマの時間配分で1回再生し、8方向GIFと原寸の新旧比較も開けます。MAGEとRONINは48×48と64×64の静止を切り替えられます。素材は `docs/assets/<名前>/` にあり、各シートは選択時に読み込みます。
 
 GitHub Pages の公開元は **main ブランチの `/docs`（Deploy from a branch）** です。[キャラクターギャラリー（GitHub Pages）](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
 

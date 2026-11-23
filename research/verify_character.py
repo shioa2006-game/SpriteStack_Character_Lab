@@ -329,13 +329,25 @@ def check_provenance(ctx):
                        "extracted tones equal the samples")
 
 
+def face_contacts(a, b):
+    count = 0
+    for axis in range(3):
+        front, back = np.moveaxis(a, axis, 0), np.moveaxis(b, axis, 0)
+        count += np.count_nonzero(front[:-1] & back[1:])
+        count += np.count_nonzero(back[:-1] & front[1:])
+    return int(count)
+
+
 def check_motions(ctx):
     settings = ctx.quality.get("motions")
     if not settings:
         ctx.report.add("model.motions", "SKIP", "no motion sources in the quality file")
         return
     for mode, source in settings.items():
-        if "same_as" in source:
+        if "clip" in source:
+            expected = json.loads(resolve(ctx.quality_dir, source["clip"]).read_bytes())
+            label = source["clip"]
+        elif "same_as" in source:
             expected = load_character(resolve(ctx.quality_dir, source["same_as"])).motions[mode]
             label = f"the {mode} clip of {source['same_as']}"
         else:

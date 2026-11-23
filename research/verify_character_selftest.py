@@ -46,8 +46,9 @@ class Workspace:
         if quality.get("provenance"):
             quality["provenance"] = {k: str((source / v).resolve()) for k, v in quality["provenance"].items()}
         for motion in quality.get("motions", {}).values():
-            if "same_as" in motion:
-                motion["same_as"] = str((source / motion["same_as"]).resolve())
+            for key in ("clip", "same_as"):
+                if key in motion:
+                    motion[key] = str((source / motion[key]).resolve())
         quality["published"] = None
         (folder / "quality.json").write_text(json.dumps(quality, indent=2), encoding="utf-8")
         self.quality = quality

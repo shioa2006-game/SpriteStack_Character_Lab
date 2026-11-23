@@ -228,7 +228,7 @@ CRYSTAL MAGEの杖には、次の制約がある。静止のW方向で、杖頭�
 | LARK `verify_rebuild.py` | メタデータとRGBAが基準と一致（PNGのバイトはWindowsでは従来どおり不一致） |
 | LARK 標準出力と `docs/assets/` の静止・歩行・攻撃 | RGBA一致 |
 | BRAM `research.verify_bram` | 合格 |
-| BRAM 標準出力と `docs/assets/bram/` の静止・歩行・攻撃 | RGBA一致 |
+| BRAM 標準出力と [保存した公開時の基準](../experiments/bram/baseline/) の静止・歩行・攻撃 | RGBA一致 |
 | Phase 4（BRAMのウェイト変形）の実行と比較 | `metrics.json` が追跡中のものと完全一致 |
 | MAREN・CRYSTAL MAGE・AZURE RONINの静止の汎用検証 | FAIL 0。WARNINGの数は以前と同じ（MAREN 1、CRYSTAL MAGE 1、AZURE RONIN 0）。公開版とのRGBA一致を含む |
 | `research.verify_maren`、`research.verify_crystal_mage` | 合格 |

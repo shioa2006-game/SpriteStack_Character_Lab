@@ -20,7 +20,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from research.verify_character import DIRECTIONS, Report, components, resolve
+from research.verify_character import DIRECTIONS, Report, components, face_contacts, resolve
 from spritestack.character import load_character
 from spritestack.render import Renderer, reslice
 from spritestack.rig import Biped, transform
@@ -149,11 +149,7 @@ def check_items(report, character, joints, poses):
                 problems.append(f"{item} marker moves against {hand} in frame {index}")
             ids = poses[f"walk_{index:02}"]
             gear, held = ids == character.parts[item], ids == character.parts[hand]
-            touching = 0
-            for axis in range(3):
-                a, b = np.moveaxis(gear, axis, 0), np.moveaxis(held, axis, 0)
-                touching += int(np.count_nonzero(a[:-1] & b[1:]) + np.count_nonzero(b[:-1] & a[1:]))
-            counts.append(touching)
+            counts.append(face_contacts(gear, held))
             side = np.sign(np.mean(np.argwhere(gear)[:, 2]) * character.posed_grid.spacing[0]
                            + character.posed_grid.origin[0])
             if side != (-1 if hand == "hand_R" else 1):

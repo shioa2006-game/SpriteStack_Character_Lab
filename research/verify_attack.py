@@ -10,7 +10,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 
 from research.overhead.analyze import guard_key
-from research.verify_bram import face_contacts
+from research.verify_character import face_contacts
 from spritestack.bake import check_attachment, require_margin
 from spritestack.character import load_character
 from spritestack.rig import Biped

@@ -19,8 +19,12 @@ from spritestack.render import Renderer, normals
 
 ROOT = Path(__file__).resolve().parents[2]
 MAREN_DIR = ROOT / "characters/maren"
-CONFIGS = {name: ROOT / f"characters/{name.lower()}/character.json" for name in ("MAREN", "LARK", "BRAM")}
-SHEETS = {"LARK": ROOT / "docs/assets/idle.png", "BRAM": ROOT / "docs/assets/bram/idle.png"}
+CONFIGS = {
+    "MAREN": ROOT / "characters/maren/character.json",
+    "LARK": ROOT / "experiments/lark/character.json",
+    "BRAM": ROOT / "experiments/bram/character.json",
+}
+SHEETS = {"LARK": ROOT / "experiments/lark_stage3/output/idle.png", "BRAM": ROOT / "experiments/bram/baseline/idle.png"}
 DIRECTIONS = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"]
 FRONT = ("S", "SW", "SE")
 BACKGROUND = (38, 46, 62, 255)

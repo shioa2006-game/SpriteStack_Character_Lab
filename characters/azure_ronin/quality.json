@@ -8,7 +8,7 @@
   },
   "attack": {"feature": "blade", "phase": "cut", "minimum_visible_px": 7},
   "motions": {
-    "walk": {"same_as": "../lark/character.json"}
+    "walk": {"clip": "../../motions/walk.json"}
   },
   "items": {
     "main": {"part": "sword", "hand": "hand_R", "marker": "sword_tip"}

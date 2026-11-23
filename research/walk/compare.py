@@ -85,10 +85,10 @@ def contact_sheet(path, before, after, directions, scale=3):
 def baseline(name):
     """The character with LARK's walk block, as before this tuning."""
     character = load_character(ROOT / f"characters/{name}/character.json")
-    lark = json.loads((ROOT / "characters/lark/character.json").read_text(encoding="utf-8"))
+    lark = json.loads((ROOT / "experiments/lark/character.json").read_text(encoding="utf-8"))
     config = copy.deepcopy(character.config)
     config["walk"] = lark["walk"]
-    clip = (ROOT / "characters/lark" / lark["walk"]["clip"]).resolve()
+    clip = (ROOT / "experiments/lark" / lark["walk"]["clip"]).resolve()
     config["walk"]["clip"] = str(clip)
     return dataclasses.replace(character, config=config)
 

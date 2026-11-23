@@ -11,9 +11,13 @@ from PIL import Image, ImageDraw, ImageFont
 from research.overhead.analyze import SUBSTEPS, angle, measure
 from research.overhead.motion import MANIFESTS, ROOT, character_for
 from research.overhead.plots import plot_paths
-from research.verify_bram import DIRECTIONS, face_contacts, read
+from research.verify_bram import DIRECTIONS, read
+from research.verify_character import face_contacts
 from spritestack.character import load_character
 from spritestack.rig import Biped
+
+
+BASELINES = {"lark": ROOT / "experiments/lark_stage3/output", "bram": ROOT / "experiments/bram/baseline"}
 
 
 def open_rgba(path):
@@ -26,11 +30,11 @@ def frame_at(sheet, layout, row, column):
     return sheet.crop((w * column, h * row, w * (column + 1), h * (row + 1)))
 
 
-def check_layout(before, improved, official_assets, *, attack_stem="attack"):
+def check_layout(before, improved, official_assets, *, overhead=None):
     current, new = (read(folder / "metadata.json") for folder in (before, improved))
     reference = read(official_assets / "metadata.json")
-    if attack_stem != "attack":
-        reference["animations"]["attack"] = read(official_assets / f"{attack_stem}.json")
+    if overhead is not None:
+        reference["animations"]["attack"] = read(overhead / "attack-overhead.json")
     assert current == reference
     for mode in ("idle", "walk"):
         panes = [open_rgba(folder / f"{mode}.png") for folder in (official_assets, before, improved)]
@@ -40,7 +44,7 @@ def check_layout(before, improved, official_assets, *, attack_stem="attack"):
     assert current["animations"]["walk"] == new["animations"]["walk"]
     poses = tuple(meta["animations"]["attack"] for meta in (current, new))
     sheets = tuple(open_rgba(folder / "attack.png") for folder in (before, improved))
-    assert sheets[0].tobytes() == open_rgba(official_assets / f"{attack_stem}.png").tobytes()
+    assert sheets[0].tobytes() == open_rgba(overhead / "attack-overhead.png" if overhead is not None else official_assets / "attack.png").tobytes()
     idle = open_rgba(improved / "idle.png")
     for clip, sheet in zip(poses, sheets, strict=True):
         assert clip["rows"] == DIRECTIONS and clip["columns"] == 9
@@ -174,7 +178,7 @@ def main():
     parser.add_argument("--out", required=True, type=Path)
     args = parser.parse_args()
     name = args.character
-    official_assets = ROOT / "docs/assets" / ("bram" if name == "bram" else "")
+    official_assets = BASELINES[name]
     clips, sheets, camera = check_layout(args.before, args.after, official_assets)
     character = character_for(name)
     before, after = (measure(model) for model in (load_character(MANIFESTS[name]), character))

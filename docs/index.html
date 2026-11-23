@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="LARK・BRAMの静止・歩行・攻撃と、MAREN・CRYSTAL MAGE・AZURE RONINの静止・歩行・攻撃を8方向のPNGスプライトで確認。">
+  <meta name="description" content="MAREN・CRYSTAL MAGE・AZURE RONINの静止・歩行・攻撃を8方向のPNGスプライトで確認。">
   <title>SpriteStack Character Lab</title>
   <link rel="stylesheet" href="gallery.css">
   <script src="gallery.js" defer></script>
@@ -12,13 +12,13 @@
   <main>
     <header class="heading">
       <p class="lab-name">SpriteStack Character Lab</p>
-      <h1><strong id="character-name">LARK</strong> <span id="character-subtitle" lang="en">The Blue Squire</span></h1>
+      <h1><strong id="character-name">MAREN</strong> <span id="character-subtitle" lang="en">Blue-Haired Swordswoman</span></h1>
     </header>
 
     <section class="gallery" aria-label="スプライトギャラリー">
       <figure class="viewer">
         <div class="stage">
-          <canvas id="sprite" width="256" height="256" role="img" aria-label="LARK のスプライト">LARK のスプライト</canvas>
+          <canvas id="sprite" width="256" height="256" role="img" aria-label="MAREN のスプライト">MAREN のスプライト</canvas>
         </div>
         <figcaption>
           <span id="status" role="status">画像を読み込み中…</span>
@@ -32,8 +32,6 @@
         <div class="playback">
           <label for="character">キャラクター</label>
           <select id="character">
-            <option value="lark">LARK · 青の従士</option>
-            <option value="bram">BRAM · ドワーフ戦士</option>
             <option value="maren">MAREN · 青髪の剣士</option>
             <option value="crystal_mage">CRYSTAL MAGE · 水晶の杖の魔法使い</option>
             <option value="azure_ronin">AZURE RONIN · スカーフの剣士</option>
@@ -56,15 +54,6 @@
             <option value="64">64×64 · 比較（1.59 px/単位）</option>
           </select>
           <p class="note">64×64は同じモデルを4/3倍の画素密度で描いた比較用です。原寸 (1×) で読みやすさを比べてください。</p>
-        </fieldset>
-
-        <fieldset id="attack-variant-row" hidden>
-          <legend id="attack-variant-label">攻撃モーション</legend>
-          <select id="attack-variant" aria-labelledby="attack-variant-label">
-            <option value="refined">改善後 · 剣の輪郭</option>
-            <option value="overhead">改善前 · 振りかぶり</option>
-            <option value="legacy">初期版</option>
-          </select>
         </fieldset>
 
         <div class="settings">

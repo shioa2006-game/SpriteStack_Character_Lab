@@ -208,7 +208,7 @@
     "voxel_size": 0.5
   },
   "walk": {
-    "clip": "../../experiments/lark_stage3/walk_motion.json",
+    "clip": "../lark_stage3/walk_motion.json",
     "cell": 48,
     "tuning": {
       "hip_yaw_scale": 0.24,

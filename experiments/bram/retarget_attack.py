@@ -1,4 +1,4 @@
-"""Derive BRAM's right-hand targets from LARK's evaluated attack."""
+"""Rebuild the archived right-hand targets from LARK's original attack."""
 
 import argparse
 import json
@@ -20,11 +20,11 @@ def arm_reach(rest):
     return np.linalg.norm(elbow - shoulder) + np.linalg.norm(hand - elbow) - .035
 
 
-def retarget():
+def retarget(target=HERE / "character.json"):
     lark = load_character(LARK)
     source = Biped(lark)
     clip = json.loads((LARK.parent / lark.config["attack"]["clip"]).read_bytes())
-    rest = json.loads((HERE / "character.json").read_bytes())["rig"]["rest"]
+    rest = json.loads(target.read_bytes())["rig"]["rest"]
     pivot = vec(rest["pelvis"])
     ratio = arm_reach(rest) / arm_reach(source.rest)
     for index, key in enumerate(clip["keys"]):
@@ -41,9 +41,11 @@ def retarget():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--character", type=Path, default=HERE / "character.json",
+                        help="target manifest (BRAM by default, or the original MAREN retarget)")
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
-    args.out.write_text(json.dumps(retarget(), indent=2) + "\n", encoding="utf-8", newline="\n")
+    args.out.write_text(json.dumps(retarget(args.character), indent=2) + "\n", encoding="utf-8", newline="\n")
 
 
 if __name__ == "__main__":

@@ -6,8 +6,6 @@ const status = document.querySelector("#status");
 const frameLabel = document.querySelector("#frame");
 const scale = document.querySelector("#scale");
 const speed = document.querySelector("#speed");
-const attackVariant = document.querySelector("#attack-variant");
-const attackVariantRow = document.querySelector("#attack-variant-row");
 const resolution = document.querySelector("#resolution");
 const resolutionRow = document.querySelector("#resolution-row");
 const character = document.querySelector("#character");
@@ -21,8 +19,6 @@ const motionButtons = [...document.querySelectorAll("[data-motion]")];
 const directionButtons = [...document.querySelectorAll("[data-direction]")];
 
 const characters = {
-  lark: { name: "LARK", subtitle: "The Blue Squire", assets: "assets", variants: true },
-  bram: { name: "BRAM", subtitle: "Dwarf Warrior", assets: "assets/bram", variants: true },
   maren: {
     name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
     attackComparison: "slash-comparison.gif",
@@ -45,7 +41,6 @@ const characters = {
 };
 // The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
 const stage = { cell: [64, 64], anchor: [32, 48] };
-const attackSheets = { refined: "attack-refined", overhead: "attack-overhead", legacy: "attack" };
 const sheets = new Map();
 const metadata = new Map();
 let viewport;
@@ -85,12 +80,11 @@ function loadMetadata(url) {
   return metadata.get(url);
 }
 
-function configure(data, attackLayout, idleLayout) {
+function configure(data, idleLayout) {
   const layouts = {
     idle: { ...(idleLayout ?? data.neutral), columns: 1 },
     ...data.animations,
   };
-  if (attackLayout ?? data.animations.attack) layouts.attack = attackLayout ?? data.animations.attack;
   const all = [stage, ...Object.values(layouts)];
   viewport = {
     width: Math.max(...all.map(layout => layout.cell[0])),
@@ -194,10 +188,9 @@ async function showSelection() {
     const name = motion;
     const facing = direction;
     const idleVariant = name === "idle" && chosen.idleSheets ? chosen.idleSheets[resolution.value] : null;
-    const sheetName = name === "attack" && chosen.variants ? attackSheets[attackVariant.value] : idleVariant ?? name;
+    const sheetName = idleVariant ?? name;
     speed.disabled = name === "idle";
     replay.hidden = name !== "attack";
-    attackVariantRow.hidden = name !== "attack" || !chosen.variants;
     resolutionRow.hidden = !(name === "idle" && chosen.idleSheets);
     const label = motionButtons.find(button => button.dataset.motion === name).textContent;
     const [image, variantLayout] = await Promise.all([
@@ -205,16 +198,14 @@ async function showSelection() {
       sheetName !== name ? loadMetadata(chosen.assets + "/" + sheetName + ".json") : null,
     ]);
     if (ticket !== selection) return;
-    const layout = name === "idle"
-      ? configure(data, null, variantLayout?.neutral)[name]
-      : configure(data, variantLayout)[name];
+    const layout = configure(data, variantLayout?.neutral)[name];
     active = {
       name, facing, layout, image, frame: 0, elapsed: 0, lastTick: performance.now(),
       duration: layout.durations_ms?.reduce((total, ms) => total + ms, 0),
     };
     status.textContent = label + " · " + facing + (chosen.idleSheets && name === "idle" ? " · " + layout.cell.join("×") : "");
     canvas.setAttribute("aria-label", chosen.name + " " + status.textContent);
-    attackGif.hidden = name !== "attack" || !!chosen.variants;
+    attackGif.hidden = name !== "attack";
     if (!attackGif.hidden) attackGif.href = chosen.assets + "/attack.gif";
     if (name === "attack" && chosen.attackComparison) {
       comparisonGif.href = chosen.assets + "/" + chosen.attackComparison;
@@ -250,6 +241,5 @@ for (const button of directionButtons) {
 replay.addEventListener("click", showSelection);
 scale.addEventListener("change", resize);
 character.addEventListener("change", showSelection);
-attackVariant.addEventListener("change", showSelection);
 resolution.addEventListener("change", showSelection);
 showSelection();

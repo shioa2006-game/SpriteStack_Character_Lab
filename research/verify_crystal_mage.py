@@ -18,7 +18,7 @@ from spritestack.rig import Biped
 ROOT = Path(__file__).resolve().parents[1]
 MAGE_DIR = ROOT / "characters/crystal_mage"
 MAGE = MAGE_DIR / "character.json"
-LARK = ROOT / "characters/lark/character.json"
+LARK = ROOT / "experiments/lark/character.json"
 PUBLISHED = ROOT / "docs/assets/crystal_mage"
 DIRECTIONS = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"]
 SHEETS = {48: ("idle.png", "metadata.json"), 64: ("idle-64.png", "idle-64.json")}
