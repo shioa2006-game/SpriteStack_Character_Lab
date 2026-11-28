@@ -1,0 +1,64 @@
+{
+  "id": "frost_crystal",
+  "cell": 48,
+  "anchor": [24, 35],
+  "source_grid": {
+    "origin_xyz": [-8, -8, -1],
+    "limit_xyz": [8, 8, 24],
+    "voxel_size": 0.5
+  },
+  "parts": ["socket", "quartz", "frost"],
+  "palette": {
+    "shade": ["363443", "5d596d", "827e92"],
+    "wear": ["60575e", "8d848a", "beb3ac"],
+    "bronze": ["654634", "a7794e", "d8b27c"],
+    "slate": ["323c5a", "586989", "8498b3"],
+    "teal": ["2e5166", "4c8190", "82abb2"],
+    "blue": ["24465e", "527fac", "8aa8ce"],
+    "ice": ["407e9b", "7ccbd7", "c8f5f0"],
+    "light": ["7aadc6", "b8e6ef", "effff8"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [14.5, 10.0, 21.0],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "game_kind": "crystal",
+    "origin": "floor below socket",
+    "game_height_steps": 2,
+    "rest_pose": "lit"
+  },
+  "views": {
+    "idle": {
+      "name": "dormant",
+      "angles_deg": [0],
+      "include": ["socket", "quartz"],
+      "offset_xyz": [0, 0, 0],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walk_blocking": true,
+        "points_xyz": {
+          "base": [0, 0, 0],
+          "focus": [0, 0, 11]
+        }
+      }
+    },
+    "lit": {
+      "name": "lit",
+      "angles_deg": [0],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walk_blocking": true,
+        "points_xyz": {
+          "base": [0, 0, 0],
+          "focus": [0, 0, 11]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "iron",
+      "directions": ["S", "SW", "NW", "N", "NE", "SE"],
+      "min_pixels": 2
+    },
+    {
+      "state": "open",
+      "material": "stone",
+      "min_pixels": 6
+    }
+  ]
+}

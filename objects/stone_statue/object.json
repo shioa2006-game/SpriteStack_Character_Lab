@@ -1,0 +1,46 @@
+{
+  "id": "stone_statue",
+  "cell": 52,
+  "anchor": [26, 39],
+  "source_grid": {
+    "origin_xyz": [-8, -8, -1],
+    "limit_xyz": [8, 8, 24],
+    "voxel_size": 0.5
+  },
+  "parts": ["plinth", "effigy"],
+  "palette": {
+    "stone": ["474454", "777489", "a29caa"],
+    "shade": ["363443", "5d596d", "827e92"],
+    "wear": ["60575e", "8d848a", "beb3ac"],
+    "moss": ["444b49", "687268", "939b7e"],
+    "chalk": ["67616d", "9d969d", "c9bbb7"],
+    "basalt": ["302f3c", "454352", "625d69"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [11.0, 10.5, 20.0],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "game_kind": "statue",
+    "origin": "plinth center on floor",
+    "game_height_steps": 2,
+    "rest_pose": "standing"
+  },
+  "views": {
+    "idle": {
+      "name": "standing",
+      "angles_deg": [0],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walk_blocking": true,
+        "points_xyz": {
+          "base": [0, 0, 0],
+          "face": [0, 5, 16]
+        }
+      }
+    }
+  }
+}

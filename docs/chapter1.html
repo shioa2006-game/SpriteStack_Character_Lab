@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第一章の仕掛け | SpriteStack Asset Lab</title>
+<link rel="stylesheet" href="gallery.css"><link rel="stylesheet" href="studies/chapter1/preview.css">
+<script defer src="catalog.js"></script><script defer src="lab.js"></script><script defer src="studies/chapter1/preview.js"></script></head>
+<body data-page="object"><header id="lab-nav"></header><main>
+<a class="crumb" href="objects.html">OBJECTS 一覧</a>
+<div class="intro"><div><p class="folio">GUILDWARD · 第一章</p><h1>遺跡と渡り場の仕掛け</h1></div></div>
+<div class="filters" id="controls"><label>投影 <select id="camera"><option value="game">GUILDWARD · 32×16</option><option value="lab">SpriteStack · 24°</option></select></label>
+<label>方向 <select id="yaw"></select></label><label>表示 <select id="zoom"><option value="2">通常 2×</option><option value="1">原寸 1×</option></select></label>
+<label><input type="checkbox" id="pins"> 設置点・接続点</label></div>
+<p id="status" role="status">読み込み中…</p><section id="scenes" aria-label="仕掛けの配置"></section>
+<section class="sheets"><h2>8方向一覧</h2><label>素材 <select id="inspect"></select></label>
+<div class="strip-scroll"><canvas id="strip" aria-label="全方向のスプライト"></canvas></div><p id="coordinates"></p>
+<p class="project-links"><a href="studies/chapter1/game.png">ゲーム投影 PNG</a><a href="studies/chapter1/game.json">切り出し・アンカー JSON</a><a href="studies/chapter1/placement.json">方向別接続点 JSON</a><a href="studies/chapter1/map-placement.json">マップ配置・状態対応 JSON</a></p></section>
+</main></body></html>

@@ -23,11 +23,14 @@ def main():
         page.on("pageerror", lambda e: errors.append(str(e)))
         page.on("response", lambda r: errors.append(str(r.status)+" "+r.url) if r.status >= 400 else None)
         page.goto(url+"objects.html")
-        assert page.locator(".asset-card").count() == 4
+        object_count = page.evaluate("AssetCatalog.assets.filter(a=>a.type==='object').length")
+        assert page.locator(".asset-card").count() == object_count
         page.select_option("#project-filter","guildward")
-        assert page.locator(".asset-card").count() == 4
+        project_objects = page.evaluate("AssetCatalog.assets.filter(a=>a.type==='object' && Lab.related(a,'guildward')).length")
+        assert page.locator(".asset-card").count() == project_objects
         page.goto(url+"projects.html?id=guildward")
-        assert page.locator("section").filter(has_text="制作候補").locator(".asset-card").count() == 4
+        candidate_count = page.evaluate("Lab.candidates(AssetCatalog.projects.find(p=>p.id==='guildward')).length")
+        assert page.locator("section").filter(has_text="制作候補").locator(".asset-card").count() == candidate_count
         for name in ("wooden_crate","treasure_chest","boulder","stone_pillar"):
             page.goto(url+"viewer.html?id="+name+"&scale=1&speed=1")
             page.wait_for_function("document.querySelector('#frame').textContent === '1 / 1'")

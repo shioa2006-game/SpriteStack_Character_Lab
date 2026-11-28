@@ -52,7 +52,8 @@ function category(key) {
   const independent = a => !a.projects.length && !a.candidateProjects?.length;
   if (key === "object") {
     for (const project of used.filter(p => p.objectPreview)) {
-      collection.insertAdjacentHTML("beforeend", `<p class="project-links"><a class="primary-link" href="${project.objectPreview}">冒険者と床面で比較</a></p>`);
+      collection.insertAdjacentHTML("beforeend", `<p class="project-links"><a class="primary-link" href="${project.objectPreview}">冒険者と床面で比較</a>
+        ${project.fixturePreview ? `<a class="text-link" href="${project.fixturePreview}">第一章の仕掛けを配置して比較</a>` : ""}</p>`);
     }
   }
   collection.insertAdjacentHTML("beforeend", `<div class="filters"><label>分類 <select id="subtype"><option value="">すべて</option>
@@ -101,6 +102,7 @@ function projectDetail(project) {
     introduction(project.name, project.description, `${items.length} 採用素材 · ${Lab.candidates(project).length} 制作候補`) +
     `<div class="project-links">${project.party ? `<a class="primary-link" href="${project.party}">隊列プレビュー</a>` : ""}
     ${project.objectPreview ? `<a class="text-link" href="${project.objectPreview}">冒険者と床面で比較</a>` : ""}
+    ${project.fixturePreview ? `<a class="text-link" href="${project.fixturePreview}">第一章の仕掛けを配置して比較</a>` : ""}
     <a class="text-link" href="${project.repository}">ゲームリポジトリ</a></div>` +
     groups.filter(([title, group]) => !["その他のキャラクター","制作候補"].includes(title) || group.length).map(([title, group]) =>
       `<section class="project-section"><div class="section-heading"><h2>${title}</h2><span class="tally">${group.length} 素材</span></div>

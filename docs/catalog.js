@@ -13,22 +13,25 @@ const AssetCatalog = (() => {
   const objectState = (id, label) => ({ id, label, state: true, sheet: id + ".png",
     metadata: id === "idle" ? "metadata.json" : id + ".json", gif: id + ".gif" });
   const objectMotion = (id, label, next) => ({ id, label, next, sheet: id + ".png", metadata: id + ".json", gif: id + ".gif" });
-  const prop = (id, name, displayName, subtype, role, description, views) => ({
+  const prop = (id, name, displayName, subtype, role, description, views, record = "research/objects01/README.md") => ({
     id, name, displayName, role, type: "object", subtype, description, status: "published",
     projects: [], candidateProjects: ["guildward"], directory: "assets/" + id + "/",
     thumbnail: "idle.png", directions: compass, views, source: "objects/" + id + "/build_model.py",
-    records: [["設計と原寸検証", "research/objects01/README.md"], ["再生成・制作ガイド", "objects/README.md"]],
+    records: [["設計と原寸検証", record], ["再生成・制作ガイド", "objects/README.md"]],
   });
+  const fixture = (id, name, ja, role, description, states) =>
+    prop(id,name,ja,"mechanism",role,description,states.map(([s,label])=>objectState(s,label)),"research/chapter1/README.md");
 
   return {
     repository: "https://github.com/shioa2006-game/SpriteStack_Character_Lab/blob/main/",
-    subtypes: { adventurer: "冒険者", npc: "NPC", humanoid: "人型", cargo: "荷物", treasure: "宝物", terrain: "地形の仕掛け" },
+    subtypes: { adventurer: "冒険者", npc: "NPC", humanoid: "人型", cargo: "荷物", treasure: "宝物", terrain: "地形の仕掛け", mechanism: "遺跡と渡り場" },
     projects: [{
       id: "guildward", name: "GUILDWARD",
       description: "ONE PROMPT WORLDSから発展した、BEYOND ONE PROMPTの第2作。",
       repository: "https://github.com/shioa2006-game/ONE_PROMPT_WORLDS/tree/main/beyond2",
       party: "party.html",
       objectPreview: "object-study.html",
+      fixturePreview: "chapter1.html",
     }],
     assets: [
       {
@@ -175,6 +178,12 @@ const AssetCatalog = (() => {
         "浅い菱形を刻んだ三段の石柱。倒れた石材を一つずつ橋として並べられる。",
         [objectState("idle", "直立"), objectMotion("topple", "転倒", "fallen"), objectState("fallen", "横倒し"), objectState("beam", "足場 BEAM")]),
         thumbnail: "cover.png", thumbnailSingle: true },
+      fixture("iron_ring","IRON RING","鉄の輪","鉤縄の接続点","壁の取付座から張り出した、鍛鉄の丸環。",[["idle","固定"]]),
+      fixture("archery_target","ARCHERY TARGET","的","一度だけ動く的","朱と生成りの輪を巻いた的。命中すると盤が前に倒れる。",[["idle","使用前"],["hit","命中後"]]),
+      fixture("drawbridge","DRAWBRIDGE","跳ね橋","岸を結ぶ橋板","鉄の横軸で板を支え、対岸までの一マスをつなぐ。",[["idle","上がった橋"],["lowered","下りた橋"]]),
+      fixture("ruin_gate","RUIN GATE","遺跡の扉","昇降する格子門","石の案内溝に鉄格子を納めた門。格子を引き上げると中央を通れる。",[["idle","閉"],["open","開"]]),
+      fixture("frost_crystal","FROST CRYSTAL","霜の水晶","霜を受けて灯る結晶","暗い石座に青い三つの結晶。凍ると稜線が淡く光る。",[["idle","消灯"],["lit","点灯"]]),
+      fixture("stone_statue","STONE STATUE","石像","遺跡の守り鳥","羽を畳んだ石の梟。深い眼窩と鉤形のくちばしが参道を向く。",[["idle","直立"]]),
     ],
   };
 })();

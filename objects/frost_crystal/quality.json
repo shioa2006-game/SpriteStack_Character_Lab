@@ -1,0 +1,15 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "lit",
+      "material": "ice",
+      "min_pixels": 8
+    },
+    {
+      "state": "idle",
+      "material": "slate",
+      "min_pixels": 1
+    }
+  ]
+}

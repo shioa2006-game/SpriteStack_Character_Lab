@@ -1,0 +1,73 @@
+{
+  "id": "drawbridge",
+  "cell": 64,
+  "anchor": [32, 38],
+  "source_grid": {
+    "origin_xyz": [-9, -5, -5],
+    "limit_xyz": [9, 16, 6],
+    "voxel_size": 0.5
+  },
+  "parts": ["bearings", "deck", "quadrant"],
+  "palette": {
+    "iron": ["343344", "5d6570", "9dabb1"],
+    "edge": ["505365", "88949c", "d1d4c7"],
+    "rust": ["593e38", "826048", "b08864"],
+    "bronze": ["654634", "a7794e", "d8b27c"],
+    "oak": ["583e35", "9b7149", "c49864"],
+    "honey": ["704e38", "b08655", "d3af7d"],
+    "grain": ["473338", "76523d", "a17a52"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [16.0, 17.5, 5.0],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "game_kind": "bridge",
+    "origin": "near bank lip, deck grade",
+    "tile_reference": "hinge bank center at local (0,-7,0); travel +Y",
+    "travel_xyz": [0, 1, 0],
+    "rest_pose": "lowered"
+  },
+  "views": {
+    "idle": {
+      "name": "raised",
+      "angles_deg": [90],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walkable_tiles": [],
+        "points_xyz": {
+          "hinge": [0, 0, -1],
+          "near_lip": [0, 0, 0]
+        }
+      }
+    },
+    "lowered": {
+      "name": "lowered",
+      "angles_deg": [0],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0],
+          [0, 1]
+        ],
+        "walkable_tiles": [
+          [0, 1]
+        ],
+        "support_center_xyz": [0, 7, 0],
+        "support_half_extents_xy": [5, 6.5],
+        "points_xyz": {
+          "hinge": [0, 0, -1],
+          "near_lip": [0, 0, 0],
+          "far_lip": [0, 14, 0]
+        }
+      }
+    }
+  },
+  "rotation": {
+    "pivot_xyz": [0, 0, -1],
+    "axis_xyz": [1, 0, 0],
+    "parts": ["deck", "quadrant"]
+  }
+}

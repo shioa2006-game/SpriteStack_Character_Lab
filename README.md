@@ -14,8 +14,8 @@ python -m http.server 8000 --bind 127.0.0.1 --directory docs
 | --- | --- |
 | [CHARACTERS](docs/characters.html) | 冒険者と人型キャラクター。画像カードを分類・プロジェクトで絞り込み、方向や再生速度を切り替えて比較 |
 | [MONSTERS](docs/monsters.html) | GOBLIN BRUTE・SKELETON GUARD。共通ビューアで公開モーションと制作記録を確認 |
-| [OBJECTS](docs/objects.html) | 木箱・宝箱・大岩・石柱。8方向の静止・開閉・転動・転倒と、独立した足場モジュール |
-| [PROJECTS](docs/projects.html) | GUILDWARDの冒険者4人とオブジェクト制作候補4種。隊列と床面の比較プレビュー |
+| [OBJECTS](docs/objects.html) | 木箱・宝箱・大岩・石柱と遺跡・渡り場の仕掛け6種。8方向の静止・可動状態、足場モジュール |
+| [PROJECTS](docs/projects.html) | GUILDWARDの冒険者4人とオブジェクト制作候補10種。隊列、床面、使う場所での配置比較 |
 
 HTMLを直接開いてもトップ・一覧・隊列は利用できます。個別ビューアはモーション別JSONを `fetch` するため、ブラウザのローカルファイル制限が適用されます。直接開いた詳細画面には素材リンク、起動コマンド、同じ素材のHTTP版へのリンクを表示します。
 
@@ -41,6 +41,8 @@ HTMLを直接開いてもトップ・一覧・隊列は利用できます。個�
 台帳の `projects` に一意な `id`、`name`、`description`、`repository` を登録し、採用素材の `projects` にそのIDを追加します。詳細URLは `projects.html?id=<id>` です。所属一覧・件数はこの関係から生成します。隊列に対応する場合は詳細ページに `party` のリンクが現れます。
 
 ## 冒険者の一行
+
+第一章の仕掛けを通常2倍の配置画面で比較できます。鉄の輪の接続点、的の命中、跳ね橋と扉の開閉、水晶の点灯、石像と人物の前後関係を確認できます。[仕掛けの配置と8方向一覧](docs/chapter1.html) · [原型・設置表・再生成](research/chapter1/README.md)
 
 木箱の上に立つリコ、宝箱が開く瞬間、大岩の転がり、石柱が1〜3マスの橋に変わる様子を、冒険者と同じ密度で確認できます。比較画面の投影を切り替えると、GUILDWARDの32×16 pxの床と1段8 pxでの見え方も確認できます。[床面比較](docs/object-study.html) · [オブジェクト制作ガイド](objects/README.md) · [初版と完成版の比較・検証結果](research/objects01/README.md)
 

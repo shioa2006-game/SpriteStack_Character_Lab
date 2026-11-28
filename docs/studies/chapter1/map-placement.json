@@ -1,0 +1,145 @@
+{
+  "reference": {
+    "repository": "shioa2006-game/ONE_PROMPT_WORLDS",
+    "commit": "013da6a5fd2b788c7cb017ecc7fc3e558d6cd9ec",
+    "version": "v0.3",
+    "maps": "beyond2/js/data.js"
+  },
+  "units": {
+    "tile_xy": 14,
+    "step_z": 8,
+    "heading": "degrees about +Z; local +Y is forward; row yaw = camera yaw - heading",
+    "origin": "tile_origin_xy is in game tile-center coordinates; origin_z_model is absolute model units above game z=0"
+  },
+  "state_mapping": {
+    "anchor": {"asset": "iron_ring", "default": "idle"},
+    "bridge": {"asset":"drawbridge", "field":"down", "false":"idle", "true":"lowered"},
+    "target": {"asset":"archery_target", "field":"hit", "false":"idle", "true":"hit"},
+    "door": {"asset":"ruin_gate", "field":"open", "false":"idle", "true":"open", "lamp_flags":["r1","r2","r3","r4"]},
+    "crystal": {"asset":"frost_crystal", "field":"lit", "false":"idle", "true":"lit"},
+    "statue": {"asset":"stone_statue", "default":"idle"}
+  },
+  "instances": [
+    {
+      "map": "m1",
+      "asset": "iron_ring",
+      "game_tile": [3, 3],
+      "ground_steps": 4,
+      "tile_origin_xy": [3, 3],
+      "origin_z_model": 32,
+      "heading_deg": -90,
+      "site": "mounting post face; flat terrace"
+    },
+    {
+      "map": "m2",
+      "asset": "iron_ring",
+      "game_tile": [6, 5],
+      "ground_steps": 5,
+      "tile_origin_xy": [6, 5.5],
+      "origin_z_model": 24,
+      "heading_deg": 0,
+      "site": "south cliff lip"
+    },
+    {
+      "map": "m3",
+      "asset": "iron_ring",
+      "game_tile": [3, 2],
+      "ground_steps": 6,
+      "tile_origin_xy": [3.5, 2],
+      "origin_z_model": 32,
+      "heading_deg": -90,
+      "site": "east rock face beside void"
+    },
+    {
+      "map": "m2",
+      "asset": "archery_target",
+      "game_tile": [4, 4],
+      "ground_steps": 5,
+      "tile_origin_xy": [4, 4],
+      "origin_z_model": 40,
+      "heading_deg": 0,
+      "site": "bracket on terrace"
+    },
+    {
+      "map": "m4",
+      "asset": "archery_target",
+      "game_tile": [13, 1],
+      "ground_steps": 7,
+      "tile_origin_xy": [13, 1],
+      "origin_z_model": 56,
+      "heading_deg": 0,
+      "site": "bracket at upper wall"
+    },
+    {
+      "map": "m2",
+      "asset": "ruin_gate",
+      "game_tile": [1, 3],
+      "ground_steps": 3,
+      "tile_origin_xy": [1, 3],
+      "origin_z_model": 24,
+      "heading_deg": 0,
+      "site": "north/south storehouse passage; no lamps"
+    },
+    {
+      "map": "m4",
+      "asset": "ruin_gate",
+      "game_tile": [6, 3],
+      "ground_steps": 3,
+      "tile_origin_xy": [6, 3],
+      "origin_z_model": 24,
+      "heading_deg": 0,
+      "site": "north/south ruin corridor; r1/r2/r3/r4"
+    },
+    {
+      "map": "m4",
+      "asset": "frost_crystal",
+      "game_tile": [0, 7],
+      "ground_steps": 3,
+      "tile_origin_xy": [0, 7],
+      "origin_z_model": 24,
+      "heading_deg": 0,
+      "site": "stone island by pond"
+    },
+    {
+      "map": "m4",
+      "asset": "stone_statue",
+      "game_tile": [6, 6],
+      "ground_steps": 3,
+      "tile_origin_xy": [6, 6],
+      "origin_z_model": 24,
+      "heading_deg": 0,
+      "site": "faces south approach"
+    },
+    {
+      "map": "m4",
+      "asset": "stone_statue",
+      "game_tile": [9, 6],
+      "ground_steps": 3,
+      "tile_origin_xy": [9, 6],
+      "origin_z_model": 24,
+      "heading_deg": 0,
+      "site": "faces south approach"
+    },
+    {
+      "map": "m7",
+      "asset": "drawbridge",
+      "game_tile": [11, 3],
+      "ground_steps": 4,
+      "tile_origin_xy": [10.5, 3],
+      "origin_z_model": 32,
+      "heading_deg": 90,
+      "site": "hinge bank to west; crossing cell [10,3], far bank [9,3]"
+    },
+    {
+      "map": "m8",
+      "asset": "drawbridge",
+      "game_tile": [13, 2],
+      "ground_steps": 3,
+      "tile_origin_xy": [12.5, 2],
+      "origin_z_model": 24,
+      "heading_deg": 90,
+      "site": "hinge bank to west; crossing cell [12,2], far bank [11,2]"
+    }
+  ],
+  "assumptions": "Game tile, ground height and bridge cells are map facts. Hardware orientation, wall face offsets, origin Z and decorative mounts are Lab integration recommendations. No chapter-one bridge exists in this revision."
+}

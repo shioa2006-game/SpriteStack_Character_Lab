@@ -1,0 +1,13 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "lowered",
+      "material": "oak",
+      "min_pixels": 7
+    }
+  ],
+  "support_states": [
+    "lowered"
+  ]
+}

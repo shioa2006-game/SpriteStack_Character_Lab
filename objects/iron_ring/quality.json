@@ -1,0 +1,10 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "edge",
+      "min_pixels": 2
+    }
+  ]
+}

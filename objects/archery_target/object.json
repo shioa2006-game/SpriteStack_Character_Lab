@@ -1,0 +1,65 @@
+{
+  "id": "archery_target",
+  "cell": 48,
+  "anchor": [24, 32],
+  "source_grid": {
+    "origin_xyz": [-7, -2, -1],
+    "limit_xyz": [7, 5, 19],
+    "voxel_size": 0.5
+  },
+  "parts": ["bracket", "board"],
+  "palette": {
+    "oak": ["583e35", "9b7149", "c49864"],
+    "grain": ["473338", "76523d", "a17a52"],
+    "iron": ["343344", "5d6570", "9dabb1"],
+    "bronze": ["654634", "a7794e", "d8b27c"],
+    "straw": ["86654c", "bc9a67", "e0c496"],
+    "ivory": ["998875", "d8c9a8", "f4e7c9"],
+    "madder": ["812f39", "b74743", "dd7160"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [11.0, 4.0, 17.0],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "game_kind": "target",
+    "origin": "floor below back of mounting bracket",
+    "rest_pose": "ready"
+  },
+  "views": {
+    "idle": {
+      "name": "ready",
+      "angles_deg": [0],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walk_blocking": false,
+        "points_xyz": {
+          "mount": [0, 0, 6.5],
+          "center": [0, 4, 11.5]
+        }
+      }
+    },
+    "hit": {
+      "name": "hit",
+      "angles_deg": [-90],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walk_blocking": false,
+        "points_xyz": {
+          "mount": [0, 0, 6.5],
+          "center": [0, 7.75, 5.25]
+        }
+      }
+    }
+  },
+  "rotation": {
+    "pivot_xyz": [0, 2.75, 6.5],
+    "axis_xyz": [1, 0, 0],
+    "parts": ["board"]
+  }
+}

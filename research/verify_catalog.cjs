@@ -34,6 +34,7 @@ unique(ids(catalog.assets), "assets");
 for (const p of catalog.projects) {
   if (p.party) exists(docs, p.party.split("?")[0]);
   if (p.objectPreview) exists(docs, p.objectPreview);
+  if (p.fixturePreview) exists(docs, p.fixturePreview);
   assert.ok(new URL(p.repository).protocol === "https:", p.repository);
 }
 let count = 0;

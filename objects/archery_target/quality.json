@@ -1,0 +1,15 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "madder",
+      "directions": [
+        "S",
+        "SW",
+        "SE"
+      ],
+      "min_pixels": 8
+    }
+  ]
+}

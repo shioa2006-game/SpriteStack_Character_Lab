@@ -1,0 +1,45 @@
+{
+  "id": "iron_ring",
+  "cell": 44,
+  "anchor": [22, 31],
+  "source_grid": {
+    "origin_xyz": [-8, -2, -1],
+    "limit_xyz": [8, 8, 19],
+    "voxel_size": 0.5
+  },
+  "parts": ["plate", "staple", "ring"],
+  "palette": {
+    "iron": ["343344", "5d6570", "9dabb1"],
+    "edge": ["505365", "88949c", "d1d4c7"],
+    "rust": ["593e38", "826048", "b08864"],
+    "bronze": ["654634", "a7794e", "d8b27c"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [12.0, 4.5, 15.5],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "game_kind": "anchor",
+    "mount_plane": "Y=0, outward +Y",
+    "origin": "wall face below mounting plate",
+    "rest_pose": "ready"
+  },
+  "views": {
+    "idle": {
+      "name": "ready",
+      "angles_deg": [0],
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "walk_blocking": false,
+        "points_xyz": {
+          "mount": [0, 0, 13.5],
+          "hook": [0, 3.5, 12],
+          "aperture": [0, 3.5, 7.5]
+        }
+      }
+    }
+  }
+}
