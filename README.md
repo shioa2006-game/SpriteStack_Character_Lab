@@ -14,8 +14,8 @@ python -m http.server 8000 --bind 127.0.0.1 --directory docs
 | --- | --- |
 | [CHARACTERS](docs/characters.html) | 冒険者と人型キャラクター。画像カードを分類・プロジェクトで絞り込み、方向や再生速度を切り替えて比較 |
 | [MONSTERS](docs/monsters.html) | GOBLIN BRUTE・SKELETON GUARD。共通ビューアで公開モーションと制作記録を確認 |
-| [OBJECTS](docs/objects.html) | オブジェクトの登録先。現在は未登録で、最初の4種の制作予定を表示 |
-| [PROJECTS](docs/projects.html) | ゲーム別の採用素材。GUILDWARDでは4人の冒険者と隊列プレビューを閲覧 |
+| [OBJECTS](docs/objects.html) | 木箱・宝箱・大岩・石柱。8方向の静止・開閉・転動・転倒と、独立した足場モジュール |
+| [PROJECTS](docs/projects.html) | GUILDWARDの冒険者4人とオブジェクト制作候補4種。隊列と床面の比較プレビュー |
 
 HTMLを直接開いてもトップ・一覧・隊列は利用できます。個別ビューアはモーション別JSONを `fetch` するため、ブラウザのローカルファイル制限が適用されます。直接開いた詳細画面には素材リンク、起動コマンド、同じ素材のHTTP版へのリンクを表示します。
 
@@ -41,6 +41,8 @@ HTMLを直接開いてもトップ・一覧・隊列は利用できます。個�
 台帳の `projects` に一意な `id`、`name`、`description`、`repository` を登録し、採用素材の `projects` にそのIDを追加します。詳細URLは `projects.html?id=<id>` です。所属一覧・件数はこの関係から生成します。隊列に対応する場合は詳細ページに `party` のリンクが現れます。
 
 ## 冒険者の一行
+
+木箱の上に立つリコ、宝箱が開く瞬間、大岩の転がり、石柱が1〜3マスの橋に変わる様子を、冒険者と同じ密度で確認できます。比較画面の投影を切り替えると、GUILDWARDの32×16 pxの床と1段8 pxでの見え方も確認できます。[床面比較](docs/object-study.html) · [オブジェクト制作ガイド](objects/README.md) · [初版と完成版の比較・検証結果](research/objects01/README.md)
 
 ガルドの重打撃、リコの弓射撃、セナの氷魔法、発破師トビの投擲を、同じ石畳で8方向から比較できます。単発再生は攻撃終了後に待機へ戻ります。待機4コマ・歩行6コマの共通セルは64×64、足元アンカーは (32, 57)。攻撃は人物ごとのセル・アンカー・コマ時間を使います。[4人の隊列・個別プレビュー](docs/party.html) · [生成手順と攻撃の検証記録](research/adventurers/ATTACKS.md)
 

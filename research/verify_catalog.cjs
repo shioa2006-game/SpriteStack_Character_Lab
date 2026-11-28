@@ -33,6 +33,7 @@ unique(projectIds, "projects");
 unique(ids(catalog.assets), "assets");
 for (const p of catalog.projects) {
   if (p.party) exists(docs, p.party.split("?")[0]);
+  if (p.objectPreview) exists(docs, p.objectPreview);
   assert.ok(new URL(p.repository).protocol === "https:", p.repository);
 }
 let count = 0;
@@ -44,7 +45,12 @@ for (const a of catalog.assets) {
   check(a.directory.endsWith("/"), "directory 末尾の /");
   unique(a.projects, a.id + " projects");
   check(a.projects.every(id => projectIds.includes(id)), "所属プロジェクト");
+  if (a.candidateProjects) {
+    unique(a.candidateProjects, a.id + " candidateProjects");
+    check(a.candidateProjects.every(id => projectIds.includes(id) && !a.projects.includes(id)), "制作候補");
+  }
   unique(a.directions, a.id + " directions");
+  if (a.type === "object") check(a.directions.join() === "S,SW,W,NW,N,NE,E,SE", "剛体の標準8方向");
   unique(ids(a.views), a.id + " views");
   exists(root, a.source);
   for (const [, record] of a.records) exists(root, record);
@@ -64,6 +70,10 @@ for (const a of catalog.assets) {
       check(layout, files.metadata + " layout");
       const order = view.state ? layout.directions : layout.rows;
       unique(order, files.metadata);
+      if (a.type === "object") {
+        check(order.join() === a.directions.join(), files.metadata + " 全状態・全動作の8方向順");
+        if (!view.state) check(layout.next === view.next, files.metadata + " 終了状態");
+      }
       order.forEach(d => available.add(d));
       const columns = view.state ? order.length : layout.columns;
       const rows = view.state ? 1 : order.length;

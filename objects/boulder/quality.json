@@ -1,0 +1,17 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "vein",
+      "min_pixels": 10,
+      "directions": ["S", "SW", "N", "NE", "E", "SE"]
+    }
+  ],
+  "rolling": {
+    "state": "roll",
+    "start": "idle",
+    "max_support_adjustment": 1,
+    "max_floor_gap": 0.5
+  }
+}

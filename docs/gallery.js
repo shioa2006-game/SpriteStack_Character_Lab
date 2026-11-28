@@ -32,7 +32,8 @@ async function openViewer() {
   get("records").innerHTML = "<strong>制作資料</strong>" +
     link("モデル生成ソース", Lab.sourceUrl(asset.source)) +
     asset.records.map(([label, path]) => link(label, Lab.sourceUrl(path))).join("") +
-    AssetCatalog.projects.filter(p => asset.projects.includes(p.id)).map(p => link(p.name, Lab.projectUrl(p))).join("");
+    AssetCatalog.projects.filter(p => Lab.related(asset, p.id)).map(p =>
+      link(p.name + (asset.candidateProjects?.includes(p.id) ? " 制作候補" : ""), Lab.projectUrl(p))).join("");
   function fileLinks(files) {
     return link("PNG", asset.directory + files.sheet) + link("JSON", asset.directory + files.metadata) +
       (files.gif ? link("GIF", asset.directory + files.gif) : "") +
@@ -81,6 +82,7 @@ async function openViewer() {
   const anchor = [extent(0) + margin, extent(1) + margin];
   const size = anchor.map((v, axis) => v + Math.max(...layouts.map(l => l.cell[axis] - l.anchor[axis])) + margin);
   const prefs = new URLSearchParams(location.search);
+  if (asset.type === "object") get("scale").value = "1";
   for (const key of ["scale", "speed"]) {
     if ([...get(key).options].some(o => o.value === prefs.get(key))) get(key).value = prefs.get(key);
   }

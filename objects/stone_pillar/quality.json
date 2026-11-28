@@ -1,0 +1,30 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "carving",
+      "min_pixels": 120
+    },
+    {
+      "state": "beam",
+      "material": "carving",
+      "min_pixels": 24
+    }
+  ],
+  "support_states": ["beam", "fallen"],
+  "endpoints": {
+    "topple": ["idle", "fallen"]
+  },
+  "toppling": {
+    "state": "topple",
+    "sweep_step_deg": 1
+  },
+  "module": {
+    "full": "fallen",
+    "single": "beam",
+    "part": "middle",
+    "center_index": 1,
+    "min_silhouette_iou": 0.96
+  }
+}

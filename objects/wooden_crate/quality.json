@@ -1,0 +1,21 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "rail",
+      "min_pixels": 160
+    },
+    {
+      "state": "idle",
+      "material": "iron",
+      "min_pixels": 4
+    },
+    {
+      "state": "idle",
+      "material": "grain",
+      "min_pixels": 12
+    }
+  ],
+  "support_states": ["idle"]
+}

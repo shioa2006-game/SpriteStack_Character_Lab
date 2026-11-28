@@ -1,0 +1,57 @@
+{
+  "id": "boulder",
+  "cell": 48,
+  "anchor": [24, 35],
+  "source_grid": {
+    "origin_xyz": [-11, -11, -2],
+    "limit_xyz": [11, 11, 21],
+    "voxel_size": 0.5
+  },
+  "parts": ["stone"],
+  "rotation": {
+    "pivot_xyz": [0, 0, 8.5],
+    "axis_xyz": [-1, 0, 0],
+    "travel_xyz": [0, 1, 0],
+    "settle": true,
+    "rolling_radius_model": 8.5,
+    "phase_formula": "angle_rad = distance_model / rolling_radius_model (mod 2*pi)"
+  },
+  "palette": {
+    "basalt": ["4e495c", "767185", "9c97a7"],
+    "slate": ["504b5e", "827d90", "a5a0ac"],
+    "plum": ["51485d", "756b81", "95899a"],
+    "light": ["655d6b", "948c9a", "b5acb2"],
+    "split": ["413d50", "5d576c", "766e81"],
+    "vein": ["736b77", "a29aa6", "c3b9bc"],
+    "lichen": ["645e5a", "888375", "a59e88"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [17, 16.5, 16],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0]
+  },
+  "views": {
+    "idle": {
+      "name": "idle",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ]
+      },
+      "angles_deg": [0]
+    },
+    "roll": {
+      "name": "roll",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ]
+      },
+      "angles_deg": [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330],
+      "durations_ms": [70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70, 70],
+      "loop": true
+    }
+  }
+}

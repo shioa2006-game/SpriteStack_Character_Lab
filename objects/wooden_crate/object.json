@@ -1,0 +1,42 @@
+{
+  "id": "wooden_crate",
+  "cell": 44,
+  "anchor": [22, 32],
+  "source_grid": {
+    "origin_xyz": [-8, -8, -1],
+    "limit_xyz": [8, 8, 15],
+    "voxel_size": 0.5
+  },
+  "parts": ["case", "battens"],
+  "palette": {
+    "oak": ["684332", "a0764e", "c89a64"],
+    "honey": ["795039", "b18457", "d2a673"],
+    "heart": ["60412f", "906540", "ba8957"],
+    "grain": ["68432f", "896040", "aa7d51"],
+    "seam": ["50392f", "6d4b37", "886147"],
+    "rail": ["79503a", "b78856", "d7ae75"],
+    "iron": ["4c4447", "71645a", "ac9981"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [14, 14, 14],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0]
+  },
+  "views": {
+    "idle": {
+      "name": "idle",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "support_center_xyz": [0, 0, 14],
+        "support_half_extents_xy": [6.5, 6.5],
+        "stack_pitch_z": 14,
+        "game_support_steps": 1
+      },
+      "angles_deg": [0]
+    }
+  }
+}

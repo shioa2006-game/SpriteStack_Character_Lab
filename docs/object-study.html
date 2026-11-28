@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>冒険者とオブジェクトの比較 | SpriteStack Asset Lab</title>
+  <link rel="stylesheet" href="gallery.css">
+  <link rel="stylesheet" href="studies/objects01/study.css">
+  <script defer src="catalog.js"></script>
+  <script defer src="lab.js"></script>
+  <script defer src="studies/objects01/study.js"></script>
+</head>
+<body data-page="object">
+  <header id="lab-nav"></header>
+  <main>
+    <a class="crumb" href="objects.html">OBJECTS 一覧</a>
+    <div class="intro"><div><p class="folio">GUILDWARD · オブジェクト制作実験 01</p>
+      <h1>冒険者と床面で比較</h1></div></div>
+    <div class="filters" id="scenes" role="group" aria-label="比較場面">
+      <button data-scene="size" aria-pressed="true">大きさの比較</button>
+      <button data-scene="crate">木箱の足場</button><button data-scene="chest">宝箱の開閉</button>
+      <button data-scene="roll">大岩の回転</button><button data-scene="bridge">石柱の転倒</button>
+    </div>
+    <figure class="study-panel"><div class="study-stage"><canvas id="study" width="592" height="172" role="img" aria-label="冒険者と4種類の素材"></canvas></div>
+      <figcaption><span id="caption" role="status">素材を読み込み中…</span><output id="pose"></output></figcaption></figure>
+    <div class="filters" id="options">
+      <label>投影 <select id="projection"><option value="lab">SpriteStack · 24°</option><option value="game">GUILDWARD · 32×16</option></select></label>
+      <label>方向 <select id="facing"></select></label>
+      <label>表示倍率 <select id="zoom"><option value="1">原寸 (1×)</option><option value="2">2×</option></select></label>
+      <label hidden id="length-label">橋の長さ <select id="length"><option>1</option><option>2</option><option selected>3</option></select> マス</label>
+      <button hidden id="play">一時停止</button><button hidden id="restart">最初から</button>
+    </div>
+    <p id="projection-note"></p>
+  </main>
+</body>
+</html>

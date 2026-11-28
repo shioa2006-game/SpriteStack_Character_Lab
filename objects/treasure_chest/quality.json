@@ -1,0 +1,31 @@
+{
+  "minimum_margin_px": 2,
+  "visible": [
+    {
+      "state": "idle",
+      "material": "brass",
+      "min_pixels": 24
+    },
+    {
+      "state": "idle",
+      "material": "iron",
+      "min_pixels": 2,
+      "directions": ["S", "SW", "SE"]
+    },
+    {
+      "state": "open",
+      "material": "lining",
+      "min_pixels": 35,
+      "directions": ["S", "SW", "W", "E", "SE"]
+    }
+  ],
+  "hinge": {
+    "state": "opening",
+    "fixed": "coffer",
+    "moving": "lid",
+    "sweep_step_deg": 1
+  },
+  "endpoints": {
+    "opening": ["idle", "open"]
+  }
+}

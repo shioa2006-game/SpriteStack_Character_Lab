@@ -1,0 +1,67 @@
+{
+  "id": "treasure_chest",
+  "cell": 52,
+  "anchor": [26, 36],
+  "source_grid": {
+    "origin_xyz": [-9, -6.5, -1],
+    "limit_xyz": [9, 6.5, 12],
+    "voxel_size": 0.5
+  },
+  "parts": ["coffer", "lid"],
+  "rotation": {
+    "parts": ["lid"],
+    "pivot_xyz": [0, -5, 6],
+    "axis_xyz": [1, 0, 0]
+  },
+  "palette": {
+    "cedar": ["56312e", "945347", "b36c50"],
+    "wine": ["452a31", "76403b", "9d5648"],
+    "copperwood": ["633a31", "a45e47", "c6825b"],
+    "cut": ["4e3031", "633b36", "7a463b"],
+    "brass": ["775435", "bb9658", "efd38a"],
+    "bronze": ["59443a", "947442", "c5a366"],
+    "lining": ["382b33", "574048", "735455"],
+    "rim": ["704936", "a7754e", "ce9c69"],
+    "iron": ["3d353e", "5c5152", "998878"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [17, 11.5, 11],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "cavity_floor_z": 3.5
+  },
+  "views": {
+    "idle": {
+      "name": "closed",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ]
+      },
+      "angles_deg": [0]
+    },
+    "opening": {
+      "name": "opening",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ]
+      },
+      "angles_deg": [0, 9, 26, 50, 75, 94, 102, 104],
+      "durations_ms": [70, 60, 60, 60, 60, 60, 60, 70],
+      "loop": false,
+      "next": "open"
+    },
+    "open": {
+      "name": "open",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ]
+      },
+      "angles_deg": [104]
+    }
+  }
+}

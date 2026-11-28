@@ -44,25 +44,28 @@ function category(key) {
   const list = assets.filter(asset => asset.type === key);
   collection.innerHTML = introduction(cat.name, cat.summary, `${list.length} 素材`);
   if (!list.length) {
-    collection.insertAdjacentHTML("beforeend", `<div class="empty-panel"><h2>${cat.title}は未登録です</h2>
-      ${key === "object" ? `<p>最初に制作を予定しているオブジェクト</p>
-      <dl class="roadmap"><div><dt>木箱</dt><dd>静止</dd></div><div><dt>宝箱</dt><dd>閉・開閉・開</dd></div>
-      <div><dt>大岩</dt><dd>静止・回転</dd></div><div><dt>石柱</dt><dd>直立・転倒・横倒し</dd></div></dl>` : ""}</div>`);
+    collection.insertAdjacentHTML("beforeend", `<div class="empty-panel"><h2>${cat.title}は未登録です</h2></div>`);
     return;
   }
   const types = [...new Set(list.map(asset => asset.subtype))];
-  const used = projects.filter(project => list.some(asset => asset.projects.includes(project.id)));
+  const used = projects.filter(project => list.some(asset => Lab.related(asset, project.id)));
+  const independent = a => !a.projects.length && !a.candidateProjects?.length;
+  if (key === "object") {
+    for (const project of used.filter(p => p.objectPreview)) {
+      collection.insertAdjacentHTML("beforeend", `<p class="project-links"><a class="primary-link" href="${project.objectPreview}">冒険者と床面で比較</a></p>`);
+    }
+  }
   collection.insertAdjacentHTML("beforeend", `<div class="filters"><label>分類 <select id="subtype"><option value="">すべて</option>
     ${types.map(type => `<option value="${type}">${AssetCatalog.subtypes[type] || type}</option>`).join("")}</select></label>
     <label>プロジェクト <select id="project-filter"><option value="">すべて</option>
     ${used.map(p => `<option value="${p.id}">${p.name}</option>`).join("")}
-    ${list.some(a => !a.projects.length) ? '<option value="-">未所属</option>' : ""}</select></label>
+    ${list.some(independent) ? '<option value="-">未所属</option>' : ""}</select></label>
     <output id="matches"></output></div><div class="card-grid" id="results"></div>`);
   function filter() {
     const type = document.querySelector("#subtype").value;
     const project = document.querySelector("#project-filter").value;
     const matches = list.filter(a => (!type || a.subtype === type) &&
-      (!project || (project === "-" ? !a.projects.length : a.projects.includes(project))));
+      (!project || (project === "-" ? independent(a) : Lab.related(a, project))));
     const results = document.querySelector("#results");
     document.querySelector("#matches").textContent = matches.length + " 件表示";
     results.innerHTML = matches.map(card).join("") || "<p>条件に一致する素材はありません。</p>";
@@ -92,12 +95,14 @@ function projectDetail(project) {
     ["その他のキャラクター", items.filter(a => a.type === "character" && !["adventurer","npc"].includes(a.subtype))],
     ["モンスター", items.filter(a => a.type === "monster")],
     ["オブジェクト", items.filter(a => a.type === "object")],
+    ["制作候補", Lab.candidates(project)],
   ];
   collection.innerHTML = `<a class="crumb" href="projects.html">PROJECTS 一覧</a>` +
-    introduction(project.name, project.description, `${items.length} 素材`) +
+    introduction(project.name, project.description, `${items.length} 採用素材 · ${Lab.candidates(project).length} 制作候補`) +
     `<div class="project-links">${project.party ? `<a class="primary-link" href="${project.party}">隊列プレビュー</a>` : ""}
+    ${project.objectPreview ? `<a class="text-link" href="${project.objectPreview}">冒険者と床面で比較</a>` : ""}
     <a class="text-link" href="${project.repository}">ゲームリポジトリ</a></div>` +
-    groups.filter(([title, group]) => title !== "その他のキャラクター" || group.length).map(([title, group]) =>
+    groups.filter(([title, group]) => !["その他のキャラクター","制作候補"].includes(title) || group.length).map(([title, group]) =>
       `<section class="project-section"><div class="section-heading"><h2>${title}</h2><span class="tally">${group.length} 素材</span></div>
       ${group.length ? `<div class="card-grid">${group.map(card).join("")}</div>` : '<p class="empty-line">登録素材はありません。</p>'}</section>`).join("");
 }

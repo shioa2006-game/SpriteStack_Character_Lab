@@ -10,15 +10,25 @@ const AssetCatalog = (() => {
   const walkGif = { ...walk, gif: "walk.gif" };
   const attack = { id: "attack", label: "攻撃", sheet: "attack.png", metadata: "attack.json", gif: "attack.gif", previewLoop: true };
   const partyAttack = { ...attack, next: "breathe" };
+  const objectState = (id, label) => ({ id, label, state: true, sheet: id + ".png",
+    metadata: id === "idle" ? "metadata.json" : id + ".json", gif: id + ".gif" });
+  const objectMotion = (id, label, next) => ({ id, label, next, sheet: id + ".png", metadata: id + ".json", gif: id + ".gif" });
+  const prop = (id, name, displayName, subtype, role, description, views) => ({
+    id, name, displayName, role, type: "object", subtype, description, status: "published",
+    projects: [], candidateProjects: ["guildward"], directory: "assets/" + id + "/",
+    thumbnail: "idle.png", directions: compass, views, source: "objects/" + id + "/build_model.py",
+    records: [["設計と原寸検証", "research/objects01/README.md"], ["再生成・制作ガイド", "objects/README.md"]],
+  });
 
   return {
     repository: "https://github.com/shioa2006-game/SpriteStack_Character_Lab/blob/main/",
-    subtypes: { adventurer: "冒険者", npc: "NPC", humanoid: "人型" },
+    subtypes: { adventurer: "冒険者", npc: "NPC", humanoid: "人型", cargo: "荷物", treasure: "宝物", terrain: "地形の仕掛け" },
     projects: [{
       id: "guildward", name: "GUILDWARD",
       description: "ONE PROMPT WORLDSから発展した、BEYOND ONE PROMPTの第2作。",
       repository: "https://github.com/shioa2006-game/ONE_PROMPT_WORLDS/tree/main/beyond2",
       party: "party.html",
+      objectPreview: "object-study.html",
     }],
     assets: [
       {
@@ -153,6 +163,18 @@ const AssetCatalog = (() => {
           ["造形・検証記録", "research/IMAGE_TO_CHARACTER_07.md"],
         ],
       },
+      prop("wooden_crate", "WOODEN CRATE", "木箱", "cargo", "積み重ねる足場",
+        "オークの板を斜めの桟で留めた荷箱。平らな天板に冒険者が立てる。", [objectState("idle", "静止")]),
+      prop("treasure_chest", "TREASURE CHEST", "宝箱", "treasure", "蝶番付きの丸蓋",
+        "赤褐色の丸蓋を真鍮の帯が包む。背の蝶番で開き、空の内張りが見える。",
+        [objectState("idle", "閉"), objectMotion("opening", "開ける", "open"), objectState("open", "開")]),
+      prop("boulder", "BOULDER", "大岩", "terrain", "転がる岩",
+        "灰紫の割れ肌に淡い鉱脈が走る。押す方向へ岩肌ごと一回転する。",
+        [objectState("idle", "静止"), objectMotion("roll", "転がる")]),
+      { ...prop("stone_pillar", "STONE PILLAR", "石柱", "terrain", "倒して渡る石橋",
+        "浅い菱形を刻んだ三段の石柱。倒れた石材を一つずつ橋として並べられる。",
+        [objectState("idle", "直立"), objectMotion("topple", "転倒", "fallen"), objectState("fallen", "横倒し"), objectState("beam", "足場 BEAM")]),
+        thumbnail: "cover.png", thumbnailSingle: true },
     ],
   };
 })();

@@ -1,0 +1,94 @@
+{
+  "id": "stone_pillar",
+  "cell": 160,
+  "thumbnail_direction": "SW",
+  "anchor": [80, 86],
+  "source_grid": {
+    "origin_xyz": [-8, -8, -1],
+    "limit_xyz": [8, 8, 43],
+    "voxel_size": 0.5
+  },
+  "parts": ["lower", "middle", "upper"],
+  "rotation": {
+    "axis_xyz": [-1, 0, 0],
+    "pivot_xyz": [0, 7, 0],
+    "travel_xyz": [0, 1, 0]
+  },
+  "palette": {
+    "ash": ["535062", "898495", "ada9b7"],
+    "mauve": ["575163", "827b8d", "a6a0ac"],
+    "pale": ["686172", "a19aaa", "c4bdc6"],
+    "joint": ["4b4557", "655f74", "847c8e"],
+    "carving": ["514b61", "70697e", "8b8397"],
+    "wear": ["645d6c", "928b99", "bab2ba"]
+  },
+  "geometry": {
+    "rest_dimensions_xyz": [14, 14, 42],
+    "anchor_model_xyz": [0, 0, 0],
+    "floor_z": 0,
+    "tile_pitch_model": 14,
+    "front_xyz": [0, 1, 0],
+    "module_length": 14
+  },
+  "views": {
+    "idle": {
+      "name": "upright",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "game_height_steps": 3
+      },
+      "angles_deg": [0]
+    },
+    "topple": {
+      "name": "topple",
+      "placement": {
+        "start_tiles": [
+          [0, 0]
+        ],
+        "end_tiles": [
+          [0, 1],
+          [0, 2],
+          [0, 3]
+        ]
+      },
+      "angles_deg": [0, 2, 6, 13, 23, 36, 52, 70, 90],
+      "durations_ms": [70, 60, 60, 60, 60, 60, 60, 60, 110],
+      "loop": false,
+      "next": "fallen"
+    },
+    "fallen": {
+      "name": "fallen",
+      "placement": {
+        "occupied_tiles": [
+          [0, 1],
+          [0, 2],
+          [0, 3]
+        ],
+        "support_centers_xyz": [
+          [0, 14, 14],
+          [0, 28, 14],
+          [0, 42, 14]
+        ],
+        "support_half_width": 6,
+        "game_support_steps": 1
+      },
+      "angles_deg": [90]
+    },
+    "beam": {
+      "name": "beam",
+      "placement": {
+        "occupied_tiles": [
+          [0, 0]
+        ],
+        "support_center_xyz": [0, 0, 14],
+        "support_half_extents_xy": [6, 6],
+        "game_support_steps": 1
+      },
+      "angles_deg": [90],
+      "include": ["middle"],
+      "offset_xyz": [0, -28, 0]
+    }
+  }
+}

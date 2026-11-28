@@ -12,6 +12,8 @@ const Lab = (() => {
   const projectUrl = project => `projects.html?id=${encodeURIComponent(project.id)}`;
   const assetUrl = asset => `viewer.html?id=${encodeURIComponent(asset.id)}`;
   const members = project => assets.filter(asset => asset.projects.includes(project.id));
+  const candidates = project => assets.filter(asset => asset.candidateProjects?.includes(project.id));
+  const related = (asset, id) => asset.projects.includes(id) || asset.candidateProjects?.includes(id);
   const subtype = asset => AssetCatalog.subtypes[asset.subtype] || asset.subtype;
   const sourceUrl = path => location.protocol === "file:" ? "../" + path : AssetCatalog.repository + path;
   const queryId = new URLSearchParams(location.search).get("id");
@@ -58,6 +60,7 @@ const Lab = (() => {
 
   function card(asset) {
     const affiliations = projects.filter(project => asset.projects.includes(project.id)).map(project => project.name);
+    affiliations.push(...projects.filter(p => asset.candidateProjects?.includes(p.id)).map(p => p.name + " 制作候補"));
     return `<a class="asset-card ${asset.type}" href="${assetUrl(asset)}">
       <div class="plate">${thumb(asset)}<span class="plate-tag">${subtype(asset)}</span></div>
       <div class="card-body"><h3>${asset.name}</h3><p>${asset.displayName} · ${asset.role}</p>
@@ -72,7 +75,7 @@ const Lab = (() => {
       <div class="nav-pages">${Object.entries(categories).map(([key, cat]) =>
         `<a href="${cat.page}" ${key === active ? 'aria-current="page"' : ""}>${cat.name}</a>`).join("")}</div></nav>`;
   }
-  return { categories, projectUrl, assetUrl, members, subtype, sourceUrl, queryId, thumb, thumbFacing, loadImage, paintThumbs, card, navigation };
+  return { categories, projectUrl, assetUrl, members, candidates, related, subtype, sourceUrl, queryId, thumb, thumbFacing, loadImage, paintThumbs, card, navigation };
 })();
 
 Lab.navigation();

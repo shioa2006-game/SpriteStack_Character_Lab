@@ -1,0 +1,6 @@
+.study-panel { border: 1px solid var(--line); background: #fcfbf5; }
+.study-stage { overflow: auto; background: #e7e5d7; }
+#study { margin: 0 auto; }
+#scenes { gap: 6px; }
+#pose { font: .8rem var(--mono); align-self: center; }
+#projection-note { color: var(--muted); font-size: .9rem; }
