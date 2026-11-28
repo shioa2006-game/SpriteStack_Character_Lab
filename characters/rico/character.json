@@ -50,7 +50,7 @@
         "light": "ffce9c"
       },
       {
-        "name": "eyes",
+        "name": "right eye",
         "group": "face",
         "shadow": "392b32",
         "base": "573831",
@@ -118,6 +118,13 @@
         "shadow": "a38063",
         "base": "dbc4a4",
         "light": "f4e5c7"
+      },
+      {
+        "name": "left eye",
+        "group": "face",
+        "shadow": "392b32",
+        "base": "573831",
+        "light": "73452e"
       }
     ]
   },
@@ -253,6 +260,8 @@
       "bow_floor": [13, 11, 14]
     },
     "visibility": {
+      "right eye": {"part": "head", "materials": [7]},
+      "left eye": {"part": "head", "materials": [17]},
       "bow": {
         "part": "bow",
         "materials": [13, 11, 14]

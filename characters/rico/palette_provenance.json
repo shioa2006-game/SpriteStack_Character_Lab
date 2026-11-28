@@ -30,10 +30,10 @@
       "method": "adjusted",
       "note": "膝下と空いた手が、ブーツの革から読める暖色を残した。"
     },
-    "eyes": {
+    "right eye": {
       "source": "skin",
       "method": "adjusted",
-      "note": "小さい顔でも左右の瞳が見える濃褐色。"
+      "note": "肌に対して小さくても読める濃褐色。左右は同じ3色で、各瞳の可視画素を個別に測る。"
     },
     "shorts": {
       "source": "leather",
@@ -79,6 +79,11 @@
       "source": "shirt",
       "method": "adjusted",
       "note": "矢羽は筒とフードの背面から読める淡い羽色とした。"
+    },
+    "left eye": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "右目と同じ濃褐色の3階調。"
     }
   }
 }

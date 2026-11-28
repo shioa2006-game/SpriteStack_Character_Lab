@@ -64,9 +64,11 @@ def build(config):
     paint(hair & ((y < .70) | (z > fringe)), "copper", "head")
     for s in (-1, 1):
         paint(rod((s*2.65, .75, 22.1), (s*3.46, .90, 19.9), .80, .33), "copper", "head")
-    v.eyes((1.18, 2.50, 20.85), (1.04, 2.34, 20.92), (.48, .46, .81))
     paint(oval((0, 2.62, 20.15), (.47, .47, .55)), "skin", "head")
-    paint(oval((.16, 2.58, 19.43), (.64, .30, .27), 2.5), "suede", "head")
+    for sign, iris in ((-1, "right eye"), (1, "left eye")):
+        paint(oval((sign*1.18, 2.50, 20.85), (.60, .58, .65), 2.5), "skin", "head")
+        # Seat the iris at the surface so each pupil survives the frontal pixel grid.
+        paint(oval((sign, 2.45, 20.30), (.38, .40, .90), 2.5), iris, "head")
     # The hood has an open, asymmetric front arch and a folded point at the nape.
     hood = oval((0, -.52, 22.02), (3.65, 3.30, 3.22), 2.25)
     opening = (y > .22) & (z < 23.08 + .47*y - .19*x)
