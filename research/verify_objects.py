@@ -7,7 +7,7 @@ import numpy as np
 from PIL import Image
 
 from objects.bake import DIRECTIONS, ROOT, bake, load, pose
-from spritestack.character import read_json
+from spritestack.character import load_character, read_json
 from spritestack.rig import transform
 
 
@@ -105,6 +105,37 @@ def check_support(model, quality):
         if "stack_pitch_z" in place:
             check(place["stack_pitch_z"] == supports[0][2] == model.spec["geometry"]["rest_dimensions_xyz"][2],
                   name + " stack contact")
+
+
+def check_platform(model, rule):
+    state = model.spec["views"][rule["state"]]
+    placement = state["placement"]
+    center = np.array(placement["support_center_xyz"])
+    half = np.array(placement["support_half_extents_xy"])
+    geometry = model.spec["geometry"]
+    profile = read_json(ROOT.parent / rule["scale_profile"])
+    pitch = placement["stack_pitch_z"]
+    check(pitch == center[2] - geometry["floor_z"] == placement["game_support_steps"] * profile["step_model"],
+          "platform, terrain and stack must have the same rise")
+    same(placement["occupied_tiles"], [[0, 0]], "single-cell occupancy")
+    check(geometry["tile_pitch_model"] == profile["tile_model"] and
+          np.all(np.abs(center[:2]) + half <= profile["tile_model"]/2), "support outside footprint")
+    vol, _, grid, _, _ = pose(model, state, 0)
+    points = centers(grid, vol != 0)
+    check(points[:, 2].min() - grid.spacing[2]/2 == geometry["floor_z"], "platform off floor")
+    # Sample the complete upper face at voxel centres, including both sole patches.
+    xs, ys = (np.arange(-radius + dx/2, radius, dx) for radius, dx in zip(half, grid.spacing[:2]))
+    xy = np.array(np.meshgrid(xs, ys)).reshape(2, -1).T + center[:2]
+    probes = np.column_stack((xy, np.full(len(xy), center[2] - grid.spacing[2]/2)))
+    check(sample(grid, vol, probes).all() and not sample(grid, vol, probes+[0,0,grid.spacing[2]]).any(),
+          "support rectangle must be flat and clear")
+    for hero in rule["standing_characters"]:
+        actor = load_character(ROOT.parent / "characters" / hero / "character.json")
+        for side in ("boot_L", "boot_R"):
+            feet = centers(actor.source_grid, actor.part_ids == actor.parts[side])
+            sole = feet[feet[:,2] == feet[:,2].min()]
+            check(sole[0,2] - actor.source_grid.spacing[2]/2 == 0, hero + " foot anchor")
+            check(np.all(np.abs(sole[:,:2]) + actor.source_grid.spacing[:2]/2 <= half), hero + " boot overhang")
 
 
 def check_sweep(model, quality):
@@ -243,6 +274,8 @@ def main():
         frames,count,margin = read_frames(published,model,quality)
         check_art(model,quality,frames)
         check_support(model,quality)
+        if "platform" in quality:
+            check_platform(model,quality["platform"])
         geometry = model.spec["geometry"]
         points = centers(model.source_grid,model.model!=0)
         same(np.ptp(points,axis=0)+model.source_grid.spacing,geometry["rest_dimensions_xyz"],"rest dimensions")

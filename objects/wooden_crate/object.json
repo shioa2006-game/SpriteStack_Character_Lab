@@ -4,7 +4,7 @@
   "anchor": [22, 32],
   "source_grid": {
     "origin_xyz": [-8, -8, -1],
-    "limit_xyz": [8, 8, 15],
+    "limit_xyz": [8, 8, 9],
     "voxel_size": 0.5
   },
   "parts": ["case", "battens"],
@@ -18,7 +18,7 @@
     "iron": ["4c4447", "71645a", "ac9981"]
   },
   "geometry": {
-    "rest_dimensions_xyz": [14, 14, 14],
+    "rest_dimensions_xyz": [14, 14, 8],
     "anchor_model_xyz": [0, 0, 0],
     "floor_z": 0,
     "tile_pitch_model": 14,
@@ -31,9 +31,9 @@
         "occupied_tiles": [
           [0, 0]
         ],
-        "support_center_xyz": [0, 0, 14],
+        "support_center_xyz": [0, 0, 8],
         "support_half_extents_xy": [6.5, 6.5],
-        "stack_pitch_z": 14,
+        "stack_pitch_z": 8,
         "game_support_steps": 1
       },
       "angles_deg": [0]

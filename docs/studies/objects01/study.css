@@ -4,3 +4,6 @@
 #scenes { gap: 6px; }
 #pose { font: .8rem var(--mono); align-self: center; }
 #projection-note { color: var(--muted); font-size: .9rem; }
+.scale-scenes { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; flex-basis: 100%; border-top: 1px solid var(--line); margin-top: 6px; padding-top: 12px; }
+.scale-scenes strong { margin-right: 8px; color: var(--teal); font-size: .9rem; }
+#dimensions { margin-top: .5em; font-size: .9rem; }

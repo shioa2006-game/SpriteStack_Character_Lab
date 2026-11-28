@@ -23,7 +23,7 @@
     "rest_dimensions_xyz": [
       14,
       14,
-      14
+      8
     ],
     "anchor_model_xyz": [
       0,
@@ -48,13 +48,13 @@
     "support_center_xyz": [
       0,
       0,
-      14
+      8
     ],
     "support_half_extents_xy": [
       6.5,
       6.5
     ],
-    "stack_pitch_z": 14,
+    "stack_pitch_z": 8,
     "game_support_steps": 1
   },
   "neutral": {
@@ -79,7 +79,7 @@
         [
           7.0,
           7.0,
-          14.0
+          8.0
         ]
       ]
     ],

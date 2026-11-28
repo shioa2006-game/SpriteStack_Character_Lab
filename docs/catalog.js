@@ -164,7 +164,7 @@ const AssetCatalog = (() => {
         ],
       },
       prop("wooden_crate", "WOODEN CRATE", "木箱", "cargo", "積み重ねる足場",
-        "オークの板を斜めの桟で留めた荷箱。平らな天板に冒険者が立てる。", [objectState("idle", "静止")]),
+        "オークの板を斜めの桟で留めた低い荷箱。平らな天板が1段の踏み台になる。", [objectState("idle", "静止")]),
       prop("treasure_chest", "TREASURE CHEST", "宝箱", "treasure", "蝶番付きの丸蓋",
         "赤褐色の丸蓋を真鍮の帯が包む。背の蝶番で開き、空の内張りが見える。",
         [objectState("idle", "閉"), objectMotion("opening", "開ける", "open"), objectState("open", "開")]),

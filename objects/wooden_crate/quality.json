@@ -17,5 +17,10 @@
       "min_pixels": 12
     }
   ],
-  "support_states": ["idle"]
+  "support_states": ["idle"],
+  "platform": {
+    "state": "idle",
+    "scale_profile": "docs/studies/objects01/guildward-scale.json",
+    "standing_characters": ["rico", "gard"]
+  }
 }

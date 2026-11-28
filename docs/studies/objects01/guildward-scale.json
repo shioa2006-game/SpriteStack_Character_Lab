@@ -1,0 +1,11 @@
+{
+  "tile_model": 14,
+  "step_model": 8,
+  "legacy_tile_px": [32, 16],
+  "legacy_step_px": 8,
+  "legacy_source_units_per_step": {
+    "stone_pillar": 14,
+    "treasure_chest": 14,
+    "boulder": 14
+  }
+}

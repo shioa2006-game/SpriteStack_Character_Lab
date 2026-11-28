@@ -20,7 +20,7 @@ async function study() {
     return result.json();
   }
   const base = "studies/objects01/";
-  const [atlas, rectangles] = await Promise.all([Lab.loadImage(base + "game.png"), json(base + "game.json")]);
+  const [atlas, rectangles, profile] = await Promise.all([Lab.loadImage(base + "game.png"), json(base + "game.json"), json(base + "guildward-scale.json")]);
   await Promise.all([...actors, ...props].map(async id => {
     const asset = AssetCatalog.assets.find(a => a.id === id);
     await Promise.all(asset.views.filter(v => props.includes(id) || v.id === "idle").map(async view => {
@@ -42,20 +42,23 @@ async function study() {
     const yaw = reference.camera_yaw_deg[facing()] * Math.PI/180;
     const lateral = x*Math.cos(yaw) + y*Math.sin(yaw);
     const forward = -x*Math.sin(yaw) + y*Math.cos(yaw);
-    if (game()) return [16*Math.SQRT2*lateral/tile, (8*Math.SQRT2*forward-8*z)/tile];
+    if (game()) {
+      const [w,h] = profile.legacy_tile_px;
+      return [w*lateral/(Math.SQRT2*tile), h*forward/(Math.SQRT2*tile)-z*profile.legacy_step_px/profile.step_model];
+    }
     const pitch = reference.camera.pitch_deg * Math.PI/180, scale = reference.camera.pixels_per_unit;
     return [scale*lateral, scale*(forward*Math.sin(pitch) - z*Math.cos(pitch))];
   }
-  function draw(id, state, point, frame = 0) {
+  function draw(id, state, point, frame = 0, direction = facing()) {
     const item = clip(id, state);
     const pos = point.map(Math.round);
     if (game() && props.includes(id)) {
-      const {rect, offset} = rectangles[id + "/" + state][facing()][frame];
+      const {rect, offset} = rectangles[id + "/" + state][direction][frame];
       ctx.drawImage(atlas, ...rect, pos[0]+offset[0], pos[1]+offset[1], rect[2], rect[3]);
       return;
     }
     const l = item.layout, [w,h] = l.cell;
-    const dir = (item.view.state ? l.directions : l.rows).indexOf(facing());
+    const dir = (item.view.state ? l.directions : l.rows).indexOf(direction);
     ctx.drawImage(item.sheet, (item.view.state ? dir : frame)*w, (item.view.state ? 0 : dir)*h, w, h,
       pos[0]-l.anchor[0], pos[1]-l.anchor[1], w, h);
   }
@@ -96,18 +99,23 @@ async function study() {
   const duration = item => item.layout.durations_ms.reduce((a,b) => a+b);
   const chest = clip("treasure_chest", "opening"), fall = clip("stone_pillar", "topple");
   const roll = clip("boulder","roll");
+  const scaleStudy = await createScaleStudy({el, ctx, canvas, project, draw, label, add, clip, game, facing,
+    directions, profile, json});
   const captions = {
     size: "同じ床面に冒険者4人と4種類のオブジェクトを配置。",
     crate: "木箱の天板中心にリコの足元を合わせる。右は2段積み。",
     chest: "蝶番を支点に丸蓋を開き、空の状態を保持。",
     roll: "床上の移動距離から回転角を取り出す。色の違う岩肌が目印。",
     bridge: "柱の前縁を支点に転倒。着地後、選んだ長さの足場にリコが立つ。",
+    ...scaleStudy.captions,
   };
   function paint() {
     const origin = [296,106];
     floor(origin);
     let status = "";
-    if (scene === "size") {
+    if (scene in scaleStudy.captions) {
+      status = scaleStudy.paint(scene);
+    } else if (scene === "size") {
       [...actors,...props].forEach((id,i) => {
         const x = 46+i*71, pos = [x,110];
         draw(id,"idle",pos);
@@ -147,7 +155,8 @@ async function study() {
         status = "FALLEN";
       } else {
         const centers = clip("stone_pillar","fallen").meta.placement.support_centers_xyz.slice(0,count);
-        const stones = centers.map(([x,y,z]) => ({ base:add(origin,project(x,y)), top:add(origin,project(x,y,z)) }));
+        const sourceScale = game() ? profile.step_model/profile.legacy_source_units_per_step.stone_pillar : 1;
+        const stones = centers.map(([x,y,z]) => ({ base:add(origin,project(x,y)), top:add(origin,project(x,y,z*sourceScale)) }));
         const withActor = stones[stones.length-1];
         // Back-to-front compositing, including a walker on a far segment.
         for (const stone of stones.sort((a,b) => a.base[1]-b.base[1])) {
@@ -176,15 +185,18 @@ async function study() {
   }
   function select(id) {
     scene = id; elapsed = 0;
+    canvas.height = id === "rows" ? 222 : 172;
+    scaleStudy.controls(id);
     const moving = ["chest","roll","bridge"].includes(scene);
     el("length-label").hidden = scene !== "bridge";
     el("play").hidden = el("restart").hidden = !moving;
-    for (const button of el("scenes").children) button.setAttribute("aria-pressed",String(button.dataset.scene === scene));
+    for (const button of el("scenes").querySelectorAll("button")) button.setAttribute("aria-pressed",String(button.dataset.scene === scene));
     el("caption").textContent = captions[id];
-    paint(); play(moving);
+    options(); play(moving);
   }
   function options() {
     canvas.style.width = canvas.width*Number(el("zoom").value)+"px";
+    scaleStudy.controls(scene);
     el("projection-note").textContent = game()
       ? "SWは現行の32×16 px投影。1段8 pxを保ち、同じ立体を45°刻みで再投影します。冒険者は原寸です。"
       : "1マス14モデル単位。冒険者と物体を仰角24°、1.50 px/モデル単位で表示しています。";
@@ -199,7 +211,8 @@ async function study() {
     play(!playing);
   };
   document.addEventListener("visibilitychange", () => { last = performance.now(); });
-  options(); select("size");
+  const initial = new URLSearchParams(location.search).get("scene");
+  select(Object.hasOwn(captions,initial) ? initial : "size");
 }
 
 study().catch(error => {

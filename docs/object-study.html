@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="studies/objects01/study.css">
   <script defer src="catalog.js"></script>
   <script defer src="lab.js"></script>
+  <script defer src="studies/objects01a/scale-study.js"></script>
   <script defer src="studies/objects01/study.js"></script>
 </head>
 <body data-page="object">
@@ -20,6 +21,12 @@
       <button data-scene="size" aria-pressed="true">大きさの比較</button>
       <button data-scene="crate">木箱の足場</button><button data-scene="chest">宝箱の開閉</button>
       <button data-scene="roll">大岩の回転</button><button data-scene="bridge">石柱の転倒</button>
+      <div class="scale-scenes" role="group" aria-label="木箱の寸法研究">
+        <strong>木箱の寸法研究</strong>
+        <button data-scene="scale">3案を並べる</button><button data-scene="stand">天板に立つ</button>
+        <button data-scene="steps">段差を登る</button><button data-scene="stack">2箱を積む</button>
+        <button data-scene="rows">8方向一覧</button><button data-scene="pillarScale">柱とBEAMの換算</button>
+      </div>
     </div>
     <figure class="study-panel"><div class="study-stage"><canvas id="study" width="592" height="172" role="img" aria-label="冒険者と4種類の素材"></canvas></div>
       <figcaption><span id="caption" role="status">素材を読み込み中…</span><output id="pose"></output></figcaption></figure>
@@ -28,9 +35,15 @@
       <label>方向 <select id="facing"></select></label>
       <label>表示倍率 <select id="zoom"><option value="1">原寸 (1×)</option><option value="2">2×</option></select></label>
       <label hidden id="length-label">橋の長さ <select id="length"><option>1</option><option>2</option><option selected>3</option></select> マス</label>
+      <label hidden id="specimen-label">木箱 <select id="specimen"><option value="all">3案を比較</option><option value="14">14 · 旧版</option><option value="8">8 · 採用</option><option value="6">6 · 試作</option></select></label>
+      <label hidden id="fit-label"><input type="checkbox" id="fit"> 各案の高さを個別に1段へ換算</label>
+      <label hidden id="climb-label">リコの位置 <select id="climb"><option value="ground">地面</option><option value="crate" selected>木箱の上</option><option value="ledge">2段上</option></select></label>
+      <label hidden id="tilt-label">石柱の姿勢 <select id="tilt"></select></label>
+      <label hidden id="marks-label"><input type="checkbox" id="marks"> 底面・支持点を表示</label>
       <button hidden id="play">一時停止</button><button hidden id="restart">最初から</button>
     </div>
     <p id="projection-note"></p>
+    <p id="dimensions" hidden></p>
   </main>
 </body>
 </html>
