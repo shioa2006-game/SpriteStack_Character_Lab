@@ -30,6 +30,8 @@
 
 **新しい画像を受け取ったら**、[開発規約](AGENTS.md) と [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) を使ってください。制作ガイドに、採色から原寸評価、公開までの手順があります。
 
+**攻撃を見直すとき**は、変更前後のベイクから足元を揃えた8方向GIF・主要ポーズ・関節座標・武器の軌跡図を生成できます。[比較コマンドと検証例](research/attack/README.md)
+
 ## 仕組み
 
 `characters/<name>/` に造形コード、材質・部位の水平断面（NPZ）、関節と装備の設定、専用攻撃クリップ、品質条件を置きます。歩行は [共通クリップ](motions/walk.json) を体格別に調整します。[共通エンジン](spritestack/) が腕・脚のIK、部位の変形、髪や布の追従、再スライス、8方向の正投影を処理します。公開用PNGと再生用メタデータは [docs/assets/](docs/assets/) にあります。[技術設計と出力仕様](docs/TECHNICAL_DESIGN.md)
