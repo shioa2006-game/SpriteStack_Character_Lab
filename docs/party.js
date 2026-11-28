@@ -8,7 +8,22 @@ const pause = document.querySelector("#pause");
 const repeat = document.querySelector("#repeat");
 const scrub = document.querySelector("#scrub");
 const state = document.querySelector("#view-state");
-const roster = [...document.querySelectorAll("article button[data-member]")];
+const project = Lab.queryId ? AssetCatalog.projects.find(p => p.id === Lab.queryId)
+  : AssetCatalog.projects.find(p => p.party === "party.html");
+const roster = project ? Lab.members(project).filter(a => a.type === "character" && a.subtype === "adventurer" && a.partyPreview) : [];
+if (project) {
+  const back = document.querySelector("#project-back");
+  back.href = Lab.projectUrl(project);
+  back.textContent = project.name;
+  document.title = project.name + " 隊列プレビュー | SpriteStack Asset Lab";
+}
+document.querySelector('[data-member="all"]').textContent = roster.length + "人を並べる";
+document.querySelector(".roster").innerHTML = roster.map(asset =>
+  `<article><button data-member="${asset.id}" aria-pressed="false">${Lab.thumb(asset)}
+    <span><small>${asset.name}</small><strong>${asset.displayName}</strong><em>${asset.role}</em></span></button>
+    <div>${asset.views.filter(v => v.gif).map(v =>
+      `<a href="${asset.directory + v.gif}">${v.label} GIF</a>`).join("")}</div></article>`).join("");
+Lab.paintThumbs(document.querySelector(".roster"));
 const directions = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"];
 const east = {S: 0, SW: -Math.SQRT1_2, W: -1, NW: -Math.SQRT1_2, N: 0, NE: Math.SQRT1_2, E: 1, SE: Math.SQRT1_2};
 const south = {S: 1, SW: Math.SQRT1_2, W: 0, NW: -Math.SQRT1_2, N: -1, NE: -Math.SQRT1_2, E: 0, SE: Math.SQRT1_2};
@@ -24,19 +39,21 @@ function buttons(attribute, value) {
     button.setAttribute("aria-pressed", String(button.dataset[attribute] === value)));
 }
 
-function imageAt(url) {
-  const image = new Image();
-  image.src = url;
-  return image.decode().then(() => image);
-}
-
-async function readActor(button) {
-  const id = button.dataset.member;
-  const folder = "assets/" + id + "/";
+async function readActor(asset) {
+  const {id, directory: folder} = asset;
+  await new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.onload = resolve;
+    script.onerror = () => reject(new Error(asset.partyPreview));
+    script.src = folder + asset.partyPreview;
+    document.head.append(script);
+  });
   const rest = window.spriteStackLayouts[new URL(folder, document.baseURI).href];
-  const clips = await Promise.all(Object.entries(rest.clips).map(async ([mode, layout]) =>
-    [mode, {...layout, sheet: await imageAt(folder + mode + ".png")}]));
-  const actor = {id, name: button.querySelector("strong").textContent, camera: rest.camera,
+  const clips = await Promise.all(["breathe", "walk", "attack"].map(async mode => {
+    const view = asset.views.find(v => v.id === mode);
+    return [mode, {...rest.clips[mode], sheet: await Lab.loadImage(folder + view.sheet)}];
+  }));
+  const actor = {id, name: asset.displayName, camera: rest.camera,
     clips: Object.fromEntries(clips), mode: "breathe", start: 0, startFrame: 0, stopAt: null,
     step: 0, groundX: 0, groundY: 0};
   return actor;
@@ -114,6 +131,7 @@ document.addEventListener("click", event => {
     member = button.dataset.member;
     buttons("member", member);
     updateState();
+    draw();
   }
   if (button === pause) {
     setPlaying(!playing);
@@ -301,6 +319,10 @@ function tick(now) {
 document.addEventListener("visibilitychange", () => { previous = null; });
 Promise.all(roster.map(readActor)).then(result => {
   actors = result;
+  if (!actors.length) {
+    state.textContent = "隊列に対応した冒険者は未登録です。";
+    return;
+  }
   updateState();
   requestAnimationFrame(tick);
 }).catch(error => {

@@ -169,7 +169,7 @@ if (Test-Path "$assets/breathe.json") {
 ```
 
 1. 検証した一式を `docs/assets/<name>/` に置く。比較GIF・ポーズ図を公開する場合はそれも加える。`quality.json.published`（歩行側で指定していれば `walk.published` も）を新しい公開先へ向ける。静止・歩行の検証を `--no-published` なしで、攻撃の検証を `--published "docs/assets/$name"` 付きで再実行する。作業用の部位IDやボリュームは公開対象から外す。
-2. [index.html](../docs/index.html) の選択肢と [gallery.js](../docs/gallery.js) の `characters` に同じIDを追加する。`name`、`subtitle`、`assets` と実際に出力した `extraAnimations` を登録する。冒険者は `["breathe", "walk", "attack"]`。比較解像度や旧版との比較も公開するときに `idleSheets`・`attackComparison` を指定する。
+2. [素材台帳](../docs/catalog.js) の `assets` に一件追加する。分類・プロジェクト所属、公開先、表紙、方向と実在する `views`、モデル・制作記録を指定する。比較解像度は `variants`、新旧比較GIFは `comparison`、隊列対応の冒険者は `partyPreview` を登録する。`node research/verify_catalog.cjs` で参照とシート寸法を確認する。[登録仕様](../docs/TECHNICAL_DESIGN.md#素材台帳とギャラリー)
 3. READMEのローカルサーバーを起動する。1×で全方向、静止→歩行→単発攻撃→再生、GIFリンク、比較解像度を確認する。公開を依頼されたらコミット・push後にmainの `/docs` のPages反映と本番画面も確認する。
 4. 制作記録には、画像で確認できた特徴と推定した背面、配色・寸法の変更理由、失敗した方向と局面、改善前後の画像、実行した検証、未評価の状況を残す。権利不明の参考画像や作業フォルダがステージされていないか `git status` で確認する。
 

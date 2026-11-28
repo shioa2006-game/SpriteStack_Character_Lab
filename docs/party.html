@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f3e9">
-  <title>冒険者の一行 | SpriteStack Character Lab</title>
+  <title>隊列プレビュー | SpriteStack Asset Lab</title>
+  <link rel="stylesheet" href="gallery.css">
   <link rel="stylesheet" href="party.css">
-  <script src="assets/gard/preview.js" defer></script>
-  <script src="assets/rico/preview.js" defer></script>
-  <script src="assets/sena/preview.js" defer></script>
-  <script src="assets/tobi/preview.js" defer></script>
+  <script src="catalog.js" defer></script>
+  <script src="lab.js" defer></script>
   <script src="party.js" defer></script>
 </head>
-<body>
-  <nav><a href="index.html"><i class="stack" aria-hidden="true"></i>SpriteStack <span>Character Lab</span></a></nav>
+<body data-page="project">
+  <header id="lab-nav"></header>
   <main>
-    <header><h1>冒険者の一行</h1><p>8方向の待機・歩行・攻撃</p></header>
-    <section class="viewer" aria-label="4人のアニメーションプレビュー">
+    <a id="project-back" class="crumb" href="projects.html">PROJECTS</a>
+    <div class="intro"><div><h1>冒険者の一行</h1><p>同じ石畳で待機・歩行・攻撃を比較</p></div></div>
+    <section class="viewer" aria-label="隊列プレビュー">
       <div class="field">
         <canvas id="field" width="800" height="300" role="img" aria-label="共通の石畳に並ぶ冒険者"></canvas>
         <output id="view-state" aria-live="polite">読み込み中…</output>
@@ -36,19 +36,14 @@
       <div class="transport attack-controls">
         <button id="replay" type="button">攻撃を1回再生</button>
         <label><input type="checkbox" id="repeat"> 攻撃を繰り返す</label>
-        <label>攻撃コマ <input id="scrub" type="range" min="1" max="10" value="1" step="1"></label>
+        <label>攻撃コマ <input id="scrub" type="range" min="1" max="1" value="1" step="1"></label>
       </div>
     </section>
     <section aria-labelledby="party-label">
-      <div class="roster-header"><h2 id="party-label">キャラクター</h2><button data-member="all" aria-pressed="true">4人を並べる</button></div>
-      <div class="roster">
-        <article><button data-member="gard" aria-pressed="false"><img src="assets/gard/breathe.png" width="60" height="60" alt=""><span><small>GARD</small><strong>ガルド</strong><em>老練な重戦士</em></span></button><div><a href="assets/gard/breathe.gif">待機 GIF</a><a href="assets/gard/walk.gif">歩行 GIF</a><a href="assets/gard/attack.gif">攻撃 GIF</a></div></article>
-        <article><button data-member="rico" aria-pressed="false"><img src="assets/rico/breathe.png" width="60" height="60" alt=""><span><small>RICO</small><strong>リコ</strong><em>少年の斥候</em></span></button><div><a href="assets/rico/breathe.gif">待機 GIF</a><a href="assets/rico/walk.gif">歩行 GIF</a><a href="assets/rico/attack.gif">攻撃 GIF</a></div></article>
-        <article><button data-member="sena" aria-pressed="false"><img src="assets/sena/breathe.png" width="60" height="60" alt=""><span><small>SENA</small><strong>セナ</strong><em>氷の術師</em></span></button><div><a href="assets/sena/breathe.gif">待機 GIF</a><a href="assets/sena/walk.gif">歩行 GIF</a><a href="assets/sena/attack.gif">攻撃 GIF</a></div></article>
-        <article><button data-member="tobi" aria-pressed="false"><img src="assets/tobi/breathe.png" width="60" height="60" alt=""><span><small>TOBI</small><strong>トビ</strong><em>発破師</em></span></button><div><a href="assets/tobi/breathe.gif">待機 GIF</a><a href="assets/tobi/walk.gif">歩行 GIF</a><a href="assets/tobi/attack.gif">攻撃 GIF</a></div></article>
-      </div>
+      <div class="roster-header"><h2 id="party-label">冒険者</h2><button data-member="all" aria-pressed="true">全員を並べる</button></div>
+      <div class="roster"></div>
     </section>
-    <noscript>アニメーション操作には JavaScript を有効にしてください。各キャラクターのGIFも再生できます。</noscript>
+    <noscript>隊列の表示には JavaScript を有効にしてください。</noscript>
   </main>
 </body>
 </html>

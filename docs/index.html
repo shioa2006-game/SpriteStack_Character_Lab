@@ -3,107 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="GUILDWARDの発破師トビを含む冒険者4人と、戦士・魔法使い・モンスターのスプライトを8方向で再生。">
-  <title>SpriteStack Character Lab</title>
+  <meta name="theme-color" content="#183b38">
+  <meta name="description" content="立体スプライト素材を種類やゲームから探す。">
+  <title>SpriteStack Asset Lab</title>
   <link rel="stylesheet" href="gallery.css">
-  <script src="gallery.js" defer></script>
+  <script src="catalog.js" defer></script>
+  <script src="lab.js" defer></script>
+  <script src="collections.js" defer></script>
 </head>
-<body>
-  <main>
-    <header class="heading">
-      <p class="lab-name">SpriteStack Character Lab</p>
-      <a class="party-link" href="party.html">冒険者4人のプレビュー →</a>
-      <h1><strong id="character-name">MAREN</strong> <span id="character-subtitle" lang="en">Blue-Haired Swordswoman</span></h1>
-    </header>
-
-    <section class="gallery" aria-label="スプライトギャラリー">
-      <figure class="viewer">
-        <div class="stage">
-          <canvas id="sprite" width="256" height="256" role="img" aria-label="MAREN のスプライト">MAREN のスプライト</canvas>
-        </div>
-        <figcaption>
-          <span id="status" role="status">画像を読み込み中…</span>
-          <span id="frame"></span>
-          <a id="attack-gif" hidden>8方向の攻撃GIF</a>
-          <a id="comparison-gif" hidden>新旧比較（原寸）</a>
-        </figcaption>
-      </figure>
-
-      <div class="controls">
-        <div class="playback">
-          <label for="character">キャラクター</label>
-          <select id="character">
-            <option value="maren">MAREN · 青髪の剣士</option>
-            <option value="crystal_mage">CRYSTAL MAGE · 水晶の杖の魔法使い</option>
-            <option value="azure_ronin">AZURE RONIN · スカーフの剣士</option>
-            <option value="fleur_knight">FLEUR KNIGHT · 百合盾の重装騎士</option>
-            <option value="crimson_blade">CRIMSON BLADE · 紅装の刀剣士</option>
-            <option value="goblin_brute">GOBLIN BRUTE · 棍棒のゴブリン戦士</option>
-            <option value="skeleton_guard">SKELETON GUARD · 錆剣の骸骨衛兵</option>
-            <option value="gard">GARD · 重戦士</option>
-            <option value="rico">RICO · 弓の斥候</option>
-            <option value="sena">SENA · 氷の術師</option>
-            <option value="tobi">TOBI · 発破師</option>
-          </select>
-        </div>
-        <fieldset>
-          <legend>モーション</legend>
-          <div class="motions">
-            <button type="button" data-motion="idle" aria-pressed="true">静止</button>
-            <button type="button" data-motion="walk" aria-pressed="false">歩行</button>
-            <button type="button" data-motion="attack" aria-pressed="false">攻撃</button>
-          </div>
-          <p id="motion-note" class="note" hidden>このキャラクターは静止8方向のみ公開しています。</p>
-        </fieldset>
-
-        <fieldset id="resolution-row" hidden>
-          <legend id="resolution-label">セル解像度（同じ立体モデル）</legend>
-          <select id="resolution" aria-labelledby="resolution-label">
-            <option value="48">48×48 · 標準（1.19 px/単位）</option>
-            <option value="64">64×64 · 比較（1.59 px/単位）</option>
-          </select>
-          <p class="note">64×64は同じモデルを4/3倍の画素密度で描いた比較用です。原寸 (1×) で読みやすさを比べてください。</p>
-        </fieldset>
-
-        <div class="settings">
-          <fieldset>
-            <legend>方向</legend>
-            <div class="directions">
-              <button type="button" data-direction="NW" aria-label="NW 北西" aria-pressed="false">NW</button>
-              <button type="button" data-direction="N" aria-label="N 北" aria-pressed="false">N</button>
-              <button type="button" data-direction="NE" aria-label="NE 北東" aria-pressed="false">NE</button>
-              <button type="button" data-direction="W" aria-label="W 西" aria-pressed="false">W</button>
-              <span class="compass-center" aria-hidden="true"></span>
-              <button type="button" data-direction="E" aria-label="E 東" aria-pressed="false">E</button>
-              <button type="button" data-direction="SW" aria-label="SW 南西" aria-pressed="true">SW</button>
-              <button type="button" data-direction="S" aria-label="S 南" aria-pressed="false">S</button>
-              <button type="button" data-direction="SE" aria-label="SE 南東" aria-pressed="false">SE</button>
-            </div>
-          </fieldset>
-
-          <div class="playback">
-            <label for="scale">表示倍率</label>
-            <select id="scale">
-              <option value="1">原寸 (1×)</option>
-              <option value="2">2×</option>
-              <option value="3">3×</option>
-              <option value="4" selected>4×</option>
-            </select>
-            <label for="speed">再生速度</label>
-            <select id="speed" disabled>
-              <option value="0.25">0.25×</option>
-              <option value="0.5">0.5×</option>
-              <option value="1" selected>1×</option>
-              <option value="1.5">1.5×</option>
-              <option value="2">2×</option>
-            </select>
-          </div>
-        </div>
-
-        <button id="replay" type="button" hidden>攻撃をもう一度再生</button>
-      </div>
-    </section>
-    <noscript><p>スプライトを切り替えるには JavaScript を有効にしてください。</p></noscript>
-  </main>
+<body data-page="home">
+  <header id="lab-nav"></header>
+  <main><div id="collection"></div></main>
+  <noscript>素材一覧と再生操作には JavaScript を有効にしてください。</noscript>
 </body>
 </html>

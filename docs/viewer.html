@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183b38">
+  <meta name="description" content="方向・モーション・表示倍率を切り替えて、原寸のスプライトと制作記録を確認。">
+  <title>素材ビューア | SpriteStack Asset Lab</title>
+  <link rel="stylesheet" href="gallery.css">
+  <script src="catalog.js" defer></script>
+  <script src="lab.js" defer></script>
+  <script src="gallery.js" defer></script>
+</head>
+<body data-page="viewer">
+  <header id="lab-nav"></header>
+  <main>
+    <a id="back" class="crumb" href="index.html">素材一覧</a>
+    <div id="viewer-heading" class="intro"><h1>素材ビューア</h1></div>
+    <section class="workbench" id="workbench" hidden aria-label="素材ビューア">
+      <figure class="sprite-view">
+        <div class="stage"><canvas id="sprite" width="1" height="1" role="img" aria-label="スプライト"></canvas></div>
+        <figcaption><span id="status" role="status">読み込み中…</span><output id="frame"></output></figcaption>
+      </figure>
+      <div class="controls">
+        <fieldset><legend>モーション・状態</legend><div class="segments" id="views"></div></fieldset>
+        <label id="variant-row" hidden>セル解像度 <select id="variant"></select></label>
+        <fieldset><legend>方向</legend><div id="directions" class="segments"></div></fieldset>
+        <div class="controls-row">
+          <label>表示倍率 <select id="scale"><option value="1">原寸 (1×)</option><option value="2">2×</option><option value="3" selected>3×</option><option value="4">4×</option></select></label>
+          <label>再生速度 <select id="speed"><option>0.25</option><option>0.5</option><option selected>1</option><option>1.5</option><option>2</option></select></label>
+        </div>
+        <div class="segments" id="transport"><button id="previous">前のコマ</button><button id="play">再生</button><button id="next">次のコマ</button><button id="replay" hidden>単発再生</button></div>
+        <label id="floor-row" hidden><input type="checkbox" id="floor"> 床面アンカー・32 px タイル</label>
+      </div>
+    </section>
+    <div id="files" class="resource-links"></div><div id="records" class="resource-links"></div>
+  </main>
+  <noscript>素材一覧と再生操作には JavaScript を有効にしてください。</noscript>
+</body>
+</html>

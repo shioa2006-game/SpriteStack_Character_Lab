@@ -1,6 +1,44 @@
-# SpriteStack Character Lab
+# SpriteStack Asset Lab
 
-参考イラスト1枚から、ゲーム用キャラクターの**静止・歩行・攻撃の8方向透過PNG**を制作する研究環境です。制作AIが画像を読み、見えない背面の形、部位の寸法、配色、装備の動きを設計します。その設計をPythonとJSONに残すと、同じボクセルモデルと共通リグから全方向を焼き直せます。[GitHub Pagesで8方向を再生](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
+複数のゲームで使う立体スプライトを制作し、原寸で動きと接地を確かめ、生成ソースとともに管理する研究環境です。現在の人型モデルでは、参考画像の配色・背面・装備の設計をPythonとJSONに残し、一つの立体から8方向の静止・アニメーションを再生成できます。[公開ギャラリー](https://shioa2006-game.github.io/SpriteStack_Character_Lab/)
+
+## ギャラリーを開く
+
+リポジトリのルートで次を実行し、[ローカルギャラリー](http://127.0.0.1:8000/) を開きます。サイトは `docs/` の静的ファイルで動作します。
+
+```powershell
+python -m http.server 8000 --bind 127.0.0.1 --directory docs
+```
+
+| 入口 | 閲覧できる内容 |
+| --- | --- |
+| [CHARACTERS](docs/characters.html) | 冒険者と人型キャラクター。画像カードを分類・プロジェクトで絞り込み、方向や再生速度を切り替えて比較 |
+| [MONSTERS](docs/monsters.html) | GOBLIN BRUTE・SKELETON GUARD。共通ビューアで公開モーションと制作記録を確認 |
+| [OBJECTS](docs/objects.html) | オブジェクトの登録先。現在は未登録で、最初の4種の制作予定を表示 |
+| [PROJECTS](docs/projects.html) | ゲーム別の採用素材。GUILDWARDでは4人の冒険者と隊列プレビューを閲覧 |
+
+HTMLを直接開いてもトップ・一覧・隊列は利用できます。個別ビューアはモーション別JSONを `fetch` するため、ブラウザのローカルファイル制限が適用されます。直接開いた詳細画面には素材リンク、起動コマンド、同じ素材のHTTP版へのリンクを表示します。
+
+## 配置と登録
+
+| 場所 | 内容 |
+| --- | --- |
+| `characters/<id>/` | 既存11体のモデル生成コード、材質・部位、リグ、専用クリップ、品質条件 |
+| [monsters/](monsters/README.md)・[objects/](objects/README.md) | 新規モンスター・オブジェクトの生成ソースの置き場と制作方針 |
+| `spritestack/`・`motions/` | 共通の描画・ベイク、人型のリグと歩行クリップ |
+| `research/`・`experiments/` | 制作ガイド、比較資料、再生成と検証の手順、研究用パッケージ |
+| `docs/assets/<id>/` | ゲームで使用する公開PNG・GIF・再生JSON。各IDにつき一式を共有 |
+| [docs/catalog.js](docs/catalog.js) | 素材とプロジェクトの台帳。分類・カード・件数・ビューア・隊列の登録元 |
+
+**素材を追加する**
+
+1. 分類に対応するディレクトリで制作し、検証したシートとJSONを `docs/assets/<id>/`、制作記録を `research/` に置きます。人型制作の手順は[キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md)にあります。
+2. 台帳の `assets` に一件追加し、実在するシート、再生JSON、任意のGIF・比較解像度、生成ソースと制作記録を指定します。`projects` に採用先のIDを列挙します。未所属は空配列です。
+3. Node.jsがある環境で `node research/verify_catalog.cjs` を実行し、登録したカードから全方向・各状態・再生・リンクを確認します。新しい隊列メンバーには生成した `preview.js` も指定します。[項目・登録例と対応範囲](docs/TECHNICAL_DESIGN.md#素材台帳とギャラリー)
+
+**プロジェクトを追加する**
+
+台帳の `projects` に一意な `id`、`name`、`description`、`repository` を登録し、採用素材の `projects` にそのIDを追加します。詳細URLは `projects.html?id=<id>` です。所属一覧・件数はこの関係から生成します。隊列に対応する場合は詳細ページに `party` のリンクが現れます。
 
 ## 冒険者の一行
 
@@ -69,7 +107,9 @@ $run = Join-Path $PWD ('.phase1/' + $name + '-' + [guid]::NewGuid())
 
 ## ギャラリーと研究資料
 
-手元では `& $python -m http.server 8000 --bind 127.0.0.1 --directory docs` を実行し、ブラウザで [ローカルギャラリー](http://127.0.0.1:8000/) を開きます。キャラクター、モーション、方向、表示倍率を選び、攻撃は再生し直せます。
+移行時の公開ファイル照合、8方向・全コマのブラウザ検査、隊列と直接HTMLの確認結果を記録しています。[ギャラリー移行の検証](research/ASSET_GALLERY_VERIFICATION.md)
+
+冒険者の再生成・ループ書き出し・公開素材との照合には、[攻撃の再生成手順](research/adventurers/ATTACKS.md#再生成と照合)と[トビの再現手順](research/adventurers/tobi/README.md#再現手順)を参照してください。
 
 LARK・BRAMは旧エンジンとの互換性や関節変形を調べる研究用資産です。過去の数値、失敗例、比較画像は各実験の記録に残しています。[資産整理と回帰基準](research/SAMPLE_CLEANUP.md) · [研究の経緯](research/ROADMAP.md)
 

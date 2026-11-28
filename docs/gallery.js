@@ -1,276 +1,218 @@
 "use strict";
 
-const canvas = document.querySelector("#sprite");
-const context = canvas.getContext("2d");
-const status = document.querySelector("#status");
-const frameLabel = document.querySelector("#frame");
-const scale = document.querySelector("#scale");
-const speed = document.querySelector("#speed");
-const resolution = document.querySelector("#resolution");
-const resolutionRow = document.querySelector("#resolution-row");
-const character = document.querySelector("#character");
-const characterName = document.querySelector("#character-name");
-const characterSubtitle = document.querySelector("#character-subtitle");
-const replay = document.querySelector("#replay");
-const attackGif = document.querySelector("#attack-gif");
-const comparisonGif = document.querySelector("#comparison-gif");
-const motionNote = document.querySelector("#motion-note");
-const motionButtons = [...document.querySelectorAll("[data-motion]")];
-const directionButtons = [...document.querySelectorAll("[data-direction]")];
-
-const characters = {
-  gard: {name: "GARD", subtitle: "Hammer and Greatshield", assets: "assets/gard", extraAnimations: ["breathe", "walk", "attack"]},
-  rico: {name: "RICO", subtitle: "Hooded Scout", assets: "assets/rico", extraAnimations: ["breathe", "walk", "attack"]},
-  sena: {name: "SENA", subtitle: "Frost Caster", assets: "assets/sena", extraAnimations: ["breathe", "walk", "attack"]},
-  tobi: {name: "TOBI", subtitle: "The Blaster", assets: "assets/tobi", extraAnimations: ["breathe", "walk", "attack"]},
-  maren: {
-    name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
-    attackComparison: "slash-comparison.gif",
-    // Motions published next to an idle-only metadata.json, each as <name>.json and <name>.png.
-    extraAnimations: ["walk", "attack"],
-  },
-  crystal_mage: {
-    name: "CRYSTAL MAGE", subtitle: "Staff and Tome", assets: "assets/crystal_mage",
-    attackComparison: "cast-comparison.gif",
-    // Idle sheets of the same model at two pixel densities; null keeps the standard idle.png.
-    idleSheets: { 48: null, 64: "idle-64" },
-    extraAnimations: ["walk", "attack"],
-  },
-  azure_ronin: {
-    name: "AZURE RONIN", subtitle: "Scarf Swordsman", assets: "assets/azure_ronin",
-    attackComparison: "slash-comparison.gif",
-    idleSheets: { 48: null, 64: "idle-64" },
-    extraAnimations: ["walk", "attack"],
-  },
-  fleur_knight: {
-    name: "FLEUR KNIGHT", subtitle: "Knight of the Gilded Lily", assets: "assets/fleur_knight",
-    attackComparison: "slash-comparison.gif",
-    extraAnimations: ["walk", "attack"],
-  },
-  crimson_blade: {
-    name: "CRIMSON BLADE", subtitle: "Crimson Silk and Lacquer", assets: "assets/crimson_blade",
-    attackComparison: "slash-comparison.gif",
-    extraAnimations: ["walk", "attack"],
-  },
-  goblin_brute: {
-    name: "GOBLIN BRUTE", subtitle: "Goblin with an Iron-Bound Club", assets: "assets/goblin_brute",
-    attackComparison: "smash-comparison.gif",
-    extraAnimations: ["walk", "attack"],
-  },
-  skeleton_guard: {
-    name: "SKELETON GUARD", subtitle: "Skeleton with Rusted Sword and Round Shield", assets: "assets/skeleton_guard",
-    attackComparison: "cleave-comparison.gif",
-    extraAnimations: ["walk", "attack"],
-  },
-};
-// The 64 px attack cell and its anchor keep the canvas the same for idle-only characters.
-const stage = { cell: [64, 64], anchor: [32, 48] };
-const sheets = new Map();
-const metadata = new Map();
-let viewport;
-let motion = "idle";
-let direction = "SW";
-let active = null;
-let selection = 0;
-let animation;
-
-function loadSheet(url) {
-  if (!sheets.has(url)) {
-    const loaded = new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => resolve(image);
-      image.onerror = () => reject(new Error(url));
-      image.src = url;
-    }).catch(error => {
-      sheets.delete(url);
-      throw error;
-    });
-    sheets.set(url, loaded);
+async function openViewer() {
+  const asset = AssetCatalog.assets.find(a => a.id === Lab.queryId);
+  const get = id => document.getElementById(id);
+  const heading = get("viewer-heading");
+  if (!asset) {
+    heading.innerHTML = "<h1>素材が見つかりません</h1>";
+    return;
   }
-  return sheets.get(url);
-}
-
-function loadMetadata(url) {
-  if (!metadata.has(url)) {
-    const loaded = fetch(url).then(response => {
-      if (!response.ok) throw new Error("metadata");
-      return response.json();
-    }).catch(error => {
-      metadata.delete(url);
-      throw error;
-    });
-    metadata.set(url, loaded);
-  }
-  return metadata.get(url);
-}
-
-function configure(data, idleLayout) {
-  const layouts = {
-    idle: { ...(idleLayout ?? data.neutral), columns: 1 },
-    ...data.animations,
-  };
-  const all = [stage, ...Object.values(layouts)];
-  viewport = {
-    width: Math.max(...all.map(layout => layout.cell[0])),
-    height: Math.max(...all.map(layout => layout.cell[1])),
-    anchorX: Math.max(...all.map(layout => layout.anchor[0])),
-    anchorY: Math.max(...all.map(layout => layout.anchor[1])),
-  };
-  return layouts;
-}
-
-function draw() {
-  if (!active) return;
-  const { name, layout, image, facing, frame } = active;
-  const [width, height] = layout.cell;
-  const idle = name === "idle";
-  const column = idle ? layout.directions.indexOf(facing) : frame;
-  const row = idle ? 0 : layout.rows.indexOf(facing);
-  const zoom = Number(scale.value);
-  const x = (viewport.anchorX - layout.anchor[0]) * zoom;
-  const y = (viewport.anchorY - layout.anchor[1]) * zoom;
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.imageSmoothingEnabled = false;
-  context.drawImage(image, column * width, row * height, width, height,
-    x, y, width * zoom, height * zoom);
-  frameLabel.textContent = (frame + 1) + " / " + layout.columns;
-}
-
-function resize() {
-  if (!viewport) return;
-  canvas.width = viewport.width * Number(scale.value);
-  canvas.height = viewport.height * Number(scale.value);
-  draw();
-}
-
-function animate(now) {
-  const clip = active;
-  clip.elapsed += (now - clip.lastTick) * Number(speed.value);
-  clip.lastTick = now;
-  const timeline = clip.layout.durations_ms;
-  let frame = 0;
-  if (timeline) {
-    let end = timeline[frame];
-    while (frame < timeline.length - 1 && clip.elapsed >= end) {
-      frame += 1;
-      end += timeline[frame];
+  const category = Lab.categories[asset.type];
+  Lab.navigation(asset.type);
+  get("back").href = category.page;
+  get("back").textContent = category.name + " 一覧";
+  document.title = asset.name + " | SpriteStack Asset Lab";
+  heading.innerHTML = `<div><p class="folio">${Lab.subtype(asset)} · ${asset.displayName}</p>
+    <h1>${asset.name}</h1><p>${asset.description}</p></div>
+    <label>素材を切り替え <select id="asset-select">${AssetCatalog.assets.filter(a => a.type === asset.type)
+      .map(a => `<option value="${a.id}" ${a.id === asset.id ? "selected" : ""}>${a.name}</option>`).join("")}</select></label>`;
+  get("asset-select").onchange = event => {
+    const url = new URL(Lab.assetUrl(AssetCatalog.assets.find(a => a.id === event.target.value)), location.href);
+    if (!get("workbench").hidden) {
+      for (const key of ["motion", "direction"]) {
+        const selected = document.querySelector(`[data-${key}][aria-pressed=true]`);
+        if (selected) url.searchParams.set(key, selected.dataset[key]);
+      }
+      for (const key of ["scale", "speed", "variant"]) url.searchParams.set(key, get(key).value);
     }
-  } else {
-    frame = Math.floor(clip.elapsed * clip.layout.fps / 1000) % clip.layout.columns;
+    location.href = url.href;
+  };
+  const link = (label, url) => `<a href="${url}">${label}</a>`;
+  get("records").innerHTML = "<strong>制作資料</strong>" +
+    link("モデル生成ソース", Lab.sourceUrl(asset.source)) +
+    asset.records.map(([label, path]) => link(label, Lab.sourceUrl(path))).join("") +
+    AssetCatalog.projects.filter(p => asset.projects.includes(p.id)).map(p => link(p.name, Lab.projectUrl(p))).join("");
+  function fileLinks(files) {
+    return link("PNG", asset.directory + files.sheet) + link("JSON", asset.directory + files.metadata) +
+      (files.gif ? link("GIF", asset.directory + files.gif) : "") +
+      (files.comparison ? link("新旧比較 GIF", asset.directory + files.comparison) : "");
   }
-  if (frame !== clip.frame) {
-    clip.frame = frame;
+  if (location.protocol === "file:") {
+    heading.insertAdjacentHTML("afterend", `<div class="empty-panel"><h2>個別再生はローカルHTTPで開けます</h2>
+      <p>ブラウザは直接開いたHTMLから再生用JSONを取得できません。リポジトリのルートで次を実行してください。</p>
+      <code>python -m http.server 8000 --bind 127.0.0.1 --directory docs</code>
+      <p>${link("この素材をローカルHTTPで開く", "http://127.0.0.1:8000/" + Lab.assetUrl(asset))}</p></div>`);
+    get("files").innerHTML = asset.views.map(v => `<div><strong>${v.label}</strong> ${fileLinks(v)}
+      ${(v.variants || []).map(alt => `<strong>${alt.label}</strong> ${fileLinks(alt)}`).join("")}</div>`).join("");
+    return;
+  }
+  get("workbench").hidden = false;
+  const canvas = get("sprite");
+  const ctx = canvas.getContext("2d");
+  const variants = new Map();
+  const cache = new Map();
+  async function read(view, files = view) {
+    const url = asset.directory + files.metadata;
+    if (!cache.has(url)) cache.set(url, fetch(url).then(response => {
+      if (!response.ok) throw new Error(files.metadata);
+      return response.json();
+    }));
+    const metadata = await cache.get(url);
+    const layout = view.state ? metadata.neutral : metadata.animations[view.id];
+    const directions = view.state ? layout.directions : layout.rows;
+    const frames = view.state ? 1 : layout.columns;
+    const times = layout.durations_ms || Array.from({ length: frames }, () => view.state ? 0 : 1000 / layout.fps);
+    const starts = [0];
+    for (const ms of times) starts.push(starts[starts.length - 1] + ms);
+    return { view, files, layout, directions, frames, starts, duration: starts[frames] };
+  }
+
+  const clips = await Promise.all(asset.views.map(async view => {
+    const versions = await Promise.all([view, ...(view.variants || [])].map(files => read(view, files)));
+    variants.set(view.id, versions);
+    return versions;
+  }));
+  const layouts = clips.flat().map(clip => clip.layout);
+  // Align all states to one floor point. Left/right extents can come from different sheets.
+  const extent = axis => Math.max(...layouts.map(l => l.anchor[axis]));
+  const tile = 32;
+  const margin = asset.type === "object" ? tile : 0;
+  const anchor = [extent(0) + margin, extent(1) + margin];
+  const size = anchor.map((v, axis) => v + Math.max(...layouts.map(l => l.cell[axis] - l.anchor[axis])) + margin);
+  const prefs = new URLSearchParams(location.search);
+  for (const key of ["scale", "speed"]) {
+    if ([...get(key).options].some(o => o.value === prefs.get(key))) get(key).value = prefs.get(key);
+  }
+  let active, image, facing = prefs.get("direction") || "SW", frame = 0, elapsed = 0, last = 0, animation = 0, ticket = 0;
+  let playing = false;
+  function draw() {
+    if (!image) return;
+    const { layout, view, directions } = active;
+    const [w, h] = layout.cell;
+    const scale = Number(get("scale").value);
+    const index = directions.indexOf(facing);
+    const x = anchor[0] - layout.anchor[0], y = anchor[1] - layout.anchor[1];
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    ctx.clearRect(0, 0, size[0], size[1]);
+    if (get("floor").checked) {
+      ctx.fillStyle = "#617d7244";
+      for (let i = anchor[0] % tile; i < size[0]; i += tile) ctx.fillRect(i, 0, 1, size[1]);
+      for (let j = anchor[1] % tile; j < size[1]; j += tile) ctx.fillRect(0, j, size[0], 1);
+    }
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(image, (view.state ? index : frame) * w, (view.state ? 0 : index) * h, w, h, x, y, w, h);
+    if (get("floor").checked) {
+      ctx.fillStyle = "#9b471c";
+      ctx.fillRect(anchor[0] - 3, anchor[1], 7, 1);
+      ctx.fillRect(anchor[0], anchor[1] - 3, 1, 7);
+    }
+    get("frame").textContent = `${frame + 1} / ${active.frames}`;
+    get("status").textContent = `${view.label} · ${facing} · ${w}×${h} px`;
+    canvas.setAttribute("aria-label", `${asset.name} ${view.label} ${facing} ${frame + 1}コマ目`);
+  }
+  function resize() {
+    canvas.width = size[0] * Number(get("scale").value);
+    canvas.height = size[1] * Number(get("scale").value);
     draw();
   }
-  if (clip.layout.loop || clip.elapsed < clip.duration) {
-    animation = requestAnimationFrame(animate);
-  } else if (clip.returnToIdle) {
-    motion = "idle";
-    for (const option of motionButtons) option.setAttribute("aria-pressed", option.dataset.motion === motion);
-    showSelection();
-  }
-}
-
-async function loadCharacterData(chosen) {
-  const data = await loadMetadata(chosen.assets + "/metadata.json");
-  if (!chosen.extraAnimations) return data;
-  const extras = await Promise.all(chosen.extraAnimations.map(
-    name => loadMetadata(chosen.assets + "/" + name + ".json")));
-  const animations = { ...data.animations };
-  for (const extra of extras) Object.assign(animations, extra.animations);
-  return { ...data, animations };
-}
-
-function selectAvailableMotion(data) {
-  const available = new Set(["idle", ...Object.keys(data.animations)]);
-  for (const button of motionButtons) button.disabled = !available.has(button.dataset.motion);
-  motionNote.hidden = motionButtons.every(button => !button.disabled);
-  motionNote.textContent = available.size === 1
-    ? "このキャラクターは静止8方向のみ公開しています。"
-    : "このキャラクターは攻撃を公開していません。";
-  if (!available.has(motion)) {
-    motion = "idle";
-    for (const option of motionButtons) option.setAttribute("aria-pressed", option.dataset.motion === motion);
-  }
-}
-
-async function showSelection() {
-  const ticket = ++selection;
-  const chosen = characters[character.value];
-  cancelAnimationFrame(animation);
-  attackGif.hidden = true;
-  comparisonGif.hidden = true;
-  if (characterName.textContent !== chosen.name) {
-    characterName.textContent = chosen.name;
-    characterSubtitle.textContent = chosen.subtitle;
-    active = null;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    frameLabel.textContent = "";
-    status.textContent = "画像を読み込み中…";
-  }
-  try {
-    const data = await loadCharacterData(chosen);
-    if (ticket !== selection) return;
-    selectAvailableMotion(data);
-    const name = motion === "idle" && data.animations.breathe ? "breathe" : motion;
-    const idleButton = motionButtons.find(button => button.dataset.motion === "idle");
-    idleButton.textContent = data.animations.breathe ? "待機" : "静止";
-    const facing = direction;
-    const idleVariant = name === "idle" && chosen.idleSheets ? chosen.idleSheets[resolution.value] : null;
-    const sheetName = idleVariant ?? name;
-    speed.disabled = name === "idle";
-    replay.hidden = name !== "attack";
-    resolutionRow.hidden = !(name === "idle" && chosen.idleSheets);
-    const label = motionButtons.find(button => button.dataset.motion === motion).textContent;
-    const [image, variantLayout] = await Promise.all([
-      loadSheet(chosen.assets + "/" + sheetName + ".png"),
-      sheetName !== name ? loadMetadata(chosen.assets + "/" + sheetName + ".json") : null,
-    ]);
-    if (ticket !== selection) return;
-    const layout = configure(data, variantLayout?.neutral)[name];
-    active = {
-      name, facing, layout, image, frame: 0, elapsed: 0, lastTick: performance.now(),
-      returnToIdle: name === "attack" && Boolean(data.animations.breathe),
-      duration: layout.durations_ms?.reduce((total, ms) => total + ms, 0),
-    };
-    status.textContent = label + " · " + facing + (chosen.idleSheets && name === "idle" ? " · " + layout.cell.join("×") : "");
-    canvas.setAttribute("aria-label", chosen.name + " " + status.textContent);
-    attackGif.hidden = name !== "attack";
-    if (!attackGif.hidden) attackGif.href = chosen.assets + "/attack.gif";
-    if (name === "attack" && chosen.attackComparison) {
-      comparisonGif.href = chosen.assets + "/" + chosen.attackComparison;
-      comparisonGif.hidden = false;
+  function run(value) {
+    cancelAnimationFrame(animation);
+    playing = value;
+    get("play").textContent = value ? "一時停止" : "再生";
+    if (value) {
+      last = performance.now();
+      animation = requestAnimationFrame(tick);
     }
-    resize();
-    if (name !== "idle") animation = requestAnimationFrame(animate);
-  } catch {
-    if (ticket !== selection) return;
-    active = null;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    frameLabel.textContent = "";
-    status.textContent = "画像を読み込めませんでした";
   }
-}
-
-for (const button of motionButtons) {
-  button.addEventListener("click", () => {
-    motion = button.dataset.motion;
-    for (const option of motionButtons) option.setAttribute("aria-pressed", option === button);
-    showSelection();
+  function tick(now) {
+    elapsed += Math.max(0, now - last) * Number(get("speed").value);
+    last = now;
+    if (active.layout.loop) elapsed %= active.duration;
+    else if (elapsed >= active.duration) {
+      run(false);
+      if (active.view.next) {
+        select(active.view.next);
+      } else {
+        frame = active.frames - 1;
+        draw();
+      }
+      return;
+    }
+    const next = active.starts.findIndex(start => start > elapsed) - 1;
+    if (next !== frame) { frame = next; draw(); }
+    animation = requestAnimationFrame(tick);
+  }
+  function step(delta) {
+    if (!image) return;
+    run(false);
+    frame = (frame + delta + active.frames) % active.frames;
+    elapsed = active.starts[frame];
+    draw();
+  }
+  function buttons(items, selected, attribute) {
+    return items.map(([id, label]) => `<button type="button" data-${attribute}="${id}" aria-pressed="${id === selected}">${label}</button>`).join("");
+  }
+  async function select(id, variant = 0) {
+    const request = ++ticket;
+    run(false);
+    active = variants.get(id)[variant];
+    image = null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    get("frame").textContent = "";
+    get("status").textContent = "読み込み中…";
+    frame = elapsed = 0;
+    const { view, directions } = active;
+    if (!directions.includes(facing)) facing = directions[0];
+    get("views").innerHTML = buttons(asset.views.map(v => [v.id, v.label]), id, "motion");
+    get("directions").innerHTML = buttons(directions.map(d => [d,d]), facing, "direction");
+    get("variant-row").hidden = !view.variants?.length;
+    get("variant").innerHTML = variants.get(id).map(({files, layout}, index) =>
+      `<option value="${index}">${layout.cell.join("×")} · ${index ? files.label : "標準"}</option>`).join("");
+    get("variant").value = variant;
+    get("speed").disabled = active.frames === 1;
+    get("transport").hidden = active.frames === 1;
+    get("replay").hidden = Boolean(active.layout.loop);
+    get("files").innerHTML = `<strong>${view.label}素材</strong>` + fileLinks(active.files);
+    try {
+      const loaded = await Lab.loadImage(asset.directory + active.files.sheet);
+      if (ticket !== request) return;
+      image = loaded;
+      resize();
+      if (active.frames > 1) run(true);
+    } catch {
+      if (ticket === request) get("status").textContent = "画像を読み込めません";
+    }
+  }
+  get("floor-row").hidden = asset.type !== "object";
+  get("floor").addEventListener("change", draw);
+  get("scale").addEventListener("change", resize);
+  get("views").addEventListener("click", event => {
+    if (event.target.dataset.motion) select(event.target.dataset.motion);
   });
-}
-
-for (const button of directionButtons) {
-  button.addEventListener("click", () => {
-    direction = button.dataset.direction;
-    for (const option of directionButtons) option.setAttribute("aria-pressed", option === button);
-    showSelection();
+  get("variant").addEventListener("change", event => select(active.view.id, Number(event.target.value)));
+  get("directions").addEventListener("click", event => {
+    if (!event.target.dataset.direction) return;
+    facing = event.target.dataset.direction;
+    for (const button of get("directions").children) button.setAttribute("aria-pressed", button.dataset.direction === facing);
+    draw();
   });
+  get("previous").onclick = () => step(-1);
+  get("next").onclick = () => step(1);
+  get("play").onclick = () => {
+    if (!image) return;
+    if (elapsed >= active.duration) elapsed = frame = 0;
+    draw();
+    run(!playing);
+  };
+  get("replay").onclick = () => select(active.view.id);
+  document.addEventListener("visibilitychange", () => { last = performance.now(); });
+  const initial = variants.has(prefs.get("motion")) ? prefs.get("motion") : asset.views[0].id;
+  const version = Number(prefs.get("variant"));
+  await select(initial, Number.isInteger(version) && variants.get(initial)[version] ? version : 0);
 }
 
-replay.addEventListener("click", showSelection);
-scale.addEventListener("change", resize);
-character.addEventListener("change", showSelection);
-resolution.addEventListener("change", showSelection);
-showSelection();
+openViewer().catch(error => {
+  document.querySelector("#status").textContent = "再生用メタデータを読み込めません";
+  console.error(error);
+});

@@ -1,11 +1,19 @@
-# SpriteStack Character Lab 開発規約
+# SpriteStack Asset Lab 開発規約
 
-新規制作は [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) の順に進める。正式サンプルはMAREN、CRYSTAL MAGE、AZURE RONIN。ガイド冒頭の作例表から、体格・衣装、歩行、持ち手と攻撃の手本を個別に選び、参考画像に固有の特徴を優先する。
+人型の新規制作は [キャラクター制作ガイド](research/CHARACTER_CREATION_GUIDE.md) の順に進める。正式サンプルはMAREN、CRYSTAL MAGE、AZURE RONIN。ガイド冒頭の作例表から、体格・衣装、歩行、持ち手と攻撃の手本を個別に選び、参考画像に固有の特徴を優先する。
+
+## 素材分類と登録
+
+- キャラクターは `characters/<id>/`、新規モンスターは `monsters/<id>/`、オブジェクトは `objects/<id>/` に生成ソースを置く。既存のゴブリン・骸骨は `characters/` で再生成し、台帳上で `monster` に分類する。
+- 公開先は全分類で `docs/assets/<id>/`。静止の標準は `idle.png` と `metadata.json`、動作は `<motion>.png` と `<motion>.json`、確認用GIFも同じ語幹を使う。既存URLと再生成コマンドを保つ。
+- 検証済み素材を [台帳](docs/catalog.js) の `assets` に登録する。ID、分類・サブ分類、名前・特徴、所属、方向、公開ファイル、生成ソース・記録を確認する。制作予定は台帳の公開素材に含めない。プロジェクト所属は採用が決まった素材の `projects` だけに記入する。一つの素材を複数のゲームから参照できる。
+- モーション別JSONがセル・アンカー・コマ時間の正本。台帳にはファイル参照と表示用の名前を置く。HTMLの選択肢・人数・カードの個別追記は不要。`node research/verify_catalog.cjs` とローカルHTTPの一覧・原寸再生・リンクを確認する。隊列更新時は `file://` でも確認する。[登録仕様](docs/TECHNICAL_DESIGN.md#素材台帳とギャラリー)
+- 現在の生成・IK・歩行・攻撃検証は人型用。剛体や非人型の制作では支持面、状態、軸、方向ごとの輪郭、軌道、タイルとの寸法関係を先に決める。静止物にも扱える公開形式とビューアがある。四足・飛行・可動物のベイクと専用の品質検査は今後の制作実験で設計する。
 
 ## 変更する場所
 
 - 作業開始時に `git status -sb` を確認する。反復ベイクと比較用の一時ファイルは `.phase1/` の新しい出力先へ置く。修正前の基準を残して比較する。
-- 造形・材質・関節・装備・攻撃・品質条件は `characters/<name>/` に置く。共通歩行は [motions/walk.json](motions/walk.json) を参照し、歩幅や姿勢は各体の `walk.tuning` で調整する。公開素材は `docs/assets/<name>/`、制作判断と検証結果は `research/` に置く。
+- 造形・材質・関節・装備・攻撃・品質条件は各素材のソースディレクトリに置く。人型の共通歩行は [motions/walk.json](motions/walk.json) を参照し、歩幅や姿勢は各体の `walk.tuning` で調整する。公開素材は `docs/assets/<name>/`、制作判断と検証結果は `research/` に置く。
 - リグ、IK、再スライス、描画、ベイク、検証器は既存の共通コードを使う。キャラクター専用ベイクや検証器の名前分岐を追加しない。装備ごとの可視画素、重要な局面、接地の条件は `quality.json` に書く。共通コードを変更する必要が生じたら、適用範囲、既存設定での挙動、再生成結果を記録する。
 - 参考画像とその画素を含む比較図は、公開権限が確認できるまでローカルに置く。座標、抽出色、配色判断、生成モデル・PNG、再現手順を追跡する。LARK・BRAMの元パッケージ、旧クリップ、回帰基準は研究用として保持する。[Phase 2の保存先](research/SAMPLE_CLEANUP.md)
 
