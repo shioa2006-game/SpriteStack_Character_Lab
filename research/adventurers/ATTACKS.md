@@ -4,11 +4,13 @@
 
 | キャラクター | クリップ | セル／足元アンカー | 総時間 | 発動（開始から） | 公開アセット |
 | --- | --- | --- | ---: | --- | --- |
-| ガルド | [重打撃](../../characters/gard/hammer-strike.json) | 84×84／(42, 67) | 960 ms | 540 ms・打撃 | [PNG](../../docs/assets/gard/attack.png) · [GIF](../../docs/assets/gard/attack.gif) · [JSON](../../docs/assets/gard/attack.json) |
+| ガルド | [重打撃](../../characters/gard/hammer-strike.json) | 100×100／(50, 75) | 960 ms | 540 ms・打撃 | [PNG](../../docs/assets/gard/attack.png) · [GIF](../../docs/assets/gard/attack.gif) · [JSON](../../docs/assets/gard/attack.json) |
 | リコ | [射撃](../../characters/rico/bow-shot.json) | 80×80／(40, 65) | 590 ms | 360 ms・離弦 | [PNG](../../docs/assets/rico/attack.png) · [GIF](../../docs/assets/rico/attack.gif) · [JSON](../../docs/assets/rico/attack.json) |
 | セナ | [氷魔法](../../characters/sena/frost-cast.json) | 100×100／(50, 75) | 1,000 ms | 580 ms・放出 | [PNG](../../docs/assets/sena/attack.png) · [GIF](../../docs/assets/sena/attack.gif) · [JSON](../../docs/assets/sena/attack.json) |
 
 ## ポーズと装備
+
+ガルドの現行版はF6で前方へ打ち込み、F7でさらに押し込む。以下の初版から変更した軌道・方向別の観察と数値は[ガルドの重打撃の改訂記録](gard-hammer/README.md)に掲載した。
 
 - **ガルド**　GOBLIN BRUTEの溜めと停止、MAREN・SKELETON GUARDの独立した盾腕を参考にした。左の盾を上げ、腰を引いて肩越しに槌頭を持ち上げる。4コマ目を190 ms保ち、5コマ目の50 msで腰を返す。打ち込んだ後の2コマは踏み出した足を同じ位置に置き、マントと肩が落ち着いてから槌を戻す。
 - **リコ**　AZURE RONINの短い発動と左右の腕に別々の役割を持たせる構成を参考にした。左手は弓を前へ、右手は矢筈を持って後方へ動く。5コマ目の照準から6コマ目の離弦へ40 msの発射像を挟み、右手が後ろへ抜ける。弓を下ろす間、矢筒と腰の鉤は身体に付いたまま。
@@ -33,6 +35,8 @@ PNGは各行が S / SW / W / NW / N / NE / E / SE、各列が時間順の9コマ
 広い軌道には `attack.cell` と `attack.posed_volume` を使う。初稿では全モードの格子原点を動かし、同じ関節姿勢でも歩行PNGの一部が変わった。攻撃だけ別の格子を選ぶ方式に変更した。3人の元モデル・待機・歩行クリップは従来のものを使う。
 
 ## 8方向の見え方
+
+この比較図と以下の初回検証値は3人の攻撃を揃えた時点（`4f77259`）の記録。現行ガルドの比較は[原寸GIF](gard-hammer/comparison.gif)と[改訂後の検証結果](gard-hammer/README.md)を参照。
 
 ![ガルド、リコ、セナの構え、溜めまたは照準、発動、NWでの発動、復帰完了](attack-poses.png)
 

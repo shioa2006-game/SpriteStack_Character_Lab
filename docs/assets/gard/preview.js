@@ -102,12 +102,12 @@ window.spriteStackLayouts[new URL(".", document.currentScript.src).href] = {
       ],
       "columns": 9,
       "cell": [
-        84,
-        84
+        100,
+        100
       ],
       "anchor": [
-        42,
-        67
+        50,
+        75
       ],
       "fps": 10,
       "durations_ms": [
@@ -128,8 +128,8 @@ window.spriteStackLayouts[new URL(".", document.currentScript.src).href] = {
         "high hold",
         "downswing",
         "impact",
-        "settle",
-        "lift clear",
+        "drive through",
+        "recover",
         "guard"
       ]
     }
