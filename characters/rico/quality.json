@@ -22,8 +22,8 @@
   },
   "cells": [64],
   "loop_visibility": [
-    {"feature": "right eye", "rows": ["S"], "min_px": 1},
-    {"feature": "left eye", "rows": ["S"], "min_px": 1},
+    {"feature": "right eye", "rows": ["S"], "min_px": 2},
+    {"feature": "left eye", "rows": ["S"], "min_px": 2},
     {"feature": "hook", "rows": ["S", "NE", "E", "SE"], "min_px": 4},
     {"feature": "arrows", "rows": ["NW", "N", "NE"], "min_px": 12},
     {"feature": "scarf", "rows": ["S"], "min_px": 30}

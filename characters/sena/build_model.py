@@ -56,7 +56,10 @@ def build(config):
         paint(rod(a0, mid, 1.36, 1.18) | rod(mid, end, 1.18, .43),
               "silver shade" if dx in (-1.35, 1.3) else "silver", "head")
     paint(oval((0, .36, 24.37), (2.91, 2.66, 3.16), 2.15), "skin", "head")
-    v.eyes((1.13, 2.75, 24.55), (.90, 2.59, 24.53), (.59, .82, .81))
+    # Seat both irises on the same forward surface beneath the sloping fringe.
+    for side in (-1, 1):
+        paint(oval((side*1.30, 3.00, 24.70), (.60, .45, .85), 2.5), "skin", "head")
+        paint(oval((side*1.10, 2.85, 24.45), (.50, .46, .93), 2.5), "eyes", "head")
     paint(oval((0, 2.83, 23.88), (.52, .42, .63)), "skin", "head")
     fringe = oval((0, 0, 26.0), (3.17, 2.92, 2.47))
     paint(fringe & ((y < 1.12) | (z > 25.15-.52*x)), "silver", "head")

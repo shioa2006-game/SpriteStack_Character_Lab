@@ -66,9 +66,12 @@ def build(config):
         paint(rod((s*2.65, .75, 22.1), (s*3.46, .90, 19.9), .80, .33), "copper", "head")
     paint(oval((0, 2.62, 20.15), (.47, .47, .55)), "skin", "head")
     for sign, iris in ((-1, "right eye"), (1, "left eye")):
-        paint(oval((sign*1.18, 2.50, 20.85), (.60, .58, .65), 2.5), "skin", "head")
-        # Seat the iris at the surface so each pupil survives the frontal pixel grid.
-        paint(oval((sign, 2.45, 20.30), (.38, .40, .90), 2.5), iris, "head")
+        paint(oval((sign*.75, 3.00, 21.65), (.76, .58, .85), 2.5), "skin", "head")
+        # Round the outer corner so the side of the iris recedes into the cheek.
+        cheek = oval((sign*1.75, 2.80, 21.25), (.50, .90, 1.10), 2.5)
+        paint(cheek & (v.material == 0), "skin", "head")
+        # Keep each iris one pixel wide and two pixels tall from the front.
+        paint(oval((sign, 3.05, 21.20), (.38, .60, .70), 2.5), iris, "head")
     # The hood has an open, asymmetric front arch and a folded point at the nape.
     hood = oval((0, -.52, 22.02), (3.65, 3.30, 3.22), 2.25)
     opening = (y > .22) & (z < 23.08 + .47*y - .19*x)
