@@ -15,7 +15,9 @@ const south = {S: 1, SW: Math.SQRT1_2, W: 0, NW: -Math.SQRT1_2, N: -1, NE: -Math
 let actors = [];
 let member = "all", dir = "S", motion = "breathe", playing = true;
 let time = 0, previous = null, lastDraw = "";
-if (matchMedia("(max-width: 680px)").matches) zoom.value = "2";
+if (matchMedia("(max-width: 680px)").matches) {
+  zoom.value = matchMedia("(max-width: 460px)").matches ? "1" : "2";
+}
 
 function buttons(attribute, value) {
   document.querySelectorAll("[data-" + attribute + "]").forEach(button =>
@@ -90,7 +92,7 @@ function changeMotion(value, restart = false) {
 
 function updateState() {
   lastDraw = "";
-  const who = member === "all" ? "3人の隊列" : actors.find(a => a.id === member)?.name;
+  const who = member === "all" ? actors.length+"人の隊列" : actors.find(a => a.id === member)?.name;
   state.textContent = [who, dir, {walk: "歩行", breathe: "待機", attack: "攻撃"}[motion]].filter(Boolean).join("  /  ");
 }
 
@@ -272,13 +274,15 @@ function draw() {
   if (stamp === lastDraw) return;
   lastDraw = stamp;
   scrub.max = Math.max(...shown.map(a => a.clips.attack.columns));
-  const attacking = shown.findIndex(a => a.mode === "attack");
-  if (attacking >= 0) scrub.value = frames[attacking]+1;
+  const attacking = shown.filter(a => a.mode === "attack").sort((a,b) => b.clips.attack.columns-a.clips.attack.columns)[0];
+  if (attacking) scrub.value = frames[shown.indexOf(attacking)]+1;
   ctx.setTransform(scale,0,0,scale,0,0);
   ctx.imageSmoothingEnabled = false;
   ground(w,h,camX,camY);
+  const edge = Math.min(44, w/4);
+  const spacing = Math.min(87, (w-2*edge)/Math.max(1, shown.length-1));
   shown.map((actor,i) => {
-    const x = w/2 + (i-(shown.length-1)/2)*Math.min(w*.28,87) + positions[i][0]-camX;
+    const x = w/2 + (i-(shown.length-1)/2)*spacing + positions[i][0]-camX;
     const y = Math.min(h-3, h/2+25) + positions[i][1]-camY;
     return {actor, frame:frames[i], x:Math.round(wrap(x,w,32)), y:Math.round(wrap(y,h,64))};
   }).sort((a,b)=>a.y-b.y).forEach(p=>paintActor(p.actor,p.frame,p.x,p.y));

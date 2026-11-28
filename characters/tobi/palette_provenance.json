@@ -1,0 +1,89 @@
+{
+  "materials": {
+    "trousers": {
+      "source": "pants",
+      "method": "adjusted",
+      "note": "Deep umber separates the legs from the apron."
+    },
+    "oiled hide": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "Dark leather for soles, bracers and the sling."
+    },
+    "saddle": {
+      "source": "leather",
+      "method": "adjusted",
+      "note": "Ochre leather makes the vest and gloves legible against the spheres."
+    },
+    "linen": {
+      "source": "linen",
+      "method": "adjusted",
+      "note": "Warm unbleached linen on the chest and sleeves."
+    },
+    "rolled linen": {
+      "source": "linen",
+      "method": "adjusted",
+      "note": "A darker edge defines the rolled cuff."
+    },
+    "skin": {
+      "source": "skin",
+      "method": "adjusted",
+      "note": "Separate forearms and cheeks from linen."
+    },
+    "chestnut": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Warm chestnut highlights show the swept tufts."
+    },
+    "right eye": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "A dark iris on sunlit skin."
+    },
+    "left eye": {
+      "source": "hair",
+      "method": "adjusted",
+      "note": "Match the right iris; measure each separately."
+    },
+    "amethyst": {
+      "source": "band",
+      "method": "adjusted",
+      "note": "Push the dusty reference purple above the warm leather."
+    },
+    "lilac": {
+      "source": "band",
+      "method": "adjusted",
+      "note": "The reverse of the bandanna and the sash border catch light."
+    },
+    "brass": {
+      "source": "brass",
+      "method": "adjusted",
+      "note": "Warm rims against the two cool lenses."
+    },
+    "aqua glass": {
+      "source": "lens",
+      "method": "adjusted",
+      "note": "Increase cyan contrast at final resolution."
+    },
+    "black iron": {
+      "source": "iron",
+      "method": "adjusted",
+      "note": "A cool graphite ramp preserves the spherical highlights."
+    },
+    "hemp": {
+      "source": "hemp",
+      "method": "adjusted",
+      "note": "Warm twisted cord on the belt and fuse."
+    },
+    "tool steel": {
+      "source": "steel",
+      "method": "adjusted",
+      "note": "A cool chisel edge over the back of the jerkin."
+    },
+    "ember": {
+      "source": "brass",
+      "method": "derived",
+      "note": "A single warm wick tip."
+    }
+  }
+}

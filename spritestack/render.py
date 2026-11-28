@@ -16,6 +16,8 @@ def reslice(character, transforms):
 
     # Later parts win at overlaps. Keeping this order is part of the bake contract.
     for name, part_id in character.parts.items():
+        if transforms[name] is None:
+            continue  # A released item is owned by the game until its rearm key.
         occupied = np.argwhere(character.part_ids == part_id)[:, ::-1]
         low = occupied.min(axis=0)
         high = occupied.max(axis=0) + 1

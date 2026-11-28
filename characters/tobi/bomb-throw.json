@@ -1,0 +1,119 @@
+{
+  "fps": 10,
+  "poses": [
+    "ready",
+    "draw back",
+    "raise",
+    "cocked",
+    "drive",
+    "release",
+    "follow through",
+    "reach pouch",
+    "draw next",
+    "ready"
+  ],
+  "durations_ms": [70, 95, 105, 145, 55, 60, 125, 100, 95, 70],
+  "events": [
+    {
+      "name": "bomb_release",
+      "frame": 5,
+      "marker": "bomb_center",
+      "direction_source": "marker_travel",
+      "released_part": "bomb",
+      "preview_distance": 18,
+      "rearm_frame": 8
+    }
+  ],
+  "keys": [
+    {},
+    {
+      "root": [-0.2, -0.24, -0.45],
+      "yaw": 12,
+      "lean": -4,
+      "front_step": 0,
+      "front_lift": 0,
+      "hand_R": [-9.0, 1.1, 19.0],
+      "elbow_pole_R": [-5, -2, -2],
+      "aim": [-0.75, 0.45, 0.60],
+      "support_delta": [-0.2, 1.42, 1.46]
+    },
+    {
+      "root": [-0.47, -0.62, -0.74],
+      "yaw": 25,
+      "lean": -7,
+      "front_step": 0.42,
+      "front_lift": 0.92,
+      "hand_R": [-8.05, -4.65, 23.07],
+      "elbow_pole_R": [-5, -3, -0.5],
+      "aim": [-0.66, -0.23, 0.73],
+      "support_delta": [-0.5, 2.95, 3.52]
+    },
+    {
+      "root": [-0.62, -0.83, -0.91],
+      "yaw": 32,
+      "lean": -8,
+      "front_step": 1.48,
+      "front_lift": 1.68,
+      "hand_R": [-7.14, -6.02, 25.18],
+      "elbow_pole_R": [-5, -2.7, 0.4],
+      "aim": [-0.57, -0.21, 0.79],
+      "support_delta": [-0.65, 3.35, 3.88]
+    },
+    {
+      "root": [-0.18, 0.34, -0.88],
+      "yaw": 6,
+      "lean": 3,
+      "front_step": 2.78,
+      "front_lift": 0.69,
+      "hand_R": [-7.98, 2.92, 22.8],
+      "elbow_pole_R": [-6, -1, 1.1],
+      "aim": [-0.48, 0.42, 0.77],
+      "support_delta": [-0.24, 2.1, 2.7]
+    },
+    {
+      "root": [0.17, 1.04, -1.05],
+      "yaw": -22,
+      "lean": 9,
+      "front_step": 2.98,
+      "front_lift": 0,
+      "hand_R": [-7.8, 7.1, 27.25],
+      "elbow_pole_R": [-4.6, 2.4, 0.5],
+      "aim": [-0.52, 0.5, 0.7],
+      "support_delta": [0.38, 0.72, 2.25]
+    },
+    {
+      "root": [0.29, 1.25, -1.29],
+      "yaw": -30,
+      "lean": 12,
+      "front_step": 2.98,
+      "front_lift": 0,
+      "hand_R": [-3.88, 9.7, 19.88],
+      "elbow_pole_R": [-5.8, 3, -2.1],
+      "aim": [-0.22, 0.85, 0.42],
+      "support_delta": [0.78, -0.34, 2.32]
+    },
+    {
+      "root": [0.02, 0.4, -0.85],
+      "yaw": -12,
+      "lean": 5,
+      "front_step": 1.9,
+      "front_lift": 1.06,
+      "hand_R": [-4.95, 2.25, 14.07],
+      "elbow_pole_R": [-4.8, -2.5, -2.6],
+      "aim": [-0.88, 0.15, 0.48],
+      "support_delta": [0.25, -0.25, 1.4]
+    },
+    {
+      "root": [-0.1, -0.05, -0.46],
+      "yaw": 3,
+      "lean": 1,
+      "front_step": 0,
+      "front_lift": 0,
+      "hand_R": [-7.35, 0.5, 13.9],
+      "elbow_pole_R": [-4, -2.4, -3],
+      "aim": [-0.6, 0.8, 0.1],
+      "support_delta": [0, 0.44, 0.85]
+    },
+    {}
+  ]
+}

@@ -80,7 +80,7 @@ class Secondary:
 
     def __init__(self, character, clip, rest, *, mode="walk"):
         self.mode = mode
-        regions = character.config["walk"].get("secondary", [])  # The same garment masks in either motion.
+        regions = character.config["breathe" if mode == "breathe" else "walk"].get("secondary", [])
         names = [material["name"] for material in character.config["model"]["palette"]]
         grid = character.source_grid
         coords = np.argwhere(character.part_ids != 0)

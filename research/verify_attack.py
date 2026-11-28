@@ -15,6 +15,7 @@ from research.verify_walk import frames_of
 from research.walk.compare import strip
 from spritestack.bake import check_attachment, require_margin
 from spritestack.character import load_character
+from spritestack.render import reslice
 from spritestack.rig import Biped
 from spritestack.secondary import Secondary
 
@@ -69,6 +70,8 @@ def check_path(character, feature, path_materials=None):
             0, key["yaw"] * tuning["support_yaw_offset"], tuning["support_hand_lift"]]
         for name, target in ((main_hand, key[main_hand]), (support_hand, support)):
             assert np.linalg.norm(joints[name] - target) < 1e-6, (i, name, "unreachable")
+        if released_at(character.motions["attack"], main, i / 12):
+            continue  # The socket still follows the hand; the item no longer follows the socket.
         rotation, shift = transforms[main]
         world = centers @ rotation.T + shift
         for part, pid in character.parts.items():
@@ -80,6 +83,11 @@ def check_path(character, feature, path_materials=None):
             assert not np.any(character.part_ids[tuple(xyz[valid][:, ::-1].T)] == pid), (i, main, part)
 
 
+def released_at(clip, part, frame):
+    return next((e for e in clip.get("events", []) if e.get("released_part") == part
+                 and e["frame"] <= frame < e["rearm_frame"]), None)
+
+
 def check_cloth(character, main):
     rig = Biped(character)
     clip = character.motions["attack"]
@@ -89,6 +97,8 @@ def check_cloth(character, main):
     for region in cloth.regions:
         swings = cloth._pendulum(region, frames) if region["kind"] == "pendulum" else [None] * len(frames)
         for i, (transforms, swing) in enumerate(zip(frames, swings)):
+            if released_at(clip, main, i):
+                continue
             cells, _ = cloth.posed_cells(character, region, transforms, swing)
             world = character.posed_grid.origin + (cells + .5) * character.posed_grid.spacing
             rotation, shift = transforms[main]
@@ -152,6 +162,18 @@ def verify(character, out, gif, rules):
         assert event["position_model_xyz"] == joints[col][source["marker"]]
         assert np.isclose(np.linalg.norm(event["direction_model_xyz"]), 1)
         assert list(event["direction_by_row"]) == dirs
+        if event.get("released_part") in rules.get("release_clearance_px", {}):
+            part = event["released_part"]
+            limit = rules["release_clearance_px"][part]
+            with Image.open(out / "attack_part_ids.png") as atlas:
+                owners = np.asarray(atlas).reshape(len(dirs), cell, count, cell)
+            for row, tile in zip(dirs, owners[:, :, col, :]):
+                item = tile == character.parts[part]
+                points = np.argwhere(item)
+                body = np.argwhere((tile != 0) & ~item)
+                assert len(points) and len(body), (row, part, "missing release image")
+                distances = np.sum((points[:, None] - body) ** 2, axis=2)
+                assert distances.min() >= limit**2, (row, part, "release clearance")
         if source.get("direction_source") == "marker_travel":
             axis = np.subtract(joints[col][source["marker"]], joints[col-1][source["marker"]])
         elif source["marker"] == "arrow_tip":
@@ -206,11 +228,33 @@ def verify(character, out, gif, rules):
                         previous = joints[col-1]["toe_"+side]
                         if abs(toe[2]) < 1e-6 and abs(previous[2]) < 1e-6:
                             assert np.allclose(previous, toe), (col, side, "grounded boot slid")
-            assert set(character.parts.values()) <= set(np.unique(ids)), ("missing part", col)
+            missing = set(character.parts.values()) - set(np.unique(ids))
+            expected_missing = set()
             for name, att in character.config["rig"]["attachments"].items():
-                faces = face_contacts(ids == character.parts[name], ids == character.parts[att["hand"]])
+                owned = ids == character.parts[name]
+                faces = face_contacts(owned, ids == character.parts[att["hand"]])
+                release = released_at(clip, name, col)
+                if release:
+                    event = next(e for e in events if e["frame"] == release["frame"]
+                                 and e.get("released_part") == name)
+                    preview = event.get("preview_distance", 0)
+                    assert event["baked_projectile_frames"] == int(preview > 0)
+                    if col == event["frame"] and preview:
+                        # The complete item appears exactly once at its independent pose.
+                        _, transforms = Biped(character).pose("attack", col)
+                        rotation, shift = transforms[name]
+                        shift = shift + np.asarray(event["direction_model_xyz"]) * preview
+                        item = replace(character, parts={name: character.parts[name]})
+                        model, expected = reslice(item, {name: (rotation, shift)})
+                        assert owned.any() and faces == 0, (name, col, "still in hand")
+                        assert np.array_equal(owned, expected != 0), (name, col, "release position")
+                        assert np.array_equal(model[owned], materials[f"attack_{col:02}"][owned])
+                    else:
+                        expected_missing.add(character.parts[name])
+                    continue
                 assert faces > 0, (name, col, "lost grip")
                 contacts[name] = min(contacts.get(name, faces), faces)
+            assert missing == expected_missing, ("unexpected part presence", col, missing, expected_missing)
             panel = Image.new("RGB", (cell * 4, (cell + 14) * 2), "#303640")
             for row, direction in enumerate(dirs):
                 frame = sheet.crop((col * cell, row * cell, (col+1)*cell, (row+1)*cell))

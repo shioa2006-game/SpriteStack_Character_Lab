@@ -1,12 +1,13 @@
 # 冒険者の一行　8方向の攻撃
 
-[隊列プレビュー](../../docs/party.html)で「攻撃を1回再生」を押すと、同じ床面で3人のテンポを比較できる。「攻撃を繰り返す」は表示中の全員が復帰してから次の攻撃を開始する。「攻撃コマ」を動かすと一時停止し、同じ局面のまま方向を変えられる。各人物は[通常ギャラリー](../../docs/index.html)の選択欄にもある。
+[隊列プレビュー](../../docs/party.html)で「攻撃を1回再生」を押すと、同じ床面で4人のテンポを比較できる。「攻撃を繰り返す」は表示中の全員が復帰してから次の攻撃を開始する。「攻撃コマ」を動かすと一時停止し、同じ局面のまま方向を変えられる。各人物は[通常ギャラリー](../../docs/index.html)の選択欄にもある。
 
 | キャラクター | クリップ | セル／足元アンカー | 総時間 | 発動（開始から） | 公開アセット |
 | --- | --- | --- | ---: | --- | --- |
 | ガルド | [重打撃](../../characters/gard/hammer-strike.json) | 100×100／(50, 75) | 960 ms | 540 ms・打撃 | [PNG](../../docs/assets/gard/attack.png) · [GIF](../../docs/assets/gard/attack.gif) · [JSON](../../docs/assets/gard/attack.json) |
 | リコ | [射撃](../../characters/rico/bow-shot.json) | 80×80／(40, 65) | 590 ms | 360 ms・離弦 | [PNG](../../docs/assets/rico/attack.png) · [GIF](../../docs/assets/rico/attack.gif) · [JSON](../../docs/assets/rico/attack.json) |
 | セナ | [氷魔法](../../characters/sena/frost-cast.json) | 100×100／(50, 75) | 1,000 ms | 580 ms・放出 | [PNG](../../docs/assets/sena/attack.png) · [GIF](../../docs/assets/sena/attack.gif) · [JSON](../../docs/assets/sena/attack.json) |
+| トビ | [発破玉の投擲](../../characters/tobi/bomb-throw.json) | 104×104／(52, 77) | 920 ms | 470 ms・離手 | [PNG](../../docs/assets/tobi/attack.png) · [GIF](../../docs/assets/tobi/attack.gif) · [JSON](../../docs/assets/tobi/attack.json) |
 
 ## ポーズと装備
 
@@ -18,9 +19,9 @@
 
 ## データを再生する
 
-PNGは各行が S / SW / W / NW / N / NE / E / SE、各列が時間順の9コマ。ゲームでは `animations.attack` の `cell`、`anchor`、`durations_ms`、`loop: false` を読む。1列目と9列目は静止画像を攻撃セルの中央に置いたもの。描画先の床座標から各モードのアンカーを引く。隊列プレビューでは歩行中に攻撃を指示すると、次の片足支持の通過姿勢まで進む。床面移動を有効にした場合は最後の移動量を短くし、支持足のつま先を同じ床座標に残して構えに移る。単発の終了後は待機の先頭へ戻る。
+PNGは各行が S / SW / W / NW / N / NE / E / SE、各列が時間順のコマ（トビは10コマ、ほかの3人は9コマ）。ゲームでは `animations.attack` の `cell`、`anchor`、`durations_ms`、`loop: false` を読む。先頭と最終列は静止画像を攻撃セルの中央に置いたもの。描画先の床座標から各モードのアンカーを引く。隊列プレビューでは歩行中に攻撃を指示すると、次の片足支持の通過姿勢まで進む。床面移動を有効にした場合は最後の移動量を短くし、支持足のつま先を同じ床座標に残して構えに移る。単発の終了後は待機の先頭へ戻る。
 
-`events[].frame` は0始まり。3人とも発動は列6（`frame = 5`）。経過時間が `time_ms` をまたいだときに1回通知できる。`position_model_xyz` は足元原点からの発動位置で、Xが本人の左、Yが前、Zが上。`direction_model_xyz` は正面モデルでの単位方向、`direction_by_row[向き]` は選択方向に回した単位方向（地面はXY、Sは+Y）。斜め視点の画面に出す際は位置も同じ向きに回し、カメラの仰角24°で投影する。
+`events[].frame` は0始まり。4人とも発動は列6（`frame = 5`）。経過時間が `time_ms` をまたいだときに1回通知できる。`position_model_xyz` は足元原点からの発動位置で、Xが本人の左、Yが前、Zが上。`direction_model_xyz` は正面モデルでの単位方向、`direction_by_row[向き]` は選択方向に回した単位方向（地面はXY、Sは+Y）。斜め視点の画面に出す際は位置も同じ向きに回し、カメラの仰角24°で投影する。
 
 - `hammer_impact` は槌頭中心と、直前の姿勢からその中心が進んだ向き。
 - `arrow_release` は表示中の矢先と矢軸の向き。`baked_projectile_frames: 1` のため、6コマ目の40 msはシートに飛翔像が1本ある。ゲームで矢を継続表示する場合は7コマ目の境界で表示を引き継ぐ。速度と飛距離はゲーム側で決める。

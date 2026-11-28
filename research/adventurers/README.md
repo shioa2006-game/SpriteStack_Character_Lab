@@ -2,6 +2,8 @@
 
 ガルドの白髭と盾、リコのフードと左手の弓、セナの折れた尖り帽子と水晶杖を、同じ24°の正投影で描いた。各人物に一つの材質格子と部位格子があり、全方向・全コマがその立体を共有する。[隊列プレビュー](../../docs/party.html)
 
+4人目のトビは紫のバンダナと真鍮ゴーグルを着け、右手に黒い発破玉を持つ。[トビの制作・検証記録](tobi/README.md)
+
 ![同じ石畳にガルド、リコ、セナを並べたブラウザ画面](preview.jpg)
 
 ## ゲームで使う
@@ -11,6 +13,7 @@
 | ガルド | [gard](../../characters/gard/) | [PNG](../../docs/assets/gard/breathe.png) | [PNG](../../docs/assets/gard/walk.png) | 3 / 7 fps | 2.052 |
 | リコ | [rico](../../characters/rico/) | [PNG](../../docs/assets/rico/breathe.png) | [PNG](../../docs/assets/rico/walk.png) | 3 / 11 fps | 1.406 |
 | セナ | [sena](../../characters/sena/) | [PNG](../../docs/assets/sena/breathe.png) | [PNG](../../docs/assets/sena/walk.png) | 3 / 8 fps | 1.748 |
+| トビ | [tobi](../../characters/tobi/) | [PNG](../../docs/assets/tobi/breathe.png) | [PNG](../../docs/assets/tobi/walk.png) | 3 / 9 fps | 1.824 |
 
 前進量の単位はモデル座標。コマ送りは待機／歩行の順。描画密度は全員1.50 px/単位。各セルは64×64の透過RGBAで、左上から (32, 57) が床面上の同一アンカー。
 

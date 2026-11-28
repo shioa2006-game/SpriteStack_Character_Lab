@@ -1,0 +1,389 @@
+{
+  "version": 1,
+  "model": {
+    "materials": "materials.npz",
+    "part_ids": "part_ids.npz",
+    "origin_xyz": [-14, -8, 0],
+    "shape_zyx": [66, 40, 56],
+    "voxel_size_xyz": [0.5, 0.5, 0.5],
+    "palette": [
+      {
+        "name": "trousers",
+        "group": "trousers",
+        "shadow": "342c36",
+        "base": "51434a",
+        "light": "706064"
+      },
+      {
+        "name": "oiled hide",
+        "group": "oiled hide",
+        "shadow": "392c32",
+        "base": "624438",
+        "light": "876048"
+      },
+      {
+        "name": "saddle",
+        "group": "saddle",
+        "shadow": "604034",
+        "base": "996342",
+        "light": "be895b"
+      },
+      {
+        "name": "linen",
+        "group": "linen",
+        "shadow": "b69880",
+        "base": "e0c3a0",
+        "light": "f6e2bd"
+      },
+      {
+        "name": "rolled linen",
+        "group": "linen",
+        "shadow": "9f806e",
+        "base": "c3a68a",
+        "light": "e9cfac"
+      },
+      {
+        "name": "skin",
+        "group": "skin",
+        "shadow": "b67e68",
+        "base": "e4a882",
+        "light": "f8cda4"
+      },
+      {
+        "name": "chestnut",
+        "group": "chestnut",
+        "shadow": "46303a",
+        "base": "68443b",
+        "light": "956648"
+      },
+      {
+        "name": "right eye",
+        "group": "eyes",
+        "shadow": "39292e",
+        "base": "433038",
+        "light": "4a3338"
+      },
+      {
+        "name": "left eye",
+        "group": "eyes",
+        "shadow": "39292e",
+        "base": "433038",
+        "light": "4a3338"
+      },
+      {
+        "name": "amethyst",
+        "group": "amethyst",
+        "shadow": "563758",
+        "base": "855387",
+        "light": "b578ac"
+      },
+      {
+        "name": "lilac",
+        "group": "amethyst",
+        "shadow": "744774",
+        "base": "a371a0",
+        "light": "d49ec1"
+      },
+      {
+        "name": "brass",
+        "group": "brass",
+        "shadow": "8c633d",
+        "base": "c89a56",
+        "light": "f4cc7c"
+      },
+      {
+        "name": "aqua glass",
+        "group": "aqua glass",
+        "shadow": "437385",
+        "base": "83c4cd",
+        "light": "c9edf0"
+      },
+      {
+        "name": "black iron",
+        "group": "black iron",
+        "shadow": "302f39",
+        "base": "484550",
+        "light": "67626a"
+      },
+      {
+        "name": "hemp",
+        "group": "hemp",
+        "shadow": "856144",
+        "base": "bc9564",
+        "light": "e5c191"
+      },
+      {
+        "name": "tool steel",
+        "group": "tool steel",
+        "shadow": "5e5e6c",
+        "base": "92919b",
+        "light": "bdbac0"
+      },
+      {
+        "name": "ember",
+        "group": "ember",
+        "shadow": "cc693c",
+        "base": "f6ac55",
+        "light": "ffe8a3"
+      }
+    ]
+  },
+  "rig": {
+    "parts": [
+      "head",
+      "chest",
+      "pelvis",
+      "thigh_R",
+      "shin_R",
+      "boot_R",
+      "upper_R",
+      "fore_R",
+      "hand_R",
+      "thigh_L",
+      "shin_L",
+      "boot_L",
+      "upper_L",
+      "fore_L",
+      "hand_L",
+      "bomb"
+    ],
+    "rest": {
+      "pelvis": [0, 0, 13.8],
+      "chest": [0, 0, 18.3],
+      "neck": [0, 0.1, 22.5],
+      "head": [0, 0.3, 25.5],
+      "shoulder_R": [-3.8, -0.18, 21.62],
+      "elbow_R": [-6.58, -0.95, 17.48],
+      "hand_R": [-8.49, 3.45, 15.72],
+      "hip_R": [-1.85, 0, 13.35],
+      "knee_R": [-2.13, 1.1, 7.9],
+      "ankle_R": [-2.23, 0.32, 1.9],
+      "toe_R": [-2.23, 2.07, 0],
+      "shoulder_L": [3.8, -0.18, 21.62],
+      "elbow_L": [5.06, -0.56, 17.62],
+      "hand_L": [5.47, 1.75, 13.55],
+      "hip_L": [1.85, 0, 13.35],
+      "knee_L": [2.13, 1.1, 7.9],
+      "ankle_L": [2.23, -0.32, 1.9],
+      "toe_L": [2.23, 1.43, 0],
+      "bomb_center": [-10.2, 4.04, 17.03]
+    },
+    "attachments": {
+      "bomb": {
+        "hand": "hand_R",
+        "marker": "bomb_center"
+      }
+    }
+  },
+  "view": {
+    "directions": {
+      "S": 0,
+      "SW": -45,
+      "W": -90,
+      "NW": -135,
+      "N": -180,
+      "NE": -225,
+      "E": -270,
+      "SE": -315
+    },
+    "camera": {
+      "pitch_deg": 24,
+      "pixels_per_unit": 1.5,
+      "base_pivot": [32, 57]
+    },
+    "neutral_cell": 64,
+    "render_cell": 64,
+    "neutral_rays": [46, -32, -0.18],
+    "posed_rays": [46, -32, -0.18],
+    "outline_rgb": [37, 29, 41]
+  },
+  "posed_volume": {
+    "origin_xyz": [-24, -16, -3],
+    "limit_xyz": [24, 18, 43],
+    "voxel_size": 0.5
+  },
+  "walk": {
+    "clip": "../../motions/walk.json",
+    "stance_note": "Advance the root by suggested_forward_per_frame_model_units each frame.",
+    "cell": 64,
+    "fps": 9,
+    "tuning": {
+      "hip_yaw_scale": 0.24,
+      "head_lateral_scale": 0.25,
+      "head_forward_offset": 0.12,
+      "head_bob_scale": 0.3,
+      "stance_start_y": 2.736,
+      "knee_pole": [1.12, 8, -0.15],
+      "arm_swing_scale": {
+        "R": -0.6,
+        "L": 1.12
+      },
+      "hand_outward": {"R": 0.85, "L": 0.12},
+      "hand_lift_scale": 0.18,
+      "hand_lift": 0.21,
+      "wrist_pitch_scale": {
+        "R": 1.3,
+        "L": 1.3
+      },
+      "wrist_pitch": {"R": -16, "L": 0},
+      "wrist_yaw_scale": 0.16,
+      "elbow_pole": [4, -2.7, -4.5],
+      "stride_scale": 0.96,
+      "swing_lift_scale": 1.08,
+      "root_bob_scale": 2.5,
+      "root_level_offset": -0.18,
+      "root_sway_scale": 0.7,
+      "twist_scale": 0.7,
+      "torso_lean": 2.15
+    },
+    "head": {
+      "follow": [1, 1, 1],
+      "snap": 1.5,
+      "bob": 0.42
+    },
+    "secondary": [
+      {
+        "name": "bandanna tails",
+        "kind": "pendulum",
+        "part": "head",
+        "materials": [
+          "amethyst",
+          "lilac"
+        ],
+        "box": {
+          "y": [-8, -2.3],
+          "x": [2.4, 8]
+        },
+        "pivot": [2.54, -2.36, 27],
+        "tip": [5.62, -4.89, 23.64],
+        "lag_frames": 1,
+        "follow": [1.3, 0.9, 1.4],
+        "max_deg": 13
+      },
+      {
+        "name": "sash end",
+        "kind": "skirt",
+        "part": "pelvis",
+        "materials": [
+          "amethyst",
+          "lilac"
+        ],
+        "box": {
+          "z": [0, 13.4]
+        },
+        "top_z": 14.5,
+        "hem_z": 8.4,
+        "follow": 0.56,
+        "drive": "thigh",
+        "side_width": 1.3
+      },
+      {
+        "name": "rope loops",
+        "kind": "pendulum",
+        "part": "pelvis",
+        "materials": [
+          "hemp"
+        ],
+        "pivot": [1.7, -2, 14.7],
+        "tip": [1.7, -2, 9.8],
+        "lag_frames": 0.8,
+        "follow": [0.45, 0.45, 0.55],
+        "max_deg": 5
+      }
+    ]
+  },
+  "breathe": {
+    "secondary": [
+      {
+        "name": "bandanna tips",
+        "kind": "pendulum",
+        "part": "head",
+        "materials": ["amethyst", "lilac"],
+        "box": {"y": [-8, -2.3], "x": [2.4, 8]},
+        "pivot": [2.54, -2.36, 27],
+        "tip": [5.62, -4.89, 23.64],
+        "lag_frames": 1,
+        "follow": [0.8, 1, 1.3],
+        "max_deg": 6
+      },
+      {
+        "name": "sash tip",
+        "kind": "pendulum",
+        "part": "pelvis",
+        "driver": "chest",
+        "materials": ["amethyst", "lilac"],
+        "box": {"z": [0, 13.4]},
+        "pivot": [2.3, 2.26, 14.5],
+        "tip": [3.02, 2.47, 8.46],
+        "lag_frames": 1,
+        "follow": [1, 1.4, 1],
+        "max_deg": 4
+      }
+    ],
+    "clip": "../../motions/breathe.json",
+    "cell": 64,
+    "lift_scale": 1.04,
+    "lean_scale": 0.8
+  },
+  "attack": {
+    "posed_volume": {
+      "origin_xyz": [-20, -18, -4],
+      "limit_xyz": [20, 34, 50],
+      "voxel_size": 0.5
+    },
+    "clip": "bomb-throw.json",
+    "cell": 104,
+    "follow_cloth": true,
+    "tuning": {
+      "hip_yaw_scale": 0.52,
+      "head_snap": 0.5,
+      "head_follow": [0, 0.55, 1],
+      "head_yaw_scale": 0,
+      "head_lean_scale": 0,
+      "step_side": "L",
+      "knee_pole": [1.2, 8, -0.2],
+      "main_hand_side": "R",
+      "weapon_axis": [-1.71, 0.59, 1.31],
+      "support_yaw_offset": 0,
+      "support_hand_lift": 0,
+      "support_wrist_yaw_scale": 0.22,
+      "support_wrist_pitch": 0,
+      "support_elbow_pole": [4, -3, -2]
+    }
+  },
+  "measurements": {
+    "lowest_z": {
+      "belt_iron": [14]
+    },
+    "visibility": {
+      "bomb": {
+        "part": "bomb",
+        "materials": [14]
+      },
+      "band": {
+        "part": "head",
+        "materials": [10, 11]
+      },
+      "glass": {
+        "part": "head",
+        "materials": [13]
+      },
+      "reserves": {
+        "part": "pelvis",
+        "materials": [14]
+      },
+      "sash": {
+        "part": "pelvis",
+        "materials": [10, 11]
+      },
+      "right eye": {
+        "part": "head",
+        "materials": [8]
+      },
+      "left eye": {
+        "part": "head",
+        "materials": [9]
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "model_builder": "characters.tobi.build_model:build",
+  "provenance": {
+    "palette": "palette_provenance.json",
+    "samples": "reference_palette.json"
+  },
+  "motions": {
+    "attack": {
+      "clip": "bomb-throw.json"
+    },
+    "walk": {
+      "clip": "../../motions/walk.json"
+    },
+    "breathe": {
+      "clip": "../../motions/breathe.json"
+    }
+  },
+  "items": {
+    "main": {
+      "part": "bomb",
+      "hand": "hand_R",
+      "marker": "bomb_center"
+    }
+  },
+  "cells": [64],
+  "continuous": [
+    {
+      "part": "bomb",
+      "through": ["hand_R"]
+    }
+  ],
+  "visibility": [
+    {
+      "label": "band",
+      "part": "head",
+      "materials": ["amethyst", "lilac"],
+      "directions": "all",
+      "min_px": 14
+    },
+    {
+      "label": "glass",
+      "part": "head",
+      "materials": ["aqua glass"],
+      "directions": ["S", "SW", "SE"],
+      "min_px": 6
+    },
+    {
+      "label": "bomb",
+      "part": "bomb",
+      "materials": ["black iron"],
+      "directions": "all",
+      "min_px": 3
+    },
+    {
+      "label": "reserves",
+      "part": "pelvis",
+      "materials": ["black iron"],
+      "directions": ["S", "SW", "SE"],
+      "min_px": 12
+    },
+    {
+      "label": "sash",
+      "part": "pelvis",
+      "materials": ["amethyst", "lilac"],
+      "directions": ["S", "SW", "SE"],
+      "min_px": 18
+    }
+  ],
+  "walk": {
+    "arm_swing": "contralateral",
+    "head": {
+      "features": ["right eye", "left eye"]
+    },
+    "lowest_z_at_least": {
+      "belt_iron": 8
+    },
+    "visibility_min_px": {
+      "band": 16,
+      "bomb": 3
+    },
+    "max_center_drift_px": 3
+  },
+  "loop_visibility": [
+    {
+      "feature": "right eye",
+      "rows": ["S"],
+      "min_px": 2
+    },
+    {
+      "feature": "left eye",
+      "rows": ["S"],
+      "min_px": 2
+    },
+    {
+      "feature": "glass",
+      "rows": ["S", "SW", "SE"],
+      "min_px": 5
+    },
+    {
+      "feature": "reserves",
+      "rows": ["S", "SE"],
+      "min_px": 12
+    }
+  ],
+  "attack": {
+    "feature": "bomb",
+    "phase": "release",
+    "minimum_visible_px": 20,
+    "planted_feet": true,
+    "visibility": [
+      {
+        "feature": "bomb",
+        "phases": ["raise", "cocked", "drive"],
+        "min_px": 12
+      }
+    ],
+    "release_clearance_px": {
+      "bomb": 4
+    }
+  },
+  "published": "../../docs/assets/tobi"
+}

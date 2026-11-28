@@ -150,6 +150,34 @@ def add_glint(rgba, visible):
                 rgba[v, u] = (*light, 255)
 
 
+def release_attachments(clip, posed, rig, directions):
+    """Keep the release socket on the wrist; independently pose the same item for the preview."""
+    releases = [e for e in clip.get("events", []) if "released_part" in e]
+    if not releases:
+        return
+    points = [joints for joints, _ in posed]
+    occupied = set()
+    for event in attack_events({**clip, "events": releases}, points, directions):
+        part, start, end = event["released_part"], event["frame"], event["rearm_frame"]
+        if part not in rig.attachments or rig.attachments[part]["marker"] != event["marker"]:
+            raise ValueError("released_part needs its own attachment marker")
+        if type(end) is not int or not 0 < start < end < len(posed):
+            raise ValueError("release and rearm must be ordered between the two ready poses")
+        distance = event.get("preview_distance", 0)
+        if not np.isfinite(distance) or distance < 0:
+            raise ValueError("preview_distance must be finite and nonnegative")
+        for i in range(start, end):
+            transforms = posed[i][1]
+            if not clip["keys"][i] or (part, i) in occupied:
+                raise ValueError("release overlaps a neutral pose or another release of this part")
+            occupied.add((part, i))
+            if i == start and distance:
+                rotation, shift = transforms[part]
+                transforms[part] = rotation, shift + distance * np.asarray(event["direction_model_xyz"])
+            else:
+                transforms[part] = None
+
+
 def render_motion(character, renderer, mode, poses, neutral):
     view = character.config["view"]
     directions = view["directions"]
@@ -252,6 +280,8 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
         posed = [rig.pose(mode, index) for index in range(count)]
         for points, transforms in posed:
             check_attachment(rig, points, transforms)
+        if mode == "attack":
+            release_attachments(clips[mode], posed, rig, view["directions"])
         bow = character.config["attack"].get("bow") if mode == "attack" else None
         body = unstrung(posed_character, bow) if bow else posed_character
         if mode == "attack" and character.config["attack"].get("follow_cloth"):
@@ -261,6 +291,9 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
             volumes_of_mode = cloth.pose_volumes(body, [t for _, t in posed])
         elif mode == "walk" and secondary:
             volumes_of_mode = secondary.pose_volumes(character, [t for _, t in posed])
+        elif mode == "breathe" and character.config[mode].get("secondary"):
+            cloth = Secondary(body, clips[mode], rig.rest, mode=mode)
+            volumes_of_mode = cloth.pose_volumes(body, [t for _, t in posed])
         else:
             volumes_of_mode = [pose_volume(body, transforms) for _, transforms in posed]
         if bow:
@@ -278,10 +311,10 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
             joints[mode].append({name: point.tolist() for name, point in points.items()})
             grid = posed_character.posed_grid
             z = np.arange(volume.shape[0]) * grid.spacing[2] + grid.origin[2]
-            ground[key] = {
-                label: float(z[np.isin(volume, materials).any(axis=(1, 2))].min())
-                for label, materials in lowest_z.items()
-            }
+            ground[key] = {}
+            for label, materials in lowest_z.items():
+                occupied_z = z[np.isin(volume, materials).any(axis=(1, 2))]
+                ground[key][label] = float(occupied_z.min()) if occupied_z.size else None
 
     neutral_sheet, neutral_frames = render_neutral(character, renderer)
     metadata = {
@@ -372,7 +405,10 @@ def attack_events(clip, joints, directions):
             angle = np.deg2rad(yaw)
             x, y, z = direction
             by_row[row] = [x*np.cos(angle) + y*np.sin(angle), -x*np.sin(angle) + y*np.cos(angle), z]
-        events.append({**event, "time_ms": sum(clip["durations_ms"][:frame]),
+        fields = dict(event)
+        if "released_part" in event:
+            fields["baked_projectile_frames"] = int(event.get("preview_distance", 0) > 0)
+        events.append({**fields, "time_ms": sum(clip["durations_ms"][:frame]),
                        "position_model_xyz": position,
                        "direction_model_xyz": direction.tolist(), "direction_by_row": by_row})
     return events

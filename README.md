@@ -4,13 +4,16 @@
 
 ## 冒険者の一行
 
-ガルドの重打撃、リコの弓射撃、セナの氷魔法を、同じ床面で8方向から比較できます。単発再生は攻撃終了後に待機へ戻ります。待機4コマ・歩行6コマの共通セルは64×64、足元アンカーは (32, 57)。攻撃は人物ごとのセル・アンカー・コマ時間を使います。[3人のブラウザプレビュー](docs/party.html) · [生成手順と攻撃の検証記録](research/adventurers/ATTACKS.md)
+ガルドの重打撃、リコの弓射撃、セナの氷魔法、発破師トビの投擲を、同じ石畳で8方向から比較できます。単発再生は攻撃終了後に待機へ戻ります。待機4コマ・歩行6コマの共通セルは64×64、足元アンカーは (32, 57)。攻撃は人物ごとのセル・アンカー・コマ時間を使います。[4人の隊列・個別プレビュー](docs/party.html) · [生成手順と攻撃の検証記録](research/adventurers/ATTACKS.md)
 
 | キャラクター | 待機 | 歩行 | 攻撃 | ゲーム用シートとメタデータ |
 | --- | --- | --- | --- | --- |
 | ガルド | [GIF](docs/assets/gard/breathe.gif) | [GIF](docs/assets/gard/walk.gif) | [重打撃](docs/assets/gard/attack.gif) | [gard](docs/assets/gard/) |
 | リコ | [GIF](docs/assets/rico/breathe.gif) | [GIF](docs/assets/rico/walk.gif) | [射撃](docs/assets/rico/attack.gif) | [rico](docs/assets/rico/) |
 | セナ | [GIF](docs/assets/sena/breathe.gif) | [GIF](docs/assets/sena/walk.gif) | [氷魔法](docs/assets/sena/attack.gif) | [sena](docs/assets/sena/) |
+| トビ | [GIF](docs/assets/tobi/breathe.gif) | [GIF](docs/assets/tobi/walk.gif) | [発破玉の投擲](docs/assets/tobi/attack.gif) | [tobi](docs/assets/tobi/) |
+
+トビは右手の発破玉を6コマ目で放ち、腰袋から次の玉を取り出します。保持・離手・再装備を同じ立体部位で表現しています。[トビの造形と投擲の検証](research/adventurers/tobi/README.md)
 
 [待機・歩行の制作記録と足元の合わせ方](research/adventurers/README.md)
 

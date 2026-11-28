@@ -1,0 +1,109 @@
+{
+  "source_sha256": "b5e99f190e20c3cf634c199b2b1df6cdb72438ce70b142351ad517d5bb73ea5c",
+  "percentile_bands": {
+    "shadow": [
+      10,
+      30
+    ],
+    "base": [
+      45,
+      70
+    ],
+    "light": [
+      80,
+      95
+    ]
+  },
+  "materials": {
+    "hair": {
+      "shadow": "5d4544",
+      "base": "7f5d59",
+      "light": "ad817e",
+      "pixels": 419
+    },
+    "band": {
+      "shadow": "694c61",
+      "base": "855971",
+      "light": "9f6d7b",
+      "pixels": 612
+    },
+    "brass": {
+      "shadow": "886360",
+      "base": "b6927f",
+      "light": "edcb97",
+      "pixels": 127
+    },
+    "lens": {
+      "shadow": "667080",
+      "base": "828c9a",
+      "light": "c4c8c6",
+      "pixels": 93
+    },
+    "linen": {
+      "shadow": "cfab99",
+      "base": "f0c8b2",
+      "light": "fad9c2",
+      "pixels": 836
+    },
+    "leather": {
+      "shadow": "614841",
+      "base": "99766a",
+      "light": "e2b598",
+      "pixels": 432
+    },
+    "skin": {
+      "shadow": "d19071",
+      "base": "f8bc97",
+      "light": "fdc59e",
+      "pixels": 539
+    },
+    "iron": {
+      "shadow": "594a48",
+      "base": "7e635b",
+      "light": "cb9b78",
+      "pixels": 622
+    },
+    "hemp": {
+      "shadow": "7e6150",
+      "base": "c29475",
+      "light": "e0b08e",
+      "pixels": 319
+    },
+    "pants": {
+      "shadow": "5a4544",
+      "base": "745954",
+      "light": "a07d6f",
+      "pixels": 480
+    },
+    "steel": {
+      "shadow": "7e6862",
+      "base": "8f756d",
+      "light": "987e76",
+      "pixels": 230
+    }
+  },
+  "family_area_share": {
+    "hair": 0.0511,
+    "band": 0.0489,
+    "brass": 0.082,
+    "lens": 0.038,
+    "linen": 0.0756,
+    "leather": 0.1202,
+    "skin": 0.0402,
+    "iron": 0.0627,
+    "hemp": 0.0827,
+    "pants": 0.3644,
+    "steel": 0.0342
+  },
+  "figure_pixels": 225757,
+  "height_fraction_above_sole": {
+    "sole": 0.0,
+    "hair_top": 1.0,
+    "skull_top": 0.9834,
+    "chin": 0.8583,
+    "shoulder": 0.8239,
+    "waist": 0.629,
+    "knee": 0.2901
+  },
+  "heads_tall": 7.86
+}

@@ -228,7 +228,7 @@ h2 {
 
 .roster {
   display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
   gap: 12px;
 }
 
@@ -250,6 +250,11 @@ h2 {
 .roster article:nth-child(3) {
   --ink: #5a668a;
   --wash: #e1e2eb;
+}
+
+.roster article:nth-child(4) {
+  --ink: #80547e;
+  --wash: #ece0eb;
 }
 
 .roster button {
@@ -337,6 +342,7 @@ button:hover {
   }
 
   .roster {
+    grid-template-columns: repeat(2,minmax(0,1fr));
     gap: 7px;
   }
 

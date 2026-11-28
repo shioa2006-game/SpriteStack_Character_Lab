@@ -22,6 +22,7 @@ const characters = {
   gard: {name: "GARD", subtitle: "Hammer and Greatshield", assets: "assets/gard", extraAnimations: ["breathe", "walk", "attack"]},
   rico: {name: "RICO", subtitle: "Hooded Scout", assets: "assets/rico", extraAnimations: ["breathe", "walk", "attack"]},
   sena: {name: "SENA", subtitle: "Frost Caster", assets: "assets/sena", extraAnimations: ["breathe", "walk", "attack"]},
+  tobi: {name: "TOBI", subtitle: "The Blaster", assets: "assets/tobi", extraAnimations: ["breathe", "walk", "attack"]},
   maren: {
     name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
     attackComparison: "slash-comparison.gif",
