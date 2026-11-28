@@ -4,13 +4,15 @@
 
 ## 冒険者の一行
 
-ガルド、リコ、セナを同じ床面に並べ、8方向の待機4コマと歩行6コマを再生できます。共通セルは64×64、足元アンカーは (32, 57)。歩行は重戦士が7 fps、斥候が11 fps、術師が8 fpsです。[3人のブラウザプレビュー](docs/party.html) · [ゲームへの組み込み・再生成・検証記録](research/adventurers/README.md)
+ガルドの重打撃、リコの弓射撃、セナの氷魔法を、同じ床面で8方向から比較できます。単発再生は攻撃終了後に待機へ戻ります。待機4コマ・歩行6コマの共通セルは64×64、足元アンカーは (32, 57)。攻撃は人物ごとのセル・アンカー・コマ時間を使います。[3人のブラウザプレビュー](docs/party.html) · [生成手順と攻撃の検証記録](research/adventurers/ATTACKS.md)
 
-| キャラクター | 待機 | 歩行 | ゲーム用シートとメタデータ |
-| --- | --- | --- | --- |
-| ガルド | [GIF](docs/assets/gard/breathe.gif) | [GIF](docs/assets/gard/walk.gif) | [gard](docs/assets/gard/) |
-| リコ | [GIF](docs/assets/rico/breathe.gif) | [GIF](docs/assets/rico/walk.gif) | [rico](docs/assets/rico/) |
-| セナ | [GIF](docs/assets/sena/breathe.gif) | [GIF](docs/assets/sena/walk.gif) | [sena](docs/assets/sena/) |
+| キャラクター | 待機 | 歩行 | 攻撃 | ゲーム用シートとメタデータ |
+| --- | --- | --- | --- | --- |
+| ガルド | [GIF](docs/assets/gard/breathe.gif) | [GIF](docs/assets/gard/walk.gif) | [重打撃](docs/assets/gard/attack.gif) | [gard](docs/assets/gard/) |
+| リコ | [GIF](docs/assets/rico/breathe.gif) | [GIF](docs/assets/rico/walk.gif) | [射撃](docs/assets/rico/attack.gif) | [rico](docs/assets/rico/) |
+| セナ | [GIF](docs/assets/sena/breathe.gif) | [GIF](docs/assets/sena/walk.gif) | [氷魔法](docs/assets/sena/attack.gif) | [sena](docs/assets/sena/) |
+
+[待機・歩行の制作記録と足元の合わせ方](research/adventurers/README.md)
 
 | 正式サンプル | 造形と動きの見どころ | 素材 |
 | --- | --- | --- |

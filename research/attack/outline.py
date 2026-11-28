@@ -13,13 +13,15 @@ from spritestack.render import Renderer
 
 
 def measure(manifest, output):
-    character = load_character(manifest)
+    character = load_character(manifest).for_motion("attack")
     renderer = Renderer(character)
     view = character.config["view"]
     count = len(character.motions["attack"]["keys"])
     cell = character.config["attack"]["cell"]
     names = [m["name"] for m in character.config["model"]["palette"]]
-    eye_id = names.index("eyes") + 1
+    eye_names = json.loads(manifest.with_name("quality.json").read_bytes()).get("walk", {}).get(
+        "head", {}).get("features", ["eyes"]) if manifest.with_name("quality.json").exists() else ["eyes"]
+    eye_ids = [names.index(name) + 1 for name in eye_names if name in names]
     blade = Blade(manifest.parent.name, mode="attack") if manifest.parent.name in NAMES else None
     sheet = np.asarray(Image.open(output / "attack.png"))
     owners = np.asarray(Image.open(output / "attack_part_ids.png"))
@@ -32,7 +34,7 @@ def measure(manifest, output):
             head = np.where(ids == character.parts["head"], volumes[key], 0)
             for row, (direction, yaw) in enumerate(view["directions"].items()):
                 visible = renderer.render(head, ids, character.posed_grid, yaw, cell, view["posed_rays"])
-                eyes[direction].append(int((visible == eye_id).sum()))
+                eyes[direction].append(int(np.isin(visible, eye_ids).sum()))
                 if blade and character.motions["attack"]["keys"][i]:
                     tile = np.s_[row * cell:(row + 1) * cell, i * cell:(i + 1) * cell]
                     metrics[f"{direction}_{i + 1}"] = blade.frame(i, yaw, sheet[tile][..., :3], owners[tile])

@@ -12,10 +12,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--character", required=True, type=Path, help="path to character.json")
     parser.add_argument("--out", required=True, type=Path, help="new output directory")
-    parser.add_argument("--modes", choices=("all", "idle", "walk"), default="all",
+    parser.add_argument("--modes", choices=("all", "idle", "walk", "attack"), default="all",
                         help="all: neutral and every configured animation (default). idle: only the idle eight "
                              "directions from the rest model, without walk or attack poses. "
-                             "walk: idle and walk, without attack")
+                             "walk or attack: neutral and that motion only")
     parser.add_argument("--cells", type=int, nargs="+", metavar="PX",
                         help="idle cell sizes for --modes idle (default: view.neutral_cell and, if "
                              "character.json has one, comparison_view.neutral_cell). A size other than "
@@ -40,8 +40,8 @@ def main():
             staging.mkdir()
             if args.modes == "idle":
                 bake_idle(character, staging, args.cells)
-            elif args.modes == "walk":
-                bake(character, staging, motions=("walk",))
+            elif args.modes != "all":
+                bake(character, staging, motions=(args.modes,))
             else:
                 bake(character, staging)
             staging.rename(out)
@@ -49,8 +49,8 @@ def main():
         parser.exit(1, f"Sprite bake failed: {error}\n")
     if args.modes == "idle":
         print(f"Baked idle eight directions to {args.out}")
-    elif args.modes == "walk":
-        print(f"Baked idle and walk eight directions to {args.out}")
+    elif args.modes != "all":
+        print(f"Baked idle and {args.modes} eight directions to {args.out}")
     else:
         print(f"Baked eight directions to {args.out}")
 

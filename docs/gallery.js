@@ -19,6 +19,9 @@ const motionButtons = [...document.querySelectorAll("[data-motion]")];
 const directionButtons = [...document.querySelectorAll("[data-direction]")];
 
 const characters = {
+  gard: {name: "GARD", subtitle: "Hammer and Greatshield", assets: "assets/gard", extraAnimations: ["breathe", "walk", "attack"]},
+  rico: {name: "RICO", subtitle: "Hooded Scout", assets: "assets/rico", extraAnimations: ["breathe", "walk", "attack"]},
+  sena: {name: "SENA", subtitle: "Frost Caster", assets: "assets/sena", extraAnimations: ["breathe", "walk", "attack"]},
   maren: {
     name: "MAREN", subtitle: "Blue-Haired Swordswoman", assets: "assets/maren",
     attackComparison: "slash-comparison.gif",
@@ -161,6 +164,10 @@ function animate(now) {
   }
   if (clip.layout.loop || clip.elapsed < clip.duration) {
     animation = requestAnimationFrame(animate);
+  } else if (clip.returnToIdle) {
+    motion = "idle";
+    for (const option of motionButtons) option.setAttribute("aria-pressed", option.dataset.motion === motion);
+    showSelection();
   }
 }
 
@@ -205,14 +212,16 @@ async function showSelection() {
     const data = await loadCharacterData(chosen);
     if (ticket !== selection) return;
     selectAvailableMotion(data);
-    const name = motion;
+    const name = motion === "idle" && data.animations.breathe ? "breathe" : motion;
+    const idleButton = motionButtons.find(button => button.dataset.motion === "idle");
+    idleButton.textContent = data.animations.breathe ? "待機" : "静止";
     const facing = direction;
     const idleVariant = name === "idle" && chosen.idleSheets ? chosen.idleSheets[resolution.value] : null;
     const sheetName = idleVariant ?? name;
     speed.disabled = name === "idle";
     replay.hidden = name !== "attack";
     resolutionRow.hidden = !(name === "idle" && chosen.idleSheets);
-    const label = motionButtons.find(button => button.dataset.motion === name).textContent;
+    const label = motionButtons.find(button => button.dataset.motion === motion).textContent;
     const [image, variantLayout] = await Promise.all([
       loadSheet(chosen.assets + "/" + sheetName + ".png"),
       sheetName !== name ? loadMetadata(chosen.assets + "/" + sheetName + ".json") : null,
@@ -221,6 +230,7 @@ async function showSelection() {
     const layout = configure(data, variantLayout?.neutral)[name];
     active = {
       name, facing, layout, image, frame: 0, elapsed: 0, lastTick: performance.now(),
+      returnToIdle: name === "attack" && Boolean(data.animations.breathe),
       duration: layout.durations_ms?.reduce((total, ms) => total + ms, 0),
     };
     status.textContent = label + " · " + facing + (chosen.idleSheets && name === "idle" ? " · " + layout.cell.join("×") : "");

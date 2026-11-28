@@ -1,6 +1,6 @@
 """Load the assets referenced by a character manifest."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import json
 from pathlib import Path
 
@@ -19,6 +19,17 @@ class Grid:
     def size_xyz(self):
         return np.array(self.shape[::-1])
 
+    @classmethod
+    def from_bounds(cls, bounds):
+        origin = np.array(bounds["origin_xyz"], dtype=float)
+        spacing = np.full(3, bounds["voxel_size"], dtype=float)
+        if not np.all(spacing > 0):
+            raise ValueError("voxel size must be positive")
+        size = (np.array(bounds["limit_xyz"], dtype=float) - origin) / spacing
+        if not np.all(size > 0) or not np.allclose(size, np.rint(size)):
+            raise ValueError("posed bounds must be positive and grid-aligned")
+        return cls(origin, spacing, tuple(np.rint(size[::-1]).astype(int)))
+
 
 @dataclass(frozen=True)
 class Character:
@@ -31,6 +42,10 @@ class Character:
     source_grid: Grid
     posed_grid: Grid
     motions: dict
+
+    def for_motion(self, mode):
+        bounds = self.config.get("attack", {}).get("posed_volume") if mode == "attack" else None
+        return replace(self, posed_grid=Grid.from_bounds(bounds)) if bounds else self
 
 
 def read_json(path):
@@ -113,23 +128,20 @@ def load_character(path: Path):
 
     source_grid = Grid(np.array(source["origin_xyz"], dtype=float),
                        np.array(source["voxel_size_xyz"], dtype=float), model.shape)
-    target = config["posed_volume"]
-    origin = np.array(target["origin_xyz"], dtype=float)
-    spacing = np.full(3, target["voxel_size"], dtype=float)
-    size_xyz = (np.array(target["limit_xyz"], dtype=float) - origin) / spacing
-    if (not np.all(source_grid.spacing > 0) or not np.all(spacing > 0)
-            or not np.all(size_xyz > 0) or not np.allclose(size_xyz, np.rint(size_xyz))):
-        raise ValueError("voxel sizes must be positive and posed bounds grid-aligned")
-    posed_grid = Grid(origin, spacing, tuple(np.rint(size_xyz[::-1]).astype(int)))
+    if not np.all(source_grid.spacing > 0):
+        raise ValueError("source voxel sizes must be positive")
+    posed_grid = Grid.from_bounds(config["posed_volume"])
 
     view = config["view"]
     directions = view["directions"]
     if len(directions) != 8 or len(set(directions.values())) != 8:
         raise ValueError("view.directions must define eight distinct yaw angles")
     modes = ["walk", *(mode for mode in ("breathe", "attack") if mode in config)]
-    cells = [view["neutral_cell"], *(config[mode]["cell"] for mode in modes)]
+    cells = [view["neutral_cell"], *(config[mode]["cell"] for mode in modes if mode != "attack")]
     render_cell = view["render_cell"]
+    attack_cell = config.get("attack", {}).get("cell", render_cell)
     if (type(render_cell) is not int or
+            type(attack_cell) is not int or attack_cell < view["neutral_cell"] or (attack_cell-render_cell) % 2 or
             any(type(cell) is not int or not 0 < cell <= render_cell
                 or (render_cell - cell) % 2 for cell in cells)):
         raise ValueError("cells must be positive integers with even, nonnegative padding")

@@ -45,7 +45,27 @@ window.spriteStackLayouts[new URL(".", document.currentScript.src).href] = {
           5,
           0
         ]
-      }
+      },
+      "stopping_poses": [
+        {
+          "after_frame": 1,
+          "support": "L",
+          "root_delta_xyz": [
+            0.3599999999999999,
+            1.3459999999999999,
+            4.440892098500626e-16
+          ]
+        },
+        {
+          "after_frame": 4,
+          "support": "R",
+          "root_delta_xyz": [
+            -0.3599999999999999,
+            0.706,
+            4.440892098500626e-16
+          ]
+        }
+      ]
     },
     "breathe": {
       "rows": [
@@ -68,6 +88,50 @@ window.spriteStackLayouts[new URL(".", document.currentScript.src).href] = {
         57
       ],
       "fps": 3
+    },
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        84,
+        84
+      ],
+      "anchor": [
+        42,
+        67
+      ],
+      "fps": 10,
+      "durations_ms": [
+        60,
+        90,
+        150,
+        190,
+        50,
+        110,
+        80,
+        140,
+        90
+      ],
+      "phase_names": [
+        "guard",
+        "brace shield",
+        "draw back",
+        "high hold",
+        "downswing",
+        "impact",
+        "settle",
+        "lift clear",
+        "guard"
+      ]
     }
   }
 };

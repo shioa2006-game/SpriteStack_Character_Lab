@@ -14,7 +14,7 @@
 <body>
   <nav><a href="index.html"><i class="stack" aria-hidden="true"></i>SpriteStack <span>Character Lab</span></a></nav>
   <main>
-    <header><h1>冒険者の一行</h1><p>8方向の待機・歩行</p></header>
+    <header><h1>冒険者の一行</h1><p>8方向の待機・歩行・攻撃</p></header>
     <section class="viewer" aria-label="3人のアニメーションプレビュー">
       <div class="field">
         <canvas id="field" width="800" height="300" role="img" aria-label="共通の石畳に並ぶ冒険者"></canvas>
@@ -22,7 +22,7 @@
       </div>
       <div class="toolbar">
         <fieldset><legend>モーション</legend><div class="seg">
-          <button data-motion="breathe" aria-pressed="true">待機</button><button data-motion="walk" aria-pressed="false">歩行</button>
+          <button data-motion="breathe" aria-pressed="true">待機</button><button data-motion="walk" aria-pressed="false">歩行</button><button data-motion="attack" aria-pressed="false">攻撃</button>
         </div></fieldset>
         <fieldset class="direction"><legend>向き</legend><div class="seg" id="directions"></div></fieldset>
         <label>表示倍率<select id="zoom"><option value="1">1× 原寸</option><option value="2">2×</option><option value="3" selected>3×</option></select></label>
@@ -32,13 +32,18 @@
         <label><input type="checkbox" id="travel" disabled> 歩幅に合わせて床面を移動</label>
         <output id="frame" aria-label="表示コマ" aria-live="off"></output>
       </div>
+      <div class="transport attack-controls">
+        <button id="replay" type="button">攻撃を1回再生</button>
+        <label><input type="checkbox" id="repeat"> 攻撃を繰り返す</label>
+        <label>攻撃コマ <input id="scrub" type="range" min="1" max="9" value="1" step="1"></label>
+      </div>
     </section>
     <section aria-labelledby="party-label">
       <div class="roster-header"><h2 id="party-label">キャラクター</h2><button data-member="all" aria-pressed="true">3人を並べる</button></div>
       <div class="roster">
-        <article><button data-member="gard" aria-pressed="false"><canvas width="60" height="60" aria-hidden="true"></canvas><span><small>GARD</small><strong>ガルド</strong><em>老練な重戦士</em></span></button><div><a href="assets/gard/breathe.gif">待機 GIF</a><a href="assets/gard/walk.gif">歩行 GIF</a></div></article>
-        <article><button data-member="rico" aria-pressed="false"><canvas width="60" height="60" aria-hidden="true"></canvas><span><small>RICO</small><strong>リコ</strong><em>少年の斥候</em></span></button><div><a href="assets/rico/breathe.gif">待機 GIF</a><a href="assets/rico/walk.gif">歩行 GIF</a></div></article>
-        <article><button data-member="sena" aria-pressed="false"><canvas width="60" height="60" aria-hidden="true"></canvas><span><small>SENA</small><strong>セナ</strong><em>氷の術師</em></span></button><div><a href="assets/sena/breathe.gif">待機 GIF</a><a href="assets/sena/walk.gif">歩行 GIF</a></div></article>
+        <article><button data-member="gard" aria-pressed="false"><img src="assets/gard/breathe.png" width="60" height="60" alt=""><span><small>GARD</small><strong>ガルド</strong><em>老練な重戦士</em></span></button><div><a href="assets/gard/breathe.gif">待機 GIF</a><a href="assets/gard/walk.gif">歩行 GIF</a><a href="assets/gard/attack.gif">攻撃 GIF</a></div></article>
+        <article><button data-member="rico" aria-pressed="false"><img src="assets/rico/breathe.png" width="60" height="60" alt=""><span><small>RICO</small><strong>リコ</strong><em>少年の斥候</em></span></button><div><a href="assets/rico/breathe.gif">待機 GIF</a><a href="assets/rico/walk.gif">歩行 GIF</a><a href="assets/rico/attack.gif">攻撃 GIF</a></div></article>
+        <article><button data-member="sena" aria-pressed="false"><img src="assets/sena/breathe.png" width="60" height="60" alt=""><span><small>SENA</small><strong>セナ</strong><em>氷の術師</em></span></button><div><a href="assets/sena/breathe.gif">待機 GIF</a><a href="assets/sena/walk.gif">歩行 GIF</a><a href="assets/sena/attack.gif">攻撃 GIF</a></div></article>
       </div>
     </section>
     <noscript>アニメーション操作には JavaScript を有効にしてください。各キャラクターのGIFも再生できます。</noscript>

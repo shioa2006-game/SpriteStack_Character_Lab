@@ -9,6 +9,8 @@ import json
 import numpy as np
 from PIL import Image
 
+from .bow import pose_bow, unstrung
+from .effects import crystal_burst
 from .render import Renderer, fine_parts, normals, reslice
 from .rig import Biped, transform
 from .secondary import Secondary
@@ -151,8 +153,8 @@ def add_glint(rgba, visible):
 def render_motion(character, renderer, mode, poses, neutral):
     view = character.config["view"]
     directions = view["directions"]
-    render_cell = view["render_cell"]
     cell = character.config[mode]["cell"]
+    render_cell = max(view["render_cell"], cell)
     neutral_pad = (render_cell - view["neutral_cell"]) // 2
     crop = (render_cell - cell) // 2
     end = crop + cell
@@ -181,8 +183,11 @@ def render_motion(character, renderer, mode, poses, neutral):
                 # Use visible emitter pixels so an occluded source produces no light.
                 materials = character.config[mode]["glow_materials"]
                 mask = np.isin(ids, materials)
+                if part := character.config[mode].get("glow_part"):
+                    mask &= part_ids == character.parts[part]
                 rgba = np.array(frame)
-                rgba[mask, :3] = np.rint((1 - glow) * rgba[mask, :3] + glow * 255).astype(np.uint8)
+                color = np.asarray(character.config[mode].get("glow_rgb", 255))
+                rgba[mask, :3] = np.rint((1 - glow) * rgba[mask, :3] + glow * color).astype(np.uint8)
                 if clip_key.get("glint", False):
                     add_glint(rgba, mask)
                 frame = Image.fromarray(rgba)
@@ -241,26 +246,38 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
         secondary = Secondary(character, rig.walk_clip, rig.rest)
 
     for mode, count in counts.items():
+        posed_character = character.for_motion(mode)
         pose_groups[mode] = []
         joints[mode] = []
         posed = [rig.pose(mode, index) for index in range(count)]
         for points, transforms in posed:
             check_attachment(rig, points, transforms)
+        bow = character.config["attack"].get("bow") if mode == "attack" else None
+        body = unstrung(posed_character, bow) if bow else posed_character
         if mode == "attack" and character.config["attack"].get("follow_cloth"):
             if pose_volume is not reslice:
                 raise ValueError("attack.follow_cloth requires the rigid pose volume")
-            cloth = Secondary(character, clips[mode], rig.rest, mode=mode)
-            volumes_of_mode = cloth.pose_volumes(character, [t for _, t in posed])
+            cloth = Secondary(body, clips[mode], rig.rest, mode=mode)
+            volumes_of_mode = cloth.pose_volumes(body, [t for _, t in posed])
         elif mode == "walk" and secondary:
             volumes_of_mode = secondary.pose_volumes(character, [t for _, t in posed])
         else:
-            volumes_of_mode = [pose_volume(character, transforms) for _, transforms in posed]
+            volumes_of_mode = [pose_volume(body, transforms) for _, transforms in posed]
+        if bow:
+            pose_bow(posed_character, posed, volumes_of_mode)
         for index, ((points, transforms), (volume, part_ids)) in enumerate(zip(posed, volumes_of_mode)):
+            if mode == "attack" and clips[mode]["keys"][index].get("burst"):
+                owner = max(character.parts.values()) + 1 + int(bool(bow))
+                if owner > 255:
+                    raise ValueError("the burst needs a free part ID")
+                crystal_burst(posed_character, character.config[mode]["burst"], clips[mode]["keys"][index],
+                              points, volume, part_ids, owner)
             pose_groups[mode].append((volume, part_ids))
             key = f"{mode}_{index:02}"
             volumes[key], parts[key] = volume, part_ids
             joints[mode].append({name: point.tolist() for name, point in points.items()})
-            z = np.arange(volume.shape[0]) * character.posed_grid.spacing[2] + character.posed_grid.origin[2]
+            grid = posed_character.posed_grid
+            z = np.arange(volume.shape[0]) * grid.spacing[2] + grid.origin[2]
             ground[key] = {
                 label: float(z[np.isin(volume, materials).any(axis=(1, 2))].min())
                 for label, materials in lowest_z.items()
@@ -281,7 +298,7 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
     motion_visibility = {}
     for mode, clip in clips.items():
         sheet, part_atlas, motion_visibility[mode] = render_motion(
-            character, renderer, mode, pose_groups[mode], neutral_frames)
+            character.for_motion(mode), renderer, mode, pose_groups[mode], neutral_frames)
         cell = character.config[mode]["cell"]
         animation = {
             "rows": directions,
@@ -302,6 +319,15 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
         else:
             animation["durations_ms"] = clip["durations_ms"]
             animation["phase_names"] = clip["poses"]
+            if clip.get("events"):
+                animation["events"] = attack_events(clip, joints[mode], view["directions"])
+            if "posed_volume" in character.config[mode]:
+                animation["posed_volume"] = character.config[mode]["posed_volume"]
+            if character.config[mode].get("bow"):
+                animation["transient_parts"] = {"arrow": max(character.parts.values()) + 1}
+            if character.config[mode].get("burst"):
+                extras = animation.setdefault("transient_parts", {})
+                extras["burst"] = max(character.parts.values()) + 1 + len(extras)
         metadata["animations"][mode] = animation
         sheet.save(out / f"{mode}.png")
         Image.fromarray(part_atlas).save(out / f"{mode}_part_ids.png")
@@ -319,3 +345,34 @@ def bake(character, out, *, pose_volume=reslice, motions=None):
     if secondary:
         measurements["walk_secondary_deg"] = secondary.angles
     write_json(out / "measurements.json", measurements)
+
+
+def attack_events(clip, joints, directions):
+    events = []
+    for event in clip["events"]:
+        frame = event["frame"]
+        if type(frame) is not int or not 0 <= frame < len(joints):
+            raise ValueError("attack event frame outside clip")
+        pose = joints[frame]
+        position = pose[event["marker"]]
+        if event.get("direction_source") == "marker_travel":
+            if frame == 0:
+                raise ValueError("marker travel needs a preceding frame")
+            direction = np.subtract(position, joints[frame-1][event["marker"]])
+        elif "arrow_tip" in pose:
+            direction = np.subtract(pose["arrow_tip"], pose["arrow_nock"])
+        else:
+            direction = np.asarray(clip["keys"][frame]["aim"], dtype=float)
+        length = np.linalg.norm(direction)
+        if length < 1e-8:
+            raise ValueError("attack event needs a nonzero direction")
+        direction = direction / length
+        by_row = {}
+        for row, yaw in directions.items():
+            angle = np.deg2rad(yaw)
+            x, y, z = direction
+            by_row[row] = [x*np.cos(angle) + y*np.sin(angle), -x*np.sin(angle) + y*np.cos(angle), z]
+        events.append({**event, "time_ms": sum(clip["durations_ms"][:frame]),
+                       "position_model_xyz": position,
+                       "direction_model_xyz": direction.tolist(), "direction_by_row": by_row})
+    return events

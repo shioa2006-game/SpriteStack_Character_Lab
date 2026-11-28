@@ -1,0 +1,43 @@
+{
+  "fps": 10,
+  "poses": [
+    "ready",
+    "invoke",
+    "gather",
+    "crystal focus",
+    "point",
+    "release",
+    "afterglow",
+    "lower staff",
+    "ready"
+  ],
+  "durations_ms": [
+    70,
+    120,
+    140,
+    180,
+    70,
+    90,
+    130,
+    120,
+    80
+  ],
+  "events": [
+    {
+      "name": "ice_release",
+      "frame": 5,
+      "marker": "crystal_tip"
+    }
+  ],
+  "keys": [
+    {},
+    {"root": [0.1, -0.1, -0.45], "yaw": 4, "lean": -2, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-7.2, 3.0, 16.4], "elbow_pole_R": [-5, -3, -1], "aim": [-0.16, 0.16, 0.98], "support_delta": [-0.1, 1, 1.9], "glow": 0.1},
+    {"root": [0.3, -0.4, -0.6], "yaw": 10, "lean": -4, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-8.2, 1.0, 18.0], "elbow_pole_R": [-5, -3, -1], "aim": [-0.24, 0.05, 0.97], "support_delta": [-1.2, 2.1, 3.5], "glow": 0.32},
+    {"root": [0.25, -0.5, -0.65], "yaw": 15, "lean": -6, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-8.0, -1.5, 20.1], "elbow_pole_R": [-5, -3, -1], "aim": [-0.27, -0.08, 0.96], "support_delta": [-1.9, 2.5, 5], "glow": 0.75, "glint": true},
+    {"root": [-0.15, 0.35, -0.7], "yaw": -3, "lean": 3, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-7.9, 3.2, 19.4], "elbow_pole_R": [-5, -3, -1], "aim": [-0.29, 0.56, 0.78], "support_delta": [-1.5, 2.7, 4], "glow": 0.58},
+    {"root": [-0.45, 0.75, -1.2], "yaw": -12, "lean": 9, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-7.7, 5.65, 18.1], "elbow_pole_R": [-5, -3, -1], "aim": [-0.24, 0.91, 0.32], "support_delta": [0.2, 2.8, 2.1], "burst": true, "glow": 0.98, "glint": true},
+    {"root": [-0.25, 0.48, -0.9], "yaw": -8, "lean": 5, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-7.5, 4.6, 18.0], "elbow_pole_R": [-5, -3, -1], "aim": [-0.23, 0.71, 0.66], "support_delta": [0.6, 1.8, 2.1], "glow": 0.37},
+    {"root": [0, 0.1, -0.45], "yaw": 1, "lean": 1, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_R": [-7.15, 2.8, 16.3], "elbow_pole_R": [-5, -3, -1], "aim": [-0.12, 0.25, 0.96], "support_delta": [0.2, 0.7, 1.0], "glow": 0.08},
+    {}
+  ]
+}

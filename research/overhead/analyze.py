@@ -19,11 +19,12 @@ def angle(a, b):
 def guard_key(rig):
     rest = rig.rest
     tuning = rig.config["attack"]["tuning"]
+    side = tuning["main_hand_side"]
     return {
         "root": [0, 0, 0], "yaw": 0, "lean": 0, "front_step": 0, "front_lift": 0, "wrist_roll": 0,
         "front_outward": 0,
-        "hand_R": rest["hand_R"],
-        "elbow_pole_R": rest["elbow_R"] - rest["shoulder_R"],
+        "hand_" + side: rest["hand_" + side],
+        "elbow_pole_" + side: rest["elbow_" + side] - rest["shoulder_" + side],
         "blade": unit(vec(tuning["weapon_axis"])),
         "shield_delta": [0, 0, -tuning["support_hand_lift"]],
     }

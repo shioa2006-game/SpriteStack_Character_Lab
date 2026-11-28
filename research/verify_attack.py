@@ -11,6 +11,8 @@ from PIL import Image, ImageDraw
 
 from research.overhead.analyze import guard_key
 from research.verify_character import face_contacts
+from research.verify_walk import frames_of
+from research.walk.compare import strip
 from spritestack.bake import check_attachment, require_margin
 from spritestack.character import load_character
 from spritestack.rig import Biped
@@ -39,15 +41,19 @@ def sample(character):
         yield i, key, joints, transforms
 
 
-def check_path(character, feature):
+def check_path(character, feature, path_materials=None):
     rig = Biped(character)
     tuning = character.config["attack"]["tuning"]
     # Check the working end against the other body parts before overlap ownership is resolved.
     visibility = character.config["measurements"]["visibility"]
     item = visibility[feature]
     main = item["part"]
+    side = tuning["main_hand_side"]
+    main_hand = "hand_" + side
+    support_hand = "hand_L" if side == "R" else "hand_R"
+    assert rig.attachments[main]["hand"] == main_hand
     grid = character.source_grid
-    coords = np.argwhere(np.isin(character.model, item["materials"]) &
+    coords = np.argwhere(np.isin(character.model, path_materials or item["materials"]) &
                          (character.part_ids == character.parts[main]))[:, ::-1]
     centers = grid.origin + (coords + .5) * grid.spacing
     for i, key, joints, transforms in sample(character):
@@ -59,14 +65,14 @@ def check_path(character, feature):
                 ankle += [outward, key["front_step"], key["front_lift"]]
             assert np.linalg.norm(joints["ankle_" + side] - ankle) < 1e-6, (i, side, "ankle")
         off = key.get("support_delta", key.get("shield_delta"))
-        left = rig.rest["hand_L"] + key["root"] + off + [
+        support = rig.rest[support_hand] + key["root"] + off + [
             0, key["yaw"] * tuning["support_yaw_offset"], tuning["support_hand_lift"]]
-        for name, target in (("hand_R", key["hand_R"]), ("hand_L", left)):
+        for name, target in ((main_hand, key[main_hand]), (support_hand, support)):
             assert np.linalg.norm(joints[name] - target) < 1e-6, (i, name, "unreachable")
         rotation, shift = transforms[main]
         world = centers @ rotation.T + shift
         for part, pid in character.parts.items():
-            if part in (main, "hand_R"):
+            if part in (main, main_hand):
                 continue
             rotation, shift = transforms[part]
             xyz = np.floor(((world - shift) @ rotation - grid.origin) / grid.spacing).astype(int)
@@ -93,6 +99,7 @@ def check_cloth(character, main):
 
 
 def verify(character, out, gif, rules):
+    character = character.for_motion("attack")
     clip = character.motions["attack"]
     layout = json.loads((out / "metadata.json").read_bytes())["animations"]["attack"]
     sheet = Image.open(out / "attack.png")
@@ -101,15 +108,31 @@ def verify(character, out, gif, rules):
     dirs = "S SW W NW N NE E SE".split()
     assert layout["rows"] == dirs and layout["columns"] == count and layout["cell"] == [cell, cell]
     assert layout["durations_ms"] == clip["durations_ms"] and not layout["loop"]
+    assert layout["phase_names"] == clip["poses"]
     assert sheet.size == (count * cell, 8 * cell) and sheet.mode == "RGBA"
     assert hashlib.sha256(sheet.tobytes()).hexdigest() == layout["rgba_sha256"]
     feature = rules["feature"]
-    check_path(character, feature)
+    check_path(character, feature, rules.get("path_materials"))
     if character.config["attack"].get("follow_cloth"):
         check_cloth(character, character.config["measurements"]["visibility"][feature]["part"])
     measurements = json.loads((out / "measurements.json").read_bytes())
     phase = clip["poses"].index(rules["phase"]) + 1
     seen = measurements["visibility_px_full_solo"]["attack"]
+    for check in rules.get("visibility", []):
+        for name in check["phases"]:
+            col = clip["poses"].index(name) + 1
+            for row in check.get("rows", dirs):
+                px = seen[f"{row}_{col}"][check["feature"]][0]
+                assert px >= check["min_px"], (name, row, check["feature"], px)
+    if rules.get("transient_visibility"):
+        with Image.open(out / "attack_part_ids.png") as atlas:
+            owners = np.asarray(atlas).reshape(len(dirs), cell, count, cell)
+        for check in rules["transient_visibility"]:
+            col = clip["poses"].index(check["phase"])
+            owner = layout["transient_parts"][check["part"]]
+            for row, direction in enumerate(dirs):
+                px = int(np.count_nonzero(owners[row, :, col, :] == owner))
+                assert px >= check["min_px"], (direction, col, check["part"], px)
     minimum = min(seen[f"{d}_{phase}"][feature][0] for d in dirs)
     assert minimum >= rules["minimum_visible_px"], (feature, minimum)
     print(f"{rules['phase']}: {feature} visible in at least {minimum} pixels in every direction")
@@ -119,12 +142,70 @@ def verify(character, out, gif, rules):
     assert layout["anchor"] == [p + pad for p in character.config["view"]["camera"]["base_pivot"]]
     previews = []
     contacts = {}
-    with np.load(out / "posed_part_ids.npz") as volumes:
+    joints = json.loads((out / "joints.json").read_bytes())["attack"]
+    events = layout.get("events", [])
+    assert len(events) == len(clip.get("events", []))
+    for event, source in zip(events, clip.get("events", [])):
+        col = source["frame"]
+        assert all(event[k] == v for k,v in source.items())
+        assert event["time_ms"] == sum(clip["durations_ms"][:col])
+        assert event["position_model_xyz"] == joints[col][source["marker"]]
+        assert np.isclose(np.linalg.norm(event["direction_model_xyz"]), 1)
+        assert list(event["direction_by_row"]) == dirs
+        if source.get("direction_source") == "marker_travel":
+            axis = np.subtract(joints[col][source["marker"]], joints[col-1][source["marker"]])
+        elif source["marker"] == "arrow_tip":
+            axis = np.subtract(joints[col]["arrow_tip"], joints[col]["arrow_nock"])
+            if "baked_projectile_frames" in event:
+                flight = 0
+                while col + flight < count and "flight_offset" in clip["keys"][col + flight]:
+                    flight += 1
+                assert event["baked_projectile_frames"] == flight
+        else:
+            axis = np.asarray(clip["keys"][col]["aim"])
+        forward = axis / np.linalg.norm(axis)
+        assert np.allclose(forward, event["direction_model_xyz"])
+        for row, yaw in character.config["view"]["directions"].items():
+            angle = np.deg2rad(yaw)
+            heading = np.array([np.sin(angle), np.cos(angle), 0])
+            lateral = np.array([np.cos(angle), -np.sin(angle), 0])
+            vector = event["direction_by_row"][row]
+            assert np.allclose([vector @ lateral, vector @ heading, vector[2]], forward)
+    with np.load(out / "posed_part_ids.npz") as volumes, np.load(out / "posed_slices.npz") as materials:
         for col in range(count):
             ids = volumes[f"attack_{col:02}"]
+            key = clip["keys"][col]
+            if bow := character.config["attack"].get("bow"):
+                arrow = ids == layout["transient_parts"]["arrow"]
+                assert arrow.any() == bool(key.get("nocked") or "flight_offset" in key)
+                if key.get("nocked"):
+                    draw = "hand_R" if character.config["rig"]["attachments"][bow["part"]]["hand"] == "hand_L" else "hand_L"
+                    string = (ids == character.parts[bow["part"]]) & (materials[f"attack_{col:02}"] == bow["string_material"])
+                    assert np.allclose(joints[col]["string_center"], joints[col][draw])
+                    assert np.allclose(joints[col]["arrow_nock"], joints[col][draw])
+                    assert face_contacts(string, ids == character.parts[draw]) > 0, (col, "lost string")
+                if "flight_offset" in key:
+                    assert not key.get("nocked") and clip["keys"][col-1].get("nocked")
+                    last = joints[col-1]
+                    ray = np.subtract(last["arrow_tip"], last["arrow_nock"])/bow["length"]
+                    assert np.allclose(joints[col]["arrow_nock"], last["arrow_nock"] + key["flight_offset"]*ray)
+                    assert not face_contacts(arrow, ids == character.parts[bow["part"]]), (col, "arrow still on bow")
+            if "burst" in layout.get("transient_parts", {}):
+                assert (ids == layout["transient_parts"]["burst"]).any() == bool(key.get("burst"))
             support = "boot_L" if character.config["attack"]["tuning"]["step_side"] == "R" else "boot_R"
             bottom = np.where((ids == character.parts[support]).any(axis=(1, 2)))[0].min()
             assert abs(character.posed_grid.origin[2] + bottom * character.posed_grid.spacing[2]) < 1e-6
+            if rules.get("planted_feet"):
+                for side in ("R", "L"):
+                    toe = np.array(joints[col]["toe_"+side])
+                    occupied = (ids == character.parts["boot_"+side]).any(axis=(1, 2))
+                    grid = character.posed_grid
+                    floor = grid.origin[2] + np.flatnonzero(occupied)[0]*grid.spacing[2]
+                    assert floor >= 0 and abs(floor-toe[2]) <= grid.spacing[2]+1e-6, (col, side, floor)
+                    if col:
+                        previous = joints[col-1]["toe_"+side]
+                        if abs(toe[2]) < 1e-6 and abs(previous[2]) < 1e-6:
+                            assert np.allclose(previous, toe), (col, side, "grounded boot slid")
             assert set(character.parts.values()) <= set(np.unique(ids)), ("missing part", col)
             for name, att in character.config["rig"]["attachments"].items():
                 faces = face_contacts(ids == character.parts[name], ids == character.parts[att["hand"]])
@@ -155,11 +236,14 @@ def check_published(output, published):
         assert sheet.mode == "RGBA" and sheet.size == (
             layout["columns"] * layout["cell"][0], len(layout["rows"]) * layout["cell"][1])
         assert hashlib.sha256(sheet.tobytes()).hexdigest() == layout["rgba_sha256"]
+        rows = frames_of(sheet, layout["cell"][0], len(layout["rows"]), layout["columns"])
     with Image.open(published / "attack.gif") as preview:
         assert preview.n_frames == layout["columns"]
         for i, duration in enumerate(layout["durations_ms"]):
             preview.seek(i)
             assert abs(preview.info["duration"] - duration) < 10  # GIF delays use 10 ms ticks.
+            if preview.size == (layout["cell"][0]*len(rows), layout["cell"][1]):
+                assert preview.convert("RGB").tobytes() == strip([rows], i, 1).convert("RGB").tobytes()
 
 
 if __name__ == "__main__":

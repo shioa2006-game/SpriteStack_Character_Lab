@@ -1,0 +1,44 @@
+{
+  "fps": 10,
+  "poses": [
+    "ready",
+    "raise bow",
+    "nock",
+    "draw",
+    "aim",
+    "loose",
+    "recoil",
+    "lower bow",
+    "ready"
+  ],
+  "durations_ms": [
+    40,
+    60,
+    70,
+    90,
+    100,
+    40,
+    60,
+    80,
+    50
+  ],
+  "events": [
+    {
+      "name": "arrow_release",
+      "frame": 5,
+      "marker": "arrow_tip",
+      "baked_projectile_frames": 1
+    }
+  ],
+  "keys": [
+    {},
+    {"root": [0, 0, -0.38], "yaw": 10, "lean": 1, "front_step": 0, "front_lift": 0, "front_outward": 0, "hand_L": [6.876, 5.0, 14.4], "elbow_pole_L": [5, -1, -5], "aim": [0.097, -0.262, 0.95], "support_delta": [0.7, 1.2, 2.4], "wrist_roll": -28},
+    {"root": [0, 0.1, -0.65], "yaw": 28, "lean": 3, "front_step": 0.3, "front_lift": 0.35, "front_outward": 0.12, "hand_L": [4.68, 6.5, 16.3], "elbow_pole_L": [6, 1, -1], "aim": [-0.305, -0.376, 0.98], "support_delta": [5.73, 1.8, 5.9], "wrist_roll": -57, "nocked": true},
+    {"root": [-0.1, 0.25, -0.65], "yaw": 47, "lean": 2, "front_step": 0.6, "front_lift": 0, "front_outward": 0.15, "hand_L": [3.46, 8.0, 16.7], "elbow_pole_L": [6, 1, -1], "aim": [-0.424, -0.44, 0.99], "support_delta": [6.53, 0.75, 6.75], "wrist_roll": -64, "nocked": true},
+    {"root": [-0.12, 0.25, -0.65], "yaw": 53, "lean": 2, "front_step": 0.6, "front_lift": 0, "front_outward": 0.15, "hand_L": [3.25, 8.65, 17.6], "elbow_pole_L": [4, -4, 1], "aim": [-0.4, -0.45, 0.98], "support_delta": [7.316, -0.379, 7.484], "wrist_roll": -67, "nocked": true},
+    {"root": [-0.15, 0.2, -0.62], "yaw": 49, "lean": 2, "front_step": 0.6, "front_lift": 0, "front_outward": 0.15, "hand_L": [3.45, 8.45, 18.3], "elbow_pole_L": [4, -4, 1], "aim": [-0.43, -0.44, 0.99], "support_delta": [3.65, -0.5, 6.5], "wrist_roll": -63, "flight_offset": 9.4},
+    {"root": [-0.12, 0.1, -0.52], "yaw": 32, "lean": 0, "front_step": 0.6, "front_lift": 0, "front_outward": 0.15, "hand_L": [4.54, 7.1, 17.4], "elbow_pole_L": [6, 1, -1], "aim": [-0.205, -0.386, 0.97], "support_delta": [1.4, -0.6, 4.3], "wrist_roll": -48},
+    {"root": [0, 0, -0.35], "yaw": 11, "lean": 1, "front_step": 0.2, "front_lift": 0.25, "front_outward": 0.05, "hand_L": [4.36, 4.5, 13.7], "elbow_pole_L": [5, -1, -5], "aim": [0.175, -0.318, 0.91], "support_delta": [0.65, 0.55, 2.1], "wrist_roll": -24},
+    {}
+  ]
+}

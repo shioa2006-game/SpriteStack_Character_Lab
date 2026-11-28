@@ -255,6 +255,66 @@
     "lift_scale": 0.9,
     "lean_scale": 1.75
   },
+  "attack": {
+    "posed_volume": {"origin_xyz": [-24, -16, -3], "limit_xyz": [24, 30, 43], "voxel_size": 0.5},
+    "clip": "bow-shot.json",
+    "cell": 80,
+    "follow_cloth": true,
+    "tuning": {
+      "hip_yaw_scale": 0.25,
+      "head_snap": 0.5,
+      "head_follow": [
+        0.8,
+        0.55,
+        1
+      ],
+      "head_yaw_scale": 0,
+      "head_lean_scale": 0,
+      "step_side": "L",
+      "knee_pole": [
+        1.2,
+        8,
+        -0.2
+      ],
+      "main_hand_side": "L",
+      "weapon_axis": [
+        3.75,
+        -2.2,
+        8.6
+      ],
+      "support_yaw_offset": 0,
+      "support_hand_lift": 0,
+      "support_wrist_yaw_scale": 0.22,
+      "support_wrist_pitch": 0,
+      "support_elbow_pole": [
+        -4,
+        -4,
+        -1
+      ]
+    },
+    "bow": {
+      "part": "bow",
+      "tips": [
+        [
+          8.18,
+          0.9,
+          4.35
+        ],
+        [
+          9.03,
+          1.45,
+          20.25
+        ]
+      ],
+      "string_material": 14,
+      "shaft_material": 13,
+      "feather_material": 16,
+      "point_material": 15,
+      "length": 11.6,
+      "string_radius": 0.53,
+      "shaft_radius": 0.49
+    }
+  },
   "measurements": {
     "lowest_z": {
       "bow_floor": [13, 11, 14]

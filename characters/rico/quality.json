@@ -6,6 +6,7 @@
     "samples": "reference_palette.json"
   },
   "motions": {
+    "attack": {"clip": "bow-shot.json"},
     "walk": {
       "clip": "../../motions/walk.json"
     },
@@ -75,6 +76,20 @@
       "arrows": 1
     },
     "max_center_drift_px": 3
+  },
+  "attack": {
+    "feature": "bow",
+    "visibility": [
+      {"feature": "bow", "phases": ["nock", "draw", "aim", "loose"], "min_px": 8}
+    ],
+    "planted_feet": true,
+    "phase": "loose",
+    "minimum_visible_px": 12,
+    "path_materials": [13, 11],
+    "transient_visibility": [
+      {"part": "arrow", "phase": "aim", "min_px": 3},
+      {"part": "arrow", "phase": "loose", "min_px": 6}
+    ]
   },
   "published": "../../docs/assets/rico"
 }

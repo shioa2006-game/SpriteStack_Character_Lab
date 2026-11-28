@@ -220,6 +220,44 @@
     "lift_scale": 0.9,
     "lean_scale": 0.8
   },
+  "attack": {
+    "posed_volume": {"origin_xyz": [-28, -24, -5], "limit_xyz": [26, 32, 46], "voxel_size": 0.5},
+    "clip": "hammer-strike.json",
+    "cell": 84,
+    "follow_cloth": true,
+    "tuning": {
+      "hip_yaw_scale": 0.25,
+      "head_snap": 0.5,
+      "head_follow": [
+        0.8,
+        0.55,
+        1
+      ],
+      "head_yaw_scale": 0,
+      "head_lean_scale": 0,
+      "step_side": "R",
+      "knee_pole": [
+        1.2,
+        8,
+        -0.2
+      ],
+      "main_hand_side": "R",
+      "weapon_axis": [
+        -5.5,
+        -7.16,
+        -5.8
+      ],
+      "support_yaw_offset": 0,
+      "support_hand_lift": 0,
+      "support_wrist_yaw_scale": 0.22,
+      "support_wrist_pitch": 0,
+      "support_elbow_pole": [
+        4,
+        -3,
+        -2
+      ]
+    }
+  },
   "measurements": {
     "lowest_z": {
       "hammer_floor": [4, 2, 7, 9],

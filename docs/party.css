@@ -157,7 +157,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible {
   flex-wrap: wrap;
 }
 
-.seg button,.pause,.roster-header button,select {
+.seg button,.pause,.roster-header button,#replay,select {
   border: 1px solid #c4c9b7;
   background: #f6f6ec;
   border-radius: 4px;
@@ -200,6 +200,10 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible {
 
 .transport input {
   accent-color: #49644e;
+}
+
+.attack-controls {
+  justify-content: flex-start;
 }
 
 #frame {
@@ -264,9 +268,12 @@ h2 {
   background: var(--wash);
 }
 
-.roster canvas {
+.roster img {
   width: 60px;
   height: 60px;
+  object-fit: none;
+  object-position: -2px -2px;
+  image-rendering: pixelated;
   background: var(--wash);
   border-radius: 4px;
 }

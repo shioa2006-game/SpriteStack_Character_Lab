@@ -6,6 +6,7 @@
     "samples": "reference_palette.json"
   },
   "motions": {
+    "attack": {"clip": "hammer-strike.json"},
     "walk": {
       "clip": "../../motions/walk.json"
     },
@@ -81,6 +82,17 @@
       "shield": 30
     },
     "max_center_drift_px": 3
+  },
+  "attack": {
+    "feature": "hammer metal",
+    "visibility": [
+      {"feature": "hammer metal", "phases": ["high hold", "downswing", "impact", "settle"], "min_px": 20},
+      {"feature": "hammer metal", "phases": ["impact", "settle"], "rows": ["NW"], "min_px": 65},
+      {"feature": "shield", "phases": ["brace shield", "impact"], "min_px": 5}
+    ],
+    "planted_feet": true,
+    "phase": "impact",
+    "minimum_visible_px": 30
   },
   "published": "../../docs/assets/gard"
 }

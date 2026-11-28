@@ -20,11 +20,14 @@
 | `walk.png` と `walk.json` | 384×512。同じ行順で6コマをループ。`contact` は0始まりの支持区間を含む |
 | `idle.png` と `metadata.json` | 512×64。造形確認・初期表示用の静止8方向。こちらは方向が列 |
 | `breathe.gif` と `walk.gif` | 8方向を横に並べた原寸ループ。GIFの時間は各コマ境界を10 ms単位へ丸めている |
-| `preview.js` | 同梱プレビューが読む再生設定。エクスポート時に上記メタデータから生成 |
+| `attack.png`、`attack.gif`、`attack.json` | 人物ごとの9コマ単発攻撃。JSONにコマ時間、発動時刻、発動位置、8方向の発動ベクトルを収録 |
+| `preview.js` | 同梱プレビュー用の再生設定。メタデータと関節座標からコマ時間と歩行停止時の支持足・移動量を生成 |
 
 方向順は **S / SW / W / NW / N / NE / E / SE**。モーションJSONの `animations[モード名]` から `rows`、`columns`、`cell`、`anchor`、`fps` を読む。描画先はワールド座標を投影した点からアンカーを引いた位置。歩くときはコマの進みとともに `suggested_forward_per_frame_model_units` だけルートを前進させる。停止は両足が着く0または3コマ目に合わせると、片足を上げたまま静止へ戻る段差を避けられる。
 
 ## プレビュー
+
+攻撃は隊列・単独の両方で再生できる。「攻撃を1回再生」で待機へ戻り、「攻撃を繰り返す」で連続比較する。「攻撃コマ」を動かすと同じ番号の姿勢で止まり、方向だけを切り替えられる。攻撃のセル、発動イベントと再生成コマンドは[攻撃制作・検証記録](ATTACKS.md)にまとめた。
 
 各人物のカードで単独表示、「3人を並べる」で隊列へ戻る。1×がゲーム原寸。歩行中に「歩幅に合わせて床面を移動」を選ぶと先頭の人物をカメラが追い、ほかの人物も自分の歩幅とテンポで進む。床模様と支持足の関係を見たいときに使う。
 
@@ -59,6 +62,7 @@ foreach ($id in 'gard','rico','sena') {
     & $py -m research.verify_walk --character $cfg --out "$run/$id-all"
     & $py -m research.export_loops --neutral "$run/$id-neutral" --animated "$run/$id-all" --out "$run/$id-assets"
     & $py -m research.verify_loops --character $cfg --out "$run/$id-all" --published "docs/assets/$id"
+    & $py -m research.verify_attack --character $cfg --out "$run/$id-all" --published "docs/assets/$id"
 }
 ```
 

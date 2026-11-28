@@ -5,6 +5,8 @@ const ctx = field.getContext("2d");
 const zoom = document.querySelector("#zoom");
 const travel = document.querySelector("#travel");
 const pause = document.querySelector("#pause");
+const repeat = document.querySelector("#repeat");
+const scrub = document.querySelector("#scrub");
 const state = document.querySelector("#view-state");
 const roster = [...document.querySelectorAll("article button[data-member]")];
 const directions = ["S", "SW", "W", "NW", "N", "NE", "E", "SE"];
@@ -35,11 +37,6 @@ async function readActor(button) {
   const actor = {id, name: button.querySelector("strong").textContent, camera: rest.camera,
     clips: Object.fromEntries(clips), mode: "breathe", start: 0, startFrame: 0, stopAt: null,
     step: 0, groundX: 0, groundY: 0};
-  const portrait = button.querySelector("canvas");
-  const portraitCtx = portrait.getContext("2d");
-  portraitCtx.imageSmoothingEnabled = false;
-  const idle = actor.clips.breathe;
-  portraitCtx.drawImage(idle.sheet, 2, 2, 60, 60, 0, 0, 60, 60);
   return actor;
 }
 
@@ -57,24 +54,34 @@ function begin(actor, mode, frame = 0, start = time) {
   actor.startFrame = frame;
   actor.step = frame;
   actor.stopAt = null;
+  actor.brakeDelta = null;
 }
 
-function changeMotion(value) {
-  if (value === motion) return;
+function changeMotion(value, restart = false) {
+  if (value === motion && !restart) return;
   motion = value;
   for (const actor of actors) {
     if (value === "walk") {
       // At right heel contact, the forward foot agrees with the stagger of the neutral pose.
       if (actor.mode !== value) begin(actor, value, actor.clips.walk.stance.R[0]);
       actor.stopAt = null;
+      actor.brakeDelta = null;
     } else if (playing && actor.mode === "walk") {
       const walk = actor.clips.walk;
+      const stops = value === "attack" ? walk.stopping_poses : null;
       const bothFeet = walk.stance.R.filter(i => walk.stance.L.includes(i));
       const phase = (time-actor.start)*walk.fps + actor.startFrame;
       let next = Math.floor(phase);
-      while (!bothFeet.includes(next % walk.columns)) next++;
+      actor.brakeDelta = null;
+      if (stops?.length) {
+        while (!stops.some(s => s.after_frame === next % walk.columns)) next++;
+        actor.brakeDelta = stops.find(s => s.after_frame === next % walk.columns).root_delta_xyz;
+        next++;
+      } else {
+        while (!bothFeet.includes(next % walk.columns)) next++;
+      }
       actor.stopAt = Math.max(time, actor.start + (next-actor.startFrame)/walk.fps);
-    } else begin(actor, value);
+    } else if (value === "attack" || actor.mode !== value) begin(actor, value);
   }
   buttons("motion", value);
   travel.disabled = value !== "walk";
@@ -84,13 +91,18 @@ function changeMotion(value) {
 function updateState() {
   lastDraw = "";
   const who = member === "all" ? "3人の隊列" : actors.find(a => a.id === member)?.name;
-  state.textContent = [who, dir, motion === "walk" ? "歩行" : "待機"].filter(Boolean).join("  /  ");
+  state.textContent = [who, dir, {walk: "歩行", breathe: "待機", attack: "攻撃"}[motion]].filter(Boolean).join("  /  ");
 }
 
 document.addEventListener("click", event => {
   const button = event.target.closest("button");
   if (!button || !actors.length) return;
-  if (button.dataset.motion) changeMotion(button.dataset.motion);
+  if (button.dataset.motion) changeMotion(button.dataset.motion, button.dataset.motion === "attack");
+  if (button.id === "replay") {
+    setPlaying(true);
+    repeat.checked = false;
+    changeMotion("attack", true);
+  }
   if (button.dataset.direction) {
     dir = button.dataset.direction;
     buttons("direction", dir);
@@ -102,12 +114,36 @@ document.addEventListener("click", event => {
     updateState();
   }
   if (button === pause) {
-    playing = !playing;
-    if (!playing) for (const actor of actors) if (actor.stopAt !== null) begin(actor, "breathe");
-    pause.textContent = playing ? "一時停止" : "再生";
-    pause.setAttribute("aria-pressed", String(!playing));
-    lastDraw = "";
+    setPlaying(!playing);
   }
+});
+
+function setPlaying(value) {
+  playing = value;
+  previous = null;
+  pause.textContent = playing ? "一時停止" : "再生";
+  pause.setAttribute("aria-pressed", String(!playing));
+  lastDraw = "";
+}
+
+repeat.addEventListener("change", () => {
+  if (repeat.checked && actors.length) {
+    setPlaying(true);
+    changeMotion("attack", true);
+  }
+});
+
+scrub.addEventListener("input", () => {
+  if (!actors.length) return;
+  setPlaying(false);
+  changeMotion("attack", true);
+  for (const actor of actors) {
+    const durations = actor.clips.attack.durations_ms;
+    const index = Math.min(Number(scrub.value)-1, durations.length-1);
+    const elapsed = durations.slice(0, index).reduce((a, b) => a+b, 0);
+    begin(actor, "attack", 0, time-elapsed/1000);
+  }
+  draw();
 });
 
 travel.addEventListener("change", () => {
@@ -197,11 +233,36 @@ function draw() {
   const shown = actors.filter(actor => member === "all" || actor.id === member);
   if (!shown.length) return;
   for (const actor of actors) {
-    advance(actor, Math.min(time, actor.stopAt ?? time));
-    if (actor.stopAt !== null && time >= actor.stopAt) begin(actor, "breathe", 0, actor.stopAt);
+    // A shortened last step replaces the normal advance on the handoff boundary.
+    const lastWalk = actor.stopAt === null ? time : actor.stopAt-(actor.brakeDelta ? 1e-6 : 0);
+    advance(actor, Math.min(time, lastWalk));
+    if (actor.stopAt !== null && time >= actor.stopAt) {
+      if (actor.brakeDelta && travel.checked) {
+        const [x,y] = actor.brakeDelta;
+        const density = actor.camera.pixels_per_unit;
+        actor.groundX += density*(x*south[dir] + y*east[dir]);
+        actor.groundY += density*(-x*east[dir] + y*south[dir])*Math.sin(actor.camera.pitch_deg*Math.PI/180);
+      }
+      begin(actor, motion, 0, actor.stopAt);
+    }
+    if (actor.mode === "attack") {
+      const total = actor.clips.attack.durations_ms.reduce((a,b) => a+b, 0)/1000;
+      if (time >= actor.start + total) begin(actor, "breathe", 0, actor.start + total);
+    }
+  }
+  if (motion === "attack" && shown.every(a => a.mode === "breathe" && a.stopAt === null)) {
+    changeMotion(repeat.checked ? "attack" : "breathe", true);
   }
   const frames = shown.map(actor => {
     const clip = actor.clips[actor.mode];
+    if (actor.mode === "attack") {
+      let elapsed = (time - actor.start)*1000 + 1e-6;
+      for (let i=0; i<clip.columns-1; i++) {
+        if (elapsed < clip.durations_ms[i]) return i;
+        elapsed -= clip.durations_ms[i];
+      }
+      return clip.columns-1;
+    }
     return (Math.floor((time-actor.start)*clip.fps)+actor.startFrame) % clip.columns;
   });
   // Follow the first visible walker. Other walkers advance by their own stride at each PNG change.
@@ -210,6 +271,9 @@ function draw() {
   const stamp = [field.width,field.height,scale,member,dir,motion,shown.map(a=>a.mode),frames,positions].join("/");
   if (stamp === lastDraw) return;
   lastDraw = stamp;
+  scrub.max = Math.max(...shown.map(a => a.clips.attack.columns));
+  const attacking = shown.findIndex(a => a.mode === "attack");
+  if (attacking >= 0) scrub.value = frames[attacking]+1;
   ctx.setTransform(scale,0,0,scale,0,0);
   ctx.imageSmoothingEnabled = false;
   ground(w,h,camX,camY);
@@ -218,7 +282,10 @@ function draw() {
     const y = Math.min(h-3, h/2+25) + positions[i][1]-camY;
     return {actor, frame:frames[i], x:Math.round(wrap(x,w,32)), y:Math.round(wrap(y,h,64))};
   }).sort((a,b)=>a.y-b.y).forEach(p=>paintActor(p.actor,p.frame,p.x,p.y));
-  document.querySelector("#frame").textContent = shown.map((a,i)=>a.name+" "+(frames[i]+1)+"/"+a.clips[a.mode].columns).join("  ·  ");
+  document.querySelector("#frame").textContent = shown.map((a,i) => {
+    const clip = a.clips[a.mode];
+    return a.name+" "+(frames[i]+1)+"/"+clip.columns+(clip.phase_names ? " "+clip.phase_names[frames[i]] : "");
+  }).join("  ·  ");
 }
 
 function tick(now) {

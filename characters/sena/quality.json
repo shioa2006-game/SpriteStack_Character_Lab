@@ -6,6 +6,7 @@
     "samples": "reference_palette.json"
   },
   "motions": {
+    "attack": {"clip": "frost-cast.json"},
     "walk": {
       "clip": "../../motions/walk.json"
     },
@@ -60,6 +61,18 @@
       "gem": 3
     },
     "max_center_drift_px": 3
+  },
+  "attack": {
+    "feature": "gem",
+    "visibility": [
+      {"feature": "gem", "phases": ["crystal focus", "release", "afterglow"], "min_px": 6}
+    ],
+    "planted_feet": true,
+    "phase": "release",
+    "minimum_visible_px": 6,
+    "transient_visibility": [
+      {"part": "burst", "phase": "release", "min_px": 4}
+    ]
   },
   "published": "../../docs/assets/sena"
 }

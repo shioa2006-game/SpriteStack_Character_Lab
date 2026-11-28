@@ -45,7 +45,27 @@ window.spriteStackLayouts[new URL(".", document.currentScript.src).href] = {
           5,
           0
         ]
-      }
+      },
+      "stopping_poses": [
+        {
+          "after_frame": 1,
+          "support": "L",
+          "root_delta_xyz": [
+            0.3599999999999999,
+            1.1939999999999997,
+            4.440892098500626e-16
+          ]
+        },
+        {
+          "after_frame": 4,
+          "support": "R",
+          "root_delta_xyz": [
+            -0.3599999999999999,
+            0.5539999999999998,
+            4.440892098500626e-16
+          ]
+        }
+      ]
     },
     "breathe": {
       "rows": [
@@ -68,6 +88,50 @@ window.spriteStackLayouts[new URL(".", document.currentScript.src).href] = {
         57
       ],
       "fps": 3
+    },
+    "attack": {
+      "rows": [
+        "S",
+        "SW",
+        "W",
+        "NW",
+        "N",
+        "NE",
+        "E",
+        "SE"
+      ],
+      "columns": 9,
+      "cell": [
+        100,
+        100
+      ],
+      "anchor": [
+        50,
+        75
+      ],
+      "fps": 10,
+      "durations_ms": [
+        70,
+        120,
+        140,
+        180,
+        70,
+        90,
+        130,
+        120,
+        80
+      ],
+      "phase_names": [
+        "ready",
+        "invoke",
+        "gather",
+        "crystal focus",
+        "point",
+        "release",
+        "afterglow",
+        "lower staff",
+        "ready"
+      ]
     }
   }
 };
