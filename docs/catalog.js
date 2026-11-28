@@ -8,7 +8,7 @@ const AssetCatalog = (() => {
   const breathe = { id: "breathe", label: "待機", sheet: "breathe.png", metadata: "breathe.json", gif: "breathe.gif" };
   const walk = { id: "walk", label: "歩行", sheet: "walk.png", metadata: "walk.json" };
   const walkGif = { ...walk, gif: "walk.gif" };
-  const attack = { id: "attack", label: "攻撃", sheet: "attack.png", metadata: "attack.json", gif: "attack.gif" };
+  const attack = { id: "attack", label: "攻撃", sheet: "attack.png", metadata: "attack.json", gif: "attack.gif", previewLoop: true };
   const partyAttack = { ...attack, next: "breathe" };
 
   return {

@@ -86,6 +86,7 @@ async function openViewer() {
   }
   let active, image, facing = prefs.get("direction") || "SW", frame = 0, elapsed = 0, last = 0, animation = 0, ticket = 0;
   let playing = false;
+  let previewLoop = false;
   function draw() {
     if (!image) return;
     const { layout, view, directions } = active;
@@ -128,7 +129,7 @@ async function openViewer() {
   function tick(now) {
     elapsed += Math.max(0, now - last) * Number(get("speed").value);
     last = now;
-    if (active.layout.loop) elapsed %= active.duration;
+    if (active.layout.loop || previewLoop) elapsed %= active.duration;
     else if (elapsed >= active.duration) {
       run(false);
       if (active.view.next) {
@@ -153,7 +154,7 @@ async function openViewer() {
   function buttons(items, selected, attribute) {
     return items.map(([id, label]) => `<button type="button" data-${attribute}="${id}" aria-pressed="${id === selected}">${label}</button>`).join("");
   }
-  async function select(id, variant = 0) {
+  async function select(id, variant = 0, once = false) {
     const request = ++ticket;
     run(false);
     active = variants.get(id)[variant];
@@ -163,6 +164,7 @@ async function openViewer() {
     get("status").textContent = "読み込み中…";
     frame = elapsed = 0;
     const { view, directions } = active;
+    previewLoop = Boolean(view.previewLoop) && !once;
     if (!directions.includes(facing)) facing = directions[0];
     get("views").innerHTML = buttons(asset.views.map(v => [v.id, v.label]), id, "motion");
     get("directions").innerHTML = buttons(directions.map(d => [d,d]), facing, "direction");
@@ -172,7 +174,10 @@ async function openViewer() {
     get("variant").value = variant;
     get("speed").disabled = active.frames === 1;
     get("transport").hidden = active.frames === 1;
-    get("replay").hidden = Boolean(active.layout.loop);
+    get("play-modes").hidden = Boolean(active.layout.loop);
+    get("repeat").hidden = !view.previewLoop;
+    get("repeat").setAttribute("aria-pressed", String(previewLoop));
+    get("replay").setAttribute("aria-pressed", String(!previewLoop));
     get("files").innerHTML = `<strong>${view.label}素材</strong>` + fileLinks(active.files);
     try {
       const loaded = await Lab.loadImage(asset.directory + active.files.sheet);
@@ -205,7 +210,8 @@ async function openViewer() {
     draw();
     run(!playing);
   };
-  get("replay").onclick = () => select(active.view.id);
+  get("repeat").onclick = () => select(active.view.id, Number(get("variant").value));
+  get("replay").onclick = () => select(active.view.id, Number(get("variant").value), true);
   document.addEventListener("visibilitychange", () => { last = performance.now(); });
   const initial = variants.has(prefs.get("motion")) ? prefs.get("motion") : asset.views[0].id;
   const version = Number(prefs.get("variant"));

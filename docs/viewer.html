@@ -29,7 +29,12 @@
           <label>表示倍率 <select id="scale"><option value="1">原寸 (1×)</option><option value="2">2×</option><option value="3" selected>3×</option><option value="4">4×</option></select></label>
           <label>再生速度 <select id="speed"><option>0.25</option><option>0.5</option><option selected>1</option><option>1.5</option><option>2</option></select></label>
         </div>
-        <div class="segments" id="transport"><button id="previous">前のコマ</button><button id="play">再生</button><button id="next">次のコマ</button><button id="replay" hidden>単発再生</button></div>
+        <div class="segments" id="transport">
+          <button id="previous">前のコマ</button><button id="play">再生</button><button id="next">次のコマ</button>
+          <div class="segments" role="group" aria-label="再生方法" id="play-modes" hidden>
+            <button id="repeat" hidden>連続再生</button><button id="replay">単発再生</button>
+          </div>
+        </div>
         <label id="floor-row" hidden><input type="checkbox" id="floor"> 床面アンカー・32 px タイル</label>
       </div>
     </section>
